@@ -11,10 +11,10 @@ $(DEPENDS): %.depend: %.cpp
 	@set -e; $(RM) $@; \
 	$(CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	$(RM) $@.$$$$
+	$(RM) $@ $@.$$$$
 
 -include $(DEPENDS)
 
 .PHONY: clean
 clean:
-	-$(RM) $(DEPENDS) $(OBJECTS) *.depend.*
+	-$(RM) $(OBJECTS)

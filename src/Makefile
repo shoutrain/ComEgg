@@ -1,6 +1,6 @@
 CPP = g++
-CPPFLAGS = -Wall -g -I/home/rafael/reference/xerces-c/src/
-LDFLAGS = -L/home/rafael/reference/xerces-c/src/.libs -lxerces-c
+CPPFLAGS = -Wall -g
+LDFLAGS = -lpthread -llog4c
 MAKE = make
 
 COMMON_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./common/*.cpp))
@@ -28,11 +28,11 @@ depend:
 	cd transaction && $(MAKE)
 
 ComEgg: ComEgg.cpp $(OBJS)
-	$(CPP) $(CPPFLAGS) $(LDFLAGS) -o $@ ComEgg.cpp $(OBJS)
+	$(CPP) $(CPPFLAGS) -o $@ ComEgg.cpp $(OBJS) $(LDFLAGS)
 
 .PHONY: clean
 clean:
-	cd commmon && $(MAKE) clean
+	cd common && $(MAKE) clean
 	cd data && $(MAKE) clean
 	cd logic && $(MAKE) clean
 	cd network && $(MAKE) clean
@@ -40,4 +40,4 @@ clean:
 	cd plugin && $(MAKE) clean
 	cd protocol && $(MAKE) clean 
 	cd transaction && $(MAKE) clean 
-	-$(RM) *.o ComEgg *.depend.*
+	-$(RM) ComEgg
