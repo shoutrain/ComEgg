@@ -1,7 +1,7 @@
 #ifndef VARIABLE_H_
 #define VARIABLE_H_
 
-#include "common.h"
+#include "CBase.h"
 
 #include <cassert>
 #include <cstring>
@@ -69,7 +69,7 @@ typedef enum RunningDataTypeForPointer {
     P_OBJ = POINTER_SIGN | OBJ,
 } prdt_;
 
-class Variable {
+class Variable: public CBase {
 public:
     Variable() {
         memset(&_v, 0, sizeof(unit_value));
@@ -290,7 +290,7 @@ public:
     }
 
     rdt_ rdt() const {
-        return __rdt(_type);
+        return __rdt(_type) ;
     }
 
     const Variable &operator =(b_1 value) {
