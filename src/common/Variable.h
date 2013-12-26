@@ -2,17 +2,16 @@
 #define VARIABLE_H_
 
 #include "common.h"
-#include "error.h"
 
 #include <cassert>
 #include <cstring>
 
 // Data _type signs and masks
-unsigned int UNSIGNED_SIGN = 0x00001000;
-unsigned int LEGNTH_MASK = 0x0000000f;
-unsigned int UDT_MASK = 0x000000f0;
-unsigned int RDT_MASK = 0x0000ffff;
-unsigned int POINTER_SIGN = 0x00010000;
+const unsigned int UNSIGNED_SIGN = 0x00001000;
+const unsigned int LEGNTH_MASK = 0x0000000f;
+const unsigned int UDT_MASK = 0x000000f0;
+const unsigned int RDT_MASK = 0x0000ffff;
+const unsigned int POINTER_SIGN = 0x00010000;
 
 #define __is_unsigned(TYPE) \
     ((TYPE) & UNSIGNED_SIGN)
@@ -21,7 +20,7 @@ unsigned int POINTER_SIGN = 0x00010000;
 #define __udt(TYPE) \
     ((TYPE) & UDT_MASK)
 #define __rdt(TYPE) \
-    ((TYPE) & RDT_MASK)
+    ((rdt_)((TYPE) & RDT_MASK))
 #define __is_pointer(TYPE) \
     ((TYPE) & POINTER_SIGN)
 
@@ -228,8 +227,6 @@ public:
 
     // FLOAT_STYLE
     explicit Variable(fb_4 value) {
-        assert(null_v != pValue);
-
         _type = FB_4;
         _v.fb4 = value;
         _len = 0;
@@ -237,8 +234,6 @@ public:
     }
 
     explicit Variable(fb_8 value) {
-        assert(null_v != pValue);
-
         _type = FB_8;
         _v.fb8 = value;
         _len = 0;
@@ -784,7 +779,7 @@ public:
             } else {
                 _offset = value._offset;
                 _len = value._len;
-                memcpy(&v, &value._v, sizeof(unit_value));
+                memcpy(&_v, &value._v, sizeof(unit_value));
             }
         } else if (INVALID == value._type) {
             if (P_OBJ == _type || P_STR == _type) {

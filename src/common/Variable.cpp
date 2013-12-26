@@ -166,8 +166,8 @@ const Variable operator +(const Variable &leftValue,
     case STR: {
         ch_1 *psz = new ch_1[leftValue.size() + rightValue.size() - 1];
 
-        strncpy(psz, (ch_1 *) leftValue, leftValue.size() - 1);
-        strncpy(psz + leftValue.size() - 1, (ch_1 *) rightValue,
+        strncpy(psz, (const ch_1 *) leftValue, leftValue.size() - 1);
+        strncpy(psz + leftValue.size() - 1, (const ch_1 *) rightValue,
                 rightValue.size() - 1);
         psz[leftValue.size() + rightValue.size() - 1] = 0;
 
@@ -507,7 +507,7 @@ const b_4 operator !=(const Variable &leftValue, const Variable &rightValue) {
 
 const b_4 operator >(const Variable &leftValue, const Variable &rightValue) {
     assert(__udt(leftValue._type) == __udt(rightValue._type));
-    assert(OBJ != leftValue._type)
+    assert(OBJ != leftValue._type);
 
     type_ type;
 
@@ -673,7 +673,7 @@ const b_4 operator <=(const Variable &leftValue, const Variable &rightValue) {
 }
 
 const b_4 operator &&(const Variable &leftValue, const Variable &rightValue) {
-    assert(__udt(leftValue._type) == __udt(rightValue._type))
+    assert(__udt(leftValue._type) == __udt(rightValue._type));
 
     type_ type;
 
