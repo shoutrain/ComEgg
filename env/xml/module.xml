@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules xmlns="http://www.comegg.com/module"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.comegg.com/module module.xsd">
+	<module path="./Plugin" name="SCSBlog" ext="so">
+		<interface name="RegisterUser">
+			<parameter_in>
+				<string name="szUserName" size="16"/>
+				<string name="szPassword" size="16"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="uiUserID" length="4" signed="false"/>
+			</parameter_out>
+		</interface>
+		<interface name="VerifyUser">
+			<parameter_in>
+				<string name="szUserName" size="16"/>
+				<string name="szPassword" size="16"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="uiUserID" length="4" signed="false"/>
+			</parameter_out>
+		</interface>
+		<interface name="UpdateUserInfo">
+			<parameter_in>
+				<normal name="uiUserID" length="4" signed="false"/>
+				<normal name="bIsMale" length="1"/>
+				<string name="szBirthday" size="11"/>
+				<string name="szSelfEstimate" size="128"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="bResult" length="1"/>
+			</parameter_out>
+		</interface>
+		<interface name="GetUserInfo">
+			<parameter_in>
+				<normal name="uiUserID" length="4" signed="false"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="bResult" length="1"/>
+				<normal name="bIsMale" length="1"/>
+				<string name="szBirthday" size="11"/>
+				<string name="szSelfEstimate" size="128"/>
+			</parameter_out>
+		</interface>
+		<interface name="AddBlog">
+			<parameter_in>
+				<normal name="uiUserID" length="4" signed="false"/>
+				<string name="szBlogTitle" size="32"/>
+				<string name="szBlogContent" size="255"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="bResult" length="1"/>
+			</parameter_out>
+		</interface>
+		<interface name="AddComments">
+			<parameter_in>
+				<normal name="uiBlogID" length="4" signed="false"/>
+				<normal name="uiUserID" length="4" signed="false"/>
+				<string name="szComments" size="128"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="bResult" length="1"/>
+			</parameter_out>
+		</interface>
+		<interface name="GetBlog">
+			<parameter_in>
+				<normal name="uiBlogID" length="4" signed="false"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="uiSize" length="4" signed="false"/>
+				<normal name="bResult" length="1"/>
+				<string name="szUserName" size="16"/>
+				<string name="szBlogTitle" size="32"/>
+				<string name="szBlogContent" size="255"/>
+				<string name="szCreateTime" size="20"/>
+				<normal name="uiCommentsNum" length="4" signed="false"/>
+				<group name="pCommentsArray" size="uiCommentsNum">
+					<normal name="uiUserID" length="4" signed="false"/>
+					<string name="szUserName" size="16"/>
+					<string name="szBlogComments" size="128"/>
+					<string name="szCreateTime" size="20"/>
+				</group>
+			</parameter_out>
+		</interface>
+		<interface name="GetBlogListByUser">
+			<parameter_in>
+				<normal name="uiUserID" length="4" signed="false"/>
+			</parameter_in>
+			<parameter_out>
+				<normal name="uiSize" length="4" signed="false"/>
+				<normal name="bResult" length="1"/>
+				<normal name="uiBlogNum" length="4" signed="false"/>
+				<group name="pBlogArray" size="uiBlogNum">
+					<normal name="uiBlogID" length="4" signed="false"/>
+					<string name="szBlogTitle" size="32"/>
+					<string name="szCreateTime" size="20"/>
+				</group>
+			</parameter_out>
+		</interface>
+		<interface name="GetBlogList">
+			<parameter_out>
+				<normal name="uiSize" length="4" signed="false"/>
+				<normal name="bResult" length="1"/>
+				<normal name="uiBlogNum" length="4" signed="false"/>
+				<group name="pBlogArray" size="uiBlogNum">
+					<normal name="uiUserID" length="4" signed="false"/>
+					<string name="szUserName" size="16"/>
+					<normal name="uiBlogID" length="4" signed="false"/>
+					<string name="szBlogTitle" size="32"/>
+					<string name="szCreateTime" size="20"/>
+				</group>
+			</parameter_out>
+		</interface>
+	</module>
+</modules>

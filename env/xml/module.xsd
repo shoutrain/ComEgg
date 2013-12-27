@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://www.comegg.com/module"
+	xmlns="http://www.comegg.com/module"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Rafael Gu</author>
+			<filename>module.xsd</filename>
+			<describe>
+				All interfaces must be defined here. Instance documents follow this must be named
+				"module.xml".
+			</describe>
+		</xs:appinfo>
+	</xs:annotation>
+	<!--****************************************************************************************************-->
+	<xs:include schemaLocation="types.xsd"/>
+	<!--****************************************************************************************************-->
+	<xs:complexType name="parameter">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="normal" type="normal"/>
+					<xs:element name="float" type="float"/>
+					<xs:element name="string" type="string"/>
+					<xs:element name="group" type="group"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="interface">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:sequence>
+					<xs:element name="parameter_in" type="parameter" minOccurs="0"/>
+					<xs:element name="parameter_out" type="parameter" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="name" type="normal_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="module">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:sequence>
+					<xs:element name="interface" type="interface" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:attribute name="path" type="xs:string" use="required"/>
+				<xs:attribute name="name" type="unique_name" use="required"/>
+				<xs:attribute name="ext" type="xs:string" default="so"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="modules">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element name="module" type="module" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

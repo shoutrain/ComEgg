@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Rafael Gu</author>
+			<filename>type.xsd</filename>
+			<describe>
+				Included by other schema, no instance documents follow this. Some types are defined
+				or declared here.
+			</describe>
+		</xs:appinfo>
+	</xs:annotation>
+	<!--****************************************************************************************************-->
+	<xs:simpleType name="ip">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([1-9]?[0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ip_list">
+		<xs:list itemType="ip"/>
+	</xs:simpleType>
+	<xs:simpleType name="port">
+		<xs:restriction base="xs:unsignedShort">
+			<xs:maxExclusive value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unique_name">
+		<xs:restriction base="xs:ID">
+			<xs:pattern value="([a-zA-Z_][a-zA-Z0-9_]{1,31}\.)?[a-zA-Z_][a-zA-Z0-9_]{1,31}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="reference_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([a-zA-Z_][a-zA-Z0-9_]{1,31}\.)?[a-zA-Z_][a-zA-Z0-9_]{1,31}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="normal_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([a-zA-Z_][a-zA-Z0-9_]{1,31}\.)?[a-zA-Z_][a-zA-Z0-9_]{1,31}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unbounded">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unbounded"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="length">
+		<xs:restriction base="xs:unsignedLong">
+			<xs:minInclusive value="1"/>
+			<xs:maxExclusive value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="size">
+		<xs:union memberTypes="length reference_name">
+			<xs:annotation>
+				<xs:documentation>
+					If size is reference_name which refer to another variable, this vairable must be defined
+					before size. And it means size is indicated by the variable dynamically.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="capacity">
+		<xs:union memberTypes="length unbounded"/>
+	</xs:simpleType>
+	<xs:simpleType name="direction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="in"/>
+			<xs:enumeration value="out"/>
+			<xs:enumeration value="all"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="bool">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--****************************************************************************************************-->
+	<xs:complexType final="restriction" name="base">
+		<xs:annotation>
+			<xs:documentation>Most of declared elements should be derived from this type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" name="note" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--****************************************************************************************************-->
+	<xs:complexType final="restriction" name="struct">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:attribute name="name" type="normal_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="normal">
+		<xs:complexContent>
+			<xs:extension base="struct">
+				<xs:attribute default="1" name="length">
+					<xs:simpleType>
+						<xs:restriction base="xs:unsignedByte">
+							<xs:enumeration value="1"/>
+							<xs:enumeration value="2"/>
+							<xs:enumeration value="4"/>
+							<xs:enumeration value="8"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute default="true" name="signed" type="xs:boolean"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="float">
+		<xs:complexContent>
+			<xs:extension base="struct">
+				<xs:attribute default="4" name="length">
+					<xs:simpleType>
+						<xs:restriction base="xs:unsignedByte">
+							<xs:enumeration value="4"/>
+							<xs:enumeration value="8"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute default="true" name="signed" type="xs:boolean"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="string">
+		<xs:complexContent>
+			<xs:extension base="struct">
+				<xs:attribute default="1" name="length">
+					<xs:simpleType>
+						<xs:restriction base="xs:unsignedByte">
+							<xs:enumeration value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute default="1" name="size" type="length"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="group">
+		<xs:complexContent>
+			<xs:extension base="struct">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:choice>
+						<xs:element name="normal" type="normal"/>
+						<xs:element name="float" type="float"/>
+						<xs:element name="string" type="string"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="size" type="reference_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--****************************************************************************************************-->
+	<xs:complexType final="restriction" name="variable">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:attribute name="name" type="normal_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_object">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute fixed="unbounded" name="value" type="unbounded"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_b_1">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:byte"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_ub_1">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:unsignedByte"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_b_2">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:short"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_ub_2">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:unsignedByte"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_b_4">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:int"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_ub_4">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:unsignedInt"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_b_8">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:long"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_ub_8">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:unsignedLong"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_fb_4">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:float"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_fb_8">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:double"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_string">
+		<xs:complexContent>
+			<xs:extension base="variable">
+				<xs:attribute default="unbounded" name="value">
+					<xs:simpleType>
+						<xs:union memberTypes="unbounded xs:string"/>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType final="#all" name="v_group">
+		<xs:complexContent>
+			<xs:extension base="struct">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:choice>
+						<xs:element name="normal" type="normal"/>
+						<xs:element name="float" type="float"/>
+						<xs:element name="string" type="string"/>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="size" type="reference_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

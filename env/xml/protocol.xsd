@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://www.comegg.com/protocol"
+	xmlns="http://www.comegg.com/protocol"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Goo Shoutrain</author>
+			<filename>protocol.xsd</filename>
+			<describe>
+				Used by binary protocols. Instance decuments follow this must be same with the protocol's
+				name.
+			</describe>
+		</xs:appinfo>
+	</xs:annotation>
+	<!--****************************************************************************************************-->
+	<xs:include schemaLocation="types.xsd"/>
+	<!--****************************************************************************************************-->
+	<xs:complexType name="head">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="normal" type="normal"/>
+					<xs:element name="float" type="float"/>
+					<xs:element name="string" type="string"/>
+					<xs:element name="group" type="group"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="pdu">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="normal" type="normal"/>
+					<xs:element name="float" type="float"/>
+					<xs:element name="string" type="string"/>
+					<xs:element name="group" type="group"/>
+				</xs:choice>
+				<xs:attribute name="name" type="unique_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="protocol">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element name="command_id_value" type="v_ub_4" maxOccurs="unbounded"/>
+						<xs:element name="head" type="head"/>
+						<xs:element name="pdu" type="pdu" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="name" type="normal_name" use="required"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
