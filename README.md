@@ -1,4 +1,4 @@
-Please wait... will be published at March 1st , 2014
+Please wait... I am refactoring old code and putting code online everyday. It will be published on March 1st , 2014
 
 ComEgg
 ======
