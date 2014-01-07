@@ -11,7 +11,7 @@ public:
     virtual ~CSem();
 
     bool_ lock(bool_ check = false_v);
-    void unlock();
+    none_ unlock();
 
     ub_4 getValue();
 

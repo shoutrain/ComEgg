@@ -24,6 +24,7 @@ const b_4 null_v = 0;
 
 typedef ub_4 size_;
 typedef b_4 ret_;
+typedef void none_;
 typedef void *obj_;
 typedef fb_8 max_v_;
 typedef b_4 type_;
@@ -45,7 +46,7 @@ b_4 __sleep(ub_4 sec, ub_4 ms);
 extern log4c_category_t *g_pCategory;
 
 bool_ __init_log();
-void __fini_log();
+none_ __fini_log();
 
 #define __debug(message, args...) \
     log4c_category_log(g_pCategory, LOG4C_PRIORITY_DEBUG, message, ##args)

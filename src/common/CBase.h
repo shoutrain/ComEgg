@@ -8,7 +8,7 @@ public:
 
 protected:
     CBase();
-    ~CBase();
+    virtual ~CBase();
 
 private:
 };

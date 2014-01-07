@@ -1446,7 +1446,7 @@ public:
         return _len;
     }
 
-    void empty() {
+    none_ empty() {
         switch (_type) {
         case B_1:
             _v.b1 = 0;
@@ -1531,7 +1531,7 @@ public:
         }
     }
 
-    void clear() {
+    none_ clear() {
         if (STR == _type) {
             __del(_v.str);
         } else {

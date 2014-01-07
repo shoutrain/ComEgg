@@ -17,7 +17,7 @@ CWorker::CWorker(ub_4 threadStackSize) :
 CWorker::~CWorker() {
 }
 
-void CWorker::work(IWorkable *pWorkable, bool_ informed, bool_ sync) {
+none_ CWorker::work(IWorkable *pWorkable, bool_ informed, bool_ sync) {
     if (_handle) {
         return;
     }
