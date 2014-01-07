@@ -6,7 +6,7 @@
 class CLock: public CBase {
 public:
 	virtual bool_ lock(bool_ check = false_v) = 0;
-	virtual void unlock() = 0;
+	virtual none_ unlock() = 0;
 
 protected:
 	CLock() {

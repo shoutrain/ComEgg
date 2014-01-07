@@ -13,7 +13,7 @@ public:
     virtual ~CCond();
 
     bool_ lock(bool_ check = false_v);
-    void unlock();
+    none_ unlock();
 
 private:
     pthread_cond_t _cond;

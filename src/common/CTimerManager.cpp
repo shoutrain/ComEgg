@@ -47,7 +47,7 @@ ub_8 CTimerManager::setTimer(ub_4 period, obj_ pParameter, ub_4 times) {
     return (ub_8) pTimer;
 }
 
-void CTimerManager::killTimer(ub_8 timerId) {
+none_ CTimerManager::killTimer(ub_8 timerId) {
     assert(timerId > 0);
     TTimer *pTimer = (TTimer *) timerId;
 
@@ -144,7 +144,7 @@ bool_ CTimerManager::working() {
     return true_v;
 }
 
-void CTimerManager::addTimer(TTimer *pTimer) {
+none_ CTimerManager::addTimer(TTimer *pTimer) {
     assert(null_v != pTimer);
 
     if (null_v == _pTimerList) {
@@ -159,7 +159,7 @@ void CTimerManager::addTimer(TTimer *pTimer) {
     pTimer->status |= ADDED;
 }
 
-void CTimerManager::delTimer(TTimer *pTimer) {
+none_ CTimerManager::delTimer(TTimer *pTimer) {
     assert(null_v != pTimer);
 
     if (null_v == pTimer->pPrevious) {

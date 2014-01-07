@@ -40,7 +40,7 @@ bool_ CMutex::lock(bool_ check) {
     return true_v;
 }
 
-void CMutex::unlock() {
+none_ CMutex::unlock() {
     if (0 != pthread_mutex_unlock(&_mutex)) {
         __fatal("CMutex::unlock: failed to call pthread_mutex_unlock");
     }

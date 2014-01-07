@@ -13,10 +13,10 @@ public:
     virtual ~CWorker();
 
     // sync is invalid unless informed = true
-    void work(IWorkable *pWorkable, bool_ informed = false_v, bool_ sync =
+    none_ work(IWorkable *pWorkable, bool_ informed = false_v, bool_ sync =
             false_v);
 
-    static void stop() {
+    static none_ stop() {
         _workingCondition = false_v;
     }
 

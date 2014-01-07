@@ -20,7 +20,7 @@ public:
     // Return true if success, otherwise false
     bool_ read(b_1 *pBuffer, ub_4 &size);
 
-    void reset();
+    none_ reset();
 
     ub_4 getTotalSize() const {
         return _totalSize;

@@ -14,7 +14,7 @@ public:
 
 private:
     // Cannot new this class
-    void *operator new(size_t size);
+    obj_ operator new(size_t size);
     CLock *_pLock;
 };
 

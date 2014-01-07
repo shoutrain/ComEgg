@@ -11,7 +11,7 @@ public:
     virtual ~CMutex();
 
     bool_ lock(bool_ check = false_v);
-    void unlock();
+    none_ unlock();
 
     pthread_mutex_t *get() {
         return &_mutex;

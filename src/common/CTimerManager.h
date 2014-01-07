@@ -44,7 +44,7 @@ public:
     // timers == 0: infinite
     // return timer id or 0: failed
     ub_8 setTimer(ub_4 period, obj_ pParameter, ub_4 times = 1);
-    void killTimer(ub_8 timerId);
+    none_ killTimer(ub_8 timerId);
 
     virtual bool_ working();
 
@@ -52,8 +52,8 @@ protected:
     virtual bool_ onTimer(ub_8 timerId, obj_ pParameter) = 0;
 
 private:
-    void addTimer(TTimer *pTimer);
-    void delTimer(TTimer *pTimer);
+    none_ addTimer(TTimer *pTimer);
+    none_ delTimer(TTimer *pTimer);
 
     CWorker _worker;
     CMutex _mutex;

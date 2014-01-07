@@ -38,7 +38,7 @@ bool_ CSem::lock(bool_ check) {
     return true_v;
 }
 
-void CSem::unlock() {
+none_ CSem::unlock() {
     if (-1 == sem_post(&_sem)) {
         __fatal("CSem::unlock: failed to call sem_post");
     }

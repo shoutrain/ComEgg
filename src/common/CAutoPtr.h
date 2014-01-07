@@ -31,7 +31,7 @@ public:
         return _p;
     }
 
-    void reset(const T *p = null) {
+    none_ reset(const T *p = null) {
         if (p != _p) {
             delete _p;
             _p = p;
@@ -56,7 +56,7 @@ public:
 
 private:
     // Cannot new this class
-    void *operator new(size_t size);
+    obj_ operator new(size_t size);
     T *_p;
 };
 

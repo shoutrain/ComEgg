@@ -31,6 +31,6 @@ bool_ __init_log() {
     return true_v;
 }
 
-void __fini_log() {
+none_ __fini_log() {
     log4c_fini();
 }
