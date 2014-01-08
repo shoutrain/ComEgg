@@ -42,6 +42,8 @@ typedef b_4 type_;
 b_4 __sleep(ub_4 sec, ub_4 ms);
 
 #include <log4c.h>
+#include <inttypes.h>
+#include <stdint.h>
 
 extern log4c_category_t *g_pCategory;
 

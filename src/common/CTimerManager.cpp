@@ -41,7 +41,7 @@ ub_8 CTimerManager::setTimer(ub_4 period, obj_ pParameter, ub_4 times) {
     _mutex.unlock();
 
     __debug(
-            "CTimerManager::setTimer: from-%016p, time id-%016p, period-%uSec, times-%u",
+            "CTimerManager::setTimer: from-%p, time id-%p, period-%uSec, times-%u",
             pParameter, pTimer, period, times);
 
     return (ub_8) pTimer;
@@ -62,7 +62,7 @@ none_ CTimerManager::killTimer(ub_8 timerId) {
     _queueForDel.push(pTimer);
     _mutex.unlock();
 
-    __debug("CTimerManager::killTimer: time id-%016p.", pTimer);
+    __debug("CTimerManager::killTimer: time id-%p.", pTimer);
 }
 
 bool_ CTimerManager::working() {
