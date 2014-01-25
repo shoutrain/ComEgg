@@ -8,12 +8,9 @@
 #include "CListener.h"
 
 CListener::CListener() {
-    // TODO Auto-generated constructor stub
-
 }
 
 CListener::~CListener() {
-    // TODO Auto-generated destructor stub
 }
 
 bool_ CListener::start(const CReactor *pReactor) {

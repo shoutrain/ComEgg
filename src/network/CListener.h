@@ -8,10 +8,9 @@
 #ifndef CLISTENER_H_
 #define CLISTENER_H_
 
-#include "INetNode.h"
-#include "../common/CBase.h"
+#include "CNetNode.h"
 
-class CListener: public INetNode, public CBase {
+class CListener: public CNetNode{
 public:
     CListener();
     virtual ~CListener();

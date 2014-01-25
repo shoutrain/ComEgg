@@ -16,7 +16,7 @@ public:
     CConnector();
     virtual ~CConnector();
 
-    virtual bool_ start(const CReactor *pReactor);
+    virtual bool_ start(const CReactor *pReactor, ch_1 *pszIP, ub_2 port);
     virtual bool_ stop();
 
     virtual ret_ onSignal(const type_ signalType);

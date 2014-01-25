@@ -16,7 +16,7 @@ CConnector::~CConnector() {
     // TODO Auto-generated destructor stub
 }
 
-bool_ CConnector::start(const CReactor *pReactor) {
+bool_ CConnector::start(const CReactor *pReactor, ch_1 *pszIP, ub_2 port) {
     return true_v;
 }
 
