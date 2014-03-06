@@ -8,7 +8,7 @@
 #include "CNetNode.h"
 
 CNetNode::CNetNode() :
-        _port(0) {
+        _port(0), pReactor(null_v) {
     memset(_szIp, 0, 16);
 }
 

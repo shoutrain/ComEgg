@@ -14,6 +14,12 @@ CListener::~CListener() {
 }
 
 bool_ CListener::start(const CReactor *pReactor) {
+    if (0 == getPort()) {
+        return false_v;
+    }
+
+
+
     return true_v;
 }
 

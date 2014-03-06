@@ -34,6 +34,8 @@ public:
 private:
     ch_1 _szIp[16];
     ub_2 _port;
+
+    CReactor *_pReator;
 };
 
 #endif /* INETNODE_H_ */
