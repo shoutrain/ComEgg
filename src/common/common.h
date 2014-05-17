@@ -16,11 +16,10 @@ typedef double fb_8;
 typedef char ch_1;
 
 typedef enum {
-    false_v,
-    true_v
+	false_v, true_v
 } bool_;
 
-const b_4 null_v = 0;
+#define null_v 0
 
 typedef ub_4 size_;
 typedef b_4 ret_;

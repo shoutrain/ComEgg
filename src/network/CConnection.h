@@ -11,7 +11,7 @@
 #include "INetNode.h"
 #include "../common/CBase.h"
 
-class CConnection: public INetNode, public CBase {
+class CConnection: public CNetNode, public CBase {
 public:
     CConnection();
     virtual ~CConnection();
