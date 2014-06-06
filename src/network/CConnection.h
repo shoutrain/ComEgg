@@ -8,7 +8,7 @@
 #ifndef CCONNECTION_H_
 #define CCONNECTION_H_
 
-#include "INetNode.h"
+#include "CNetNode.h"
 #include "../common/CBase.h"
 
 class CConnection: public CNetNode, public CBase {

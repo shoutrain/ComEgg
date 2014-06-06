@@ -8,10 +8,10 @@
 #ifndef CCONNECTOR_H_
 #define CCONNECTOR_H_
 
-#include "INetNode.h"
+#include "CNetNode.h"
 #include "../common/CBase.h"
 
-class CConnector: public INetNode, public CBase {
+class CConnector: public CNetNode, public CBase {
 public:
     CConnector();
     virtual ~CConnector();
