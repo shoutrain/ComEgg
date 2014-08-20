@@ -26,7 +26,7 @@ History
 3. Sep ~ Oct, 2005, completed the second version, 0.1.1, which can work like JRE, some demo established based on ComEgg, and size-variable PDU was supported.
 4. Jun ~ Aug, 2009, completed the third version, 0.2, ported from Windows to Linux, supports so plug-in, and made some demos, like an Blog demo.  This phase the XML script was called RDS(Role Define Script), and a new part which is named MagicEgg rised.  So RDS+ComEgg<-->MagicEgg on TCP/UDP works the way of Java+JVM+Tomcat+Servlet<-->IE/Firefox/Chrome on HTTP.
 
-More information about the History you can refer a document <SCS Introduction>.
+More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
 
 If you have any question and advice, please send me emails: shoutrain.goo@gmail.com
 
