@@ -984,7 +984,7 @@ public:
             return (b_1) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1032,7 +1032,7 @@ public:
             return (ub_1) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1080,7 +1080,7 @@ public:
             return (b_2) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1128,7 +1128,7 @@ public:
             return (ub_2) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1176,7 +1176,7 @@ public:
             return (b_4) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1224,7 +1224,7 @@ public:
             return (ub_4) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1272,7 +1272,7 @@ public:
             return (b_8) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1320,7 +1320,7 @@ public:
             return (ub_8) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1368,7 +1368,7 @@ public:
             return (fb_4) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1416,7 +1416,7 @@ public:
             return (fb_8) (*_v.pfb8);
         default:
             assert(false_v);
-            break;
+            return 0;
         }
     }
 
@@ -1428,7 +1428,7 @@ public:
             return _v.pstr;
         default:
             assert(false_v);
-            break;
+            return null_v;
         }
     }
 
@@ -1438,7 +1438,7 @@ public:
             return _v.obj;
         default:
             assert(false_v);
-            break;
+            return null_v;
         }
     }
 

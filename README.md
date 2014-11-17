@@ -1,11 +1,13 @@
-Recent weeks I am not busy, so I can take time on new ComEgg.  Hope I can complete the first workable version of new ComEgg in 2014.
+The project has been suspended a long time since 2005 and 2009, due to goal missing and life maintaining.  Recently I found the goal again, Mobile App, which SCS(ComEgg, MagicEgg and SCS) will serve for.  So the project will soon be launched again.
 
 What's the new ComEgg
 ==================
-1. You can see new ComEgg as a C/C++ version of Java+JVM+Tomcat, you can provide so/dll as servlets.
+1. You can see new ComEgg as a C/C++ version of Java + JVM + Tomcat, you can provide so/dll as servlets.
 2. ComEgg works with TCP/UDP instead of HTTP, the protocol data is presented by binary format instead of string format.
 3. You can define your own private PDU(Protocol Define Unit, binary) by XML/XSD, size-variable PUD is supported.
-4. If you use ComEgg as your backend service provider, you just need to provide so/dll, in which only your service code is involved, you do not pay attention on socket\thread\os\PDU parser.
+4. If you use ComEgg as your backend service provider, you just need to provide so/dll, in which only your service code is involved, you do not pay attention on socket\thread\OS\PDU parser\etc.
+5. There are some features like Protocol Buffer.
+6. ComEgg will be te backend server for Mobile App, and developer will not think more about distributed system.
 
 Current Status
 ==================
@@ -28,5 +30,5 @@ History
 
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
 
-If you have any question and advice, please send me emails: shoutrain.goo@gmail.com
+If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
 

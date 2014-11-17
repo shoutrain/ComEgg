@@ -16,7 +16,7 @@ CNetNode::~CNetNode() {
 }
 
 bool_ CNetNode::bind(ch_1 *pszIp, ub_2 port) {
-    if ((null != pszIp && 0 == pszIp[0])
+    if ((null_v != pszIp && 0 == pszIp[0])
             || 15 < strlen(pszIp) /* TODO checking if it's a legal IP */) {
         return false_v;
     }
@@ -25,7 +25,7 @@ bool_ CNetNode::bind(ch_1 *pszIp, ub_2 port) {
         return false_v;
     }
 
-    if (null != pszIp) { // for connection and connector
+    if (null_v != pszIp) { // for connection and connector
         strncpy(_ip, ip, 15);
     } else { // only for listener
         memset(_szIp, 0, 16);
