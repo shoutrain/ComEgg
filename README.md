@@ -20,4 +20,5 @@ Old ComEgg is ACE 5.7.2 and Xerces C++ 3.0.1 based
 Log
 ==================
 2014/11/18
-	1. reverted back to old ComEgg
+1. reverted back to old ComEgg
+2. unified code style by refactor PluginExample

@@ -2,41 +2,35 @@
 #define CCONFIG_H
 
 const unsigned int PARAMETER_MAX_LENGTH = 32;
-
 const char CONFIGURE_FILE_NAME[] = "config.ini";
 
-class CConfig
-{
+class CConfig {
 public:
 	CConfig();
 
-	bool Initialize();
+	bool init();
 
-	const char *GetServer() const
-	{
-		return m_szServer;
+	const char *getServer() const {
+		return _server;
 	}
 
-	const char *GetUser() const
-	{
-		return m_szUser;
+	const char *getUser() const {
+		return _user;
 	}
 
-	const char *GetPassword() const
-	{
-		return m_szPassword;
+	const char *getPassword() const {
+		return _password;
 	}
 
-	const char *GetDatabase() const
-	{
-		return m_szDatabase;
+	const char *getDatabase() const {
+		return _database;
 	}
 
 private:
-	char m_szServer[PARAMETER_MAX_LENGTH];
-	char m_szUser[PARAMETER_MAX_LENGTH];
-	char m_szPassword[PARAMETER_MAX_LENGTH];
-	char m_szDatabase[PARAMETER_MAX_LENGTH];
+	char _server[PARAMETER_MAX_LENGTH];
+	char _user[PARAMETER_MAX_LENGTH];
+	char _password[PARAMETER_MAX_LENGTH];
+	char _database[PARAMETER_MAX_LENGTH];
 };
 
 #endif // CCONFIG_H
