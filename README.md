@@ -1,3 +1,7 @@
+More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
+
+If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
+
 New Beginning - What's the new ComEgg
 ==================
 Although I had a lot of ideas about ComEgg, I don't know what's the new ComEgg.  My current idea is to refactor ComEgg module by module and make every moudle useful.  Sooner or later the ComEgg composed by these useful modules will be useful.
@@ -12,10 +16,6 @@ History - What's the old ComEgg
 4. Jun ~ Aug, 2009, completed the third version, 0.2, ported from Windows to Linux, supports so plug-in, and made some demos, like an Blog demo.  This phase the XML script was called RDS(Role Define Script), and a new part which is named MagicEgg rised.  So RDS+ComEgg<-->MagicEgg on TCP/UDP works the way of Java+JVM+Tomcat+Servlet<-->IE/Firefox/Chrome on HTTP.
 
 Old ComEgg is ACE 5.7.2 and Xerces C++ 3.0.1 based
-
-More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
-
-If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
 
 Log
 ==================
