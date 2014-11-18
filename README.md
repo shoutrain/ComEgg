@@ -17,3 +17,7 @@ More information about the History you can refer the document-SCS Introduction(p
 
 If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
 
+Log
+==================
+2014/11/18
+	1. reverted back to old ComEgg
