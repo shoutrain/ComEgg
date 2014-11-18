@@ -22,3 +22,6 @@ Log
 2014/11/18
 1. reverted back to old ComEgg
 2. unified code style by refactor PluginExample
+3. port Xerces C++ 3.0.1 to 3.1.1
+4. decided to replace ACE with native epoll socket
+ 

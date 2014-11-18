@@ -1,5 +1,6 @@
+XERCESC_PATH = /home/rafael/reference/xerces-c/src/
 CPP = g++
-CPPFLAGS = -Wall -g -I/home/rafael/reference/ACE_wrappers/ -I/home/rafael/reference/xerces-c/src/
+CPPFLAGS = -Wall -g -I$(XERCESC_PATH)
 LDFLAGS = 
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)

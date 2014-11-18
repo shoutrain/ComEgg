@@ -1,6 +1,7 @@
+XERCESC_PATH = /home/rafael/reference/xerces-c/src/
 CPP = g++
-CPPFLAGS = -Wall -g -I/home/rafael/reference/ACE_wrappers/ -I/home/rafael/reference/xerces-c/src/
-LDFLAGS = -L/home/rafael/reference/ACE_wrappers/lib -lACE -L/home/rafael/reference/xerces-c/src/.libs -lxerces-c
+CPPFLAGS = -Wall -g -I$(XERCESC_PATH)
+LDFLAGS = -L$(XERCESC_PATH).libs -lxerces-c
 MAKE = make
 
 COMMON_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Common/*.cpp))
