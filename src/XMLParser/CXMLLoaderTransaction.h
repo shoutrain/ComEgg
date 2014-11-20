@@ -103,17 +103,17 @@ private:
 	ret_ LoadVariable(const CPDUInfo *pPDU,
 					  const CData &Data,
 					  const DOMElement *pElement,
-					  CVariable *&pOV);
+					  CAutoVar *&pOV);
 	ret_ LoadSolidVariable(const CData &Data,
 						   const DOMElement *pElement,
-						   CVariable *&pOV);
+						   CAutoVar *&pOV);
 	ret_ LoadGroupVariable(const CData &Data,
 						   const DOMElement *pElement,
-						   CVariable *&pOV);
+						   CAutoVar *&pOV);
 	ret_ LoadNetworkVarialbe(const CPDUInfo *pPDU,
 							 const CData &Data,
 							 const DOMElement *pElement,
-							 CVariable *&pOV);
+							 CAutoVar *&pOV);
 
 	ret_ LoadExpression(const CData &Data,
 						const DOMElement *pElement,

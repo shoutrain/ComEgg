@@ -33,7 +33,7 @@ public:
 		m_pData = pUnit->pData;
 	}
 
-	virtual void Work(const TMU *pTMU) = 0;
+	virtual void Work(const TMessageUnit *pTMU) = 0;
 
 protected:
 	COperator(const EOperatorType Type)

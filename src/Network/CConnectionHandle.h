@@ -27,12 +27,12 @@ public:
 		if (peer_.get_remote_addr(RemoteAddr))
 			return -1;
 
-		strncpy(m_MsgInfo.sLocalIP, LocalAddr.get_host_addr(),
+		strncpy(m_MsgInfo.localIP, LocalAddr.get_host_addr(),
 				IP_MAX_LENGTH_SIGN);
-		m_MsgInfo.nLocalPort	= LocalAddr.get_port_number();
-		strncpy(m_MsgInfo.sRemoteIP, RemoteAddr.get_host_addr(),
+		m_MsgInfo.localPort	= LocalAddr.get_port_number();
+		strncpy(m_MsgInfo.remoteIP, RemoteAddr.get_host_addr(),
 				IP_MAX_LENGTH_SIGN);
-		m_MsgInfo.nRemotePort	= RemoteAddr.get_port_number();
+		m_MsgInfo.remotePort	= RemoteAddr.get_port_number();
 
 		if (SUCCESS != _ERR(CNetworkHandle::Open()))
 			return -1;

@@ -1,6 +1,6 @@
 #include "CProgramWhile.h"
 
-void CProgramWhile::Work(const TMU *pTMU)
+void CProgramWhile::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

@@ -6,8 +6,8 @@
 class COptNetworkWakeUp: public COperator
 {
 public:
-	COptNetworkWakeUp(const CVariable *pNetworkName,
-					  const CVariable *pResult)
+	COptNetworkWakeUp(const CAutoVar *pNetworkName,
+					  const CAutoVar *pResult)
 		: COperator(OT_NETWORK_WAKE_UP)
 	{
 		m_pNetworkName	= pNetworkName->Clone();
@@ -54,11 +54,11 @@ public:
 		m_pResult->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pNetworkName;
-	CVariable *m_pResult;
+	CAutoVar *m_pNetworkName;
+	CAutoVar *m_pResult;
 };
 
 #endif // COPT_NETWORK_WAKE_UP_H

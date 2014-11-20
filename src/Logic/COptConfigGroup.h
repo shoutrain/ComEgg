@@ -6,7 +6,7 @@
 class COptConfigGroup: public COperator
 {
 public:
-	COptConfigGroup(const CVariable *pGroup, const CVariable *pSize)
+	COptConfigGroup(const CAutoVar *pGroup, const CAutoVar *pSize)
 		: COperator(OT_CONFIG_GROUP)
 	{
 		m_pGroup = pGroup->Clone();
@@ -53,11 +53,11 @@ public:
 		m_pSize->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pGroup;
-	CVariable *m_pSize;
+	CAutoVar *m_pGroup;
+	CAutoVar *m_pSize;
 };
 
 #endif // COPT_CONFIG_GROUP_H

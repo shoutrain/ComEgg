@@ -1,6 +1,6 @@
 #include "COptGetAddress.h"
 
-void COptGetAddress::Work(const TMU *pTMU)
+void COptGetAddress::Work(const TMessageUnit *pTMU)
 {
 	if (!pTMU)
 		throw OPERATOR_OPERAITON_ERROR;
@@ -9,13 +9,13 @@ void COptGetAddress::Work(const TMU *pTMU)
 	{
 		if (m_bRemote)
 		{
-			*m_pIP->Value(pTMU)	= v_((ch_1 *)(pTMU->pMsgInfo->sRemoteIP));
-			*m_pPort->Value(pTMU)	= v_((ub_2)(pTMU->pMsgInfo->nRemotePort));
+			*m_pIP->Value(pTMU)	= v_((ch_1 *)(pTMU->msgInfo->remoteIP));
+			*m_pPort->Value(pTMU)	= v_((ub_2)(pTMU->msgInfo->remotePort));
 		}
 		else
 		{
-			*m_pIP->Value(pTMU)	= v_((ch_1 *)(pTMU->pMsgInfo->sLocalIP));
-			*m_pPort->Value(pTMU)	= v_((ub_2)(pTMU->pMsgInfo->nLocalPort));
+			*m_pIP->Value(pTMU)	= v_((ch_1 *)(pTMU->msgInfo->localIP));
+			*m_pPort->Value(pTMU)	= v_((ub_2)(pTMU->msgInfo->localPort));
 		}
 	}
 	catch (...)

@@ -1,8 +1,8 @@
 #include "CVarGroupDefined.h"
 
-CVariable *CVarGroupDefined::Clone() const
+CAutoVar *CVarGroupDefined::Clone() const
 {
-	return (CVariable *)new CVarGroupDefined(m_szGroupName,
+	return (CAutoVar *)new CVarGroupDefined(m_szGroupName,
 										     m_szSubName,
 										     m_szIndexName);
 }
@@ -23,7 +23,7 @@ void CVarGroupDefined::Initialize(const CData *pData)
 		m_pSize = pData->Value(m_pField->GetSizeName());
 }
 
-v_ *CVarGroupDefined::Value(const TMU *pTMU)
+v_ *CVarGroupDefined::Value(const TMessageUnit *pTMU)
 {
 	m_Value.clear();
 	

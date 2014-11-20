@@ -3,7 +3,7 @@
 
 #define _DEBUG_
 
-#include "variable.h"
+#include "CAutoVar.h"
 	
 // Parser returned value
 #define _MOD(RET) \

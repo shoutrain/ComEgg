@@ -2,11 +2,11 @@
 
 #include "../Network/NetworkCommon.h"
 
-void COptForward::Work(const TMU *pTMU)
+void COptForward::Work(const TMessageUnit *pTMU)
 {
 	try
 	{
-		TMsgInfo *pMsgInfo = ((TMU *)pTMU)->pMsgInfo;
+		TMsgInfo *pMsgInfo = ((TMessageUnit *)pTMU)->msgInfo;
 		TMsgInfo MsgInfo;
 		const CProcessor *pProcessor = GetContainer();
 
@@ -25,18 +25,18 @@ void COptForward::Work(const TMU *pTMU)
 			v_ *pPort	= m_pPort->Value(pTMU);
 
 			memset(&MsgInfo, 0, sizeof(TMsgInfo));
-			strncpy(MsgInfo.sLocalIP, pMsgInfo->sLocalIP, IP_MAX_LENGTH);
-			MsgInfo.nLocalPort	= pMsgInfo->nLocalPort;
-			strncpy(MsgInfo.sRemoteIP, (const ch_1 *)*pIP, IP_MAX_LENGTH);
-			MsgInfo.nRemotePort = (ub_2)*pPort;
+			strncpy(MsgInfo.localIP, pMsgInfo->localIP, IP_MAX_LENGTH);
+			MsgInfo.localPort	= pMsgInfo->localPort;
+			strncpy(MsgInfo.remoteIP, (const ch_1 *)*pIP, IP_MAX_LENGTH);
+			MsgInfo.remotePort = (ub_2)*pPort;
 
 			pMsgInfo = &MsgInfo;
 		}
 
 		if (SUCCESS != _ERR(((CProcessor *)pProcessor)->Send(
-								(const CPDUInfo *)((TMU *)pTMU)->pPDUInfo,
-								((TMU *)pTMU)->pMessage,
-								((TMU *)pTMU)->nSize,
+								(const CPDUInfo *)((TMessageUnit *)pTMU)->pduInfo,
+								((TMessageUnit *)pTMU)->message,
+								((TMessageUnit *)pTMU)->size,
 								pMsgInfo)))
 		{
 			throw OPERATOR_OPERAITON_ERROR;

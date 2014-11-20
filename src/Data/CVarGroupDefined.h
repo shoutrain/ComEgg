@@ -5,7 +5,7 @@
 
 #include "../Protocols/ProtocolCommon.h"
 
-class CVarGroupDefined: public CVariable
+class CVarGroupDefined: public CAutoVar
 {
 public:
 	CVarGroupDefined(const ch_1 *pszGroupName, 
@@ -30,9 +30,9 @@ public:
 		m_pGroupData = null_v;
 	}
 
-	virtual CVariable *Clone() const;
+	virtual CAutoVar *Clone() const;
 	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMU *pTMU);
+	virtual v_ *Value(const TMessageUnit *pTMU);
 	virtual v_ *Value(obj_ &);
 
 private:

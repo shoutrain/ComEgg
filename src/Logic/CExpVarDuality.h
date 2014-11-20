@@ -6,9 +6,9 @@
 class CExpVarDuality: public CExpression
 {
 public:
-	CExpVarDuality(const CVariable *pLeftVar,
+	CExpVarDuality(const CAutoVar *pLeftVar,
 				   const ECompareCalculate ECC,
-				   const CVariable *pRightVar)
+				   const CAutoVar *pRightVar)
 	{
 		m_pLeftVar	= pLeftVar->Clone();
 		m_ECC		= ECC;
@@ -53,7 +53,7 @@ public:
 		m_pRightVar->Initialize(pUnit->pData);
 	}
 
-	virtual bool_ Evaluate(const TMU *pTMU) const
+	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
 	{
 		bool_ bResult = false_v;
 
@@ -95,9 +95,9 @@ public:
 private:
 	CExpVarDuality();
 
-	CVariable			*m_pLeftVar;
+	CAutoVar			*m_pLeftVar;
 	ECompareCalculate	m_ECC;
-	CVariable			*m_pRightVar;
+	CAutoVar			*m_pRightVar;
 };
 
 #endif // CEXP_VAR_DUALITY_H

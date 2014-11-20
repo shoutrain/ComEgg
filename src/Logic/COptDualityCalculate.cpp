@@ -1,6 +1,6 @@
 #include "COptDualityCalculate.h"
 
-void COptDualityCalculate::Work(const TMU *pTMU)
+void COptDualityCalculate::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

@@ -5,7 +5,7 @@
 
 #include "../Protocols/ProtocolCommon.h"
 
-class CVarSolidDefined: public CVariable
+class CVarSolidDefined: public CAutoVar
 {
 public:
 	CVarSolidDefined(const ch_1 *pszName)
@@ -15,9 +15,9 @@ public:
 		m_pValue = null_v;
 	}
 
-	virtual CVariable *Clone() const;
+	virtual CAutoVar *Clone() const;
 	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMU *pTMU);
+	virtual v_ *Value(const TMessageUnit *pTMU);
 
 private:
 	CVarSolidDefined();

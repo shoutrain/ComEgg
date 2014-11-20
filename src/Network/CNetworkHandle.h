@@ -27,22 +27,22 @@ public:
 
 	const ch_1 *GetLocalIP() const
 	{
-		return (const ch_1 *)m_MsgInfo.sLocalIP;
+		return (const ch_1 *)m_MsgInfo.localIP;
 	}
 
 	ub_2 GetLocalPort() const
 	{
-		return m_MsgInfo.nLocalPort;
+		return m_MsgInfo.localPort;
 	}
 
 	const ch_1 *GetRemoteIP() const
 	{
-		return (const ch_1 *)m_MsgInfo.sRemoteIP;
+		return (const ch_1 *)m_MsgInfo.remoteIP;
 	}
 
 	ub_2 GetRemotePort() const
 	{
-		return m_MsgInfo.nRemotePort;
+		return m_MsgInfo.remotePort;
 	}
 
 protected:

@@ -1,6 +1,6 @@
 #include "COptRegister.h"
 
-void COptRegister::Work(const TMU *pTMU)
+void COptRegister::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

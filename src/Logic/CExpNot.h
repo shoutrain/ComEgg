@@ -43,7 +43,7 @@ public:
 		m_pExp->Initialize(pUnit);
 	}
 
-	virtual bool_ Evaluate(const TMU *pTMU) const
+	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
 	{
 		try
 		{

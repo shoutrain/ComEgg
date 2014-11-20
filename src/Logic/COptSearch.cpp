@@ -1,6 +1,6 @@
 #include "COptSearch.h"
 
-void COptSearch::Work(const TMU *pTMU)
+void COptSearch::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

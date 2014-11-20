@@ -7,8 +7,8 @@ class COptUnitaryCalculate: public COperator
 {
 public:
 	COptUnitaryCalculate(const EUnitaryCalculate Opt,
-						 const CVariable *pResultVariable,
-						 const CVariable *pRightVariable)
+						 const CAutoVar *pResultVariable,
+						 const CAutoVar *pRightVariable)
 		: COperator(OT_UNITARY_CALCULATE)
 	{
 		m_Opt				= Opt;
@@ -58,12 +58,12 @@ public:
 		m_pRightVariable->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	EUnitaryCalculate	m_Opt;
-	CVariable			*m_pResultVariable;
-	CVariable			*m_pRightVariable;
+	CAutoVar			*m_pResultVariable;
+	CAutoVar			*m_pRightVariable;
 };
 
 #endif // COPT_UNITARY_CALCULATE_H

@@ -27,7 +27,7 @@ public:
 		return (COperator *)new COptBreak(*this);
 	}
 
-	virtual void Work(const TMU *pTMU)
+	virtual void Work(const TMessageUnit *pTMU)
 	{
 		call_break Break;
 

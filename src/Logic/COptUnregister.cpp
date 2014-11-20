@@ -1,6 +1,6 @@
 #include "COptUnregister.h"
 
-void COptUnregister::Work(const TMU *pTMU)
+void COptUnregister::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

@@ -6,7 +6,7 @@
 #include "CField.h"
 #include "../Protocols/CPDUInfo.h"
 
-class CVarNetwork: public CVariable
+class CVarNetwork: public CAutoVar
 {
 public:
 	CVarNetwork(const CField *pField, const ch_1 *pszIndexName = null_v)
@@ -20,9 +20,9 @@ public:
 		m_pIndex = null_v;
 	}
 
-	virtual CVariable *Clone() const;
+	virtual CAutoVar *Clone() const;
 	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMU *pTMU);
+	virtual v_ *Value(const TMessageUnit *pTMU);
 
 private:
 	CVarNetwork();

@@ -191,7 +191,7 @@ void COptUseModule::Initialize(const opt_unit *pUnit)
     }
 }
 
-bool_ COptUseModule::AddInParameter(CVariable *pValue)
+bool_ COptUseModule::AddInParameter(CAutoVar *pValue)
 {
 #ifdef _DEBUG_
 	if (!m_pInterfaceInfo)
@@ -208,7 +208,7 @@ bool_ COptUseModule::AddInParameter(CVariable *pValue)
 	{
 		if (!(*pos)->pField || !(*pos)->pValue)
 		{
-			(*pos)->pField = (CVariable *)new CVarModule((*pos)->pFieldInfo);
+			(*pos)->pField = (CAutoVar *)new CVarModule((*pos)->pFieldInfo);
 			(*pos)->pValue = pValue->Clone();
 
 			break;
@@ -222,7 +222,7 @@ bool_ COptUseModule::AddInParameter(CVariable *pValue)
 }
 
 bool_ COptUseModule::AddOutParameter(const ch_1 *pszFieldName, 
-									  CVariable *pValue)
+									  CAutoVar *pValue)
 {
 #ifdef _DEBUG_
 	if (!m_pInterfaceInfo)
@@ -257,13 +257,13 @@ bool_ COptUseModule::AddOutParameter(const ch_1 *pszFieldName,
 	if (m_OutEvaluateVector.end() == pos)
 		return false_v;
 
-	(*pos)->pField = (CVariable *)new CVarModule(pFieldInfo);
+	(*pos)->pField = (CAutoVar *)new CVarModule(pFieldInfo);
 	(*pos)->pValue = pValue->Clone();
 
 	return true_v;
 }
 
-void COptUseModule::Work(const TMU *pTMU)
+void COptUseModule::Work(const TMessageUnit *pTMU)
 {
 	size_ nSize = 0;
 
@@ -282,7 +282,7 @@ void COptUseModule::Work(const TMU *pTMU)
 				if ((*pos)->pValue->Value(Temp))
 					bIsCountSize = true_v;
 				// If ture, Network Group
-				else if ((*pos)->pFieldInfo->Size(pTMU->pMessage, pTMU->nSize))
+				else if ((*pos)->pFieldInfo->Size(pTMU->message, pTMU->size))
 					bIsCountSize = true_v;
 
 				if (bIsCountSize)
@@ -304,20 +304,20 @@ void COptUseModule::Work(const TMU *pTMU)
 		}
 	}	
 
-	TMU InMU;
+	TMessageUnit InMU;
 
-	memset(&InMU, 0, sizeof(TMU));
-	InMU.nSize = nSize;
+	memset(&InMU, 0, sizeof(TMessageUnit));
+	InMU.size = nSize;
 
-	if (InMU.nSize)
+	if (InMU.size)
 	{
-		InMU.pMessage = new ub_1[InMU.nSize];
-		memset(InMU.pMessage, 0, InMU.nSize);		
+		InMU.message = new ub_1[InMU.size];
+		memset(InMU.message, 0, InMU.size);		
 	}
 
-	TMU OutMU;
+	TMessageUnit OutMU;
 
-	memset(&OutMU, 0, sizeof(TMU));
+	memset(&OutMU, 0, sizeof(TMessageUnit));
 
 	try
 	{
@@ -336,10 +336,10 @@ void COptUseModule::Work(const TMU *pTMU)
 					 m_pInterfaceInfo->GetModuleInfo()->GetName(),
 					 m_pInterfaceInfo->GetModuleInfo()->GetExt(),
 					 m_pInterfaceInfo->Name(),
-					 InMU.pMessage,
-					 InMU.nSize,
-					 OutMU.pMessage,
-					 OutMU.nSize))
+					 InMU.message,
+					 InMU.size,
+					 OutMU.message,
+					 OutMU.size))
 		{
 			throw OPERATOR_OPERAITON_ERROR;
 		}
@@ -352,7 +352,7 @@ void COptUseModule::Work(const TMU *pTMU)
 			{
 				if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type() &&
 					// It must be CFieldGroup(Module), check if it's available.
-					(*pos)->pFieldInfo->Size(OutMU.pMessage, OutMU.nSize))
+					(*pos)->pFieldInfo->Size(OutMU.message, OutMU.size))
 				{
 					try
 					{
@@ -414,12 +414,12 @@ void COptUseModule::Work(const TMU *pTMU)
 	}
 	catch (...)
 	{
-		_DEL_ARR(InMU.pMessage);
-		_DEL_ARR(OutMU.pMessage);
+		_DEL_ARR(InMU.message);
+		_DEL_ARR(OutMU.message);
 		
 		throw;
 	}
 
-	_DEL_ARR(InMU.pMessage);
-	_DEL_ARR(OutMU.pMessage);
+	_DEL_ARR(InMU.message);
+	_DEL_ARR(OutMU.message);
 }

@@ -26,9 +26,9 @@ public:
 			return -1;
 
 		m_bIsInited = true_v;
-		strncpy(m_MsgInfo.sLocalIP, LocalAddr.get_host_addr(),
+		strncpy(m_MsgInfo.localIP, LocalAddr.get_host_addr(),
 				IP_MAX_LENGTH_SIGN);
-		m_MsgInfo.nLocalPort = LocalAddr.get_port_number();
+		m_MsgInfo.localPort = LocalAddr.get_port_number();
 
 		if (SUCCESS != _ERR(CNetworkHandle::Open()))
 			return -1;
@@ -53,9 +53,9 @@ public:
 
 		if (0 < m_nRecvSize)
 		{
-			strncpy(m_MsgInfo.sRemoteIP, RemoteAddr.get_host_addr(),
+			strncpy(m_MsgInfo.remoteIP, RemoteAddr.get_host_addr(),
 					IP_MAX_LENGTH_SIGN);
-			m_MsgInfo.nRemotePort = RemoteAddr.get_port_number();
+			m_MsgInfo.remotePort = RemoteAddr.get_port_number();
 
 			if (FROBID_USE == _ERR(Check(&m_MsgInfo)))
 				return 0;
@@ -70,8 +70,8 @@ public:
 
 			putq(pMsg);
 			memset(m_Buf, 0, m_nRecvSize);
-			memset(m_MsgInfo.sRemoteIP, 0, IP_MAX_LENGTH);
-			m_MsgInfo.nRemotePort = 0;
+			memset(m_MsgInfo.remoteIP, 0, IP_MAX_LENGTH);
+			m_MsgInfo.remotePort = 0;
 
 			return 0;
 		}

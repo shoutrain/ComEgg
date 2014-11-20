@@ -6,7 +6,7 @@
 class CExpVarUnitary: public CExpression
 {
 public:
-	CExpVarUnitary(const CVariable *pVariable)
+	CExpVarUnitary(const CAutoVar *pVariable)
 	{
 		m_pVariable = pVariable->Clone();
 	}
@@ -43,7 +43,7 @@ public:
 		m_pVariable->Initialize(pUnit->pData);
 	}
 
-	virtual bool_ Evaluate(const TMU *pTMU) const
+	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
 	{
 
 		bool_ bResult;
@@ -93,7 +93,7 @@ public:
 private:
 	CExpVarUnitary();
 
-	CVariable *m_pVariable;
+	CAutoVar *m_pVariable;
 };
 
 #endif // CEXP_VAR_UNITARY_H

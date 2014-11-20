@@ -26,7 +26,7 @@ public:
 	bool_ AddExpression(const CExpression *pExpression);
 
 	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	void Clear();

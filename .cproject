@@ -27,6 +27,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.537715123" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.650918760" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include/mysql"/>
+									<listOptionValue builtIn="false" value="/home/rafael/references/xerces-c/src"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1094870075" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>

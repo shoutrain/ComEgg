@@ -2,7 +2,7 @@
 
 #include "../Network/CNetworkManager.h"
 
-void COptNetworkSleep::Work(const TMU *pTMU)
+void COptNetworkSleep::Work(const TMessageUnit *pTMU)
 {
 	try
 	{
@@ -12,7 +12,7 @@ void COptNetworkSleep::Work(const TMU *pTMU)
 			CNetworkManager::Instance()->GetNetwork((const ch_1 *)NetworkName);
 
 		if (pNetwork)
-			pNetwork->Sleep();
+			pNetwork->sleep();
 	}
 	catch (...)
 	{

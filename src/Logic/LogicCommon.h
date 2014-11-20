@@ -110,13 +110,13 @@ typedef struct {} call_block;
 typedef struct {} call_break;
 
 class CField;
-class CVariable;
+class CAutoVar;
 
 struct TEvaluate
 {
 	CField *pFieldInfo;
-	CVariable *pField;
-	CVariable *pValue;
+	CAutoVar *pField;
+	CAutoVar *pValue;
 };
 
 #include <vector>

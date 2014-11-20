@@ -9,9 +9,9 @@
 class COptRegister: public COperator
 {
 public:
-	COptRegister(const CVariable *pCategory,
-				 const CVariable *pKey,
-				 const CVariable *pObject,
+	COptRegister(const CAutoVar *pCategory,
+				 const CAutoVar *pKey,
+				 const CAutoVar *pObject,
 				 const bool_ bIsCovered = false_v)
 		: COperator(OT_REGISTER)
 	{
@@ -68,12 +68,12 @@ public:
 		m_pObject->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable	*m_pCategory;
-	CVariable	*m_pKey;
-	CVariable	*m_pObject;
+	CAutoVar	*m_pCategory;
+	CAutoVar	*m_pKey;
+	CAutoVar	*m_pObject;
 	bool_		m_bIsCovered;
 };
 

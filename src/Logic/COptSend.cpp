@@ -4,7 +4,7 @@
 #include "../Data/CVarNetwork.h"
 
 COptSend::COptSend(const CPDUInfo *pPDUInfo,
-				   const CVariable *pDestination)
+				   const CAutoVar *pDestination)
 	: COperator(OT_SEND)
 {
 	m_pDestination = null_v;
@@ -41,8 +41,8 @@ COptSend::COptSend(const CPDUInfo *pPDUInfo,
 
 COptSend::COptSend(b_4 nSign/*No meaning*/,
 				   const CPDUInfo *pPDUInfo,
-				   const CVariable *pIP,
-				   const CVariable *pPort)
+				   const CAutoVar *pIP,
+				   const CAutoVar *pPort)
 	: COperator(OT_SEND)
 {
 	m_pDestination = null_v;
@@ -210,7 +210,7 @@ void COptSend::Initialize(const opt_unit *pUnit)
 }
 
 bool_ COptSend::AddEvaluate(const ch_1 *pszFieldName,
-							const CVariable *pValue)
+							const CAutoVar *pValue)
 {
 #ifdef _DEBUG_
 	if (!m_pPDUInfo)
@@ -245,13 +245,13 @@ bool_ COptSend::AddEvaluate(const ch_1 *pszFieldName,
 	if (m_EvaluateVector.end() == pos)
 		return false_v;
 
-	(*pos)->pField = (CVariable *)new CVarNetwork(pFieldInfo);
+	(*pos)->pField = (CAutoVar *)new CVarNetwork(pFieldInfo);
 	(*pos)->pValue = pValue->Clone();
 
 	return true_v;
 }
 
-void COptSend::Work(const TMU *pTMU)
+void COptSend::Work(const TMessageUnit *pTMU)
 {
 	size_ nSize = 0;
 
@@ -270,7 +270,7 @@ void COptSend::Work(const TMU *pTMU)
 				if ((*pos)->pValue->Value(Temp))
 					bIsCountSize = true_v;
 				// If ture, Network Group
-				else if ((*pos)->pFieldInfo->Size(pTMU->pMessage, pTMU->nSize))
+				else if ((*pos)->pFieldInfo->Size(pTMU->message, pTMU->size))
 					bIsCountSize = true_v;
 
 				if (bIsCountSize)
@@ -292,14 +292,14 @@ void COptSend::Work(const TMU *pTMU)
 		}
 	}	
 
-	TMU MU;
+	TMessageUnit MU;
 
-	MU.nSize	= nSize;
-	MU.pMessage = new ub_1[MU.nSize];
-	MU.pPDUInfo	= m_pPDUInfo;
-	memset(MU.pMessage, 0, MU.nSize);
+	MU.size	= nSize;
+	MU.message = new ub_1[MU.size];
+	MU.pduInfo	= m_pPDUInfo;
+	memset(MU.message, 0, MU.size);
 
-	TMsgInfo *pMsgInfo = ((TMU *)pTMU)->pMsgInfo;
+	TMsgInfo *pMsgInfo = ((TMessageUnit *)pTMU)->msgInfo;
 	TMsgInfo MsgInfo;
 	const CProcessor *pProcessor = GetContainer();
 
@@ -336,17 +336,17 @@ void COptSend::Work(const TMU *pTMU)
 			v_ *pPort	= m_pPort->Value(pTMU);
 
 			memset(&MsgInfo, 0, sizeof(TMsgInfo));
-			strncpy(MsgInfo.sLocalIP, pMsgInfo->sLocalIP, IP_MAX_LENGTH);
-			MsgInfo.nLocalPort	= pMsgInfo->nLocalPort;
-			strncpy(MsgInfo.sRemoteIP, (const ch_1 *)*pIP, IP_MAX_LENGTH);
-			MsgInfo.nRemotePort = (ub_2)*pPort;
+			strncpy(MsgInfo.localIP, pMsgInfo->localIP, IP_MAX_LENGTH);
+			MsgInfo.localPort	= pMsgInfo->localPort;
+			strncpy(MsgInfo.remoteIP, (const ch_1 *)*pIP, IP_MAX_LENGTH);
+			MsgInfo.remotePort = (ub_2)*pPort;
 
 			pMsgInfo = &MsgInfo;
 		}
 
 		if (SUCCESS != _ERR(((CProcessor *)pProcessor)->Send(m_pPDUInfo,
-															 MU.pMessage,
-															 MU.nSize,
+															 MU.message,
+															 MU.size,
 															 pMsgInfo)))
         {
 			throw OPERATOR_OPERAITON_ERROR;
@@ -354,10 +354,10 @@ void COptSend::Work(const TMU *pTMU)
 	}
 	catch (...)
 	{
-		_DEL_ARR(MU.pMessage);
+		_DEL_ARR(MU.message);
 
 		throw;
 	}
 
-	_DEL_ARR(MU.pMessage);
+	_DEL_ARR(MU.message);
 }

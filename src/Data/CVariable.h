@@ -6,12 +6,12 @@
 
 // It's not real variable, actually it's a template for variable
 // used by operators
-class CVariable
+class CAutoVar
 {
 public:
-	virtual CVariable *Clone() const = 0;
+	virtual CAutoVar *Clone() const = 0;
 	virtual void Initialize(const CData *pData) = 0;
-	virtual v_ *Value(const TMU *pTMU) = 0;
+	virtual v_ *Value(const TMessageUnit *pTMU) = 0;
 
 	// For CVarGroupDefined
 	virtual v_ *Value(obj_ &) { return null_v; }

@@ -6,10 +6,10 @@
 class COptSaveFile: public COperator
 {
 public:
-	COptSaveFile(const CVariable *pFilePath,
-				 const CVariable *pFileName,
-				 const CVariable *pFileContent,
-				 const CVariable *pResult)
+	COptSaveFile(const CAutoVar *pFilePath,
+				 const CAutoVar *pFileName,
+				 const CAutoVar *pFileContent,
+				 const CAutoVar *pResult)
 		: COperator(OT_SAVE_FILE)
 	{
 		m_pFilePath		= pFilePath->Clone();
@@ -68,13 +68,13 @@ public:
 		m_pResult->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pFilePath;
-	CVariable *m_pFileName;
-	CVariable *m_pFileContent;
-	CVariable *m_pResult;
+	CAutoVar *m_pFilePath;
+	CAutoVar *m_pFileName;
+	CAutoVar *m_pFileContent;
+	CAutoVar *m_pResult;
 };
 
 #endif // COPT_SAVE_FILE_H

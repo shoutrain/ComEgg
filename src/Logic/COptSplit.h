@@ -6,8 +6,8 @@
 class COptSplit: public COperator
 {
 public:
-	COptSplit(const CVariable *pEnvironment,
-			  const CVariable *pResult)
+	COptSplit(const CAutoVar *pEnvironment,
+			  const CAutoVar *pResult)
 		: COperator(OT_SPLIT)
 	{
 		m_pEnvironment	= pEnvironment->Clone();
@@ -54,11 +54,11 @@ public:
 		m_pResult->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pEnvironment;
-	CVariable *m_pResult;
+	CAutoVar *m_pEnvironment;
+	CAutoVar *m_pResult;
 };
 
 #endif // COPT_SPLIT_H

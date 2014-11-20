@@ -8,8 +8,8 @@
 class COptGetAddress: public COperator
 {
 public:
-	COptGetAddress(const CVariable *pIP,
-				   const CVariable *pPort,
+	COptGetAddress(const CAutoVar *pIP,
+				   const CAutoVar *pPort,
 				   bool_ bRemote = true_v)
 		: COperator(OT_GET_ADDRESS)
 	{
@@ -58,13 +58,13 @@ public:
 		m_pPort->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	bool_ m_bRemote;
 
-	CVariable *m_pIP;
-	CVariable *m_pPort;
+	CAutoVar *m_pIP;
+	CAutoVar *m_pPort;
 };
 
 #endif // COPT_GET_ADDRESS_H

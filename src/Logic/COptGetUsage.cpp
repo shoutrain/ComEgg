@@ -2,7 +2,7 @@
 
 #include "../System/CSysInfo.h"
 
-void COptGetUsage::Work(const TMU *pTMU)
+void COptGetUsage::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

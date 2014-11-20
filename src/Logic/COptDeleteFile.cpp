@@ -2,7 +2,7 @@
 
 #include "../System/CFile.h"
 
-void COptDeleteFile::Work(const TMU *pTMU)
+void COptDeleteFile::Work(const TMessageUnit *pTMU)
 {
 	v_ Success((b_4)true_v);
 	v_ Failure((b_4)false_v);

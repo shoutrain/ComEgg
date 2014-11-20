@@ -6,10 +6,10 @@
 class COptDualityCalculate: public COperator
 {
 public:
-	COptDualityCalculate(const CVariable *pLeftVariable,
+	COptDualityCalculate(const CAutoVar *pLeftVariable,
 						 const EDualityCalculate Opt,
-						 const CVariable *pRightVariable,
-						 const CVariable *pResultVariable)
+						 const CAutoVar *pRightVariable,
+						 const CAutoVar *pResultVariable)
 		: COperator(OT_DUALITY_CALCULATE)
 	{
 		m_pLeftVariable		= pLeftVariable->Clone();
@@ -65,13 +65,13 @@ public:
 		m_pResultVariable->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable			*m_pLeftVariable;
+	CAutoVar			*m_pLeftVariable;
 	EDualityCalculate	m_Opt;
-	CVariable			*m_pRightVariable;
-	CVariable			*m_pResultVariable;
+	CAutoVar			*m_pRightVariable;
+	CAutoVar			*m_pResultVariable;
 };
 
 #endif // COPT_DUALITY_CALCULATE_H

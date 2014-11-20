@@ -11,88 +11,71 @@
 
 using namespace std;
 
-typedef map<size_, const CPDUInfo *> map_pdu_table;
-typedef map<const CPDUInfo *, size_> map_id_table;
+typedef map<size_, const CPDUInfo *> MapPduTable;
+typedef map<const CPDUInfo *, size_> MapIdTable;
 
-class CNetworkConf: public CBaseClass
-{
+class CNetworkConf: public CBase {
 public:
-	ret_ ConfigPDU(const v_ &ID,
-				   const CPDUInfo *pPDUInfo,
-				   EDirection Direction);
-	ret_ IdentifyID(const v_ &ID,
-					CPDUInfo *&pPDUInfo,
-					EDirection Direction);
-	ret_ IdentifyPDU(const CPDUInfo *pPDUInfo,
-					 v_ &ID,
-					 EDirection Direction);
+	b_4 configPdu(const v_ &id, const CPDUInfo *pduInfo, EDirection direction);
+	b_4 identifyId(const v_ &id, CPDUInfo *&pduInfo, EDirection direction);
+	b_4 identifyPdu(const CPDUInfo *pPDUInfo, v_ &id, EDirection direction);
 
-	const CProtocolInfo *GetProtocol() const
-	{
-		return m_pProtocol;
+	const CProtocolInfo *getProtocol() const {
+		return _protocol;
 	}
 
-	const CField *GetCommandID() const
-	{
-		return m_pCommandID;
+	const CField *getCommandId() const {
+		return _commandId;
 	}
 
-	const CField *GetSizeID() const
-	{
-		return m_pSizeID;
+	const CField *getSizeId() const {
+		return _sizeId;
 	}
 
-	ub_2 GetLocalPort() const
-	{
-		return m_nLocalPort;
+	ub_2 getLocalPort() const {
+		return _localPort;
 	}
 
-	void SetTransaction(const CTransaction *pTransaction)
-	{
-		m_pTransaction	= (CTransaction *)pTransaction;
+	void setTransaction(const CTransaction *transaction) {
+		_transaction = (CTransaction *) transaction;
 	}
 
-	const CTransaction *GetTransaction() const
-	{
-		return m_pTransaction;
+	const CTransaction *getTransaction() const {
+		return _transaction;
 	}
 
 protected:
-	CNetworkConf(const CProtocolInfo *pProtocol,
-				 const CField *pCommandID,
-				 const CField *pSizeID,
-				 ub_2 nLocalPort,
-				 class_sign ClassID)
-		: CBaseClass(ClassID)
-	{
-		m_pProtocol		= (CProtocolInfo *)pProtocol;
-		m_pCommandID	= (CField *)pCommandID;
-		m_pSizeID		= (CField *)pSizeID;
-		m_nLocalPort	= nLocalPort;
+	CNetworkConf(const CProtocolInfo *protocol, const CField *commandId,
+			const CField *sizeId, ub_2 localPort) {
+		_protocol = (CProtocolInfo *) protocol;
+		_commandId = (CField *) commandId;
+		_sizeId = (CField *) sizeId;
+		_localPort = localPort;
+
+		_transaction = null_v;
 	}
 
-	virtual ~CNetworkConf()
-	{
-		m_PDUInTableMap.clear();
-		m_PDUOutTableMap.clear();
+	virtual ~CNetworkConf() {
+		_pduInTableMap.clear();
+		_pduOutTableMap.clear();
 	}
 
 private:
-	bool_ FindPDU(const v_ &ID, EDirection Direction, CPDUInfo *&pPDUInfo);
-	bool_ FindID(const CPDUInfo *pPDUInfo, EDirection Direction, v_ &ID);
+	bool_ findPdu(const v_ &id, EDirection direction, CPDUInfo *&pduInfo);
+	bool_ findId(const CPDUInfo *pduInfo, EDirection direction, v_ &id);
 
-	map_pdu_table	m_PDUInTableMap;
-	map_pdu_table	m_PDUOutTableMap;
+	MapPduTable _pduInTableMap;
+	MapPduTable _pduOutTableMap;
 
-	map_id_table	m_IDInTableMap;
-	map_id_table	m_IDOutTablemap;
+	MapIdTable _idInTableMap;
+	MapIdTable _idOutTablemap;
 
-	CProtocolInfo *m_pProtocol;
-	CField *m_pCommandID;
-	CField *m_pSizeID;
-	ub_2 m_nLocalPort;
+	CProtocolInfo *_protocol;
+	CField *_commandId;
+	CField *_sizeId;
+	ub_2 _localPort;
 
-	CTransaction	*m_pTransaction;
+	CTransaction *_transaction;
 };
 
 #endif // CNETWORK_CONF_H

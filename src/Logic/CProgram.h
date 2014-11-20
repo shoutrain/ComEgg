@@ -38,7 +38,7 @@ public:
 
 	virtual void Reset();
 	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 protected:
 	CProgram(const EOperatorType Type, const CData *pData = null_v)

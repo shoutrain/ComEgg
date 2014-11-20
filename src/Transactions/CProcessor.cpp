@@ -285,10 +285,10 @@ ret_ CProcessor::ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh)
 {
 	_START(EXEC_NORMAL_HANDLE);
 
-	TMU tmu;
+	TMessageUnit tmu;
 
-	memset(&tmu, 0, sizeof(TMU));
-	tmu.pMsgInfo = (TMsgInfo *)pMsgInfo;
+	memset(&tmu, 0, sizeof(TMessageUnit));
+	tmu.msgInfo = (TMsgInfo *)pMsgInfo;
 
 	try
 	{
@@ -327,12 +327,12 @@ ret_ CProcessor::ExecMsgHandle(const CPDUInfo *pPDUInfo,
 	}
 #endif
 
-	TMU tmu;
+	TMessageUnit tmu;
 
-	tmu.pPDUInfo	= (CPDUInfo *)pPDUInfo;
-	tmu.pMessage	= (ub_1 *)pMsg;
-	tmu.nSize		= nSize;
-	tmu.pMsgInfo	= (TMsgInfo *)pMsgInfo;
+	tmu.pduInfo	= (CPDUInfo *)pPDUInfo;
+	tmu.message	= (ub_1 *)pMsg;
+	tmu.size		= nSize;
+	tmu.msgInfo	= (TMsgInfo *)pMsgInfo;
 
 	opt_unit Unit;
 
@@ -458,8 +458,8 @@ ret_ CProcessor::Send(const CPDUInfo *pPDUInfo,
 	TMsgInfo MsgInfo;
 
 	memcpy(&MsgInfo, pMsgInfo, sizeof(TMsgInfo));
-	memcpy(MsgInfo.sLocalIP, m_pHandle->GetLocalIP(), IP_MAX_LENGTH);
-	MsgInfo.nLocalPort = m_pHandle->GetLocalPort();
+	memcpy(MsgInfo.localIP, m_pHandle->GetLocalIP(), IP_MAX_LENGTH);
+	MsgInfo.localPort = m_pHandle->GetLocalPort();
 
 	Ret = ExecMsgHandle(pPDUInfo, pMsg, nSize, &MsgInfo, DIRECTION_OUT);
 
@@ -468,8 +468,8 @@ ret_ CProcessor::Send(const CPDUInfo *pPDUInfo,
 
 	_RET_BY(m_pHandle->Send(pMsg,
 							nSize,
-							MsgInfo.sRemoteIP,
-							MsgInfo.nRemotePort));
+							MsgInfo.remoteIP,
+							MsgInfo.remotePort));
 }
 
 ret_ CProcessor::Register(const ch_1 *pszCategory,

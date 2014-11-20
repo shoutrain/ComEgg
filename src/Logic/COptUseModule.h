@@ -20,11 +20,11 @@ public:
 	
 	virtual ~COptUseModule();
 
-	bool_ AddInParameter(CVariable *pValue);
-	bool_ AddOutParameter(const ch_1 *pszFieldName, CVariable *pValue);
+	bool_ AddInParameter(CAutoVar *pValue);
+	bool_ AddOutParameter(const ch_1 *pszFieldName, CAutoVar *pValue);
 
 	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	COptUseModule();

@@ -68,7 +68,7 @@ void CProgramIf::Initialize(const opt_unit *pUnit)
 		((CExpression *)m_ExpVector[n])->Initialize(&Unit);
 }
 
-void CProgramIf::Work(const TMU *pTMU)
+void CProgramIf::Work(const TMessageUnit *pTMU)
 {
 	size_ nNum = (size_)m_ExpVector.size();
 

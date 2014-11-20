@@ -2,7 +2,7 @@
 
 #include "../System/CFile.h"
 
-void COptSaveFile::Work(const TMU *pTMU)
+void COptSaveFile::Work(const TMessageUnit *pTMU)
 {
 	v_ Success((b_4)true_v);
 	v_ Failure((b_4)false_v);

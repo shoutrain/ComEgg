@@ -60,7 +60,7 @@ public:
 		m_pExpression->Initialize(&Unit);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	CProgramWhile();

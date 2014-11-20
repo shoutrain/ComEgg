@@ -9,8 +9,8 @@
 class COptUnregister: public COperator
 {
 public:
-	COptUnregister(const CVariable *pCategory,
-				   const CVariable *pKey)
+	COptUnregister(const CAutoVar *pCategory,
+				   const CAutoVar *pKey)
 		: COperator(OT_UNREGISTER)
 	{
 		m_pCategory	= pCategory->Clone();
@@ -57,11 +57,11 @@ public:
 		m_pKey->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable	*m_pCategory;
-	CVariable	*m_pKey;
+	CAutoVar	*m_pCategory;
+	CAutoVar	*m_pKey;
 };
 
 #endif // COPT_UNREGISTER_H

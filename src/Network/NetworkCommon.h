@@ -1,40 +1,21 @@
-#ifndef NETWORK_COMMON_H
-#define NETWORK_COMMON_H
+#ifndef _NETWORK_COMMON_H_
+#define _NETWORK_COMMON_H_
 
-#include "../Common/CBaseClass.h"
+#include "../Common/CBase.h"
 
-#include <ace/Reactor.h>
-#include <ace/Acceptor.h>
-#include <ace/SOCK_Acceptor.h>
-#include <ace/Connector.h>
-#include <ace/SOCK_Connector.h>
-#include <ace/Svc_Handler.h>
-#include <ace/Synch.h>
-#include <ace/Thread.h>
-#include <ace/SOCK_Dgram.h>
+const ub_4 REV_BUFFER_MAX_SIZE = 65535;
+const ub_4 IP_MAX_LENGTH = 16;
+const ub_4 IP_MAX_LENGTH_SIGN = IP_MAX_LENGTH - 1;
 
-typedef ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> Reactor;
-
-const ub_4 REV_BUFFER_MAX_SIZE	= 65535;
-
-const ub_4 IP_MAX_LENGTH		= 16;
-const ub_4 IP_MAX_LENGTH_SIGN	= IP_MAX_LENGTH - 1;
-
-enum ENetworkStatus
-{
-	WORKING,
-	SLEEPING
+enum ENetworkStatus {
+	WORKING, SLEEPING
 };
 
-enum EDirection
-{
-	DIRECTION_IN = 1,
-	DIRECTION_OUT,
-	DIRECTION_ALL,
+enum EDirection {
+	DIRECTION_IN = 1, DIRECTION_OUT, DIRECTION_ALL,
 };
 
-enum ENetworkType
-{
+enum ENetworkType {
 	NETWORK_NONE,
 	NETWORK_ACCEPTOR,
 	NETWORK_CONNECTOR,
@@ -42,22 +23,20 @@ enum ENetworkType
 	NETWORK_SENDER
 };
 
-struct TMsgInfo
-{
-	ch_1	sLocalIP[IP_MAX_LENGTH];
-	ub_2	nLocalPort;
-	ch_1	sRemoteIP[IP_MAX_LENGTH];
-	ub_2	nRemotePort;
+struct TMsgInfo {
+	ch_1 localIP[IP_MAX_LENGTH];
+	ub_2 localPort;
+	ch_1 remoteIP[IP_MAX_LENGTH];
+	ub_2 remotePort;
 };
 
 class CPDUInfo;
 
-struct TMU // Message Unit
-{
-	CPDUInfo	*pPDUInfo;
-	ub_1		*pMessage;
-	size_		nSize;
-	TMsgInfo	*pMsgInfo;
+struct TMessageUnit {
+	CPDUInfo *pduInfo;
+	ub_1 *message;
+	size_ size;
+	TMsgInfo *msgInfo;
 };
 
-#endif // NETWORK_COMMON_H
+#endif // _NETWORK_COMMON_H_

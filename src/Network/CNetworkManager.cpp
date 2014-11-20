@@ -38,7 +38,7 @@ ret_ CNetworkManager::AddNetwork(const ch_1 *pszName,
 	_RET(SUCCESS);
 }
 
-ret_ CNetworkManager::Work()
+ret_ CNetworkManager::work()
 {
 	_START(WORK);
 
@@ -51,8 +51,8 @@ ret_ CNetworkManager::Work()
 #endif
 		CNetwork *pNetwork = (CNetwork *)pos->second;
 
-		if (pNetwork->IsAutoStart())
-			pNetwork->Work();
+		if (pNetwork->isAutoStart())
+			pNetwork->work();
 	}
 
 	ACE_Reactor::instance()->owner(ACE_OS::thr_self());

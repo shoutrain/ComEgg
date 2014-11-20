@@ -11,7 +11,7 @@ ret_ CAcceptorHandle::OnOpen(const ub_1 *pObj)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 #endif
 
-	m_pConf = (CAcceptorConf *)((CAcceptor *)pObj)->GetConf();
+	m_pConf = (CAcceptorConf *)((CAcceptor *)pObj)->getConf();
 
 	if (!m_pConf->OpenConnection())
 		_RET(FROBID_USE);

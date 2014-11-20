@@ -4,7 +4,7 @@ ret_ CNetworkHandle::Open()
 {
 	_START(OPEN);
 
-	CTransaction *pTransaction = (CTransaction *)GetConf()->GetTransaction();
+	CTransaction *pTransaction = (CTransaction *)GetConf()->getTransaction();
 	ret_ Ret = pTransaction->Allocate(m_pProcessor);
 
 	if (SUCCESS != _ERR(Ret))
@@ -26,7 +26,7 @@ ret_ CNetworkHandle::Close()
 	m_pProcessor->ExecNormalHandle(&m_MsgInfo, OVER_HANDLE);
 	m_pProcessor->Reset();
 
-	CTransaction *pTransaction = (CTransaction *)GetConf()->GetTransaction();
+	CTransaction *pTransaction = (CTransaction *)GetConf()->getTransaction();
 	
 	pTransaction->Release(m_pProcessor);
 
@@ -57,7 +57,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 		_RET(NO_ELEMENT_IN_CONTAINER);
 #endif
 
-	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->GetProtocol();
+	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->getProtocol();
 
 #ifdef _DEBUG_
 	if (!pProtocol)
@@ -68,7 +68,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 	try
 	{
 		size_ *pnSize = (size_ *)(pMsg +
-				pConf->GetSizeID()->Offset(pMsg, nSize));
+				pConf->getSizeId()->Offset(pMsg, nSize));
 		*pnSize = nSize;
 	}
 	catch (error_code err)
@@ -81,7 +81,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 	try
 	{
 		v_ CommandID((size_ *)(pMsg +
-				pConf->GetCommandID()->Offset(pMsg, nSize)));
+				pConf->getCommandId()->Offset(pMsg, nSize)));
 
 		ret_ Ret = pConf->IdentifyPDU(pPDUInfo, CommandID, DIRECTION_OUT);
 
@@ -120,7 +120,7 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 		_RET(NO_ELEMENT_IN_CONTAINER);
 #endif
 
-	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->GetProtocol();
+	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->getProtocol();
 
 #ifdef _DEBUG_
 	if (!pProtocol)
@@ -132,7 +132,7 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 	try
 	{
 		v_ CommandID((size_ *)(pMsg +
-							   pConf->GetCommandID()->Offset(pMsg, nSize)));
+							   pConf->getCommandId()->Offset(pMsg, nSize)));
 		ret_ Ret = pConf->IdentifyID(CommandID, pPDUInfo, DIRECTION_IN);
 
 		if (SUCCESS != _ERR(Ret))

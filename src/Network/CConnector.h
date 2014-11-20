@@ -35,25 +35,25 @@ public:
 		close();
 	}
 
-	virtual void Work()
+	virtual void work()
 	{
 		ACE_Thread::spawn((ACE_THR_FUNC)Svc, (void *)this);
 	}
 
-	virtual void Sleep()
+	virtual void sleep()
 	{
 		m_bConnected = false_v;
 		close();
 	}
 
-	virtual const CNetworkConf *GetConf() const
+	virtual const CNetworkConf *getConf() const
 	{
 		return (CNetworkConf *)&m_Conf;
 	}
 
 	b_4 Run()
 	{
-		ACE_INET_Addr LocalAddr(m_Conf.GetLocalPort());
+		ACE_INET_Addr LocalAddr(m_Conf.getLocalPort());
 		ACE_INET_Addr RemoteAddr(m_Conf.GetRemotePort(),
 								 m_Conf.GetRemoteIP());
 

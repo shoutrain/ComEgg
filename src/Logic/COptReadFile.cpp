@@ -2,7 +2,7 @@
 
 #include "../System/CFile.h"
 
-void COptReadFile::Work(const TMU *pTMU)
+void COptReadFile::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

@@ -7,7 +7,7 @@ class COptEmpty: public COperator
 {
 public:
 
-	COptEmpty(const CVariable *pVariable)
+	COptEmpty(const CAutoVar *pVariable)
 		: COperator(OT_EMPTY)
 	{
 		m_pVariable = pVariable->Clone();
@@ -48,10 +48,10 @@ public:
 		m_pVariable->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pVariable;
+	CAutoVar *m_pVariable;
 };
 
 #endif // COPT_EMPTY_H

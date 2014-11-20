@@ -1,41 +1,37 @@
-#ifndef CNETWORK_H
-#define CNETWORK_H
+#ifndef _C_NETWORK_H_
+#define _C_NETWORK_H_
 
 #include "NetworkCommon.h"
 
 class CNetworkConf;
 
-class CNetwork: public CBaseClass
-{
+class CNetwork: public CBase {
 public:
-	CNetwork(bool_ IsAutoStart,
-			 ENetworkType Type,
-			 class_sign ClassID)
-		: CBaseClass(ClassID)
-	{
-		m_IsAutoStart = IsAutoStart;
-		m_Type = Type;
+	CNetwork(bool_ isAutoStart, ENetworkType type) {
+		_isAutoStart = isAutoStart;
+		_type = type;
 	}
 
-	virtual void Work() = 0;
-	virtual void Sleep() = 0;
-
-	virtual const CNetworkConf *GetConf() const = 0;
-
-	bool_ IsAutoStart() const
-	{
-		return m_IsAutoStart;
+	virtual ~CNetwork() {
 	}
 
-	ENetworkType GetType() const
-	{
-		return m_Type;
+	virtual none_ work() = 0;
+	virtual none_ sleep() = 0;
+
+	virtual const CNetworkConf *getConf() const = 0;
+
+	bool_ isAutoStart() const {
+		return _isAutoStart;
+	}
+
+	ENetworkType getType() const {
+		return _type;
 	}
 
 private:
-	bool_ m_IsAutoStart;
-	ENetworkType m_Type;
+	bool_ _isAutoStart;
+	ENetworkType _type;
 };
 
-#endif // CNETWORK_H
+#endif // _CNETWORK_H_
 

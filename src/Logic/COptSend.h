@@ -9,11 +9,11 @@ class COptSend: public COperator
 {
 public:
     COptSend(const CPDUInfo *pPDUInfo,
-			 const CVariable *pDestination = null_v);
+			 const CAutoVar *pDestination = null_v);
 	COptSend(b_4 nSign,
 			 const CPDUInfo *pPDUInfo,
-			 const CVariable *pIP = null_v,
-			 const CVariable *pPort = null_v);
+			 const CAutoVar *pIP = null_v,
+			 const CAutoVar *pPort = null_v);
 
 	COptSend(const COptSend &opt);
 	const COptSend &operator =(const COptSend &opt);
@@ -25,10 +25,10 @@ public:
 
 	virtual ~COptSend();
 
-	bool_ AddEvaluate(const ch_1 *pszFieldName, const CVariable *pValue);
+	bool_ AddEvaluate(const ch_1 *pszFieldName, const CAutoVar *pValue);
 
 	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	COptSend();
@@ -45,9 +45,9 @@ private:
 		UDP_SEND
 	} m_SendType;
 
-	CVariable *m_pDestination;
-	CVariable *m_pIP;
-	CVariable *m_pPort;
+	CAutoVar *m_pDestination;
+	CAutoVar *m_pIP;
+	CAutoVar *m_pPort;
 };
 
 #endif // COPT_SEND_H

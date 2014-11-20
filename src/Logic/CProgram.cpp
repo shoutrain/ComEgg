@@ -70,7 +70,7 @@ void CProgram::Initialize(const opt_unit *pUnit)
 		((COperator *)m_OptVector[i])->Initialize(&Unit);
 }
 
-void CProgram::Work(const TMU *pTMU)
+void CProgram::Work(const TMessageUnit *pTMU)
 {
 	size_ n = (size_)m_OptVector.size();
 

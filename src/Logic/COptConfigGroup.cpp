@@ -2,7 +2,7 @@
 
 #include "../Data/CVarGroupDefined.h"
 
-void COptConfigGroup::Work(const TMU *pTMU)
+void COptConfigGroup::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

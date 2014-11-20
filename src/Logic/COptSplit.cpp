@@ -2,7 +2,7 @@
 
 #include "../System/CSysCall.h"
 
-void COptSplit::Work(const TMU *pTMU)
+void COptSplit::Work(const TMessageUnit *pTMU)
 {
 	v_ Success((b_4)true_v);
 	v_ Failure((b_4)false_v);

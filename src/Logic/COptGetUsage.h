@@ -6,7 +6,7 @@
 class COptGetUsage: public COperator
 {
 public:
-	COptGetUsage(const CVariable *pResult): COperator(OT_GET_USAGE)
+	COptGetUsage(const CAutoVar *pResult): COperator(OT_GET_USAGE)
 	{
 		m_pResult = pResult->Clone();
 	}
@@ -46,10 +46,10 @@ public:
 		m_pResult->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pResult;
+	CAutoVar *m_pResult;
 };
 
 #endif // COPT_GET_USAGE_H

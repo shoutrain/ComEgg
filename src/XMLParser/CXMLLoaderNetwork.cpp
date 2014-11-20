@@ -256,7 +256,7 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 			}
 		}
 
-		CNetworkConf *pNetworkConf = (CNetworkConf *)pNetwork->GetConf();
+		CNetworkConf *pNetworkConf = (CNetworkConf *)pNetwork->getConf();
 
 		//
 		DOMElement *pSub = (DOMElement *)pChild->getFirstChild();

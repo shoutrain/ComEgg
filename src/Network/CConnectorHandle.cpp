@@ -11,7 +11,7 @@ ret_ CConnectorHandle::OnOpen(const ub_1 *pObj)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 #endif
 	m_pConnector = (CConnector *)pObj;
-	m_pConf		 = (CConnectorConf *)m_pConnector->GetConf();
+	m_pConf		 = (CConnectorConf *)m_pConnector->getConf();
 
 	_RET(SUCCESS);
 }

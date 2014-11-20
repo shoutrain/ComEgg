@@ -25,19 +25,19 @@ public:
 		close();
 	}
 
-	virtual void Work()
+	virtual void work()
 	{
-		ACE_INET_Addr Addr(m_Conf.GetLocalPort());
+		ACE_INET_Addr Addr(m_Conf.getLocalPort());
 
 		open(Addr, ACE_Reactor::instance());
 	}
 
-	virtual void Sleep()
+	virtual void sleep()
 	{
 		close();
 	}
 
-	virtual const CNetworkConf *GetConf() const
+	virtual const CNetworkConf *getConf() const
 	{
 		return (CNetworkConf *)&m_Conf;
 	}

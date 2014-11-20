@@ -6,8 +6,8 @@
 class COptDeleteFile: public COperator
 {
 public:
-	COptDeleteFile(const CVariable *pFilePath,
-				   const CVariable *pResult)
+	COptDeleteFile(const CAutoVar *pFilePath,
+				   const CAutoVar *pResult)
 		: COperator(OT_DELETE_FILE)
 	{
 		m_pFilePath		= pFilePath->Clone();
@@ -55,11 +55,11 @@ public:
 		m_pResult->Initialize(pUnit->pData);
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
-	CVariable *m_pFilePath;
-	CVariable *m_pResult;
+	CAutoVar *m_pFilePath;
+	CAutoVar *m_pResult;
 };
 
 #endif // COPT_DELETE_FILE_H

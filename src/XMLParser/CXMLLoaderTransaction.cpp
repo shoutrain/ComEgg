@@ -450,18 +450,18 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	if (!pNetwork)
 		_RET(XML_LOADER_ERROR);
 
-	if (NETWORK_NONE == (m_tmpNetworkType = pNetwork->GetType()))
+	if (NETWORK_NONE == (m_tmpNetworkType = pNetwork->getType()))
 		_RET(XML_LOADER_ERROR);
 #endif
 
-	CNetworkConf *pConf = (CNetworkConf *)pNetwork->GetConf();
+	CNetworkConf *pConf = (CNetworkConf *)pNetwork->getConf();
 
 #ifdef _DEBUG_
 	if (!pConf)
 		_RET(XML_LOADER_ERROR);
 #endif
 
-	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->GetProtocol();
+	CProtocolInfo *pProtocol = (CProtocolInfo *)pConf->getProtocol();
 
 #ifdef _DEBUG_
 	if (!pProtocol)
@@ -597,7 +597,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 		pChild = (DOMElement *)pChild->getNextSibling();
 	}
 
-	switch (pNetwork->GetType())
+	switch (pNetwork->getType())
 	{
 	case NETWORK_ACCEPTOR:
 		if (SUCCESS != _ERR(CTransactionManager::Instance()->AddTransaction(
@@ -638,7 +638,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 		_RET(XML_LOADER_ERROR);
 	}
 
-	pConf->SetTransaction(pTransaction);
+	pConf->setTransaction(pTransaction);
 
 	_RET(SUCCESS);
 }
@@ -1013,7 +1013,7 @@ ret_ CXMLLoaderTransaction::LoadEmpty(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV;
+	CAutoPtr<CAutoVar> OV;
 
 	while (pSub)
 	{
@@ -1064,7 +1064,7 @@ ret_ CXMLLoaderTransaction::LoadUnitaryCalculate(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -1120,7 +1120,7 @@ ret_ CXMLLoaderTransaction::LoadDualityCalculate(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[3];
+	CAutoPtr<CAutoVar> OV[3];
 	size_ n = 0;
 
 	while (pSub)
@@ -1161,7 +1161,7 @@ ret_ CXMLLoaderTransaction::LoadConfigGroup(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -1464,7 +1464,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 	// For send operation, sub elements is not necessary.
 	DOMElement *pSub = (DOMElement *)pElement->getFirstChild();
 	size_ n = 0;
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	COptSend *pOperator = null_v;
 
 	while (pSub)
@@ -1535,7 +1535,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 			{
 				//
 				DOMElement	*pVariable = (DOMElement *)pSub->getFirstChild();
-				CAutoPtr<CVariable> OV_;
+				CAutoPtr<CAutoVar> OV_;
 
 				if (!pVariable)
 					_RET(XML_LOADER_ERROR);
@@ -1594,7 +1594,7 @@ ret_ CXMLLoaderTransaction::LoadForward(CProgram &Program,
 #endif
 
 	// For forward operation, sub elements is not necessary.
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 	COptForward *pOperator = null_v;
 	DOMElement *pSub = (DOMElement *)pElement->getFirstChild();
@@ -1681,7 +1681,7 @@ ret_ CXMLLoaderTransaction::LoadGetAddress(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -1737,7 +1737,7 @@ ret_ CXMLLoaderTransaction::LoadRegister(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[3];
+	CAutoPtr<CAutoVar> OV[3];
 	size_ n = 0;
 
 	while (pSub)
@@ -1793,7 +1793,7 @@ ret_ CXMLLoaderTransaction::LoadUnregister(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -1838,7 +1838,7 @@ ret_ CXMLLoaderTransaction::LoadSearch(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[3];
+	CAutoPtr<CAutoVar> OV[3];
 	size_ n = 0;
 
 	while (pSub)
@@ -1883,7 +1883,7 @@ ret_ CXMLLoaderTransaction::LoadGetUsage(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV;
+	CAutoPtr<CAutoVar> OV;
 
 	while (pSub)
 	{
@@ -1925,7 +1925,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkWakeUp(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -1970,7 +1970,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkSleep(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -2018,7 +2018,7 @@ ret_ CXMLLoaderTransaction::LoadReadFile(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[3];
+	CAutoPtr<CAutoVar> OV[3];
 	size_ n = 0;
 
 	while (pSub)
@@ -2067,7 +2067,7 @@ ret_ CXMLLoaderTransaction::LoadSaveFile(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[4];
+	CAutoPtr<CAutoVar> OV[4];
 	size_ n = 0;
 
 	while (pSub)
@@ -2114,7 +2114,7 @@ ret_ CXMLLoaderTransaction::LoadDeleteFile(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -2197,7 +2197,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 			while (pSub)
 			{
-				CAutoPtr<CVariable> OV;
+				CAutoPtr<CAutoVar> OV;
 
 				ret_ Ret = LoadVariable(pPDU, 
 										Program.Data(), 
@@ -2232,7 +2232,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 			if (!pSub)
 				_RET(XML_LOADER_ERROR);
 
-			CAutoPtr<CVariable> OV;
+			CAutoPtr<CAutoVar> OV;
 
 			while (pSub)
 			{
@@ -2282,7 +2282,7 @@ ret_ CXMLLoaderTransaction::LoadSplit(CProgram &Program,
 	if (!pSub)
 		_RET(XML_LOADER_ERROR);
 
-	CAutoPtr<CVariable> OV[2];
+	CAutoPtr<CAutoVar> OV[2];
 	size_ n = 0;
 
 	while (pSub)
@@ -2323,7 +2323,7 @@ ret_ CXMLLoaderTransaction::LoadDie(CProgram &Program)
 ret_ CXMLLoaderTransaction::LoadVariable(const CPDUInfo *pPDU,
 										 const CData &Data,
 										 const DOMElement *pElement,
-										 CVariable *&pOV)
+										 CAutoVar *&pOV)
 {
 	_START(LOAD_VARIABLE);
 
@@ -2366,7 +2366,7 @@ ret_ CXMLLoaderTransaction::LoadVariable(const CPDUInfo *pPDU,
 
 ret_ CXMLLoaderTransaction::LoadSolidVariable(const CData &Data,
 											  const DOMElement *pElement,
-											  CVariable *&pOV)
+											  CAutoVar *&pOV)
 {
 	_START(LOAD_SOLID_VARIABLE);
 
@@ -2393,7 +2393,7 @@ ret_ CXMLLoaderTransaction::LoadSolidVariable(const CData &Data,
 
 ret_ CXMLLoaderTransaction::LoadGroupVariable(const CData &Data,
 											  const DOMElement *pElement,
-											  CVariable *&pOV)
+											  CAutoVar *&pOV)
 {
 	_START(LOAD_GROUP_VARIABLE);
 
@@ -2447,7 +2447,7 @@ ret_ CXMLLoaderTransaction::LoadGroupVariable(const CData &Data,
 ret_ CXMLLoaderTransaction::LoadNetworkVarialbe(const CPDUInfo *pPDU,
 												const CData &Data,
 												const DOMElement *pElement,
-												CVariable *&pOV)
+												CAutoVar *&pOV)
 {
 	_START(LOAD_NETWORK_VARIABLE);
 
@@ -2622,7 +2622,7 @@ ret_ CXMLLoaderTransaction::LoadExpression(const CData &Data,
 		if (!pChild)
 			_RET(XML_LOADER_ERROR);
 
-		CAutoPtr<CVariable> v;
+		CAutoPtr<CAutoVar> v;
 
 		while (pChild)
 		{
@@ -2647,7 +2647,7 @@ ret_ CXMLLoaderTransaction::LoadExpression(const CData &Data,
 		if (!pChild)
 			_RET(XML_LOADER_ERROR);
 
-		CAutoPtr<CVariable> v[2];
+		CAutoPtr<CAutoVar> v[2];
 		size_ n = 0;
 
 		while (pChild)

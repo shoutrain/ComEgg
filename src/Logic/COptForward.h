@@ -8,7 +8,7 @@
 class COptForward: public COperator
 {
 public:
-	COptForward(const CVariable *pObject = null_v): COperator(OT_FORWARD)
+	COptForward(const CAutoVar *pObject = null_v): COperator(OT_FORWARD)
 	{
 		m_pObject = null_v;
 		m_pIP = null_v;
@@ -21,8 +21,8 @@ public:
 	}
 
 	COptForward(b_4 nSign/*No meaning*/,
-			 const CVariable *pIP = null_v,
-			 const CVariable *pPort = null_v)
+			 const CAutoVar *pIP = null_v,
+			 const CAutoVar *pPort = null_v)
 		: COperator(OT_SEND)
 	{
 		m_pObject = null_v;
@@ -111,7 +111,7 @@ public:
 		}
 	}
 
-	virtual void Work(const TMU *pTMU);
+	virtual void Work(const TMessageUnit *pTMU);
 
 private:
 	enum
@@ -120,9 +120,9 @@ private:
 		UDP_SEND
 	} m_SendType;
 
-	CVariable *m_pObject;
-	CVariable *m_pIP;
-	CVariable *m_pPort;
+	CAutoVar *m_pObject;
+	CAutoVar *m_pIP;
+	CAutoVar *m_pPort;
 };
 
 #endif // COPT_FORWARD_H

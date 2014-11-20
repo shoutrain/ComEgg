@@ -1,6 +1,6 @@
 #include "COptUnitaryCalculate.h"
 
-void COptUnitaryCalculate::Work(const TMU *pTMU)
+void COptUnitaryCalculate::Work(const TMessageUnit *pTMU)
 {
 	try
 	{

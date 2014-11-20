@@ -1,87 +1,54 @@
 #include "CNetworkConf.h"
 
-ret_ CNetworkConf::ConfigPDU(const v_ &ID,
-							 const CPDUInfo *pPDUInfo,
-							 EDirection Direction)
-{
-	_START(CONFIG_PDU);
+ub_4 CNetworkConf::configPdu(const v_ &id, const CPDUInfo *pduInfo,
+		EDirection direction) {
+	assert(pduInfo);
 
+	if (DIRECTION_IN == (EDirection) (direction & DIRECTION_IN)) {
 #ifdef _DEBUG_
-	if (!pPDUInfo)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+		try {
+			CPDUInfo *pTempPDUInfo = null_v;
+			v_ TempID;
 
-	if (DIRECTION_IN	!= Direction &&
-		DIRECTION_OUT	!= Direction &&
-		DIRECTION_ALL	!= Direction)
-	{
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_2);
-	}
-#endif
-
-	if (DIRECTION_IN == (EDirection)(Direction & DIRECTION_IN))
-	{
-#ifdef _DEBUG_
-		try
-		{
-			CPDUInfo	*pTempPDUInfo = null_v;
-			v_			TempID;
-
-			if (true_v == FindPDU(ID, DIRECTION_IN, pTempPDUInfo)
-				|| true_v == FindID(pPDUInfo, DIRECTION_IN, TempID))
-			{
+			if (true_v == FindPDU(id, DIRECTION_IN, pTempPDUInfo)
+					|| true_v == FindID(pduInfo, DIRECTION_IN, TempID)) {
 				_RET(ELEMENT_EXIST_IN_CONTAINER);
 			}
-		}
-		catch (error_code err)
-		{
+		} catch (error_code err) {
 			_RET(err);
 		}
 #endif
 
-		try
-		{
-			m_PDUInTableMap.insert(map_pdu_table::value_type((size_)ID,
-															 pPDUInfo));
-			m_IDInTableMap.insert(map_id_table::value_type(pPDUInfo,
-														   (size_)ID));
-		}
-		catch (error_code err)
-		{
+		try {
+			_pduInTableMap.insert(MapPduTable::value_type((size_) id, pduInfo));
+			_idInTableMap.insert(MapIdTable::value_type(pduInfo, (size_) id));
+		} catch (error_code err) {
 #ifdef _DEBUG_
 			_RET(err);
 #endif
 		}
 	}
 
-	if (DIRECTION_OUT == (EDirection)(Direction & DIRECTION_OUT))
-	{
+	if (DIRECTION_OUT == (EDirection) (direction & DIRECTION_OUT)) {
 #ifdef _DEBUG_
-		try
-		{
-			CPDUInfo	*pTempPDUInfo = null_v;
-			v_			TempID;
+		try {
+			CPDUInfo *pTempPDUInfo = null_v;
+			v_ TempID;
 
-			if (true_v == FindPDU(ID, DIRECTION_OUT, pTempPDUInfo)
-				|| true_v == FindID(pPDUInfo, DIRECTION_OUT, TempID))
-			{
+			if (true_v == FindPDU(id, DIRECTION_OUT, pTempPDUInfo)
+					|| true_v == FindID(pduInfo, DIRECTION_OUT, TempID)) {
 				_RET(ELEMENT_EXIST_IN_CONTAINER);
 			}
-		}
-		catch (error_code err)
-		{
+		} catch (error_code err) {
 			_RET(err);
 		}
 #endif
 
-		try
-		{
-			m_PDUOutTableMap.insert(map_pdu_table::value_type((size_)ID,
-															  pPDUInfo));
-			m_IDOutTablemap.insert(map_id_table::value_type(pPDUInfo,
-															(size_)ID));
-		}
-		catch (error_code err)
-		{
+		try {
+			_pduOutTableMap.insert(
+					MapPduTable::value_type((size_) id, pduInfo));
+			_idOutTablemap.insert(MapIdTable::value_type(pduInfo, (size_) id));
+		} catch (error_code err) {
 #ifdef _DEBUG_
 			_RET(err);
 #endif
@@ -91,19 +58,15 @@ ret_ CNetworkConf::ConfigPDU(const v_ &ID,
 	_RET(SUCCESS);
 }
 
-ret_ CNetworkConf::IdentifyID(const v_ &ID,
-							  CPDUInfo *&pPDUInfo,
-							  EDirection Direction)
-{
+ub_4 CNetworkConf::IdentifyID(const v_ &ID, CPDUInfo *&pPDUInfo,
+		EDirection Direction) {
 	_START(IDENTIFY_ID);
 
 #ifdef _DEBUG_
 	if (pPDUInfo)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 
-	if (DIRECTION_IN != Direction
-		&& DIRECTION_OUT != Direction)
-	{
+	if (DIRECTION_IN != Direction && DIRECTION_OUT != Direction) {
 		_RET(PARAMETER_TYPE_ERROR | PARAMETER_3);
 	}
 #endif
@@ -114,19 +77,15 @@ ret_ CNetworkConf::IdentifyID(const v_ &ID,
 	_RET(SUCCESS);
 }
 
-ret_ CNetworkConf::IdentifyPDU(const CPDUInfo *pPDUInfo,
-							   v_ &ID,
-							   EDirection Direction)
-{
+ub_4 CNetworkConf::IdentifyPDU(const CPDUInfo *pPDUInfo, v_ &ID,
+		EDirection Direction) {
 	_START(IDENTIFY_PDU);
 
 #ifdef _DEBUG_
 	if (!pPDUInfo)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (DIRECTION_IN != Direction
-		&& DIRECTION_OUT != Direction)
-	{
+	if (DIRECTION_IN != Direction && DIRECTION_OUT != Direction) {
 		_RET(PARAMETER_TYPE_ERROR | PARAMETER_3);
 	}
 #endif
@@ -137,72 +96,48 @@ ret_ CNetworkConf::IdentifyPDU(const CPDUInfo *pPDUInfo,
 	_RET(SUCCESS);
 }
 
+bool_ CNetworkConf::findPdu(const v_ &id, EDirection direction,
+		CPDUInfo *&pduInfo) {
+	MapPduTable::const_iterator pos/* = _pduInTableMap.end()*/;
 
-bool_ CNetworkConf::FindPDU(const v_ &ID,
-							EDirection Direction,
-							CPDUInfo *&pPDUInfo)
-{
-	map_pdu_table::const_iterator pos/* = m_PDUInTableMap.end()*/;
+	if (DIRECTION_IN == direction) {
+		pos = _pduInTableMap.find(id);
 
-	try
-	{
-		if (DIRECTION_IN == Direction)
-		{
-			pos = m_PDUInTableMap.find((size_)ID);
+		if (_pduInTableMap.end() != pos) {
+			pduInfo = (CPDUInfo *) pos->second;
 
-			if (m_PDUInTableMap.end() != pos)
-			{
-				pPDUInfo = (CPDUInfo *)pos->second;
-
-				return true_v;
-			}
-
+			return true_v;
 		}
-		else if (DIRECTION_OUT == Direction)
-		{
-			pos = m_PDUOutTableMap.find((size_)ID);
+	} else if (DIRECTION_OUT == direction) {
+		pos = _pduOutTableMap.find((size_) id);
 
-			if (m_PDUOutTableMap.end() != pos)
-			{
-				pPDUInfo = (CPDUInfo *)pos->second;
+		if (_pduOutTableMap.end() != pos) {
+			pduInfo = (CPDUInfo *) pos->second;
 
-				return true_v;
-			}
+			return true_v;
 		}
-	}
-	catch (...)
-	{
-		return false_v;
 	}
 
 	return false_v;
 }
 
-bool_ CNetworkConf::FindID(const CPDUInfo *pPDUInfo,
-						   EDirection Direction,
-						   v_ &ID)
-{
-	map_id_table::const_iterator pos;
+bool_ CNetworkConf::findid(const CPDUInfo *pduInfo, EDirection direction,
+		v_ &id) {
+	MapIdTable::const_iterator pos;
 
-	if (DIRECTION_IN == Direction)
-	{
-		pos = m_IDInTableMap.find((CPDUInfo *)pPDUInfo);
+	if (DIRECTION_IN == direction) {
+		pos = _idInTableMap.find((CPDUInfo *) pduInfo);
 
-		if (m_IDInTableMap.end() != pos)
-		{
-			ID = v_((size_)pos->second);
+		if (_idInTableMap.end() != pos) {
+			id = v_(pos->second);
 
 			return true_v;
 		}
+	} else if (DIRECTION_OUT == direction) {
+		pos = _idOutTablemap.find((CPDUInfo *) pduInfo);
 
-	}
-	else if (DIRECTION_OUT == Direction)
-	{
-		pos = m_IDOutTablemap.find((CPDUInfo *)pPDUInfo);
-
-		if (m_IDOutTablemap.end() != pos)
-		{
-			ID = v_((size_)pos->second);
+		if (_idOutTablemap.end() != pos) {
+			id = v_(pos->second);
 
 			return true_v;
 		}
