@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <networks xmlns="http://www.comegg.com/network" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.comegg.com/network network.xsd">
-	<acceptor name="weather_server" command_id="command" protocol="weather" local_port="8900" size_id="size" max_connections="100">
-		<identity identity="weather_server.query_id" pdu="query" direction="in"/>
-		<identity identity="weather_server.query_ack_id" pdu="query_ack" direction="out"/>
-	</acceptor>
 	<acceptor name="scsblog_server" command_id="command" protocol="scsblog" local_port="9000" size_id="size" max_connections="100">
 		<identity identity="scsblog_server.RegisterUserID" pdu="RegisterUser" direction="in"/>
 		<identity identity="scsblog_server.RegisterUserAckID" pdu="RegisterUserAck" direction="out"/>

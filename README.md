@@ -32,6 +32,7 @@ Log
 2. only keep TCP supports and removed UDP supports, maybe add UDP supports later
 3. enhance common supports classes and tools
 4. replace the error handle stack with normal log system
-5. replace eclipse with clion(from jetbrains)
+5. replace eclipse with clion(from jetbrains) due to xml and scheme supports
+6. refine schemes and xml files accordingly
 
 

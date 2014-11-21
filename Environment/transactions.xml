@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transactions xmlns="http://www.comegg.com/transactions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.comegg.com/transactions transactions.xsd">
-	<processor name="weather_server">
-		<data_block>
-			<v_string name="today_weather" value="26 ~ 31 degree centigrades. It will be rainy"/>
-		</data_block>
-		<handle identity="weather_server.query" direction="in">
-			<process_block>
-				<send protocol="weather" pdu="query_ack">
-					<field_variable field_name="content">
-						<solid_variable name="today_weather"/>
-					</field_variable>
-				</send>
-			</process_block>
-		</handle>
-	</processor>
 	<processor name="scsblog_server">
 		<data_block>
 			<v_ub_4 name="LoginedUserID"/>
@@ -547,7 +533,7 @@
 					</program>					
 				</if>			
 			</process_block>
-		</handle>					
+		</handle>				
 		<handle identity="scsblog_server.OpenWeatherServer" direction="in">
 			<data_block>
 				<v_string name="split_parameters" value="./Environments/Weather"/>
@@ -564,6 +550,6 @@
 					</field_variable>
 				</send>
 			</process_block>
-		</handle>					
+		</handle>			
 	</processor>
 </transactions>
