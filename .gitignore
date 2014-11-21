@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+*.depend
 
 # Compiled Dynamic libraries
 *.so
