@@ -247,7 +247,7 @@
     <xs:complexType name="continue">
         <xs:annotation>
             <xs:documentation>
-                Stop special operator, like while, make no sense for other
+                stop special operator, like while, make no sense for other
                 operator.
             </xs:documentation>
         </xs:annotation>
@@ -258,7 +258,7 @@
     <xs:complexType name="break">
         <xs:annotation>
             <xs:documentation>
-                Stop the nearest operator, like while, make no sense for other
+                stop the nearest operator, like while, make no sense for other
                 operator.
             </xs:documentation>
         </xs:annotation>
@@ -268,7 +268,7 @@
     </xs:complexType>
     <xs:complexType name="block">
         <xs:annotation>
-            <xs:documentation>Stop the top operator.</xs:documentation>
+            <xs:documentation>stop the top operator.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="base"/>

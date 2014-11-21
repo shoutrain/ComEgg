@@ -3,37 +3,38 @@
 
 #include "ProtocolCommon.h"
 
-class CPduInfo : public CBase
-{
+class CPduInfo : public CBase {
 public:
-	CPDUInfo(const CField *pField)
-		: CBaseClass(CPDUINFO)
-	{
-		Start(pField);
-	}
+    CPDUInfo(const CField *field) {
+        start(field);
+    }
 
-	virtual ~CPDUInfo() {}
+    virtual ~CPDUInfo() {
+    }
 
-	// If GroupName is not null, Field is sub-field, GroupName is the name
-	// of group.
-	ret_ AddField(const TField &Field, 
-				  const ch_1 *pszGroupName = null_v);
+    // If GroupName is not null, Field is sub-field, GroupName is the name
+    // of group.
+    b_4 addField(const TField &field,
+            const ch_1 *groupName = null_v);
 
-	// Get field
-	ret_ GetField(const ch_1 *pszName, CField *&pField);
+    // Get field
+    CField *getField(const ch_1 *name);
 
-	// Get PDU structure
-	ret_ GetStruct(CField *&pField);
+    // Get PDU structure
+    CField *getStruct() {
+        return _field;
+    }
 
 protected:
-	ret_ Start(const CField *pHeadField);
-	ret_ Stop();
+    b_4 start(const CField *headField);
+
+    none_ stop();
 
 private:
-    mapField m_FieldMap;
+    mapField _fieldMap;
 
-	CField *m_pField;
-	CField *m_pCurField;
+    CField *_field;
+    CField *_curField;
 };
 
 #endif // _C_PDU_INFO_H_

@@ -1,255 +1,180 @@
-#include "CPduInfo.h"
+none_ CPduInfo::start(const CField *headField) {
+    _field = null_v;
+    _curField = null_v;
 
-ret_ CPduInfo::Start(const CField *pHeadField)
-{
-	_START(START);
+    if (headField) {
+        _field = (CField *) headField->clone(null_v, null_v);
+    }
 
-	m_pField = null_v;
-	m_pCurField = null_v;
+    CField *p = _field;
 
-	if (pHeadField)
-        m_pField = (CField *) pHeadField->clone(null_v, null_v);
-
-	CField *p = m_pField;
-		 
-	while (p)
-	{
-        if (FIELD_GROUP_TYPE == p->type())
-		{
+    while (p) {
+        if (FIELD_GROUP_TYPE == p->type()) {
             CField *q = (CField *) p->getSubField();
 
-			while (q)
-			{
-				ch_1 sName[VARIABLE_NAME_LENGTH * 2] = {0};
+            while (q) {
+                ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-                sprintf(sName, "%s.%s", p->name(), q->name());
-                m_FieldMap.insert(mapField::value_type(sName, q));
+                sprintf(name, "%s.%s", p->name(), q->name());
+                _fieldMap.insert(mapField::value_type(name, q));
 
                 q = (CField *) q->getNextField();
-			}
-		}
+            }
+        }
 
-		m_pCurField = p;
-        m_FieldMap.insert(mapField::value_type(p->name(), p));
+        _curField = p;
+        _fieldMap.insert(mapField::value_type(p->name(), p));
 
         p = (CField *) p->getNextField();
-	}
-
-	_RET(SUCCESS);
+    }
 }
 
-ret_ CPduInfo::Stop()
-{
-	_START(STOP);
+none_ CPduInfo::stop() {
+    for (mapField::iterator pos = _fieldMap.begin(); pos != _fieldMap.end();
+         pos++) {
+        _DEL(pos->second);
+    }
 
-    for (mapField::iterator pos = m_FieldMap.begin(); pos != m_FieldMap.end();
-		 pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos->second);
-	}
-
-	m_FieldMap.clear();
-	m_pField = null_v;
-	m_pCurField = null_v;
-
-	_RET(SUCCESS);
+    _fieldMap.clear();
+    _field = null_v;
+    _curField = null_v;
 }
 
-ret_ CPduInfo::AddField(const TField &Field, const ch_1 *pszGroupName)
-{
-	_START(ADD_FIELD);
+b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
+    if (!field.name || 0 == field.name[0]) {
+        assert(0);
+        return -1;
+    }
 
-#ifdef _DEBUG_
-	if (!Field.name ||	0 == Field.name[0])
-		_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+    b_4 ret;
+    CField *singleField = null_v;
+    CField *groupField = null_v;
+    ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-	ret_ Ret;
-	CField *pField = null_v;
-	CField *pGroupField = null_v;
-	ch_1 sName[VARIABLE_NAME_LENGTH * 2] = {0};
+    if (groupName && 0 != groupName[0]) {
+        groupField = getField(groupName);
 
-	if (pszGroupName && 0 != pszGroupName[0])
-	{
-		Ret = _ERR(GetField(pszGroupName, pGroupField));
+        if (null_v == groupField) {
+            return -2;
+        }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
+        sprintf(name, "%s.%s", groupName, field.name);
+    } else {
+        sprintf(name, "%s", field.name);
+    }
 
-        sprintf(sName, "%s.%s", pszGroupName, Field.name);
-	}
-	else
-	{
-        sprintf(sName, "%s", Field.name);
-	}
+    // Check if there is a field which name is same as the field's name,
+    // in the map.
+    if (_fieldMap.end() != _fieldMap.find(name)) {
+        return -3;
+    }
 
-	// Check if there is a field which name is same as the field's name,
-	// in the map.
-	if (m_FieldMap.end() != m_FieldMap.find(sName))
-		_RET(ELEMENT_EXIST_IN_CONTAINER);
+    switch (field.style) {
+        case FIELD_NORMAL_STYLE: {
+            EFieldType type;
 
-    switch (Field.style)
-	{
-	case FIELD_NORMAL_STYLE:
-	{
-		EFieldType Type;
+            if (1 == field.length && field.isSigned) {
+                type = FIELD_B_1_TYPE;
+            } else if (1 == field.length && !field.isSigned) {
+                type = FIELD_UB_1_TYPE;
+            } else if (2 == field.length && field.isSigned) {
+                type = FIELD_B_2_TYPE;
+            } else if (2 == field.length && !field.isSigned) {
+                type = FIELD_UB_2_TYPE;
+            } else if (4 == field.length && field.isSigned) {
+                type = FIELD_B_4_TYPE;
+            } else if (4 == field.length && !field.isSigned) {
+                type = FIELD_UB_4_TYPE;
+            } else if (8 == field.length && field.isSigned) {
+                type = FIELD_B_8_TYPE;
+            } else if (8 == field.length && !field.isSigned) {
+                type = FIELD_UB_8_TYPE;
+            } else {
+                return -4;
+            }
 
-        if (1 == Field.length && Field.isSigned)
-			Type = FIELD_B_1_TYPE;
-        else if (1 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_1_TYPE;
-        else if (2 == Field.length && Field.isSigned)
-			Type = FIELD_B_2_TYPE;
-        else if (2 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_2_TYPE;
-        else if (4 == Field.length && Field.isSigned)
-			Type = FIELD_B_4_TYPE;
-        else if (4 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_4_TYPE;
-        else if (8 == Field.length && Field.isSigned)
-			Type = FIELD_B_8_TYPE;
-        else if (8 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                return -5;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            singleField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_FLOAT_STYLE: {
+            EFieldType type;
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_FLOAT_STYLE:
-	{
-		EFieldType Type;
+            if (4 == field.length) {
+                type = FIELD_FB_4_TYPE;
+            } else if (8 == field.length) {
+                type = FIELD_FB_8_TYPE;
+            } else {
+                return -6;
+            }
 
-        if (4 == Field.length)
-			Type = FIELD_FB_4_TYPE;
-        else if (8 == Field.length)
-			Type = FIELD_FB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                return -7;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            singleField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_STRING_STYLE: {
+            if (0 == field.size || 0 != field.sizeName[0]) {
+                return -8;
+            }
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_STRING_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 == Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            singleField = new CFieldString(name, field.size, groupField);
+        }
+            break;
+        case FIELD_GROUP_STYLE: {
+            if (0 != field.size) {
+                return -9;
+            }
 
-        pField = new CFieldString(sName, Field.size, pGroupField);
-	}
-	break;
-	case FIELD_GROUP_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 != Field.size)
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 == field.sizeName[0]) {
+                return -10;
+            }
 
-		if (0 == Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
-		
-		CField *pSizeField = null_v;
+            CField *sizeField = null_v;
 
-        Ret = _ERR(GetField(Field.sizeName, pSizeField));
+            if (0 != getField(field.sizeName, sizeField)) {
+                return -11;
+            }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
-				
-		pField = new CFieldGroup(sName, pSizeField);
-	}
-	break;
-#ifdef _DEBUG_
-	default:
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_1);
-#endif
-	}
+            singleField = new CFieldGroup(name, sizeField);
+        }
+            break;
+        default:
+            return -12;
+    }
 
-	if (!pGroupField)
-	{
-		if (m_pCurField)
-            m_pCurField->attach(pField);
-		else
-			m_pField = pField;
+    if (!groupField) {
+        if (_curField) {
+            _curField->attach(singleField);
+        } else {
+            _field = singleField;
+        }
 
-		m_pCurField = pField;
-	}
-	else
-	{
-        pGroupField->setSubField(pField);
-	}
+        _curField = singleField;
+    } else {
+        groupField->setSubField(singleField);
+    }
 
-    m_FieldMap.insert(mapField::value_type(sName, pField));
+    _fieldMap.insert(mapField::value_type(name, singleField));
 
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CPduInfo::GetField(const ch_1 *pszName, CField *&pField)
-{
-	_START(GET_FIELD);
+CField *CPduInfo::getField(const ch_1 *name) {
+    if (!name || 0 == name[0]) {
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapField::const_iterator pos = _fieldMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_fieldMap.end() == pos) {
+        return null_v;
+    }
 
-	if (pField)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-    mapField::const_iterator pos = m_FieldMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_FieldMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pField = (CField *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
-}
-
-ret_ CPduInfo::GetStruct(CField *&pField)
-{
-	_START(GET_STRUCT);
-
-#ifdef _DEBUG_
-	if (pField)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_1);
-#endif
-
-	pField = m_pField;
-
-	_RET(SUCCESS);
+    return (CField *) pos->second;
 }
