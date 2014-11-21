@@ -70,14 +70,16 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="unitary_calculate">
+    <xs:complexType name="unitaryCalculate">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
                               ref="parameterVariable">
                         <xs:annotation>
-                            <xs:documentation>First = Second.</xs:documentation>
+                            <xs:documentation>
+                                First = Second.
+                            </xs:documentation>
                         </xs:annotation>
                     </xs:group>
                 </xs:sequence>
@@ -101,7 +103,8 @@
                     <xs:group maxOccurs="3" minOccurs="3"
                               ref="parameterVariable">
                         <xs:annotation>
-                            <xs:documentation>First + Second = Third.
+                            <xs:documentation>
+                                First + Second = Third.
                             </xs:documentation>
                         </xs:annotation>
                     </xs:group>
@@ -124,20 +127,20 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="config_group">
+    <xs:complexType name="configGroup">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
-                    <xs:element name="group_varialbe" type="group_variable"/>
-                    <xs:element name="solid_variable" type="solid_variable"/>
+                    <xs:element name="groupVariable" type="groupVariable"/>
+                    <xs:element name="solidVariable" type="solidVariable"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="condition_unitary">
+    <xs:complexType name="conditionUnitary">
         <xs:sequence>
-            <xs:group maxOccurs="1" minOccurs="1" ref="parameter_variable">
+            <xs:group maxOccurs="1" minOccurs="1" ref="parameterVariable">
                 <xs:annotation>
                     <xs:documentation>
                         First: The value.
@@ -146,9 +149,9 @@
             </xs:group>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="condition_duality">
+    <xs:complexType name="conditionDuality">
         <xs:sequence>
-            <xs:group maxOccurs="2" minOccurs="2" ref="parameter_variable">
+            <xs:group maxOccurs="2" minOccurs="2" ref="parameterVariable">
                 <xs:annotation>
                     <xs:documentation>
                         First: Left.
@@ -170,7 +173,7 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
-    <xs:complexType name="expression_unitary">
+    <xs:complexType name="expressionUnitary">
         <xs:sequence>
             <xs:group ref="expression"/>
         </xs:sequence>
@@ -182,7 +185,7 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
-    <xs:complexType name="expression_duality">
+    <xs:complexType name="expressionDuality">
         <xs:sequence>
             <xs:group maxOccurs="2" minOccurs="2" ref="expression"/>
         </xs:sequence>
@@ -197,10 +200,10 @@
     </xs:complexType>
     <xs:group name="expression">
         <xs:choice>
-            <xs:element name="expression_unitary" type="expression_unitary"/>
-            <xs:element name="expression_duality" type="expression_duality"/>
-            <xs:element name="condition_unitary" type="condition_unitary"/>
-            <xs:element name="condition_duality" type="condition_duality"/>
+            <xs:element name="expressionUnitary" type="expressionUnitary"/>
+            <xs:element name="expressionDuality" type="expressionDuality"/>
+            <xs:element name="conditionUnitary" type="conditionUnitary"/>
+            <xs:element name="conditionDuality" type="conditionDuality"/>
         </xs:choice>
     </xs:group>
     <xs:group name="action">
@@ -213,8 +216,8 @@
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="data_block"
-                                type="data_block"/>
+                    <xs:element minOccurs="0" name="dataBlock"
+                                type="dataBlock"/>
                     <xs:group maxOccurs="unbounded" ref="action"/>
                     <xs:element minOccurs="0" name="program" type="program"/>
                 </xs:sequence>
@@ -225,10 +228,10 @@
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="data_block"
-                                type="data_block"/>
+                    <xs:element minOccurs="0" name="dataBlock"
+                                type="dataBlock"/>
                     <xs:group ref="expression"/>
-                    <xs:element name="process_block" type="process_block"/>
+                    <xs:element name="processBlock" type="processBlock"/>
                 </xs:sequence>
                 <xs:attribute default="head" name="position">
                     <xs:simpleType>
@@ -243,8 +246,9 @@
     </xs:complexType>
     <xs:complexType name="continue">
         <xs:annotation>
-            <xs:documentation>Stop special operator, like while, make no sense
-                for other operator.
+            <xs:documentation>
+                Stop special operator, like while, make no sense for other
+                operator.
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
@@ -253,8 +257,9 @@
     </xs:complexType>
     <xs:complexType name="break">
         <xs:annotation>
-            <xs:documentation>Stop the nearest operator, like while, make no
-                sense for other operator.
+            <xs:documentation>
+                Stop the nearest operator, like while, make no sense for other
+                operator.
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
@@ -275,33 +280,33 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0"
-                                name="field_variable">
+                                name="fieldVariable">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:group ref="parameter_variable"/>
+                                <xs:group ref="parameterVariable"/>
                             </xs:sequence>
-                            <xs:attribute name="field_name"
-                                          type="reference_name" use="required"/>
+                            <xs:attribute name="fieldName"
+                                          type="referenceName" use="required"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:group maxOccurs="2" minOccurs="0"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 If there is none, it&apos;s the current
                                 Interface or current remote ip and port.
                                 If there is only one element, it&apos;s TCP
                                 Interface.
-                                If thiere are two element,
+                                If there are two element,
                                 First: Ip.
                                 Second: Port.
                             </xs:documentation>
                         </xs:annotation>
                     </xs:group>
                 </xs:sequence>
-                <xs:attribute name="protocol" type="reference_name"
+                <xs:attribute name="protocol" type="referenceName"
                               use="required"/>
-                <xs:attribute name="pdu" type="reference_name" use="required"/>
+                <xs:attribute name="pdu" type="referenceName" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -310,9 +315,10 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="0"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
-                            <xs:documentation>If there is none, it&apos;s the
+                            <xs:documentation>
+                                If there is none, it&apos;s the
                                 current Interface.
                                 If there is only one element, it&apos;s TCP
                                 Interface.
@@ -327,12 +333,12 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="get_address">
+    <xs:complexType name="getAddress">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: IP.
@@ -358,7 +364,7 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="3" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: Category, must be string.
@@ -382,7 +388,7 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: Category, must be string.
@@ -399,7 +405,7 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="3" minOccurs="3"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: Category, must be string.
@@ -413,12 +419,12 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="get_usage">
+    <xs:complexType name="getUsage">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="1" minOccurs="1"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: Return usage
@@ -430,12 +436,12 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="network_wake_up">
+    <xs:complexType name="networkWakeUp">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: interface name, must be string.
@@ -448,16 +454,16 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="network_sleep">
+    <xs:complexType name="networkSleep">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: interface name, must be string.
-                                Second: return destory result, maybe success,
+                                Second: return destroy result, maybe success,
                                 maybe failure.
                             </xs:documentation>
                         </xs:annotation>
@@ -467,12 +473,12 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="read_file">
+    <xs:complexType name="readFile">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="3" minOccurs="3"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: File Folder
@@ -485,12 +491,12 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="save_file">
+    <xs:complexType name="saveFile">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="4" minOccurs="4"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: File Folder
@@ -504,12 +510,12 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="delete_file">
+    <xs:complexType name="deleteFile">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: File Folder or File name
@@ -522,30 +528,30 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="use_module">
+    <xs:complexType name="useModule">
         <xs:complexContent>
             <xs:extension base="base">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="parameter_in">
+                    <xs:element minOccurs="0" name="parameterIn">
                         <xs:complexType>
                             <xs:group maxOccurs="unbounded"
-                                      ref="parameter_variable"/>
+                                      ref="parameterVariable"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:element maxOccurs="unbounded" minOccurs="0"
-                                name="parameter_out">
+                                name="parameterOut">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:group ref="parameter_variable"/>
+                                <xs:group ref="parameterVariable"/>
                             </xs:sequence>
-                            <xs:attribute name="field_name"
-                                          type="reference_name" use="required"/>
+                            <xs:attribute name="fieldName"
+                                          type="referenceName" use="required"/>
                         </xs:complexType>
                     </xs:element>
                 </xs:sequence>
-                <xs:attribute name="module" type="reference_name"
+                <xs:attribute name="module" type="referenceName"
                               use="required"/>
-                <xs:attribute name="interface" type="reference_name"
+                <xs:attribute name="interface" type="referenceName"
                               use="required"/>
             </xs:extension>
         </xs:complexContent>
@@ -556,7 +562,7 @@
             <xs:extension base="base">
                 <xs:sequence>
                     <xs:group maxOccurs="2" minOccurs="2"
-                              ref="parameter_variable">
+                              ref="parameterVariable">
                         <xs:annotation>
                             <xs:documentation>
                                 First: Environment folder
@@ -578,12 +584,12 @@
         </xs:complexContent>
     </xs:complexType>
     <!-- ****************************************************************************************************-->
-    <xs:complexType name="process_block">
+    <xs:complexType name="processBlock">
         <xs:choice maxOccurs="unbounded">
             <xs:element name="empty" type="empty"/>
-            <xs:element name="unitary_calculate" type="unitary_calculate"/>
-            <xs:element name="duality_calculate" type="duality_calculate"/>
-            <xs:element name="config_group" type="config_group"/>
+            <xs:element name="unitaryCalculate" type="unitaryCalculate"/>
+            <xs:element name="dualityCalculate" type="dualityCalculate"/>
+            <xs:element name="configGroup" type="configGroup"/>
             <xs:element name="if" type="if"/>
             <xs:element name="while" type="while"/>
             <xs:element name="continue" type="continue"/>
@@ -591,17 +597,17 @@
             <xs:element name="break" type="break"/>
             <xs:element name="send" type="send"/>
             <xs:element name="forward" type="forward"/>
-            <xs:element name="get_address" type="get_address"/>
+            <xs:element name="getAddress" type="getAddress"/>
             <xs:element name="register" type="register"/>
             <xs:element name="unregister" type="unregister"/>
             <xs:element name="search" type="search"/>
-            <xs:element name="get_usage" type="get_usage"/>
-            <xs:element name="network_wake_up" type="network_wake_up"/>
-            <xs:element name="network_sleep" type="network_sleep"/>
-            <xs:element name="read_file" type="read_file"/>
-            <xs:element name="save_file" type="save_file"/>
-            <xs:element name="delete_file" type="delete_file"/>
-            <xs:element name="use_module" type="use_module"/>
+            <xs:element name="getUsage" type="getUsage"/>
+            <xs:element name="networkWakeUp" type="networkWakeUp"/>
+            <xs:element name="networkSleep" type="networkSleep"/>
+            <xs:element name="readFile" type="readFile"/>
+            <xs:element name="saveFile" type="saveFile"/>
+            <xs:element name="deleteFile" type="deleteFile"/>
+            <xs:element name="useModule" type="useModule"/>
             <xs:element name="split" type="split"/>
             <xs:element name="die" type="die"/>
             <xs:element name="program" type="program"/>
@@ -609,8 +615,8 @@
     </xs:complexType>
     <xs:complexType name="program">
         <xs:sequence>
-            <xs:element minOccurs="0" name="data_block" type="data_block"/>
-            <xs:element name="process_block" type="process_block"/>
+            <xs:element minOccurs="0" name="dataBlock" type="dataBlock"/>
+            <xs:element name="processBlock" type="processBlock"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

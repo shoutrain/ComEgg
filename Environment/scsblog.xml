@@ -1,119 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol xmlns="http://www.comegg.com/protocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.comegg.com/protocol protocol.xsd" name="scsblog">
-	<commandIdValue name="registerUserId" value="1"/>
-	<commandIdValue name="registerUserAckId" value="2"/>
-	<commandIdValue name="verifyUserId" value="3"/>
-	<commandIdValue name="verifyUserAckId" value="4"/>
-	<commandIdValue name="updateUserInfoId" value="5"/>
-	<commandIdValue name="updateUserInfoAckId" value="6"/>
-	<commandIdValue name="getUserInfoId" value="7"/>
-	<commandIdValue name="getUserInfoAckId" value="8"/>
-	<commandIdValue name="addBlogId" value="9"/>
-	<commandIdValue name="addBlogAckId" value="10"/>
-	<commandIdValue name="addCommentsId" value="11"/>
-	<commandIdValue name="addCommentsAckId" value="12"/>
-	<commandIdValue name="getBlogId" value="13"/>
-	<commandIdValue name="getBlogAckId" value="14"/>
-	<commandIdValue name="getBlogListByUserId" value="15"/>
-	<commandIdValue name="getBlogListByUserAckId" value="16"/>
-	<commandIdValue name="getBlogListId" value="17"/>
-	<commandIdValue name="getBlogListAckId" value="18"/>
-	<commandIdValue name="openWeatherServerId" value="19"/>
-	<commandIdValue name="openWeatherServerAckId" value="20"/>
-	<head>
-		<normal name="size" length="4" signed="false"/>
-		<normal name="command" length="4" signed="false"/>
-	</head>
-	<pdu name="registerUser">
-		<string name="userName" size="16"/>
-		<string name="password" size="16"/>
-	</pdu>
-	<pdu name="registerUserAck">
-		<normal name="userId" length="4" signed="false"/>
-	</pdu>
-	<pdu name="verifyUser">
-		<string name="userName" size="16"/>
-		<string name="password" size="16"/>
-	</pdu>
-	<pdu name="verifyUserAck">
-		<normal name="userId" length="4" signed="false"/>
-	</pdu>
-	<pdu name="updateUserInfo">
-		<normal name="userId" length="4" signed="false"/>
-		<normal name="ssMale" length="1"/>
-		<string name="birthday" size="11"/>
-		<string name="selfEstimate" size="128"/>
-	</pdu>
-	<pdu name="updateUserInfoAck">
-		<normal name="result" length="1"/>
-	</pdu>
-	<pdu name="getUserInfo">
-		<normal name="userId" length="4" signed="false"/>
-	</pdu>
-	<pdu name="getUserInfoAck">
-		<normal name="result" length="1"/>
-		<normal name="isMale" length="1"/>
-		<string name="birthday" size="11"/>
-		<string name="selfEstimate" size="128"/>
-	</pdu>
-	<pdu name="addBlog">
-		<string name="blogTitle" size="32"/>
-		<string name="blogContent" size="255"/>
-	</pdu>
-	<pdu name="addBlogAck">
-		<normal name="result" length="1"/>
-	</pdu>
-	<pdu name="addComments">
-		<normal name="blogId" length="4" signed="false"/>
-		<string name="comments" size="128"/>
-	</pdu>
-	<pdu name="addCommentsAck">
-		<normal name="result" length="1"/>
-	</pdu>
-	<pdu name="getBlog">
-		<normal name="blogId" length="4" signed="false"/>
-	</pdu>
-	<pdu name="getBlogAck">
-		<normal name="result" length="1"/>
-		<string name="userName" size="16"/>
-		<string name="blogTitle" size="32"/>
-		<string name="blogContent" size="255"/>
-		<string name="createTime" size="20"/>
-		<normal name="commentsNum" length="4" signed="false"/>
-		<group name="commentsArray" size="commentsNum">
-			<normal name="userID" length="4" signed="false"/>
-			<string name="userName" size="16"/>
-			<string name="blogComments" size="128"/>
-			<string name="createTime" size="20"/>
-		</group>
-	</pdu>
-	<pdu name="getBlogListByUser">
-		<normal name="userID" length="4" signed="false"/>
-	</pdu>
-	<pdu name="getBlogListByUserAck">
-		<normal name="result" length="1"/>
-		<normal name="blogNum" length="4" signed="false"/>
-		<group name="blogArray" size="blogNum">
-			<normal name="blogID" length="4" signed="false"/>
-			<string name="blogTitle" size="32"/>
-			<string name="createTime" size="20"/>
-		</group>
-	</pdu>
-	<pdu name="getBlogList"/>
-	<pdu name="getBlogListAck">
-		<normal name="result" length="1"/>
-		<normal name="blogNum" length="4" signed="false"/>
-		<group name="blogArray" size="blogNum">
-			<normal name="userID" length="4" signed="false"/>
-			<string name="userName" size="16"/>
-			<normal name="blogID" length="4" signed="false"/>
-			<string name="blogTitle" size="32"/>
-			<string name="createTime" size="20"/>
-		</group>
-	</pdu>
-	<pdu name="openWeatherServer"/>
-	<pdu name="openWeatherServerAck">
-		<normal name="Result" length="1"/>
-	</pdu>	
+<protocol xmlns="http://www.comegg.com/protocol"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.comegg.com/protocol protocol.xsd"
+          name="blog">
+    <commandIdValue name="registerUserId" value="1"/>
+    <commandIdValue name="registerUserAckId" value="2"/>
+    <commandIdValue name="verifyUserId" value="3"/>
+    <commandIdValue name="verifyUserAckId" value="4"/>
+    <commandIdValue name="updateUserInfoId" value="5"/>
+    <commandIdValue name="updateUserInfoAckId" value="6"/>
+    <commandIdValue name="getUserInfoId" value="7"/>
+    <commandIdValue name="getUserInfoAckId" value="8"/>
+    <commandIdValue name="addBlogId" value="9"/>
+    <commandIdValue name="addBlogAckId" value="10"/>
+    <commandIdValue name="addCommentsId" value="11"/>
+    <commandIdValue name="addCommentsAckId" value="12"/>
+    <commandIdValue name="getBlogId" value="13"/>
+    <commandIdValue name="getBlogAckId" value="14"/>
+    <commandIdValue name="getBlogListByUserId" value="15"/>
+    <commandIdValue name="getBlogListByUserAckId" value="16"/>
+    <commandIdValue name="getBlogListId" value="17"/>
+    <commandIdValue name="getBlogListAckId" value="18"/>
+    <commandIdValue name="openWeatherServerId" value="19"/>
+    <commandIdValue name="openWeatherServerAckId" value="20"/>
+    <head>
+        <normal name="size" length="4" signed="false"/>
+        <normal name="command" length="4" signed="false"/>
+    </head>
+    <pdu name="registerUser">
+        <string name="userName" size="16"/>
+        <string name="password" size="16"/>
+    </pdu>
+    <pdu name="registerUserAck">
+        <normal name="userId" length="4" signed="false"/>
+    </pdu>
+    <pdu name="verifyUser">
+        <string name="userName" size="16"/>
+        <string name="password" size="16"/>
+    </pdu>
+    <pdu name="verifyUserAck">
+        <normal name="userId" length="4" signed="false"/>
+    </pdu>
+    <pdu name="updateUserInfo">
+        <normal name="userId" length="4" signed="false"/>
+        <normal name="ssMale" length="1"/>
+        <string name="birthday" size="11"/>
+        <string name="selfEstimate" size="128"/>
+    </pdu>
+    <pdu name="updateUserInfoAck">
+        <normal name="result" length="1"/>
+    </pdu>
+    <pdu name="getUserInfo">
+        <normal name="userId" length="4" signed="false"/>
+    </pdu>
+    <pdu name="getUserInfoAck">
+        <normal name="result" length="1"/>
+        <normal name="isMale" length="1"/>
+        <string name="birthday" size="11"/>
+        <string name="selfEstimate" size="128"/>
+    </pdu>
+    <pdu name="addBlog">
+        <string name="blogTitle" size="32"/>
+        <string name="blogContent" size="255"/>
+    </pdu>
+    <pdu name="addBlogAck">
+        <normal name="result" length="1"/>
+    </pdu>
+    <pdu name="addComments">
+        <normal name="blogId" length="4" signed="false"/>
+        <string name="comments" size="128"/>
+    </pdu>
+    <pdu name="addCommentsAck">
+        <normal name="result" length="1"/>
+    </pdu>
+    <pdu name="getBlog">
+        <normal name="blogId" length="4" signed="false"/>
+    </pdu>
+    <pdu name="getBlogAck">
+        <normal name="result" length="1"/>
+        <string name="userName" size="16"/>
+        <string name="blogTitle" size="32"/>
+        <string name="blogContent" size="255"/>
+        <string name="createTime" size="20"/>
+        <normal name="commentsNum" length="4" signed="false"/>
+        <group name="commentsArray" size="commentsNum">
+            <normal name="userId" length="4" signed="false"/>
+            <string name="userName" size="16"/>
+            <string name="blogComments" size="128"/>
+            <string name="createTime" size="20"/>
+        </group>
+    </pdu>
+    <pdu name="getBlogListByUser">
+        <normal name="userId" length="4" signed="false"/>
+    </pdu>
+    <pdu name="getBlogListByUserAck">
+        <normal name="result" length="1"/>
+        <normal name="blogNum" length="4" signed="false"/>
+        <group name="blogArray" size="blogNum">
+            <normal name="blogId" length="4" signed="false"/>
+            <string name="blogTitle" size="32"/>
+            <string name="createTime" size="20"/>
+        </group>
+    </pdu>
+    <pdu name="getBlogList"/>
+    <pdu name="getBlogListAck">
+        <normal name="result" length="1"/>
+        <normal name="blogNum" length="4" signed="false"/>
+        <group name="blogArray" size="blogNum">
+            <normal name="userId" length="4" signed="false"/>
+            <string name="userName" size="16"/>
+            <normal name="blogId" length="4" signed="false"/>
+            <string name="blogTitle" size="32"/>
+            <string name="createTime" size="20"/>
+        </group>
+    </pdu>
 </protocol>
 

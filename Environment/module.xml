@@ -1,114 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modules xsi:schemaLocation="http://www.comegg.com/module module.xsd" xmlns="http://www.comegg.com/module" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<module path="./Plugin" name="SCSBlog" ext="so">
-		<interface name="RegisterUser">
-			<parameter_in>
-				<string name="szUserName" size="16"/>
-				<string name="szPassword" size="16"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="uiUserID" length="4" signed="false"/>
-			</parameter_out>
-		</interface>
-		<interface name="VerifyUser">
-			<parameter_in>
-				<string name="szUserName" size="16"/>
-				<string name="szPassword" size="16"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="uiUserID" length="4" signed="false"/>
-			</parameter_out>
-		</interface>
-		<interface name="UpdateUserInfo">
-			<parameter_in>
-				<normal name="uiUserID" length="4" signed="false"/>
-				<normal name="bIsMale" length="1"/>
-				<string name="szBirthday" size="11"/>
-				<string name="szSelfEstimate" size="128"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="bResult" length="1"/>
-			</parameter_out>
-		</interface>
-		<interface name="GetUserInfo">
-			<parameter_in>
-				<normal name="uiUserID" length="4" signed="false"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="bResult" length="1"/>
-				<normal name="bIsMale" length="1"/>
-				<string name="szBirthday" size="11"/>
-				<string name="szSelfEstimate" size="128"/>
-			</parameter_out>
-		</interface>
-		<interface name="AddBlog">
-			<parameter_in>
-				<normal name="uiUserID" length="4" signed="false"/>
-				<string name="szBlogTitle" size="32"/>
-				<string name="szBlogContent" size="255"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="bResult" length="1"/>
-			</parameter_out>
-		</interface>
-		<interface name="AddComments">
-			<parameter_in>
-				<normal name="uiBlogID" length="4" signed="false"/>
-				<normal name="uiUserID" length="4" signed="false"/>
-				<string name="szComments" size="128"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="bResult" length="1"/>
-			</parameter_out>
-		</interface>
-		<interface name="GetBlog">
-			<parameter_in>
-				<normal name="uiBlogID" length="4" signed="false"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="uiSize" length="4" signed="false"/>
-				<normal name="bResult" length="1"/>
-				<string name="szUserName" size="16"/>
-				<string name="szBlogTitle" size="32"/>
-				<string name="szBlogContent" size="255"/>
-				<string name="szCreateTime" size="20"/>
-				<normal name="uiCommentsNum" length="4" signed="false"/>
-				<group name="pCommentsArray" size="uiCommentsNum">
-					<normal name="uiUserID" length="4" signed="false"/>
-					<string name="szUserName" size="16"/>
-					<string name="szBlogComments" size="128"/>
-					<string name="szCreateTime" size="20"/>
-				</group>
-			</parameter_out>
-		</interface>
-		<interface name="GetBlogListByUser">
-			<parameter_in>
-				<normal name="uiUserID" length="4" signed="false"/>
-			</parameter_in>
-			<parameter_out>
-				<normal name="uiSize" length="4" signed="false"/>
-				<normal name="bResult" length="1"/>
-				<normal name="uiBlogNum" length="4" signed="false"/>
-				<group name="pBlogArray" size="uiBlogNum">
-					<normal name="uiBlogID" length="4" signed="false"/>
-					<string name="szBlogTitle" size="32"/>
-					<string name="szCreateTime" size="20"/>
-				</group>
-			</parameter_out>
-		</interface>
-		<interface name="GetBlogList">
-			<parameter_out>
-				<normal name="uiSize" length="4" signed="false"/>
-				<normal name="bResult" length="1"/>
-				<normal name="uiBlogNum" length="4" signed="false"/>
-				<group name="pBlogArray" size="uiBlogNum">
-					<normal name="uiUserID" length="4" signed="false"/>
-					<string name="szUserName" size="16"/>
-					<normal name="uiBlogID" length="4" signed="false"/>
-					<string name="szBlogTitle" size="32"/>
-					<string name="szCreateTime" size="20"/>
-				</group>
-			</parameter_out>
-		</interface>
-	</module>
+<modules xsi:schemaLocation="http://www.comegg.com/module module.xsd"
+         xmlns="http://www.comegg.com/module"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <module path="./Plugin" name="blog" ext="so">
+        <interface name="registerUser">
+            <parameterIn>
+                <string name="userName" size="16"/>
+                <string name="password" size="16"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="userId" length="4" signed="false"/>
+            </parameterOut>
+        </interface>
+        <interface name="verifyUser">
+            <parameterIn>
+                <string name="userName" size="16"/>
+                <string name="password" size="16"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="userId" length="4" signed="false"/>
+            </parameterOut>
+        </interface>
+        <interface name="updateUserInfo">
+            <parameterIn>
+                <normal name="userId" length="4" signed="false"/>
+                <normal name="isMale" length="1"/>
+                <string name="birthday" size="11"/>
+                <string name="selfEstimate" size="128"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="result" length="1"/>
+            </parameterOut>
+        </interface>
+        <interface name="getUserInfo">
+            <parameterIn>
+                <normal name="userId" length="4" signed="false"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="result" length="1"/>
+                <normal name="isMale" length="1"/>
+                <string name="birthday" size="11"/>
+                <string name="selfEstimate" size="128"/>
+            </parameterOut>
+        </interface>
+        <interface name="addBlog">
+            <parameterIn>
+                <normal name="userId" length="4" signed="false"/>
+                <string name="blogTitle" size="32"/>
+                <string name="blogContent" size="255"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="result" length="1"/>
+            </parameterOut>
+        </interface>
+        <interface name="addComments">
+            <parameterIn>
+                <normal name="blogId" length="4" signed="false"/>
+                <normal name="userId" length="4" signed="false"/>
+                <string name="comments" size="128"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="result" length="1"/>
+            </parameterOut>
+        </interface>
+        <interface name="getBlog">
+            <parameterIn>
+                <normal name="blogId" length="4" signed="false"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="size" length="4" signed="false"/>
+                <normal name="result" length="1"/>
+                <string name="userName" size="16"/>
+                <string name="blogTitle" size="32"/>
+                <string name="blogContent" size="255"/>
+                <string name="createTime" size="20"/>
+                <normal name="commentsNum" length="4" signed="false"/>
+                <group name="commentsArray" size="commentsNum">
+                    <normal name="userId" length="4" signed="false"/>
+                    <string name="userName" size="16"/>
+                    <string name="blogComments" size="128"/>
+                    <string name="createTime" size="20"/>
+                </group>
+            </parameterOut>
+        </interface>
+        <interface name="getBlogListByUser">
+            <parameterIn>
+                <normal name="userId" length="4" signed="false"/>
+            </parameterIn>
+            <parameterOut>
+                <normal name="size" length="4" signed="false"/>
+                <normal name="result" length="1"/>
+                <normal name="blogNum" length="4" signed="false"/>
+                <group name="blogArray" size="blogNum">
+                    <normal name="blogId" length="4" signed="false"/>
+                    <string name="blogTitle" size="32"/>
+                    <string name="createTime" size="20"/>
+                </group>
+            </parameterOut>
+        </interface>
+        <interface name="getBlogList">
+            <parameterOut>
+                <normal name="size" length="4" signed="false"/>
+                <normal name="result" length="1"/>
+                <normal name="blogNum" length="4" signed="false"/>
+                <group name="blogArray" size="blogNum">
+                    <normal name="userId" length="4" signed="false"/>
+                    <string name="userName" size="16"/>
+                    <normal name="blogId" length="4" signed="false"/>
+                    <string name="blogTitle" size="32"/>
+                    <string name="createTime" size="20"/>
+                </group>
+            </parameterOut>
+        </interface>
+    </module>
 </modules>
