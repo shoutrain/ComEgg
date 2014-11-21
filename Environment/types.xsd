@@ -4,7 +4,8 @@
 		<xs:appinfo>
 			<author>Goo Shoutrain</author>
 			<filename>type.xsd</filename>
-			<describe>				Included by other schema, no instance documents follow this. 
+			<describe>				
+				Included by other schema, no instance documents follow this. 
 				Some types are defined or declared here.</describe>
 		</xs:appinfo>
 	</xs:annotation>

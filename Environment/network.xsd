@@ -83,20 +83,6 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="receiver" final="#all">
-		<xs:complexContent>
-			<xs:extension base="network">
-				<xs:sequence minOccurs="0">
-					<xs:element name="filter" type="filter"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="sender" final="#all">
-		<xs:complexContent>
-			<xs:extension base="network"/>
-		</xs:complexContent>
-	</xs:complexType>
 	<!--****************************************************************************************************-->
 	<xs:element name="networks">
 		<xs:complexType>
@@ -105,8 +91,6 @@
 					<xs:choice maxOccurs="unbounded">
 						<xs:element name="acceptor" type="acceptor"/>
 						<xs:element name="connector" type="connector"/>
-						<xs:element name="receiver" type="receiver"/>
-						<xs:element name="sender" type="sender"/>
 					</xs:choice>
 				</xs:extension>
 			</xs:complexContent>

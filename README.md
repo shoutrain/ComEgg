@@ -26,10 +26,11 @@ Log
 3. port Xerces C++ 3.0.1 to 3.1.1
 4. decided to replace ACE with native epoll socket
 
-2014/11/20
+2014/11/20 ~ 2014/11/21
 ---------
 1. refactor network part and has not completed
-2. only keep TCP support and removed UDP, maybe add UDP supports later
+2. only keep TCP supports and removed UDP supports, maybe add UDP supports later
 3. enhance common supports classes and tools
 4. replace the error handle stack with normal log system
+
 
