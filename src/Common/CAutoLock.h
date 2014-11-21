@@ -3,19 +3,21 @@
 
 #include "CLock.h"
 
-class CAutoLock: public CBase {
+class CAutoLock : public CBase {
 public:
-	CAutoLock(CLock *lock = null_v);
-	virtual ~CAutoLock();
+    CAutoLock(CLock *lock = null_v);
 
-	const CLock *get() const {
-		return _lock;
-	}
+    virtual ~CAutoLock();
+
+    const CLock *get() const {
+        return _lock;
+    }
 
 private:
-	// Cannot new this class
-	obj_ operator new(size_t size);
-	CLock *_lock;
+    // Cannot new this class
+    obj_ operator new(size_t size);
+
+    CLock *_lock;
 };
 
 #endif // _C_AUTO_LOCK_H_

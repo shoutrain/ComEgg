@@ -7,39 +7,40 @@
 
 class IWorkable;
 
-class CWorker: public CBase {
+class CWorker : public CBase {
 public:
-	CWorker(ub_4 threadStackSize /* k */);
-	virtual ~CWorker();
+    CWorker(ub_4 threadStackSize /* k */);
 
-	// bSync is invalid unless bInformed = true
-	none_ work(IWorkable *workable, bool_ informed = false_v, bool_ sync =
-			false_v);
+    virtual ~CWorker();
 
-	static none_ stop() {
-		_workingCondition = false_v;
-	}
+    // bSync is invalid unless bInformed = true
+    none_ work(IWorkable *workable, bool_ informed = false_v, bool_ sync =
+    false_v);
 
-	static ub_4 getTotalNum() {
-		return _workerNum;
-	}
+    static none_ stop() {
+        _workingCondition = false_v;
+    }
+
+    static ub_4 getTotalNum() {
+        return _workerNum;
+    }
 
 private:
-	static obj_ run(obj_ object);
+    static obj_ run(obj_ object);
 
-	static CMutex _mutexWorker;
-	static ub_4 _workerNum;
-	static bool_ _workingCondition;
+    static CMutex _mutexWorker;
+    static ub_4 _workerNum;
+    static bool_ _workingCondition;
 
-	bool_ createThread();
+    bool_ createThread();
 
-	ub_4 _threadStackSize; // k
-	pthread_t _handle;
-	bool_ _informed;
-	CMutex _mutexInformed;
-	CCond _condInformed;
+    ub_4 _threadStackSize; // k
+    pthread_t _handle;
+    bool_ _informed;
+    CMutex _mutexInformed;
+    CCond _condInformed;
 
-	IWorkable *_workable;
+    IWorkable *_workable;
 };
 
 #endif // _C_WORKER_H_

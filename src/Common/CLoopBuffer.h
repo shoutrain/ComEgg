@@ -5,55 +5,56 @@
 
 class CMutex;
 
-class CLoopBuffer: public CBase {
+class CLoopBuffer : public CBase {
 public:
-	CLoopBuffer(ub_4 size, CMutex *mutex = null_v, bool_ isPadding = false_v);
-	virtual ~CLoopBuffer();
+    CLoopBuffer(ub_4 size, CMutex *mutex = null_v, bool_ isPadding = false_v);
 
-	// buffer: the buffer to be write to the LoopBuffer
-	// size: the buffer size
-	// Return true if success, otherwise false
-	bool_ write(const ch_1 *buffer, ub_4 size);
+    virtual ~CLoopBuffer();
 
-	// buffer: the buffer to be read in
-	// size: the buffer size, the actual read size
-	// Return true if success, otherwise false
-	bool_ read(ch_1 *uffer, ub_4 &size);
+    // buffer: the buffer to be write to the LoopBuffer
+    // size: the buffer size
+    // Return true if success, otherwise false
+    bool_ write(const ch_1 *buffer, ub_4 size);
 
-	none_ reset();
+    // buffer: the buffer to be read in
+    // size: the buffer size, the actual read size
+    // Return true if success, otherwise false
+    bool_ read(ch_1 *uffer, ub_4 &size);
 
-	ub_4 getTotalSize() const {
-		return _totalSize;
-	}
+    none_ reset();
 
-	ub_4 getActualSize() const {
-		return _actualSize;
-	}
+    ub_4 getTotalSize() const {
+        return _totalSize;
+    }
 
-	ub_4 getFreeSize() const {
-		return _freeSize;
-	}
+    ub_4 getActualSize() const {
+        return _actualSize;
+    }
 
-	ub_4 getUsedSize() const {
-		return _usedSize;
-	}
+    ub_4 getFreeSize() const {
+        return _freeSize;
+    }
+
+    ub_4 getUsedSize() const {
+        return _usedSize;
+    }
 
 protected:
-	char *_buffer;
+    char *_buffer;
 
 private:
-	const ub_4 _totalSize;
-	ub_4 _actualSize; // _totalSize - _padding
-	ub_4 _usedSize; // _actualSize - _freeSize
-	ub_4 _freeSize; // _actualSize - _userSize
+    const ub_4 _totalSize;
+    ub_4 _actualSize; // _totalSize - _padding
+    ub_4 _usedSize; // _actualSize - _freeSize
+    ub_4 _freeSize; // _actualSize - _userSize
 
-	bool_ _isPadding;
-	ub_4 _padding; // _totalSize - _actualSize
+    bool_ _isPadding;
+    ub_4 _padding; // _totalSize - _actualSize
 
-	ch_1 *_writePoint;
-	ch_1 *_readPoint;
+    ch_1 *_writePoint;
+    ch_1 *_readPoint;
 
-	CMutex *_mutex;
+    CMutex *_mutex;
 };
 
 #endif // _C_LOOP_BUFFER_H_

@@ -3,17 +3,18 @@
 
 #include "CBase.h"
 
-class CLock: public CBase {
+class CLock : public CBase {
 public:
-	virtual bool_ lock(bool_ bCheck = false_v) = 0;
-	virtual none_ unlock() = 0;
+    virtual bool_ lock(bool_ bCheck = false_v) = 0;
+
+    virtual none_ unlock() = 0;
 
 protected:
-	CLock() {
-	}
+    CLock() {
+    }
 
-	virtual ~CLock() {
-	}
+    virtual ~CLock() {
+    }
 };
 
 #endif // _C_LOCK_H_

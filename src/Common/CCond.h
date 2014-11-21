@@ -7,17 +7,19 @@
 
 class CMutex;
 
-class CCond: public CLock {
+class CCond : public CLock {
 public:
-	CCond(CMutex *mutex);
-	virtual ~CCond();
+    CCond(CMutex *mutex);
 
-	bool_ lock(bool_ check = false_v);
-	void unlock();
+    virtual ~CCond();
+
+    bool_ lock(bool_ check = false_v);
+
+    void unlock();
 
 private:
-	pthread_cond_t _cond;
-	CMutex *_mutex;
+    pthread_cond_t _cond;
+    CMutex *_mutex;
 };
 
 #endif // _C_COND_H_

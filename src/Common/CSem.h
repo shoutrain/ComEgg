@@ -5,18 +5,20 @@
 
 #include <semaphore.h>
 
-class CSem: public CLock {
+class CSem : public CLock {
 public:
-	CSem(ub_4 value = 1);
-	virtual ~CSem();
+    CSem(ub_4 value = 1);
 
-	bool_ lock(bool_ check = false_v);
-	none_ unlock();
+    virtual ~CSem();
 
-	ub_4 getValue();
+    bool_ lock(bool_ check = false_v);
+
+    none_ unlock();
+
+    ub_4 getValue();
 
 private:
-	sem_t _sem;
+    sem_t _sem;
 };
 
 #endif // _C_SEM_H_

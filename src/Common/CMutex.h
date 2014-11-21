@@ -5,20 +5,22 @@
 
 #include <pthread.h>
 
-class CMutex: public CLock {
+class CMutex : public CLock {
 public:
-	CMutex(pthread_mutexattr_t *attr = null_v);
-	virtual ~CMutex();
+    CMutex(pthread_mutexattr_t *attr = null_v);
 
-	bool_ lock(bool_ check = false_v);
-	void unlock();
+    virtual ~CMutex();
 
-	pthread_mutex_t *getMutex() {
-		return &_mutex;
-	}
+    bool_ lock(bool_ check = false_v);
+
+    void unlock();
+
+    pthread_mutex_t *getMutex() {
+        return &_mutex;
+    }
 
 private:
-	pthread_mutex_t _mutex;
+    pthread_mutex_t _mutex;
 };
 
 #endif // _C_MUTEX_H_
