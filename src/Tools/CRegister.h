@@ -8,8 +8,8 @@
 
 using namespace std;
 
-typedef map<string, v_ *>			map_variable;
-typedef map<string, map_variable *>	map_category;
+typedef map<string, v_ *> mapVariable;
+typedef map<string, mapVariable *> map_category;
 
 class CRegister: public CBaseClass
 {

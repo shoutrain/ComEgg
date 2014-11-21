@@ -3,7 +3,7 @@
 #include "../Transactions/CProcessor.h"
 #include "../Data/CVarNetwork.h"
 
-COptSend::COptSend(const CPDUInfo *pPDUInfo,
+COptSend::COptSend(const CPduInfo *pPDUInfo,
 				   const CAutoVar *pDestination)
 	: COperator(OT_SEND)
 {
@@ -12,7 +12,7 @@ COptSend::COptSend(const CPDUInfo *pPDUInfo,
 	m_pPort = null_v;
 
 	m_SendType = TCP_SEND;
-	m_pPDUInfo = (CPDUInfo *)pPDUInfo;
+    m_pPDUInfo = (CPduInfo *) pPDUInfo;
 
 	if (m_pDestination)
 		m_pDestination = pDestination->Clone();
@@ -24,7 +24,7 @@ COptSend::COptSend(const CPDUInfo *pPDUInfo,
 
 	while (pFieldInfo)
 	{
-		if (null_v == pFieldInfo->GetGroupField())
+        if (null_v == pFieldInfo->getGroupField())
 		{
 			pEvaluate = new TEvaluate;
 
@@ -35,12 +35,12 @@ COptSend::COptSend(const CPDUInfo *pPDUInfo,
 			m_EvaluateVector.push_back(pEvaluate);
 		}
 
-		pFieldInfo = (CField *)pFieldInfo->GetNextField();
+        pFieldInfo = (CField *) pFieldInfo->getNextField();
 	}
 }
 
 COptSend::COptSend(b_4 nSign/*No meaning*/,
-				   const CPDUInfo *pPDUInfo,
+        const CPduInfo *pPDUInfo,
 				   const CAutoVar *pIP,
 				   const CAutoVar *pPort)
 	: COperator(OT_SEND)
@@ -50,7 +50,7 @@ COptSend::COptSend(b_4 nSign/*No meaning*/,
 	m_pPort = null_v;
 
 	m_SendType = UDP_SEND;
-	m_pPDUInfo = (CPDUInfo *)pPDUInfo;
+    m_pPDUInfo = (CPduInfo *) pPDUInfo;
 
 	if (m_pIP)
 		m_pIP = pIP->Clone();
@@ -65,7 +65,7 @@ COptSend::COptSend(b_4 nSign/*No meaning*/,
 
 	while (pFieldInfo)
 	{
-		if (null_v == pFieldInfo->GetGroupField())
+        if (null_v == pFieldInfo->getGroupField())
 		{
 			pEvaluate->pFieldInfo = pFieldInfo;
 			pEvaluate->pField = null_v;
@@ -74,7 +74,7 @@ COptSend::COptSend(b_4 nSign/*No meaning*/,
 			m_EvaluateVector.push_back(pEvaluate);
 		}
 
-		pFieldInfo = (CField *)pFieldInfo->GetNextField();
+        pFieldInfo = (CField *) pFieldInfo->getNextField();
 	}
 }
 
@@ -258,7 +258,7 @@ void COptSend::Work(const TMessageUnit *pTMU)
 	for (vector_evaluate::const_iterator pos = m_EvaluateVector.begin();
 		 pos != m_EvaluateVector.end(); pos++)
 	{
-		if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type())
+        if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->type())
 		{
 			// If it's Group, check if it's available.
 			if ((*pos)->pField && (*pos)->pValue)
@@ -270,7 +270,7 @@ void COptSend::Work(const TMessageUnit *pTMU)
 				if ((*pos)->pValue->Value(Temp))
 					bIsCountSize = true_v;
 				// If ture, Network Group
-				else if ((*pos)->pFieldInfo->Size(pTMU->message, pTMU->size))
+                else if ((*pos)->pFieldInfo->size(pTMU->message, pTMU->size))
 					bIsCountSize = true_v;
 
 				if (bIsCountSize)
@@ -286,9 +286,9 @@ void COptSend::Work(const TMessageUnit *pTMU)
 				}
 			}
 		}
-		else // if (null_v == (*pos)->pFieldInfo->GetGroupField())
+        else // if (null_v == (*pos)->pFieldInfo->getGroupField())
 		{
-			nSize += (*pos)->pFieldInfo->GetUnitSize();
+            nSize += (*pos)->pFieldInfo->getUnitSize();
 		}
 	}	
 
@@ -313,7 +313,7 @@ void COptSend::Work(const TMessageUnit *pTMU)
 		{
 			if ((*pos)->pField && (*pos)->pValue)
 			{
-				if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type())
+                if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->type())
 					if (0 == (*pos)->pValue->Value(pTMU)->size())
 						continue;
 

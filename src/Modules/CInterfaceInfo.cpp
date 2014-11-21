@@ -8,7 +8,7 @@ ret_ CInterfaceInfo::Stop()
 {
 	_START(STOP);
 
-	for (map_field::iterator pos1 = m_InFieldMap.begin(); 
+    for (mapField::iterator pos1 = m_InFieldMap.begin();
 		 pos1 != m_InFieldMap.end();
 		 pos1++)
 	{
@@ -19,7 +19,7 @@ ret_ CInterfaceInfo::Stop()
 		_DEL(pos1->second);
 	}
 
-	for (map_field::iterator pos2 = m_OutFieldMap.begin(); 
+    for (mapField::iterator pos2 = m_OutFieldMap.begin();
 		 pos2 != m_OutFieldMap.end();
 		 pos2++)
 	{
@@ -45,7 +45,7 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 	_START(ADD_IN_FIELD);
 
 #ifdef _DEBUG_
-	if (!Field.sName ||	0 == Field.sName[0])
+	if (!Field.name ||	0 == Field.name[0])
 		_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -63,45 +63,45 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 			_RET_BY(Ret);
 #endif
 
-		sprintf(sName, "%s.%s", pszGroupName, Field.sName);
+        sprintf(sName, "%s.%s", pszGroupName, Field.name);
 	}
 	else
 	{
-		sprintf(sName, "%s", Field.sName);
+        sprintf(sName, "%s", Field.name);
 	}
 
 	// Check if there is a field which name is same as the field's name,
 	// in the map.
 	if (m_InFieldMap.end() != m_InFieldMap.find(sName))
 		_RET(ELEMENT_EXIST_IN_CONTAINER);
-	
-	switch (Field.Style)
+
+    switch (Field.style)
 	{
 	case FIELD_NORMAL_STYLE:
 	{
 		EFieldType Type;
 
-		if (1 == Field.nLength && Field.IsSigned)
+        if (1 == Field.length && Field.isSigned)
 			Type = FIELD_B_1_TYPE;
-		else if (1 == Field.nLength && !Field.IsSigned)
+        else if (1 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_1_TYPE;
-		else if (2 == Field.nLength && Field.IsSigned)
+        else if (2 == Field.length && Field.isSigned)
 			Type = FIELD_B_2_TYPE;
-		else if (2 == Field.nLength && !Field.IsSigned)
+        else if (2 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_2_TYPE;
-		else if (4 == Field.nLength && Field.IsSigned)
+        else if (4 == Field.length && Field.isSigned)
 			Type = FIELD_B_4_TYPE;
-		else if (4 == Field.nLength && !Field.IsSigned)
+        else if (4 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_4_TYPE;
-		else if (8 == Field.nLength && Field.IsSigned)
+        else if (8 == Field.length && Field.isSigned)
 			Type = FIELD_B_8_TYPE;
-		else if (8 == Field.nLength && !Field.IsSigned)
+        else if (8 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_8_TYPE;
 #ifdef _DEBUG_
 		else
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 != Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 != Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -112,15 +112,15 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 	{
 		EFieldType Type;
 
-		if (4 == Field.nLength)
+        if (4 == Field.length)
 			Type = FIELD_FB_4_TYPE;
-		else if (8 == Field.nLength)
+        else if (8 == Field.length)
 			Type = FIELD_FB_8_TYPE;
 #ifdef _DEBUG_
 		else
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 != Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 != Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -130,26 +130,26 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 	case FIELD_STRING_STYLE:
 	{
 #ifdef _DEBUG_
-		if (0 == Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 == Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
-		pField = new CFieldString(sName, Field.nSize, pGroupField);
+        pField = new CFieldString(sName, Field.size, pGroupField);
 	}
 	break;
 	case FIELD_GROUP_STYLE:
 	{
 #ifdef _DEBUG_
-		if (0 != Field.nSize)
+		if (0 != Field.size)
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 == Field.sSizeName[0])
+		if (0 == Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 		
 		CField *pSizeField = null_v;
 
-		Ret = _ERR(GetInField(Field.sSizeName, pSizeField));
+        Ret = _ERR(GetInField(Field.sizeName, pSizeField));
 
 #ifdef _DEBUG_
 		if (SUCCESS != _ERR(Ret))
@@ -168,7 +168,7 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 	if (!pGroupField)
 	{
 		if (m_pInCurField)
-			m_pInCurField->Attach(pField);
+            m_pInCurField->attach(pField);
 		else
 			m_pInField = pField;
 
@@ -176,10 +176,10 @@ ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
 	}
 	else
 	{
-		pGroupField->SetSubField(pField);
+        pGroupField->setSubField(pField);
 	}
 
-	m_InFieldMap.insert(map_field::value_type(sName, pField));
+    m_InFieldMap.insert(mapField::value_type(sName, pField));
 
 	_RET(SUCCESS);
 }
@@ -189,7 +189,7 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	_START(ADD_OUT_FIELD);
 
 #ifdef _DEBUG_
-	if (!Field.sName ||	0 == Field.sName[0])
+	if (!Field.name ||	0 == Field.name[0])
 		_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -207,11 +207,11 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 			_RET_BY(Ret);
 #endif
 
-		sprintf(sName, "%s.%s", pszGroupName, Field.sName);
+        sprintf(sName, "%s.%s", pszGroupName, Field.name);
 	}
 	else
 	{
-		sprintf(sName, "%s", Field.sName);
+        sprintf(sName, "%s", Field.name);
 	}
 
 	// Check if there is a field which name is same as the field's name,
@@ -219,33 +219,33 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	if (m_OutFieldMap.end() != m_OutFieldMap.find(sName))
 		_RET(ELEMENT_EXIST_IN_CONTAINER);
 
-	switch (Field.Style)
+    switch (Field.style)
 	{
 	case FIELD_NORMAL_STYLE:
 	{
 		EFieldType Type;
 
-		if (1 == Field.nLength && Field.IsSigned)
+        if (1 == Field.length && Field.isSigned)
 			Type = FIELD_B_1_TYPE;
-		else if (1 == Field.nLength && !Field.IsSigned)
+        else if (1 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_1_TYPE;
-		else if (2 == Field.nLength && Field.IsSigned)
+        else if (2 == Field.length && Field.isSigned)
 			Type = FIELD_B_2_TYPE;
-		else if (2 == Field.nLength && !Field.IsSigned)
+        else if (2 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_2_TYPE;
-		else if (4 == Field.nLength && Field.IsSigned)
+        else if (4 == Field.length && Field.isSigned)
 			Type = FIELD_B_4_TYPE;
-		else if (4 == Field.nLength && !Field.IsSigned)
+        else if (4 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_4_TYPE;
-		else if (8 == Field.nLength && Field.IsSigned)
+        else if (8 == Field.length && Field.isSigned)
 			Type = FIELD_B_8_TYPE;
-		else if (8 == Field.nLength && !Field.IsSigned)
+        else if (8 == Field.length && !Field.isSigned)
 			Type = FIELD_UB_8_TYPE;
 #ifdef _DEBUG_
 		else
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 != Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 != Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -256,15 +256,15 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	{
 		EFieldType Type;
 
-		if (4 == Field.nLength)
+        if (4 == Field.length)
 			Type = FIELD_FB_4_TYPE;
-		else if (8 == Field.nLength)
+        else if (8 == Field.length)
 			Type = FIELD_FB_8_TYPE;
 #ifdef _DEBUG_
 		else
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 != Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 != Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
@@ -274,26 +274,26 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	case FIELD_STRING_STYLE:
 	{
 #ifdef _DEBUG_
-		if (0 == Field.nSize ||	0 != Field.sSizeName[0])
+		if (0 == Field.size ||	0 != Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
-		pField = new CFieldString(sName, Field.nSize, pGroupField);
+        pField = new CFieldString(sName, Field.size, pGroupField);
 	}
 	break;
 	case FIELD_GROUP_STYLE:
 	{
 #ifdef _DEBUG_
-		if (0 != Field.nSize)
+		if (0 != Field.size)
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 
-		if (0 == Field.sSizeName[0])
+		if (0 == Field.sizeName[0])
 			_RET(PARAMETER_ERROR | PARAMETER_1);
 #endif
 
 		CField *pSizeField = null_v;
 
-		Ret = _ERR(GetOutField(Field.sSizeName, pSizeField));
+        Ret = _ERR(GetOutField(Field.sizeName, pSizeField));
 
 #ifdef _DEBUG_
 		if (SUCCESS != _ERR(Ret))
@@ -312,7 +312,7 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	if (!pGroupField)
 	{
 		if (m_pOutCurField)
-			m_pOutCurField->Attach(pField);
+            m_pOutCurField->attach(pField);
 		else
 			m_pOutField = pField;
 
@@ -320,11 +320,11 @@ ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
 	}
 	else
 	{
-		pGroupField->SetSubField(pField);
+        pGroupField->setSubField(pField);
 	}
 
 	m_pOutCurField = pField;
-	m_OutFieldMap.insert(map_field::value_type(sName, pField));
+    m_OutFieldMap.insert(mapField::value_type(sName, pField));
 
 	_RET(SUCCESS);
 }
@@ -345,7 +345,7 @@ ret_ CInterfaceInfo::GetInField(const ch_1 *pszName,
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 
-	map_field::iterator pos = m_InFieldMap.find(pszName);
+    mapField::iterator pos = m_InFieldMap.find(pszName);
 
 #ifdef _DEBUG_
 	if (m_InFieldMap.end() != pos)
@@ -383,7 +383,7 @@ ret_ CInterfaceInfo::GetOutField(const ch_1 *pszName,
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 
-	map_field::iterator pos = m_OutFieldMap.find(pszName);
+    mapField::iterator pos = m_OutFieldMap.find(pszName);
 
 #ifdef _DEBUG_
 	if (m_OutFieldMap.end() != pos)

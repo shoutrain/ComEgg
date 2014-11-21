@@ -14,7 +14,7 @@ ret_ CRegister::Stop()
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
 
-		for(map_variable::iterator pos_ = pos->second->begin(); 
+        for (mapVariable::iterator pos_ = pos->second->begin();
 			pos_ != pos->second->end(); pos_++)
 		{
 #ifdef _DEBUG_
@@ -67,7 +67,7 @@ ret_ CRegister::Register(const ch_1 *pszCategory,
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
 
-		map_variable::iterator pos_ = pos->second->find(pszKey);
+        mapVariable::iterator pos_ = pos->second->find(pszKey);
 
 		if (pos->second->end() != pos_)
 		{
@@ -86,7 +86,7 @@ ret_ CRegister::Register(const ch_1 *pszCategory,
 					v_ *pNewVariable = new v_(*pVariable);
 
 					pos->second->insert(
-						map_variable::value_type(pszKey, pNewVariable));
+                            mapVariable::value_type(pszKey, pNewVariable));
 				}
 				catch (...)
 				{
@@ -101,7 +101,7 @@ ret_ CRegister::Register(const ch_1 *pszCategory,
 				v_ *pNewVariable = new v_(*pVariable);
 
 				pos->second->insert(
-					map_variable::value_type(pszKey, pNewVariable));
+                        mapVariable::value_type(pszKey, pNewVariable));
 			}
 			catch (...)
 			{
@@ -111,14 +111,14 @@ ret_ CRegister::Register(const ch_1 *pszCategory,
 	}
 	else
 	{
-		map_variable *pVarialbeMap = new map_variable;
+        mapVariable *pVarialbeMap = new mapVariable;
 
 		try
 		{
 			v_ *pNewVariable = new v_(*pVariable);
 
 			pVarialbeMap->insert(
-				map_variable::value_type(pszKey, pNewVariable));
+                    mapVariable::value_type(pszKey, pNewVariable));
 		}
 		catch (...)
 		{
@@ -161,7 +161,7 @@ ret_ CRegister::Unregister(const ch_1 *pszCategory, const ch_1 *pszKey)
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
 
-		map_variable::iterator pos_ = pos->second->find(pszKey);
+        mapVariable::iterator pos_ = pos->second->find(pszKey);
 
 		if (pos->second->end() != pos_)
 		{
@@ -214,7 +214,7 @@ ret_ CRegister::Search(const ch_1 *pszCategory, const ch_1 *pszKey, v_ *&pVariab
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
 
-		map_variable::iterator pos_ = pos->second->find(pszKey);
+        mapVariable::iterator pos_ = pos->second->find(pszKey);
 
 		if (pos->second->end() != pos_)
 		{

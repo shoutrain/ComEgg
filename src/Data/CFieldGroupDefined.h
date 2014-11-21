@@ -1,46 +1,45 @@
-#ifndef CFIELD_GROUP_DEFINED_H
-#define CFIELD_GROUP_DEFINED_H
+#ifndef _C_FIELD_GROUP_DEFINED_H_
+#define _C_FIELD_GROUP_DEFINED_H_
 
 #include "CField.h"
 
 // For style of defined group
-class CFieldGroupDefined: public CField
-{
+class CFieldGroupDefined : public CField {
 public:
-	CFieldGroupDefined(const ch_1 *pszName, const ch_1 *pszSizeName)
-		: CField(pszName, FIELD_GROUP_TYPE)
-	{
-		memset(m_szSizeName, 0, VARIABLE_NAME_LENGTH);
-		strncpy(m_szSizeName, pszSizeName, VARIABLE_NAME_LENGTH);
-	}
+    CFieldGroupDefined(const ch_1 *name, const ch_1 *sizeName)
+            : CField(name, FIELD_GROUP_TYPE) {
+        memset(_sizeName, 0, VARIABLE_NAME_LENGTH);
+        strncpy(_sizeName, sizeName, VARIABLE_NAME_LENGTH);
+    }
 
-	virtual CField *Clone(const CField *pGroupField, 
-						  const CField *pFirstField) const
-	{
-		CFieldGroupDefined *pField = new CFieldGroupDefined(m_szName, 
-															m_szSizeName);
+    virtual CField *clone(const CField *pGroupField,
+            const CField *pFirstField) const {
+        CFieldGroupDefined *pField = new CFieldGroupDefined(_name,
+                _sizeName);
 
-		if (m_pSubField)
-			pField->SetSubField(m_pSubField->Clone(this, null_v));
+        if (_subField)
+            pField->setSubField(_subField->clone(this, null_v));
 
-		return pField;
-	}
+        return pField;
+    }
 
-	virtual const ch_1 *GetSizeName() const
-	{
-		return m_szSizeName;
-	}
+    virtual const ch_1 *getSizeName() const {
+        return _sizeName;
+    }
 
-	virtual size_ Offset(size_ nSize,
-						 size_ nBlockSize, 
-						 size_ nIndex = 0) const;
+    virtual size_ offset(size_ size,
+            size_ blockSize,
+            size_ index = 0) const;
+
 protected:
-	ch_1 m_szSizeName[VARIABLE_NAME_LENGTH];
+    ch_1 _sizeName[VARIABLE_NAME_LENGTH];
 
 private:
-	CFieldGroupDefined();
-	CFieldGroupDefined(const CFieldGroupDefined &);
-	const CFieldGroupDefined &operator =(const CFieldGroupDefined &);
+    CFieldGroupDefined();
+
+    CFieldGroupDefined(const CFieldGroupDefined &);
+
+    const CFieldGroupDefined &operator=(const CFieldGroupDefined &);
 };
 
-#endif // CFIELD_GROUP_DEFINED_H
+#endif // _C_FIELD_GROUP_DEFINED_H_

@@ -11,7 +11,7 @@ ret_ CConnectionHandle::Send(const ub_1 *pBuffer,
 	if (!pBuffer)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == nSize)
+	if (0 == size)
 		_RET(PARAMETER_ERROR | PARAMETER_2);
 #endif
 

@@ -7,12 +7,12 @@ template <class PtrClass>
 class CAutoPtr
 {
 public:
-	CAutoPtr() // Initialize the object by null, and be initialized later
+    CAutoPtr() // init the object by null, and be initialized later
 	{
 		m_Ptr = null_v;
 	}
-	
-	CAutoPtr(const PtrClass *&Ptr) // Initialize the object by real object
+
+    CAutoPtr(const PtrClass *&Ptr) // init the object by real object
 	{
 		m_Ptr = Ptr;
 	}

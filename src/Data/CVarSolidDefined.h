@@ -1,31 +1,31 @@
-#ifndef CVAR_SOLID_DEFINED_H
-#define CVAR_SOLID_DEFINED_H
+#ifndef _C_VAR_SOLID_DEFINED_H_
+#define _C_VAR_SOLID_DEFINED_H_
 
 #include "CVariable.h"
 
-#include "../Protocols/ProtocolCommon.h"
-
-class CVarSolidDefined: public CAutoVar
-{
+class CVarSolidDefined : public CVariable {
 public:
-	CVarSolidDefined(const ch_1 *pszName)
-	{
-		memset(m_szName, 0, VARIABLE_NAME_LENGTH);
-		strncpy(m_szName, pszName, VARIABLE_NAME_LENGTH);
-		m_pValue = null_v;
-	}
+    CVarSolidDefined(const ch_1 *name) {
+        memset(_name, 0, VARIABLE_NAME_LENGTH);
+        strncpy(_name, name, VARIABLE_NAME_LENGTH);
+        _value = null_v;
+    }
 
-	virtual CAutoVar *Clone() const;
-	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMessageUnit *pTMU);
+    virtual CVariable *clone() const;
+
+    virtual void init(const CData *data);
+
+    virtual v_ *value(const TMessageUnit *tmu);
 
 private:
-	CVarSolidDefined();
-	CVarSolidDefined(const CVarSolidDefined &);
-	const CVarSolidDefined &operator =(const CVarSolidDefined &);
+    CVarSolidDefined();
 
-	ch_1 m_szName[VARIABLE_NAME_LENGTH];
-	v_ *m_pValue;
+    CVarSolidDefined(const CVarSolidDefined &);
+
+    const CVarSolidDefined &operator=(const CVarSolidDefined &);
+
+    ch_1 _name[VARIABLE_NAME_LENGTH];
+    v_ *_value;
 };
 
-#endif // CVAR_SOLID_DEFINED_H
+#endif // _C_VAR_SOLID_DEFINED_H_

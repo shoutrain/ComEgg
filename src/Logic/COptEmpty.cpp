@@ -13,10 +13,10 @@ void COptEmpty::Work(const TMessageUnit *pTMU)
 		{
 			TFieldGroup *pFieldGroup = (TFieldGroup *)(obj_)*p;
 
-			if (pFieldGroup->nSize && pFieldGroup->pData)
+            if (pFieldGroup->size && pFieldGroup->data)
 			{
-				_DEL_ARR(pFieldGroup->pData);
-				pFieldGroup->nSize = 0;
+                _DEL_ARR(pFieldGroup->data);
+                pFieldGroup->size = 0;
 			}
 		}
 

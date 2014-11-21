@@ -48,7 +48,7 @@ ret_ CTransactionManager::AddTransaction(const ch_1 *pszTransactionName,
 	if (0 == pszTransactionName[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (0 == nSize)
+	if (0 == size)
 		_RET(PARAMETER_ERROR | PARAMETER_3);
 #endif
 

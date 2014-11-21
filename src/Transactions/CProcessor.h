@@ -11,7 +11,7 @@ class CNetworkHandle;
 
 using namespace std;
 
-typedef map<const CPDUInfo *, const CProgram *>	map_handle;
+typedef map<const CPduInfo *, const CProgram *> map_handle;
 
 typedef set<string>								set_register;
 typedef map<string, set_register *>				map_register;
@@ -43,10 +43,11 @@ public:
 
 	ret_ SetMsgHandle(const CProgram &Program,
 					  EDirection Direction,
-					  const CPDUInfo *pPDUInfo);
+            const CPduInfo *pPDUInfo);
 
 	ret_ ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh);
-	ret_ ExecMsgHandle(const CPDUInfo *pPDUInfo,
+
+    ret_ ExecMsgHandle(const CPduInfo *pPDUInfo,
 					   const ub_1 *pMsg,
 					   size_ nSize,
 					   const TMsgInfo *pMsgInfo,
@@ -54,7 +55,7 @@ public:
 
 	ret_ SetHandle(const CNetworkHandle *pHandle);
 
-	ret_ Send(const CPDUInfo *pPDUInfo,
+    ret_ Send(const CPduInfo *pPDUInfo,
 			  const ub_1 *pMsg,
 			  size_ nSize,
 			  const TMsgInfo *pMsgInfo);

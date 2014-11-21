@@ -15,7 +15,7 @@ COptUseModule::COptUseModule(const CInterfaceInfo *pInterfaceInfo)
 
 	while (pFieldInfo)
 	{
-		if (null_v == pFieldInfo->GetGroupField())
+        if (null_v == pFieldInfo->getGroupField())
 		{
 			pEvaluate = new TEvaluate;
 
@@ -26,14 +26,14 @@ COptUseModule::COptUseModule(const CInterfaceInfo *pInterfaceInfo)
 			m_InEvaluateVector.push_back(pEvaluate);
 		}
 
-		pFieldInfo = (CField *)pFieldInfo->GetNextField();
+        pFieldInfo = (CField *) pFieldInfo->getNextField();
 	}
 
 	m_pInterfaceInfo->GetOutStruct(pFieldInfo);
 
 	while (pFieldInfo)
 	{
-		if (null_v == pFieldInfo->GetGroupField())
+        if (null_v == pFieldInfo->getGroupField())
 		{
 			pEvaluate = new TEvaluate;
 
@@ -44,7 +44,7 @@ COptUseModule::COptUseModule(const CInterfaceInfo *pInterfaceInfo)
 			m_OutEvaluateVector.push_back(pEvaluate);
 		}
 
-		pFieldInfo = (CField *)pFieldInfo->GetNextField();
+        pFieldInfo = (CField *) pFieldInfo->getNextField();
 	}
 }
 
@@ -270,7 +270,7 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 	for (vector_evaluate::const_iterator pos = m_InEvaluateVector.begin();
 		 pos != m_InEvaluateVector.end(); pos++)
 	{
-		if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type())
+        if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->type())
 		{
 			// If it's Group, check if it's available.
 			if ((*pos)->pField && (*pos)->pValue)
@@ -282,7 +282,7 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 				if ((*pos)->pValue->Value(Temp))
 					bIsCountSize = true_v;
 				// If ture, Network Group
-				else if ((*pos)->pFieldInfo->Size(pTMU->message, pTMU->size))
+                else if ((*pos)->pFieldInfo->size(pTMU->message, pTMU->size))
 					bIsCountSize = true_v;
 
 				if (bIsCountSize)
@@ -298,9 +298,9 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 				}
 			}
 		}
-		else // if (null_v == (*pos)->pFieldInfo->GetGroupField())
+        else // if (null_v == (*pos)->pFieldInfo->getGroupField())
 		{
-			nSize += (*pos)->pFieldInfo->GetUnitSize();
+            nSize += (*pos)->pFieldInfo->getUnitSize();
 		}
 	}	
 
@@ -350,9 +350,9 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 		{
 			if ((*pos)->pField && (*pos)->pValue)
 			{
-				if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type() &&
+                if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->type() &&
 					// It must be CFieldGroup(Module), check if it's available.
-					(*pos)->pFieldInfo->Size(OutMU.message, OutMU.size))
+                            (*pos)->pFieldInfo->size(OutMU.message, OutMU.size))
 				{
 					try
 					{
@@ -363,18 +363,18 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 						TFieldGroup *pValueGroup =
 							(TFieldGroup *)(obj_)*pValueData;
 
-						if (pValueGroup->nSize && pValueGroup->pData)
+                        if (pValueGroup->size && pValueGroup->data)
 						{
-							_DEL_ARR(pValueGroup->pData);
-							pValueGroup->nSize = 0;
+                            _DEL_ARR(pValueGroup->data);
+                            pValueGroup->size = 0;
 						}
 
-						pValueGroup->nSize = pField->size();
+                        pValueGroup->size = pField->size();
 
-						if (pValueGroup->nSize) // should be true
+                        if (pValueGroup->size) // should be true
 						{
-							pValueGroup->pData = new ub_1[pValueGroup->nSize];
-							memset(pValueGroup->pData, 0, pValueGroup->nSize);
+                            pValueGroup->data = new ub_1[pValueGroup->size];
+                            memset(pValueGroup->data, 0, pValueGroup->size);
 						}
 						else
 						{
@@ -396,13 +396,13 @@ void COptUseModule::Work(const TMessageUnit *pTMU)
 		for (vector_evaluate::const_iterator pos = m_OutEvaluateVector.begin();
 			 pos != m_OutEvaluateVector.end(); pos++)
 		{
-			if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->Type())
+            if (FIELD_GROUP_TYPE == (*pos)->pFieldInfo->type())
 			{
 				CField *pValueField = null_v;
 				v_ *pValueData = (*pos)->pValue->Value((obj_ &)pValueField);
 				TFieldGroup *pValueGroup = (TFieldGroup *)(obj_)*pValueData;
 
-				if (!pValueGroup->nSize)
+                if (!pValueGroup->size)
 					continue;
 			}
 

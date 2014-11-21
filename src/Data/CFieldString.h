@@ -1,51 +1,51 @@
-#ifndef CFIELD_STRING_H
-#define CFIELD_STRING_H
+#ifndef _C_FIELD_STRING_H_
+#define _C_FIELD_STRING_H_
 
 #include "CField.h"
 
 // For style of string
-class CFieldString: public CField
-{
+class CFieldString : public CField {
 public:
-	CFieldString(const ch_1 *pszName,
-				 size_ nSize,
-				 const CField *pGroupField = null_v)
-		: CField(pszName, FIELD_STR_TYPE)
-	{
-		m_nUnitSize = nSize;
-		m_pGroupField = (CField *)pGroupField;
-	}
+    CFieldString(const ch_1 *name,
+            size_ size,
+            const CField *groupField = null_v)
+            : CField(name, FIELD_STR_TYPE) {
+        _unitSize = size;
+        _groupField = (CField *) groupField;
+    }
 
-	virtual CField *Clone(const CField *pGroupField, 
-						  const CField *pFirstField) const
-	{
-		CFieldString *pField = new CFieldString(m_szName, 
-												m_nUnitSize, 
-												pGroupField);
+    virtual CField *clone(const CField *groupField,
+            const CField *firstField) const {
+        CFieldString *field = new CFieldString(_name,
+                _unitSize,
+                groupField);
 
-		if (!pFirstField)
-			pFirstField = pField;
+        if (!firstField) {
+            firstField = field;
+        }
 
-		if (m_pNextField)
-			pField->Attach(m_pNextField->Clone(pGroupField, pField));
+        if (_nextField) {
+            field->attach(_nextField->clone(groupField, field));
+        }
 
-		return pField;
-	}
+        return field;
+    }
 
-	virtual size_ Size(const ub_1 *pBlock = null_v, 
-					   size_ nBlockSize = 0) const
-	{
-		return m_nUnitSize;
-	}
+    virtual size_ size(const ub_1 *block = null_v,
+            size_ blockSize = 0) const {
+        return _unitSize;
+    }
 
-	virtual size_ Offset(const ub_1 *pBlock, 
-						 size_ nBlockSize, 
-						 size_ nIndex = 0) const;
+    virtual size_ offset(const ub_1 *block,
+            size_ blockSize,
+            size_ index = 0) const;
 
 private:
-	CFieldString();
-	CFieldString(const CFieldString &);
-	const CFieldString &operator =(const CFieldString &);
+    CFieldString();
+
+    CFieldString(const CFieldString &);
+
+    const CFieldString &operator=(const CFieldString &);
 };
 
-#endif // CFIELD_STRING_H
+#endif // _C_FIELD_STRING_H_

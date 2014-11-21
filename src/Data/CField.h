@@ -1,5 +1,5 @@
-#ifndef CFIELD_H
-#define CFIELD_H
+#ifndef _C_FIELD_H_
+#define _C_FIELD_H_
 
 #include "DataCommon.h"
 
@@ -8,145 +8,141 @@
 using namespace std;
 
 class CField;
-typedef set<const CField *> set_field;
 
-class CField
-{
+typedef set<const CField *> setField;
+
+class CField {
 public:
-	virtual CField *Clone(const CField *pGroupField, 
-						  const CField *pFirstField) const 
-	{ 
-		return null_v; 
-	}
+    virtual CField *clone(const CField *groupField,
+            const CField *firstField) const {
+        return null_v;
+    }
 
-	virtual ~CField() {}
+    virtual ~CField() {
+    }
 
-	EFieldType Type() const
-	{
-		return m_Type;
-	}
-	
-	const ch_1 *Name() const
-	{
-		return m_szName;
-	}
+    EFieldType type() const {
+        return _type;
+    }
 
-	void Attach(const CField *pField)
-	{
-		((CField *)pField)->SetPrevField(this);
-		SetNextField(pField);
-	}
+    const ch_1 *name() const {
+        return _name;
+    }
 
-	// For field in group
-	const CField *GetGroupField() const
-	{
-		return m_pGroupField;
-	}
+    void attach(const CField *field) {
+        ((CField *) field)->setPrevField(this);
+        setNextField(field);
+    }
 
-	// for group
-	void SetSubField(const CField *pField)
-	{
-		CField *pRollField = (CField *)pField;
-		size_ nSize = 0;
+    // For field in group
+    const CField *getGroupField() const {
+        return _groupField;
+    }
 
-		while (pRollField)
-		{
-			nSize += pRollField->GetUnitSize();
-			pRollField = (CField *)pRollField->GetNextField();
-		}
+    // for group
+    void setSubField(const CField *field) {
+        CField *rollField = (CField *) field;
+        size_ size = 0;
 
-		if (!m_pSubField)
-		{
-			m_pSubField = (CField *)pField;
-			m_nUnitSize = nSize;
-		}
-		else
-		{
-			pRollField = (CField *)m_pSubField;
+        while (rollField) {
+            size += rollField->getUnitSize();
+            rollField = (CField *) rollField->getNextField();
+        }
 
-			while (pRollField->GetNextField())
-				pRollField = (CField *)pRollField->GetNextField();
+        if (!_subField) {
+            _subField = (CField *) field;
+            _unitSize = size;
+        } else {
+            rollField = (CField *) _subField;
 
-			pRollField->Attach((CField *)pField);
-			m_nUnitSize += nSize;
-		}
-	}
+            while (rollField->getNextField()) {
+                rollField = (CField *) rollField->getNextField();
+            }
 
-	// for group
-	const CField *GetSubField() const
-	{
-		return m_pSubField;
-	}
+            rollField->attach((CField *) field);
+            _unitSize += size;
+        }
+    }
 
-	void SetPrevField(const CField *pField)
-	{
-		m_pPrevField = (CField *)pField;
-	}
+    // for group
+    const CField *getSubField() const {
+        return _subField;
+    }
 
-	void SetNextField(const CField *pField)
-	{
-		m_pNextField = (CField *)pField;
-	}
+    void setPrevField(const CField *field) {
+        _prevField = (CField *) field;
+    }
 
-	const CField *GetNextField() const
-	{
-		return m_pNextField;
-	}
+    void setNextField(const CField *field) {
+        _nextField = (CField *) field;
+    }
 
-	size_ GetUnitSize() const
-	{
-		return m_nUnitSize;
-	}
+    const CField *getNextField() const {
+        return _nextField;
+    }
 
-	// For network
-	virtual size_ Size(const ub_1 *pBlock = null_v, 
-					   size_ nBlockSize = 0) const { return 0; }
+    size_ getUnitSize() const {
+        return _unitSize;
+    }
 
-	// For network
-	virtual size_ Offset(const ub_1 *pBlock, 
-						 size_ nBlockSize, 
-						 size_ nIndex = 0) const { return 0; }
+    // For network
+    virtual size_ size(const ub_1 *block = null_v,
+            size_ blockSize = 0) const {
+        return 0;
+    }
 
-	// For defined
-	virtual const ch_1 *GetSizeName() const { return null_v; }
+    // For network
+    virtual size_ offset(const ub_1 *block,
+            size_ blockSize,
+            size_ index = 0) const {
+        return 0;
+    }
 
-	// For defined
-	virtual size_ Offset(size_ nSize,
-						 size_ nBlockSize, 
-						 size_ nIndex = 0) const { return 0; }
+    // For defined
+    virtual const ch_1 *getSizeName() const {
+        return null_v;
+    }
+
+    // For defined
+    virtual size_ offset(size_ size,
+            size_ blockSize,
+            size_ index = 0) const {
+        return 0;
+    }
 
 protected:
-	CField(const ch_1 *pszName, EFieldType Type)
-	{
-		strncpy(m_szName, pszName, VARIABLE_NAME_LENGTH);
-		m_Type = Type;
-		m_nUnitSize = 0;
-		m_pGroupField = null_v;
-		m_pSubField = null_v;
-		m_pPrevField = null_v;
-		m_pNextField = null_v;
-	}
+    CField(const ch_1 *name, EFieldType type) {
+        strncpy(_name, name, VARIABLE_NAME_LENGTH);
+        _type = type;
+        _unitSize = 0;
+        _groupField = null_v;
+        _subField = null_v;
+        _prevField = null_v;
+        _nextField = null_v;
+    }
 
-	ch_1 m_szName[VARIABLE_NAME_LENGTH];
-	EFieldType m_Type;
+    ch_1 _name[VARIABLE_NAME_LENGTH];
+    EFieldType _type;
 
-	size_ m_nUnitSize;
+    size_ _unitSize;
 
-	// If it's independent field, this variable is null_v;	
-	// If it's field in group, this variable indicates the parent group.
-	CField *m_pGroupField;
+    // If it's independent field, this variable is null_v;
+    // If it's field in group, this variable indicates the parent group.
+    CField *_groupField;
 
-	// If it's independent field, this variable is null_v;	
-	// If it's group field, this variable is the first children field;
-	CField *m_pSubField;
+    // If it's independent field, this variable is null_v;
+    // If it's group field, this variable is the first children field;
+    CField *_subField;
 
-	CField *m_pPrevField;
-	CField *m_pNextField;
+    CField *_prevField;
+    CField *_nextField;
 
 private:
-	CField();
-	CField(const CField &);
-	const CField &operator =(const CField &);
+    CField();
+
+    CField(const CField &);
+
+    const CField &operator=(const CField &);
 };
 
-#endif // CFIELD_H
+#endif // _C_FIELD_H_

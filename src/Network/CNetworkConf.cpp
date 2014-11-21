@@ -1,6 +1,6 @@
 #include "CNetworkConf.h"
 
-ub_4 CNetworkConf::configPdu(const v_ &id, const CPDUInfo *pduInfo,
+ub_4 CNetworkConf::configPdu(const v_ &id, const CPduInfo *pduInfo,
 		EDirection direction) {
 	assert(pduInfo);
 
@@ -58,7 +58,7 @@ ub_4 CNetworkConf::configPdu(const v_ &id, const CPDUInfo *pduInfo,
 	_RET(SUCCESS);
 }
 
-ub_4 CNetworkConf::IdentifyID(const v_ &ID, CPDUInfo *&pPDUInfo,
+ub_4 CNetworkConf::IdentifyID(const v_ &ID, CPduInfo *&pPDUInfo,
 		EDirection Direction) {
 	_START(IDENTIFY_ID);
 
@@ -77,7 +77,7 @@ ub_4 CNetworkConf::IdentifyID(const v_ &ID, CPDUInfo *&pPDUInfo,
 	_RET(SUCCESS);
 }
 
-ub_4 CNetworkConf::IdentifyPDU(const CPDUInfo *pPDUInfo, v_ &ID,
+ub_4 CNetworkConf::IdentifyPDU(const CPduInfo *pPDUInfo, v_ &ID,
 		EDirection Direction) {
 	_START(IDENTIFY_PDU);
 
@@ -97,14 +97,14 @@ ub_4 CNetworkConf::IdentifyPDU(const CPDUInfo *pPDUInfo, v_ &ID,
 }
 
 bool_ CNetworkConf::findPdu(const v_ &id, EDirection direction,
-		CPDUInfo *&pduInfo) {
+        CPduInfo *&pduInfo) {
 	MapPduTable::const_iterator pos/* = _pduInTableMap.end()*/;
 
 	if (DIRECTION_IN == direction) {
 		pos = _pduInTableMap.find(id);
 
 		if (_pduInTableMap.end() != pos) {
-			pduInfo = (CPDUInfo *) pos->second;
+            pduInfo = (CPduInfo *) pos->second;
 
 			return true_v;
 		}
@@ -112,7 +112,7 @@ bool_ CNetworkConf::findPdu(const v_ &id, EDirection direction,
 		pos = _pduOutTableMap.find((size_) id);
 
 		if (_pduOutTableMap.end() != pos) {
-			pduInfo = (CPDUInfo *) pos->second;
+            pduInfo = (CPduInfo *) pos->second;
 
 			return true_v;
 		}
@@ -121,12 +121,12 @@ bool_ CNetworkConf::findPdu(const v_ &id, EDirection direction,
 	return false_v;
 }
 
-bool_ CNetworkConf::findid(const CPDUInfo *pduInfo, EDirection direction,
+bool_ CNetworkConf::findid(const CPduInfo *pduInfo, EDirection direction,
 		v_ &id) {
 	MapIdTable::const_iterator pos;
 
 	if (DIRECTION_IN == direction) {
-		pos = _idInTableMap.find((CPDUInfo *) pduInfo);
+        pos = _idInTableMap.find((CPduInfo *) pduInfo);
 
 		if (_idInTableMap.end() != pos) {
 			id = v_(pos->second);
@@ -134,7 +134,7 @@ bool_ CNetworkConf::findid(const CPDUInfo *pduInfo, EDirection direction,
 			return true_v;
 		}
 	} else if (DIRECTION_OUT == direction) {
-		pos = _idOutTablemap.find((CPDUInfo *) pduInfo);
+        pos = _idOutTablemap.find((CPduInfo *) pduInfo);
 
 		if (_idOutTablemap.end() != pos) {
 			id = v_(pos->second);

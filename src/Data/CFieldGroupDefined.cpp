@@ -1,36 +1,26 @@
 #include "CFieldGroupDefined.h"
 
-size_ CFieldGroupDefined::Offset(size_ nSize,
-								 size_ nBlockSize, 
-								 size_ nIndex) const
-{
-	if (0 == nBlockSize)
-		throw FIELD_DATA_NULL;
+size_ CFieldGroupDefined::offset(size_ size,
+        size_ blockSize,
+        size_ index) const {
+    if (0 == blockSize || size < index || size * _unitSize > blockSize || 0 == _sizeName[0]) {
+        assert(0);
+        logError("The parameter of CFieldGroupDefined::offset is wrong");
+        return 0;
+    }
 
-	if (nSize < nIndex)
-		throw FIELD_INDEX_ERROR;
+    size_ offset = 0;
 
-	if (nSize * m_nUnitSize > nBlockSize)
-		throw FIELD_SIZE_OVERLOADED;
+    if (index) {
+        offset += (index - 1) * _unitSize;
+    }
 
-	if (0 == m_szSizeName[0])
-		throw FIELD_TYPE_ERROR;
+    if (blockSize <= offset) {
+        assert(0);
+        logError("The offset is not right in CFieldGroupDefined::offset");
+        return 0;
+    }
 
-	size_ nOffset = 0;
-
-	if (nIndex)
-		nOffset += (nIndex - 1) * m_nUnitSize;
-	
-	try
-	{
-		if (nBlockSize <= nOffset)
-			throw FIELD_SIZE_OVERLOADED;
-	}
-	catch (...)
-	{
-		throw;
-	}
-
-	return nOffset;
+    return offset;
 }
 

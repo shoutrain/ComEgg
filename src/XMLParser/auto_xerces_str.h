@@ -3,7 +3,7 @@
 
 #include "XMLParserCommon.h"
 
-// Can only be used after called XMLPlatformUtils::Initialize();
+// Can only be used after called XMLPlatformUtils::init();
 class auto_xerces_str
 {
 public:

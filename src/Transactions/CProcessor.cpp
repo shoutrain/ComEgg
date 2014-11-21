@@ -233,7 +233,7 @@ ret_ CProcessor::Reset()
 
 ret_ CProcessor::SetMsgHandle(const CProgram &Program,
 							  EDirection Direction,
-							  const CPDUInfo *pPDUInfo)
+        const CPduInfo *pPDUInfo)
 {
 	_START(SET_MSG_HANDLE);
 
@@ -302,7 +302,7 @@ ret_ CProcessor::ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh)
 	_RET(SUCCESS);
 }
 
-ret_ CProcessor::ExecMsgHandle(const CPDUInfo *pPDUInfo,
+ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 							   const ub_1 *pMsg,
 							   size_ nSize,
 							   const TMsgInfo *pMsgInfo,
@@ -317,7 +317,7 @@ ret_ CProcessor::ExecMsgHandle(const CPDUInfo *pPDUInfo,
 	if (!pMsg)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 >= nSize)
+	if (0 >= size)
 		_RET(PARAMETER_ERROR | PARAMETER_3);
 
 	if (DIRECTION_IN		!= Direction &&
@@ -329,7 +329,7 @@ ret_ CProcessor::ExecMsgHandle(const CPDUInfo *pPDUInfo,
 
 	TMessageUnit tmu;
 
-	tmu.pduInfo	= (CPDUInfo *)pPDUInfo;
+    tmu.pduInfo = (CPduInfo *) pPDUInfo;
 	tmu.message	= (ub_1 *)pMsg;
 	tmu.size		= nSize;
 	tmu.msgInfo	= (TMsgInfo *)pMsgInfo;
@@ -426,7 +426,7 @@ ret_ CProcessor::SetHandle(const CNetworkHandle *pHandle)
 	_RET(SUCCESS);
 }
 
-ret_ CProcessor::Send(const CPDUInfo *pPDUInfo,
+ret_ CProcessor::Send(const CPduInfo *pPDUInfo,
 					  const ub_1 *pMsg,
 					  size_ nSize,
 					  const TMsgInfo *pMsgInfo)
@@ -443,7 +443,7 @@ ret_ CProcessor::Send(const CPDUInfo *pPDUInfo,
 	if (!pMsg)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 >= nSize)
+	if (0 >= size)
 		_RET(PARAMETER_ERROR | PARAMETER_3);
 
 	if (!pMsgInfo)

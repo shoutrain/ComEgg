@@ -1,40 +1,31 @@
 #include "CFieldString.h"
 
-size_ CFieldString::Offset(const ub_1 *pBlock, 
-						   size_ nBlockSize, 
-						   size_ nIndex) const
-{
-	if (!pBlock || 0 == nBlockSize)
-		throw FIELD_DATA_NULL;
+size_ CFieldString::offset(const ub_1 *block,
+        size_ blockSize,
+        size_ index) const {
+    if (!block || 0 == blockSize) {
+        assert(0);
+        logError("The parameters block and blockSize are not right in CFieldString::offset");
+        return 0;
+    }
 
-	size_ nOffset = 0;
+    size_ offset = 0;
 
-	if (m_pPrevField)
-	{
-		try
-		{
-			nOffset += m_pPrevField->Offset(pBlock, nBlockSize)	
-				+ m_pPrevField->Size(pBlock, nBlockSize);
-		}
-		catch (...)
-		{
-			throw;
-		}
-	}
+    if (_prevField) {
+        offset += _prevField->offset(block, blockSize)
+                + _prevField->size(block, blockSize);
+    }
 
-	if (nIndex && m_pGroupField)
-		nOffset += m_pGroupField->Offset(pBlock, nBlockSize, nIndex);
+    if (index && _groupField) {
+        offset += _groupField->offset(block, blockSize, index);
+    }
 
-	try
-	{
-		if (nBlockSize < nOffset + Size(pBlock, nBlockSize))
-			throw FIELD_SIZE_OVERLOADED;
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (blockSize < offset + size(block, blockSize)) {
+        assert(0);
+        logError("blockSize in CFieldString::offset is overloaded");
+        return 0;
+    }
 
-	return nOffset;
+    return offset;
 }
 

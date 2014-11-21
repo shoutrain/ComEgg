@@ -3,402 +3,351 @@
 #include <stdio.h>
 #include <string.h>
 
-CData::CData(const CData &Data)
-{
-	
-	for (map_variable::const_iterator pos = Data.m_VariableMap.begin();
-		 pos != Data.m_VariableMap.end(); pos++)
-	{
-		v_ *p = new v_(*(pos->second));
+CData::CData(const CData &data) {
+    for (mapVariable::const_iterator pos = data._variableMap.begin();
+         pos != data._variableMap.end(); pos++) {
+        v_ *p = new v_(*(pos->second));
 
-		m_VariableMap.insert(map_variable::value_type(pos->first, p));
-	}
+        _variableMap.insert(mapVariable::value_type(pos->first, p));
+    }
 
-	for (map_data::const_iterator pos_ = Data.m_DataMap.begin();
-		 pos_ != Data.m_DataMap.end(); pos_++)
-	{
-		TFieldGroup *pData = new TFieldGroup;
+    for (mapData::const_iterator pos_ = data._dataMap.begin();
+         pos_ != data._dataMap.end(); pos_++) {
+        TFieldGroup *newData = new TFieldGroup;
 
-		memset(pData, 0, sizeof(TFieldGroup));
-		m_DataMap.insert(map_data::value_type(pos_->first, pData));
+        memset(newData, 0, sizeof(TFieldGroup));
+        _dataMap.insert(mapData::value_type(pos_->first, newData));
 
-		if (pos_->second->nSize && pos_->second->pData)
-		{
-			pData->nSize= pos_->second->nSize;
-			pData->pData = new ub_1[pos_->second->nSize];
-		}
-	}
+        if (pos_->second->size && pos_->second->data) {
+            newData->size = pos_->second->size;
+            newData->data = new ub_1[pos_->second->size];
+        }
+    }
 }
 
-const CData &CData::operator =(const CData &Data)
-{
-	if (&Data != this)
-	{
-		Clear();
+const CData &CData::operator=(const CData &data) {
+    if (&data != this) {
+        clear();
 
-		for (map_variable::const_iterator pos = Data.m_VariableMap.begin();
-			 pos != Data.m_VariableMap.end(); pos++)
-		{
-			v_ *p = new v_(*(pos->second));
+        for (mapVariable::const_iterator pos = data._variableMap.begin();
+             pos != data._variableMap.end(); pos++) {
+            v_ *p = new v_(*(pos->second));
 
-			m_VariableMap.insert(map_variable::value_type(pos->first, p));
-		}
+            _variableMap.insert(mapVariable::value_type(pos->first, p));
+        }
 
-		for (map_data::const_iterator pos_ = Data.m_DataMap.begin();
-			 pos_ != Data.m_DataMap.end(); pos_++)
-		{
-			TFieldGroup *pData = new TFieldGroup;
+        for (mapData::const_iterator pos_ = data._dataMap.begin();
+             pos_ != data._dataMap.end(); pos_++) {
+            TFieldGroup *newData = new TFieldGroup;
 
-			memset(pData, 0, sizeof(TFieldGroup));
-			m_DataMap.insert(map_data::value_type(pos_->first, pData));
+            memset(newData, 0, sizeof(TFieldGroup));
+            _dataMap.insert(mapData::value_type(pos_->first, newData));
 
-			if (pos_->second->nSize && pos_->second->pData)
-			{
-				pData->nSize= pos_->second->nSize;
-				pData->pData = new ub_1[pos_->second->nSize];
-			}
-		}
-	}
+            if (pos_->second->size && pos_->second->data) {
+                newData->size = pos_->second->size;
+                newData->data = new ub_1[pos_->second->size];
+            }
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
-bool_ CData::Define(const ch_1 *pszName, evt_ Type)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, evt_ type) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = null_v;
+    v_ *var = null_v;
 
-	switch (Type)
-	{
-	case B_1:
-		{
-			b_1 v = 0;
+    switch (type) {
+        case B_1: {
+            b_1 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case UB_1: {
+            ub_1 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case B_2: {
+            b_2 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case UB_2: {
+            ub_2 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case B_4: {
+            b_4 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case UB_4: {
+            ub_4 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case B_8: {
+            b_8 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case UB_8: {
+            ub_8 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case FB_4: {
+            fb_4 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case FB_8: {
+            fb_8 v = 0;
+            var = new v_(v);
+        }
+            break;
+        case STR:
+            var = new v_("", 0);
+            break;
+        case OBJ: {
+            obj_ v = null_v;
+            var = new v_(v);
+        }
+            break;
+        default:
+            return false_v;
+    }
 
-			pVar = new v_(v);
-		}
-		break;
-	case UB_1:
-		{
-			ub_1 v = 0;
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-			pVar = new v_(v);
-		}
-		break;
-	case B_2:
-		{
-			b_2 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case UB_2:
-		{
-			ub_2 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case B_4:
-		{
-			b_4 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case UB_4:
-		{
-			ub_4 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case B_8:
-		{
-			b_8 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case UB_8:
-		{
-			ub_8 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case FB_4:
-		{
-			fb_4 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case FB_8:
-		{
-			fb_8 v = 0;
-
-			pVar = new v_(v);
-		}
-		break;
-	case STR:
-		try
-		{
-			pVar = new v_("", 0);
-		}
-		catch (...)
-		{
-			return false_v;
-		}
-		break;
-	case OBJ:
-		{
-			obj_ v = null_v;
-
-			pVar = new v_(v);
-		}
-		break;
-	default:
-		return false_v;
-	}
-
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
-
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, evt_ Type, b_4 Data)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, evt_ type, b_4 data) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = null_v;
+    v_ *var = null_v;
 
-	switch (Type)
-	{
-	case B_1:
-		pVar = new v_((b_1)Data);
-		break;
-	case UB_1:
-		pVar = new v_((ub_1)Data);
-		break;
-	case B_2:
-		pVar = new v_((b_2)Data);
-		break;
-	case UB_2:
-		pVar = new v_((ub_2)Data);
-		break;
-	case B_4:
-		pVar = new v_((b_4)Data);
-		break;
-	case UB_4:
-		pVar = new v_((ub_4)Data);
-		break;
-	default:
-		return false_v;
-	}
+    switch (type) {
+        case B_1:
+            var = new v_((b_1) data);
+            break;
+        case UB_1:
+            var = new v_((ub_1) data);
+            break;
+        case B_2:
+            var = new v_((b_2) data);
+            break;
+        case UB_2:
+            var = new v_((ub_2) data);
+            break;
+        case B_4:
+            var = new v_((b_4) data);
+            break;
+        case UB_4:
+            var = new v_((ub_4) data);
+            break;
+        default:
+            return false_v;
+    }
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, b_8 Data)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, b_8 data) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_(Data);
+    v_ *var = new v_(data);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, ub_8 Data)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, ub_8 data) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_(Data);
+    v_ *var = new v_(data);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, fb_4 Data)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, fb_4 data) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_(Data);
+    v_ *var = new v_(data);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, fb_8 Data)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, fb_8 data) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_(Data);
+    v_ *var = new v_(data);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, const ch_1 *pszValue)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, const ch_1 *value) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_((const ch_1*)pszValue, 0);
+    v_ *var = new v_((const ch_1 *) value, 0);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const ch_1 *pszName, obj_ Object)
-{
-	if (m_VariableMap.end() != m_VariableMap.find(pszName))
-		return false_v;
+bool_ CData::define(const ch_1 *name, obj_ object) {
+    if (_variableMap.end() != _variableMap.find(name)) {
+        return false_v;
+    }
 
-	v_ *pVar = new v_(Object);
+    v_ *var = new v_(object);
 
-	m_VariableMap.insert(map_variable::value_type(pszName, pVar));
+    _variableMap.insert(mapVariable::value_type(name, var));
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CData::Define(const CFieldGroupDefined *pFieldGroup)
-{
-	if (!pFieldGroup)
-		return false_v;
+bool_ CData::define(const CFieldGroupDefined *fieldGroup) {
+    if (!fieldGroup) {
+        return false_v;
+    }
 
-	v_ *pSize = Value(pFieldGroup->GetSizeName());
+    v_ *size = value(fieldGroup->getSizeName());
 
-	if (!pSize)
-		return false_v;
+    if (!size) {
+        return false_v;
+    }
 
-	if (m_VariableMap.end() != m_VariableMap.find(pFieldGroup->Name()))
-		return false_v;
+    if (_variableMap.end() != _variableMap.find(fieldGroup->name())) {
+        return false_v;
+    }
 
-	m_VariableMap.insert(map_variable::value_type(pFieldGroup->Name(), 
-												  new v_((obj_)pFieldGroup)));
+    _variableMap.insert(mapVariable::value_type(fieldGroup->name(),
+            new v_((obj_) fieldGroup)));
 
-	TFieldGroup *pGroupData = new TFieldGroup;
+    TFieldGroup *groupData = new TFieldGroup;
 
-	memset(pGroupData, 0, sizeof(TFieldGroup));
-	m_DataMap.insert(map_data::value_type(pFieldGroup->Name(),
-										  pGroupData));
+    memset(groupData, 0, sizeof(TFieldGroup));
+    _dataMap.insert(mapData::value_type(fieldGroup->name(),
+            groupData));
 
-	size_ nSize = (size_)*pSize;
+    size_ n = (size_) *size;
 
-	if (nSize)
-	{
-		pGroupData->nSize= nSize;
-		pGroupData->pData = new ub_1[pGroupData->nSize];
-		memset(pGroupData->pData, 0, pGroupData->nSize);
-	}
+    if (n) {
+        groupData->size = n;
+        groupData->data = new ub_1[groupData->size];
+        memset(groupData->data, 0, groupData->size);
+    }
 
-	const CField *pField = pFieldGroup->GetSubField();
+    const CField *field = fieldGroup->getSubField();
 
-	while (pField)
-	{
-		ch_1 pszName[VARIABLE_NAME_LENGTH * 2] = {0};
+    while (field) {
+        ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-		sprintf(pszName, "%s.%s", pFieldGroup->Name(), pField->Name());
+        sprintf(name, "%s.%s", fieldGroup->name(), field->name());
 
-		if (m_VariableMap.end() != m_VariableMap.find(pszName))
-			return false_v;
+        if (_variableMap.end() != _variableMap.find(name)) {
+            return false_v;
+        }
 
-		m_VariableMap.insert(map_variable::value_type(pszName, 
-													  new v_((obj_)pField)));
-		pField = pField->GetNextField();
-	}
+        _variableMap.insert(mapVariable::value_type(name,
+                new v_((obj_) field)));
+        field = field->getNextField();
+    }
 
-	return true_v;
+    return true_v;
 }
 
-v_ *CData::Value(const ch_1 *pszName) const 
-{
-	map_variable::const_iterator pos = m_VariableMap.find(pszName);
+v_ *CData::value(const ch_1 *name) const {
+    mapVariable::const_iterator pos = _variableMap.find(name);
 
-	if (m_VariableMap.end() != pos)
-		return pos->second;
-	else if (m_pParent)
-		return m_pParent->Value(pszName);
-	else
-		return null_v;
+    if (_variableMap.end() != pos) {
+        return pos->second;
+    } else if (_parent) {
+        return _parent->value(name);
+    } else {
+        return null_v;
+    }
 }
 
-v_ *CData::Value(const ch_1 *pszGroupName, 
-				 const ch_1 *pszSubName, 
-				 TFieldGroup *&pData) const
-{
-	if (!pszGroupName || 0 == pszGroupName[0] || pData)
-		return null_v;
+v_ *CData::value(const ch_1 *groupName,
+        const ch_1 *subName,
+        TFieldGroup *&data) const {
+    if (!groupName || 0 == groupName[0] || data) {
+        return null_v;
+    }
 
-	ch_1 pszName[VARIABLE_NAME_LENGTH * 2] = {0};
+    ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-	if (!pszSubName || 0 == pszSubName[0])
-		strncpy(pszName, pszGroupName, VARIABLE_NAME_LENGTH);
-	else
-		sprintf(pszName, "%s.%s", pszGroupName, pszSubName);
+    if (!subName || 0 == subName[0]) {
+        strncpy(name, groupName, VARIABLE_NAME_LENGTH);
+    } else {
+        sprintf(name, "%s.%s", groupName, subName);
+    }
 
-	map_variable::const_iterator pos = m_VariableMap.find(pszName);
+    mapVariable::const_iterator pos = _variableMap.find(name);
 
-	if (m_VariableMap.end() != pos)
-	{
-		map_data::const_iterator pos_ = m_DataMap.find(pszGroupName);
+    if (_variableMap.end() != pos) {
+        mapData::const_iterator pos_ = _dataMap.find(groupName);
 
-		if (m_DataMap.end() != pos_)
-		{
-			pData = pos_->second;
+        if (_dataMap.end() != pos_) {
+            data = pos_->second;
 
-			return pos->second;
-		}
-		else
-		{
-			return null_v;
-		}
-	}
-	else if (m_pParent)
-	{
-		return m_pParent->Value(pszGroupName, pszSubName, pData);
-	}
-	else
-	{
-		return null_v;
-	}
+            return pos->second;
+        } else {
+            return null_v;
+        }
+    } else if (_parent) {
+        return _parent->value(groupName, subName, data);
+    } else {
+        return null_v;
+    }
 }
 
-void CData::Clear()
-{
-	for (map_variable::iterator pos = m_VariableMap.begin(); 
-		 pos != m_VariableMap.end(); pos++)
-	{
-		_DEL(pos->second);
-	}
+void CData::clear() {
+    for (mapVariable::iterator pos = _variableMap.begin();
+         pos != _variableMap.end(); pos++) {
+        _DEL(pos->second);
+    }
 
-	for (map_data::iterator pos_ = m_DataMap.begin();
-		 pos_ != m_DataMap.end(); pos_++)
-	{
-		if (pos_->second->nSize && pos_->second->pData)
-		{
-			_DEL_ARR(pos_->second->pData);
-			pos_->second->nSize = 0;
-		}
+    for (mapData::iterator pos_ = _dataMap.begin();
+         pos_ != _dataMap.end(); pos_++) {
+        if (pos_->second->size && pos_->second->data) {
+            _DEL_ARR(pos_->second->data);
+            pos_->second->size = 0;
+        }
 
-		_DEL(pos_->second);
-	}
+        _DEL(pos_->second);
+    }
 
-	m_VariableMap.clear();
-	m_DataMap.clear();
+    _variableMap.clear();
+    _dataMap.clear();
 }

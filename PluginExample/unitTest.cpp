@@ -9,7 +9,7 @@ void callDirectly() {
     CBlog blog;
 
     if (!blog.init()) {
-        printf("Initialize blog error!\n");
+        printf("init blog error!\n");
 
         return;
     }

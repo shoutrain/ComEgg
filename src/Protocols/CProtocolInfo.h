@@ -10,9 +10,9 @@
 
 using namespace std;
 
-class CPDUInfo;
+class CPduInfo;
 
-typedef map<string, const CPDUInfo *> map_pdu;
+typedef map<string, const CPduInfo *> map_pdu;
 
 class CProtocolInfo: public CBaseClass
 {
@@ -36,8 +36,9 @@ public:
 	// Get field
 	ret_ GetHeadField(const ch_1 *pszName, CField *&pField);
 
-	ret_ AddPDU(const ch_1 *pszName, CPDUInfo *&pPDUInfo);
-	ret_ GetPDU(const ch_1 *pszName, CPDUInfo *&pPDUInfo);
+    ret_ AddPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo);
+
+    ret_ GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo);
 
 	CData &Data()
 	{
@@ -56,7 +57,7 @@ protected:
 	ret_ Stop();
 
 private:
-	map_field m_HeadFieldMap;
+    mapField m_HeadFieldMap;
 	map_pdu	m_PDUInfoMap;
 
 	CField *m_pField;

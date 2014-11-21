@@ -1,31 +1,31 @@
-#ifndef CVAR_MODULE_H
-#define CVAR_MODULE_H
+#ifndef _C_VAR_MODULE_H_
+#define _C_VAR_MODULE_H_
 
 #include "CVariable.h"
-
 #include "CField.h"
-#include "../Protocols/CPDUInfo.h"
 
-class CVarModule: public CAutoVar
-{
+class CVarModule : public CVariable {
 public:
-	CVarModule(const CField *pField)
-	{
-		m_pField = (CField *)pField;
-	}
+    CVarModule(const CField *field) {
+        field = (CField *) field;
+    }
 
-	virtual CAutoVar *Clone() const;
-	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMessageUnit *pTMU);
+    virtual CVariable *clone() const;
+
+    virtual void init(const CData *data);
+
+    virtual v_ *value(const TMessageUnit *tmu);
 
 private:
-	CVarModule();
-	CVarModule(const CVarModule &);
-	const CVarModule &operator =(const CVarModule &);
+    CVarModule();
 
-	CField *m_pField;
+    CVarModule(const CVarModule &);
 
-	v_ m_Value;
+    const CVarModule &operator=(const CVarModule &);
+
+    CField *field;
+
+    v_ _value;
 };
 
-#endif // CVAR_MODULE_H
+#endif // _C_VAR_MODULE_H_

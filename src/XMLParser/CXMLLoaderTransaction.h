@@ -29,78 +29,78 @@ private:
 	ret_ LoadProgram(const CData *pParentData,
 					 CProgram &Program,
 					 const DOMElement *pElement,
-					 const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadProcessBlock(CProgram &Program,
 						  const DOMElement *pElement,
-						  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 
 	ret_ LoadEmpty(CProgram &Program,
-				   const DOMElement *pElement, 
-				   const CPDUInfo *pPDU);
+            const DOMElement *pElement,
+            const CPduInfo *pPDU);
 	ret_ LoadUnitaryCalculate(CProgram &Program,
 							  const DOMElement *pElement,
-							  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadDualityCalculate(CProgram &Program,
 							  const DOMElement *pElement,
-							  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadConfigGroup(CProgram &Program,
 						 const DOMElement *pElement,
-						 const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadIf(CProgram &Program,
 				const DOMElement *pElement,
-				const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadWhile(CProgram &Program,
 				   const DOMElement *pElement,
-				   const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadContinue(CProgram &Program);
 	ret_ LoadBlock(CProgram &Program);
 	ret_ LoadBreak(CProgram &Program);
 	ret_ LoadSend(CProgram &Program,
 				  const DOMElement *pElement,
-				  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadForward(CProgram &Program,
 					 const DOMElement *pElement,
-					 const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadGetAddress(CProgram &Program,
 						const DOMElement *pElement,
-						const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadRegister(CProgram &Program,
 					  const DOMElement *pElement,
-					  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadUnregister(CProgram &Program,
 						const DOMElement *pElement,
-						const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadSearch(CProgram &Program,
 					const DOMElement *pElement,
-					const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadGetUsage(CProgram &Program,
 					  const DOMElement *pElement,
-					  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadNetworkWakeUp(CProgram &Program,
 						   const DOMElement *pElement,
-						   const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadNetworkSleep(CProgram &Program,
 						  const DOMElement *pElement,
-						  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadReadFile(CProgram &Program,
 					  const DOMElement *pElement,
-					  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadSaveFile(CProgram &Program,
 					  const DOMElement *pElement,
-					  const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadDeleteFile(CProgram &Program,
 						const DOMElement *pElement,
-						const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadUseModule(CProgram &Program,
 					   const DOMElement *pElement,
-					   const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadSplit(CProgram &Program,
 				   const DOMElement *pElement,
-				   const CPDUInfo *pPDU);
+            const CPduInfo *pPDU);
 	ret_ LoadDie(CProgram &Program);
 
 
-	ret_ LoadVariable(const CPDUInfo *pPDU,
+    ret_ LoadVariable(const CPduInfo *pPDU,
 					  const CData &Data,
 					  const DOMElement *pElement,
 					  CAutoVar *&pOV);
@@ -110,14 +110,15 @@ private:
 	ret_ LoadGroupVariable(const CData &Data,
 						   const DOMElement *pElement,
 						   CAutoVar *&pOV);
-	ret_ LoadNetworkVarialbe(const CPDUInfo *pPDU,
+
+    ret_ LoadNetworkVarialbe(const CPduInfo *pPDU,
 							 const CData &Data,
 							 const DOMElement *pElement,
 							 CAutoVar *&pOV);
 
 	ret_ LoadExpression(const CData &Data,
 						const DOMElement *pElement,
-						const CPDUInfo *pPDU, 
+            const CPduInfo *pPDU,
 						CExpression *&pExpression);
 
 	CXMLLoaderTransaction()

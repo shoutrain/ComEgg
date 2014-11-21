@@ -3,15 +3,15 @@
 
 #include "COperator.h"
 
-#include "../Protocols/CPDUInfo.h"
+#include "CPduInfo.h"
 
 class COptSend: public COperator
 {
 public:
-    COptSend(const CPDUInfo *pPDUInfo,
+    COptSend(const CPduInfo *pPDUInfo,
 			 const CAutoVar *pDestination = null_v);
 	COptSend(b_4 nSign,
-			 const CPDUInfo *pPDUInfo,
+            const CPduInfo *pPDUInfo,
 			 const CAutoVar *pIP = null_v,
 			 const CAutoVar *pPort = null_v);
 
@@ -35,7 +35,7 @@ private:
 
 	void Clear();
 
-	CPDUInfo			*m_pPDUInfo;
+    CPduInfo *m_pPDUInfo;
 	vector_evaluate		m_EvaluateVector;
 
 	enum

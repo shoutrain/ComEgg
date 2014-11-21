@@ -112,7 +112,7 @@ ret_ CXMLLoaderProtocol::Load(XercesDOMParser *pParser,
 			auto_xerces_str sName(pChild->getAttribute(wsName));
 			auto_xerces_str sValue(pChild->getAttribute(wsValue));
 
-			if (!m_pProtocol->Data().Define(sName, UB_4, (ub_4)atoi(sValue)))
+            if (!m_pProtocol->Data().define(sName, UB_4, (ub_4) atoi(sValue)))
 				_RET(XML_LOADER_ERROR);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(), wsHead))
@@ -162,7 +162,7 @@ ret_ CXMLLoaderProtocol::LoadPDU(const DOMElement *pElement,
 #endif
 
 		auto_xerces_str	sName(pElement->getAttribute(wsName));
-		CPDUInfo		*pPDUInfo = null_v;
+        CPduInfo *pPDUInfo = null_v;
 
 		if (SUCCESS != _ERR(m_pProtocol->AddPDU(sName, pPDUInfo)))
 			_RET(XML_LOADER_ERROR);
@@ -379,8 +379,8 @@ ret_ CXMLLoaderProtocol::LoadPDU(const DOMElement *pElement,
 
 // Produce PDU fields
 ret_ CXMLLoaderProtocol::LoadPDUField(const DOMElement *pElement,
-									  EFieldStyle FieldStyle, 
-									  CPDUInfo *pPDUInfo,
+        EFieldStyle FieldStyle,
+        CPduInfo *pPDUInfo,
 									  bool_ bIsSubField,
 									  ch_1 *pszGroupName)
 {
@@ -397,12 +397,12 @@ ret_ CXMLLoaderProtocol::LoadPDUField(const DOMElement *pElement,
 	TField Field;
 
 	memset(&Field, 0, sizeof(TField));
-	Field.Style	= FieldStyle;
+    Field.style = FieldStyle;
 
 	auto_xerces_str	wsName	("name");
 	auto_xerces_str sName	(pElement->getAttribute(wsName));
 
-	strncpy(Field.sName, sName, VARIABLE_NAME_LENGTH);
+    strncpy(Field.name, sName, VARIABLE_NAME_LENGTH);
 
 	auto_xerces_str	wsLength("length");
 	auto_xerces_str	wsSigned("signed");
@@ -414,26 +414,26 @@ ret_ CXMLLoaderProtocol::LoadPDUField(const DOMElement *pElement,
 		auto_xerces_str	sLength(pElement->getAttribute(wsLength));
 		auto_xerces_str	sSigned(pElement->getAttribute(wsSigned));
 
-		Field.nLength	= atoi(sLength);
-		Field.IsSigned	=
+        Field.length = atoi(sLength);
+        Field.isSigned =
 			(0 == strcmp(sSigned, "true") ? true_v : false_v);
 	}
 	else if (FIELD_STRING_STYLE == FieldStyle)
 	{
 		auto_xerces_str sSize(pElement->getAttribute(wsSize));
 
-		Field.nSize = (size_)atoi(sSize);
+        Field.size = (size_) atoi(sSize);
 	}
 	else if (!bIsSubField) // FIELD_GROUP_STYLE
 	{
 		if (pszGroupName)
-			strncpy(pszGroupName, Field.sName, VARIABLE_NAME_LENGTH);
+            strncpy(pszGroupName, Field.name, VARIABLE_NAME_LENGTH);
 		else
 			_RET(PARAMETER_NULL | PARAMETER_5);
 
 		auto_xerces_str sSize(pElement->getAttribute(wsSize));
 
-		strncpy((ch_1 *)Field.sSizeName, sSize, VARIABLE_NAME_LENGTH);
+        strncpy((ch_1 *) Field.sizeName, sSize, VARIABLE_NAME_LENGTH);
 	}
 
 	if (pPDUInfo)

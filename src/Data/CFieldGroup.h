@@ -1,62 +1,63 @@
-#ifndef CFIELD_GROUP_H
-#define CFIELD_GROUP_H
+#ifndef _C_FIELD_GROUP_H_
+#define _C_FIELD_GROUP_H_
 
 #include "CField.h"
 
 // For style of group on network
-class CFieldGroup: public CField
-{
+class CFieldGroup : public CField {
 public:
-	CFieldGroup(const ch_1 *pszName, const CField *pSizeField)
-		: CField(pszName, FIELD_GROUP_TYPE)
-	{
-		m_pSizeField = (CField *)pSizeField;
-	}
+    CFieldGroup(const ch_1 *name, const CField *sizeField)
+            : CField(name, FIELD_GROUP_TYPE) {
+        _sizeField = (CField *) sizeField;
+    }
 
-	virtual CField *Clone(const CField *pGroupField, 
-						  const CField *pFirstField) const
-	{
-		if (!pFirstField || !m_pSizeField)
-			return null_v;
+    virtual CField *clone(const CField *groupField,
+            const CField *firstField) const {
+        if (!firstField || !_sizeField) {
+            return null_v;
+        }
 
-		CField *pSizeField = (CField *)pFirstField;
+        CField *sizeField = (CField *) firstField;
 
-		while (pSizeField)
-		{
-			if (strncmp(pSizeField->Name(), 
-						m_pSizeField->Name(), 
-						VARIABLE_NAME_LENGTH))
-			{
-				break;
-			}
+        while (sizeField) {
+            if (strncmp(sizeField->name(),
+                    _sizeField->name(),
+                    VARIABLE_NAME_LENGTH)) {
+                break;
+            }
 
-			pSizeField = (CField *)pSizeField->GetNextField();
-		}
+            sizeField = (CField *) sizeField->getNextField();
+        }
 
-		CFieldGroup *pField = new CFieldGroup(m_szName, pSizeField);
+        CFieldGroup *field = new CFieldGroup(_name, sizeField);
 
-		if (m_pNextField)
-			pField->Attach(m_pNextField->Clone(null_v, pFirstField));
+        if (_nextField) {
+            field->attach(_nextField->clone(null_v, firstField));
+        }
 
-		if (m_pSubField)
-			pField->SetSubField(m_pSubField->Clone(pField, null_v));
+        if (_subField) {
+            field->setSubField(_subField->clone(field, null_v));
+        }
 
-		return pField;
-	}
+        return field;
+    }
 
-	virtual size_ Size(const ub_1 *pBlock = null_v, 
-					   size_ nBlockSize = 0) const;
-	virtual size_ Offset(const ub_1 *pBlock, 
-						 size_ nBlockSize, 
-						 size_ nIndex = 0) const;
+    virtual size_ size(const ub_1 *block = null_v,
+            size_ blockSize = 0) const;
+
+    virtual size_ offset(const ub_1 *block,
+            size_ blockSize,
+            size_ index = 0) const;
 
 protected:
-	CField *m_pSizeField;
+    CField *_sizeField;
 
 private:
-	CFieldGroup();
-	CFieldGroup(const CFieldGroup &);
-	const CFieldGroup &operator =(const CFieldGroup &);
+    CFieldGroup();
+
+    CFieldGroup(const CFieldGroup &);
+
+    const CFieldGroup &operator=(const CFieldGroup &);
 };
 
-#endif // CFIELD_GROUP_H
+#endif // _C_FIELD_GROUP_H_

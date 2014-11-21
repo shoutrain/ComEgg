@@ -1,70 +1,49 @@
 #include "CFieldGroup.h"
 
-size_ CFieldGroup::Size(const ub_1 *pBlock, size_ nBlockSize) const
-{
-	if (!pBlock || 0 == nBlockSize)
-		throw FIELD_DATA_NULL;
+size_ CFieldGroup::size(const ub_1 *block, size_ blockSize) const {
+    if (!block || 0 == blockSize) {
+        assert(0);
+        logError("The parameters block and blockSize are not right in CFieldGroup::size");
+        return 0;
+    }
 
-	if (null_v == m_pSizeField)
-		throw FIELD_TYPE_ERROR;
-	
-	size_ nUnitNum = 0;
+    if (null_v == _sizeField) {
+        assert(0);
+        logError("_sizeField is not right in CFieldGroup::size");
+        return 0;
+    }
 
-	if (m_pSizeField)
-	{
-		try
-		{
-			nUnitNum = (size_)*(pBlock + m_pSizeField->Offset(pBlock, 
-															  nBlockSize));
-		}
-		catch (...)
-		{
-			throw;
-		}
-	}
-	else
-	{
-		throw FIELD_TYPE_ERROR;
-	}
+    size_ unitNum = (size_) *(block + _sizeField->offset(block,
+            blockSize));
 
-	return m_nUnitSize * nUnitNum;
+    return _unitSize * unitNum;
 }
 
-size_ CFieldGroup::Offset(const ub_1 *pBlock, 
-						  size_ nBlockSize, 
-						  size_ nIndex) const
-{
-	if (!pBlock || 0 == nBlockSize)
-		throw FIELD_DATA_NULL;
+size_ CFieldGroup::offset(const ub_1 *block,
+        size_ blockSize,
+        size_ index) const {
+    if (!block || 0 == blockSize) {
+        assert(0);
+        logError("The parameters block and blockSize are not right in CFieldGroup::offset");
+        return 0;
+    }
 
-	size_ nOffset = 0;
+    size_ offset = 0;
 
-	if (m_pPrevField)
-	{
-		try
-		{
-			nOffset += m_pPrevField->Offset(pBlock, nBlockSize)	
-				+ m_pPrevField->Size(pBlock, nBlockSize);
-		}
-		catch (...)
-		{
-			throw;
-		}
-	}
+    if (_prevField) {
+        offset += _prevField->offset(block, blockSize)
+                + _prevField->size(block, blockSize);
+    }
 
-	if (nIndex)
-		nOffset += (nIndex - 1) * m_nUnitSize;
+    if (index) {
+        offset += (index - 1) * _unitSize;
+    }
 
-	try
-	{
-		if (nBlockSize <= nOffset)
-			throw FIELD_SIZE_OVERLOADED;
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (blockSize <= offset) {
+        assert(0);
+        logError("blockSize in CFieldGroup::offset is overloaded");
+        return 0;
+    }
 
-	return nOffset;
+    return offset;
 }
-

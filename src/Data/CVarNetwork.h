@@ -1,39 +1,40 @@
-#ifndef CVAR_NETWORK_H
-#define CVAR_NETWORK_H
+#ifndef _C_VAR_NETWORK_H_
+#define _C_VAR_NETWORK_H_
 
 #include "CVariable.h"
-
 #include "CField.h"
-#include "../Protocols/CPDUInfo.h"
 
-class CVarNetwork: public CAutoVar
-{
+class CVarNetwork : public CVariable {
 public:
-	CVarNetwork(const CField *pField, const ch_1 *pszIndexName = null_v)
-	{
-		m_pField = (CField *)pField;
-		memset(m_szIndexName, 0, VARIABLE_NAME_LENGTH);
+    CVarNetwork(const CField *field, const ch_1 *indexName = null_v) {
+        _field = (CField *) field;
+        memset(_indexName, 0, VARIABLE_NAME_LENGTH);
 
-		if (pszIndexName)
-			strncpy(m_szIndexName, pszIndexName, VARIABLE_NAME_LENGTH);
+        if (indexName) {
+            strncpy(_indexName, indexName, VARIABLE_NAME_LENGTH);
+        }
 
-		m_pIndex = null_v;
-	}
+        _index = null_v;
+    }
 
-	virtual CAutoVar *Clone() const;
-	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMessageUnit *pTMU);
+    virtual CVariable *clone() const;
+
+    virtual void init(const CData *data);
+
+    virtual v_ *value(const TMessageUnit *tmu);
 
 private:
-	CVarNetwork();
-	CVarNetwork(const CVarNetwork &);
-	const CVarNetwork &operator =(const CVarNetwork &);
+    CVarNetwork();
 
-	CField *m_pField;
-	ch_1 m_szIndexName[VARIABLE_NAME_LENGTH];
-	v_ *m_pIndex;
+    CVarNetwork(const CVarNetwork &);
 
-	v_ m_Value;
+    const CVarNetwork &operator=(const CVarNetwork &);
+
+    CField *_field;
+    ch_1 _indexName[VARIABLE_NAME_LENGTH];
+    v_ *_index;
+
+    v_ _value;
 };
 
-#endif // CVAR_NETWORK_H
+#endif // _C_VAR_NETWORK_H_

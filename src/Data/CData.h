@@ -1,5 +1,5 @@
-#ifndef CDATA_H
-#define CDATA_H
+#ifndef _C_DATA_H_
+#define _C_DATA_H_
 
 #include "DataCommon.h"
 #include "CFieldGroupDefined.h"
@@ -9,97 +9,94 @@
 
 using namespace std;
 
-typedef map<string, v_ *> map_variable;
-typedef map<string, TFieldGroup *> map_data;
+typedef map<string, v_ *> mapVariable;
+typedef map<string, TFieldGroup *> mapData;
 
-class CData
-{
+class CData {
 public:
-	CData()
-	{
-		m_pParent = null_v;
-	}
+    CData() {
+        _parent = null_v;
+    }
 
-	virtual ~CData()
-	{
-		Clear();
-	}
+    virtual ~CData() {
+        clear();
+    }
 
-	CData(const CData &Data);
-	const CData &operator =(const CData &Data);
+    CData(const CData &data);
 
-	void SetParent(const CData *pParent)
-	{
-		m_pParent = (CData *)pParent;
-	}
+    const CData &operator=(const CData &data);
 
-	// Define variables for any type without initialized value.
-	bool_ Define(
-		const ch_1 *pszName,		// Variable's name.
-		evt_ Type		// Variable's type.
-		);
+    void SetParent(const CData *pParent) {
+        _parent = (CData *) pParent;
+    }
 
-	// Define vairables with initialized value, integer number less than 32 bit.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		evt_ Type,	// Variable's type, except STR and OBJ.
-		b_4 Data	// Vairable's initialized value.
-		);
+    // define variables for any type without initialized value.
+    bool_ define(
+            const ch_1 *name,        // Variable's name.
+            evt_ type        // Variable's type.
+    );
 
-	// Define vairables with initialized value, 64 bit signed integer number.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		b_8 Data	// Vairable's initialized value.
-		);
+    // define vairables with initialized value, integer number less than 32 bit.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            evt_ type,    // Variable's type, except STR and OBJ.
+            b_4 data    // Vairable's initialized value.
+    );
 
-	// Define vairables with initialized value, 64 bit unsigned integer number.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		ub_8 Data	// Vairable's initialized value.
-		);
+    // define vairables with initialized value, 64 bit signed integer number.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            b_8 data    // Vairable's initialized value.
+    );
 
-	// Define vairables with initialized value, 32 bit float number.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		fb_4 Data	// Vairable's initialized value.
-		);
+    // define vairables with initialized value, 64 bit unsigned integer number.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            ub_8 data    // Vairable's initialized value.
+    );
 
-	// Define vairables with initialized value, 64 bit float number.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		fb_8 Data	// Vairable's initialized value.
-		);
+    // define vairables with initialized value, 32 bit float number.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            fb_4 data    // Vairable's initialized value.
+    );
 
-	// Define vairables just for STR with initialized value.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		const ch_1 *pszValue	// Vairable's initialized value.
-		);
+    // define vairables with initialized value, 64 bit float number.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            fb_8 data    // Vairable's initialized value.
+    );
 
-	// Define vairables just for OBJ with initialized value.
-	bool_ Define(
-		const ch_1 *pszName,	// Variable's name.
-		obj_ Object	// Vairable's initialized value.
-		);
+    // define vairables just for STR with initialized value.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            const ch_1 *value    // Vairable's initialized value.
+    );
 
-	// Define variables just for Group without initialized value.
-	bool_ Define(const CFieldGroupDefined *pFieldGroup);
- 
-	// Get normal variable's value.
-	v_ *Value(const ch_1 *pszName) const ;
+    // define vairables just for OBJ with initialized value.
+    bool_ define(
+            const ch_1 *name,    // Variable's name.
+            obj_ object    // Vairable's initialized value.
+    );
 
-	// Get group or indexed variable's struct
-	v_ *Value(const ch_1 *pszGroupName,
-			  const ch_1 *pszSubName, 
-			  TFieldGroup *&pData) const;
+    // define variables just for Group without initialized value.
+    bool_ define(const CFieldGroupDefined *fieldGroup);
 
-	void Clear();
+    // Get normal variable's value.
+    v_ *value(const ch_1 *name) const;
+
+    // Get group or indexed variable's struct
+    v_ *value(const ch_1 *groupName,
+            const ch_1 *subName,
+            TFieldGroup *&data) const;
+
+    void clear();
 
 private:
-	CData *m_pParent;
+    CData *_parent;
 
-	map_variable m_VariableMap;
-	map_data m_DataMap;
+    mapVariable _variableMap;
+    mapData _dataMap;
 };
 
 #endif // CDATA_H

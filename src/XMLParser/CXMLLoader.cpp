@@ -50,7 +50,7 @@ ret_ CXMLLoader::GetFirstName(const ch_1 *pszFullName,
 	if (!sPos)
 		_RET(FAILURE);
 
-	if (nLength >= nSize)
+	if (length >= size)
 		_RET(FAILURE);
 #endif
 

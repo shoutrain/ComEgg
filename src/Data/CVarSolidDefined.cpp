@@ -1,16 +1,13 @@
 #include "CVarSolidDefined.h"
 
-CAutoVar *CVarSolidDefined::Clone() const
-{
-	return (CAutoVar *)new CVarSolidDefined(m_szName);
+CVariable *CVarSolidDefined::clone() const {
+    return (CVariable *) new CVarSolidDefined(_name);
 }
 
-void CVarSolidDefined::Initialize(const CData *pData)
-{
-	m_pValue = pData->Value(m_szName);
+void CVarSolidDefined::init(const CData *data) {
+    _value = data->value(_name);
 }
 
-v_ *CVarSolidDefined::Value(const TMessageUnit *pTMU)
-{
-	return m_pValue;
+v_ *CVarSolidDefined::value(const TMessageUnit *tmu) {
+    return _value;
 }

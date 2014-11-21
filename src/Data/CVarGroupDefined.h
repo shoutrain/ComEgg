@@ -1,56 +1,59 @@
-#ifndef CVAR_GROUP_DEFINED_H
-#define CVAR_GROUP_DEFINED_H
+#ifndef _C_VAR_GROUP_DEFINED_H_
+#define _C_VAR_GROUP_DEFINED_H_
 
 #include "CVariable.h"
 
-#include "../Protocols/ProtocolCommon.h"
-
-class CVarGroupDefined: public CAutoVar
-{
+class CVarGroupDefined : public CVariable {
 public:
-	CVarGroupDefined(const ch_1 *pszGroupName, 
-					 const ch_1 *pszSubName = null_v, 
-					 const ch_1 *pszIndexName = null_v)
-	{
-		memset(m_szGroupName, 0, VARIABLE_NAME_LENGTH);
-		memset(m_szIndexName, 0, VARIABLE_NAME_LENGTH);
-		memset(m_szSubName, 0, VARIABLE_NAME_LENGTH);
+    CVarGroupDefined(const ch_1 *groupName,
+            const ch_1 *subName = null_v,
+            const ch_1 *indexName = null_v) {
+        memset(_groupName, 0, VARIABLE_NAME_LENGTH);
+        memset(_indexName, 0, VARIABLE_NAME_LENGTH);
+        memset(_subName, 0, VARIABLE_NAME_LENGTH);
 
-		strncpy(m_szGroupName, pszGroupName, VARIABLE_NAME_LENGTH);
+        strncpy(_groupName, groupName, VARIABLE_NAME_LENGTH);
 
-		if (pszSubName)
-			strncpy(m_szSubName, pszSubName, VARIABLE_NAME_LENGTH);
+        if (subName) {
+            strncpy(_subName, subName, VARIABLE_NAME_LENGTH);
+        }
 
-		if (pszIndexName)
-			strncpy(m_szIndexName, pszIndexName, VARIABLE_NAME_LENGTH);
+        if (indexName) {
+            strncpy(_indexName, indexName, VARIABLE_NAME_LENGTH);
+        }
 
-		m_pField = null_v;
-		m_pSize = null_v;
-		m_pIndex = null_v;
-		m_pGroupData = null_v;
-	}
+        _field = null_v;
+        _size = null_v;
+        _index = null_v;
+        _groupData = null_v;
+    }
 
-	virtual CAutoVar *Clone() const;
-	virtual void Initialize(const CData *pData);
-	virtual v_ *Value(const TMessageUnit *pTMU);
-	virtual v_ *Value(obj_ &);
+    virtual CVariable *clone() const;
+
+    virtual void init(const CData *data);
+
+    virtual v_ *value(const TMessageUnit *tmu);
+
+    virtual v_ *value(obj_ &);
 
 private:
-	CVarGroupDefined();
-	CVarGroupDefined(const CVarGroupDefined &);
-	const CVarGroupDefined &operator =(const CVarGroupDefined &);
+    CVarGroupDefined();
 
-	ch_1 m_szGroupName[VARIABLE_NAME_LENGTH];
-	ch_1 m_szSubName[VARIABLE_NAME_LENGTH];
+    CVarGroupDefined(const CVarGroupDefined &);
 
-	ch_1 m_szIndexName[VARIABLE_NAME_LENGTH];
-	CField *m_pField;
-	v_ *m_pSize;
-	v_ *m_pIndex;
+    const CVarGroupDefined &operator=(const CVarGroupDefined &);
 
-	v_ m_Value;
+    ch_1 _groupName[VARIABLE_NAME_LENGTH];
+    ch_1 _subName[VARIABLE_NAME_LENGTH];
 
-	TFieldGroup *m_pGroupData;
+    ch_1 _indexName[VARIABLE_NAME_LENGTH];
+    CField *_field;
+    v_ *_size;
+    v_ *_index;
+
+    v_ _value;
+
+    TFieldGroup *_groupData;
 };
 
-#endif // CVAR_GROUP_DEFINED_H
+#endif // _C_VAR_GROUP_DEFINED_H_

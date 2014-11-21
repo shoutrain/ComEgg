@@ -33,7 +33,7 @@ ret_ CNetworkHandle::Close()
 	_RET(SUCCESS);
 }
 
-ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
+ret_ CNetworkHandle::CheckSend(const CPduInfo *pPDUInfo,
 							   const ub_1 *pMsg,
 							   size_ nSize)
 {
@@ -46,7 +46,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 	if (!pMsg)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == nSize)
+	if (0 == size)
 		_RET(PARAMETER_ERROR | PARAMETER_3);
 #endif
 
@@ -68,7 +68,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 	try
 	{
 		size_ *pnSize = (size_ *)(pMsg +
-				pConf->getSizeId()->Offset(pMsg, nSize));
+                pConf->getSizeId()->offset(pMsg, nSize));
 		*pnSize = nSize;
 	}
 	catch (error_code err)
@@ -81,7 +81,7 @@ ret_ CNetworkHandle::CheckSend(const CPDUInfo *pPDUInfo,
 	try
 	{
 		v_ CommandID((size_ *)(pMsg +
-				pConf->getCommandId()->Offset(pMsg, nSize)));
+                pConf->getCommandId()->offset(pMsg, nSize)));
 
 		ret_ Ret = pConf->IdentifyPDU(pPDUInfo, CommandID, DIRECTION_OUT);
 
@@ -106,7 +106,7 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 	if (!pMsg)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == nSize)
+	if (0 == size)
 		_RET(PARAMETER_ERROR | PARAMETER_2);
 
 	if (!pMsgInfo)
@@ -127,12 +127,12 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 		_RET(NO_ELEMENT_IN_CONTAINER);
 #endif
 
-	CPDUInfo *pPDUInfo = null_v;
+    CPduInfo *pPDUInfo = null_v;
 
 	try
 	{
 		v_ CommandID((size_ *)(pMsg +
-							   pConf->getCommandId()->Offset(pMsg, nSize)));
+                pConf->getCommandId()->offset(pMsg, nSize)));
 		ret_ Ret = pConf->IdentifyID(CommandID, pPDUInfo, DIRECTION_IN);
 
 		if (SUCCESS != _ERR(Ret))

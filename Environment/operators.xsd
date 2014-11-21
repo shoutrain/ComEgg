@@ -369,7 +369,7 @@
                             <xs:documentation>
                                 First: Category, must be string.
                                 Second: Key, must be string.
-                                Third: Value.If is&apos;s not exist, register
+                                Third: value.If is&apos;s not exist, register
                                 the current interface.
                             </xs:documentation>
                         </xs:annotation>
@@ -410,7 +410,7 @@
                             <xs:documentation>
                                 First: Category, must be string.
                                 Second: Key, must be string.
-                                Third: Value.
+                                Third: value.
                             </xs:documentation>
                         </xs:annotation>
                     </xs:group>
@@ -482,7 +482,7 @@
                         <xs:annotation>
                             <xs:documentation>
                                 First: File Folder
-                                Second: File Name
+                                Second: File name
                                 Third: File content, null_v if failure
                             </xs:documentation>
                         </xs:annotation>
@@ -500,7 +500,7 @@
                         <xs:annotation>
                             <xs:documentation>
                                 First: File Folder
-                                Second: File Name
+                                Second: File name
                                 Third: File content
                                 Forth: Result, true_v or false_v
                             </xs:documentation>

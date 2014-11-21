@@ -102,8 +102,8 @@ void CProgram::Work(const TMessageUnit *pTMU)
 
 void CProgram::Clear()
 {
-	m_Data.Clear();
-	m_OrnData.Clear();
+    m_Data.clear();
+    m_OrnData.clear();
 
 	size_ n = (size_)m_OptVector.size();
 

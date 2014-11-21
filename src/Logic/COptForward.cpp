@@ -34,7 +34,7 @@ void COptForward::Work(const TMessageUnit *pTMU)
 		}
 
 		if (SUCCESS != _ERR(((CProcessor *)pProcessor)->Send(
-								(const CPDUInfo *)((TMessageUnit *)pTMU)->pduInfo,
+                (const CPduInfo *) ((TMessageUnit *) pTMU)->pduInfo,
 								((TMessageUnit *)pTMU)->message,
 								((TMessageUnit *)pTMU)->size,
 								pMsgInfo)))

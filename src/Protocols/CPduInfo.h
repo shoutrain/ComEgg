@@ -1,9 +1,9 @@
-#ifndef CPDU_INFO_H
-#define CPDU_INFO_H
+#ifndef _C_PDU_INFO_H_
+#define _C_PDU_INFO_H_
 
 #include "ProtocolCommon.h"
 
-class CPDUInfo: public CBaseClass
+class CPduInfo : public CBase
 {
 public:
 	CPDUInfo(const CField *pField)
@@ -30,10 +30,10 @@ protected:
 	ret_ Stop();
 
 private:
-	map_field m_FieldMap;
+    mapField m_FieldMap;
 
 	CField *m_pField;
 	CField *m_pCurField;
 };
 
-#endif // CPDU_INFO_H
+#endif // _C_PDU_INFO_H_

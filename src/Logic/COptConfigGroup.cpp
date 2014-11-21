@@ -15,15 +15,15 @@ void COptConfigGroup::Work(const TMessageUnit *pTMU)
 		pFieldGroup = (TFieldGroup *)(obj_)*pGroupData;
 		pSize = m_pSize->Value(pTMU);
 
-		if (pFieldGroup->nSize && pFieldGroup->pData)
+        if (pFieldGroup->size && pFieldGroup->data)
 		{
-			_DEL_ARR(pFieldGroup->pData);
-			pFieldGroup->nSize = 0;
+            _DEL_ARR(pFieldGroup->data);
+            pFieldGroup->size = 0;
 		}
 
-		pFieldGroup->nSize = pField->GetUnitSize() * ((size_)*pSize);
-		pFieldGroup->pData = new ub_1[pFieldGroup->nSize];
-		memset(pFieldGroup->pData, 0, pFieldGroup->nSize);
+        pFieldGroup->size = pField->getUnitSize() * ((size_) *pSize);
+        pFieldGroup->data = new ub_1[pFieldGroup->size];
+        memset(pFieldGroup->data, 0, pFieldGroup->size);
 	}
 	catch (...)
 	{

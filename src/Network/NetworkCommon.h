@@ -19,8 +19,6 @@ enum ENetworkType {
 	NETWORK_NONE,
 	NETWORK_ACCEPTOR,
 	NETWORK_CONNECTOR,
-	NETWORK_RECEIVER,
-	NETWORK_SENDER
 };
 
 struct TMsgInfo {
@@ -30,10 +28,10 @@ struct TMsgInfo {
 	ub_2 remotePort;
 };
 
-class CPDUInfo;
+class CPduInfo;
 
 struct TMessageUnit {
-	CPDUInfo *pduInfo;
+    CPduInfo *pduInfo;
 	ub_1 *message;
 	size_ size;
 	TMsgInfo *msgInfo;

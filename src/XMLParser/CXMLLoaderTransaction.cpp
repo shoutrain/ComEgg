@@ -144,7 +144,7 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 			auto_xerces_str sName	(pChild->getAttribute(wsName));
 			auto_xerces_str sValue	(pChild->getAttribute(wsValue));
 
-			if (false_v == Data.Define(sName, (obj_)null_v))
+            if (false_v == Data.define(sName, (obj_) null_v))
 				_RET(XML_LOADER_ERROR);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(), wsB1))
@@ -154,12 +154,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, B_1))
+                if (false_v == Data.define(sName, B_1))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, B_1, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, B_1, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 
@@ -171,12 +171,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, UB_1))
+                if (false_v == Data.define(sName, UB_1))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, UB_1, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, UB_1, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -187,12 +187,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, B_2))
+                if (false_v == Data.define(sName, B_2))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, B_2, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, B_2, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -203,12 +203,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, UB_2))
+                if (false_v == Data.define(sName, UB_2))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, UB_2, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, UB_2, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -219,12 +219,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, B_4))
+                if (false_v == Data.define(sName, B_4))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, B_4, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, B_4, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -235,12 +235,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, UB_4))
+                if (false_v == Data.define(sName, UB_4))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, UB_4, (b_4)atoi(sValue)))
+                if (false_v == Data.define(sName, UB_4, (b_4) atoi(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -251,12 +251,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, B_8))
+                if (false_v == Data.define(sName, B_8))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, B_8, (b_8)atoll(sValue)))
+                if (false_v == Data.define(sName, B_8, (b_8) atoll(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -267,12 +267,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, UB_8))
+                if (false_v == Data.define(sName, UB_8))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, UB_8, (ub_8)atoll(sValue)))
+                if (false_v == Data.define(sName, UB_8, (ub_8) atoll(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -283,12 +283,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, FB_4))
+                if (false_v == Data.define(sName, FB_4))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, (fb_4)atof(sValue)))
+                if (false_v == Data.define(sName, (fb_4) atof(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -299,12 +299,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, FB_8))
+                if (false_v == Data.define(sName, FB_8))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, (fb_8)atof(sValue)))
+                if (false_v == Data.define(sName, (fb_8) atof(sValue)))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -315,12 +315,12 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 
 			if (0 == strcmp(sValue, SIGN_UNBOUNDED))
 			{
-				if (false_v == Data.Define(sName, (ch_1 *)""))
+                if (false_v == Data.define(sName, (ch_1 *) ""))
 					_RET(XML_LOADER_ERROR);
 			}
 			else
 			{
-				if (false_v == Data.Define(sName, sValue))
+                if (false_v == Data.define(sName, sValue))
 					_RET(XML_LOADER_ERROR);
 			}
 		}
@@ -368,7 +368,7 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 															Type, 
 															pGroupField);
 
-					pGroupField->SetSubField(pField);
+                    pGroupField->setSubField(pField);
 				}
 				else if (0 == XMLString::compareString(pSub->getNodeName(),
 													   wsFloat))
@@ -387,7 +387,7 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 															Type, 
 															pGroupField);
 
-					pGroupField->SetSubField(pField);
+                    pGroupField->setSubField(pField);
 				}
 				else if (0 == XMLString::compareString(pSub->getNodeName(),
 													   wsString))
@@ -400,13 +400,13 @@ ret_ CXMLLoaderTransaction::LoadDataBlock(CData &Data,
 															atoi(sSize), 
 															pGroupField);
 
-					pGroupField->SetSubField(pField);
+                    pGroupField->setSubField(pField);
 				}
 
 				pSub = (DOMElement *)pSub->getNextSibling();
 			}
-			
-			if (false_v == Data.Define(pGroupField))
+
+            if (false_v == Data.define(pGroupField))
 				_RET(XML_LOADER_ERROR);
 		}
 
@@ -531,7 +531,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 			if (SUCCESS != _ERR(GetLastName(sIdentity, sLastName)))
 				_RET(XML_LOADER_ERROR);
 
-			CPDUInfo *pPDUInfo = null_v;
+            CPduInfo *pPDUInfo = null_v;
 
 			if (SUCCESS != _ERR(pProtocol->GetPDU(sLastName, pPDUInfo)))
 				_RET(XML_LOADER_ERROR);
@@ -646,7 +646,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 ret_ CXMLLoaderTransaction::LoadProgram(const CData *pParentData,
 										CProgram &Program,
 										const DOMElement *pElement,
-										const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_PROGRAM);
 
@@ -701,7 +701,7 @@ ret_ CXMLLoaderTransaction::LoadProgram(const CData *pParentData,
 
 ret_ CXMLLoaderTransaction::LoadProcessBlock(CProgram &Program,
 											 const DOMElement *pElement,
-											 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_PROCESS_BLOCK);
 
@@ -994,8 +994,8 @@ ret_ CXMLLoaderTransaction::LoadProcessBlock(CProgram &Program,
 }
 
 ret_ CXMLLoaderTransaction::LoadEmpty(CProgram &Program,
-									  const DOMElement *pElement, 
-									  const CPDUInfo *pPDU)
+        const DOMElement *pElement,
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_EMPTY);
 
@@ -1038,7 +1038,7 @@ ret_ CXMLLoaderTransaction::LoadEmpty(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadUnitaryCalculate(CProgram &Program,
 												 const DOMElement *pElement,
-												 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_UNITARY_CALCULATE);
 
@@ -1093,7 +1093,7 @@ ret_ CXMLLoaderTransaction::LoadUnitaryCalculate(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadDualityCalculate(CProgram &Program,
 												 const DOMElement *pElement,
-												 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_DUALITY_CALCULATE);
 
@@ -1151,7 +1151,7 @@ ret_ CXMLLoaderTransaction::LoadDualityCalculate(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadConfigGroup(CProgram &Program,
 											const DOMElement *pElement,
-											const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_CONFIG_GROUP);
 
@@ -1217,7 +1217,7 @@ ret_ CXMLLoaderTransaction::LoadConfigGroup(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 								   const DOMElement *pElement,
-								   const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_IF);
 
@@ -1307,7 +1307,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadWhile(CProgram &Program,
 									  const DOMElement *pElement,
-									  const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_WHILE);
 
@@ -1427,7 +1427,7 @@ ret_ CXMLLoaderTransaction::LoadBreak(CProgram &Program)
 
 ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 									 const DOMElement *pElement,
-									 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 
 {
 	_START(LOAD_SEND);
@@ -1456,7 +1456,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 	auto_xerces_str	wsPDU	("pdu");
 	auto_xerces_str	sPDU	(pElement->getAttribute(wsPDU));
 
-	CPDUInfo *pPDUInfo = null_v;
+    CPduInfo *pPDUInfo = null_v;
 
 	if (SUCCESS != _ERR(pProtocol->GetPDU(sPDU, pPDUInfo)))
 		_RET(XML_LOADER_ERROR);
@@ -1580,7 +1580,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadForward(CProgram &Program,
 										const DOMElement *pElement,
-										const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 
 {
 	_START(LOAD_FORWARD);
@@ -1662,7 +1662,7 @@ ret_ CXMLLoaderTransaction::LoadForward(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadGetAddress(CProgram &Program,
 										   const DOMElement *pElement,
-										   const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 
 {
 	_START(LOAD_GET_ADDRESS);
@@ -1720,7 +1720,7 @@ ret_ CXMLLoaderTransaction::LoadGetAddress(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadRegister(CProgram &Program,
 										 const DOMElement *pElement,
-										 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_REGISTER);
 
@@ -1776,7 +1776,7 @@ ret_ CXMLLoaderTransaction::LoadRegister(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadUnregister(CProgram &Program,
 										   const DOMElement *pElement,
-										   const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_UNREGISTER);
 
@@ -1821,7 +1821,7 @@ ret_ CXMLLoaderTransaction::LoadUnregister(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadSearch(CProgram &Program,
 									   const DOMElement *pElement,
-									   const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_SEARCH);
 
@@ -1866,7 +1866,7 @@ ret_ CXMLLoaderTransaction::LoadSearch(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadGetUsage(CProgram &Program,
 										 const DOMElement *pElement,
-										 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_GET_USAGE);
 
@@ -1908,7 +1908,7 @@ ret_ CXMLLoaderTransaction::LoadGetUsage(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadNetworkWakeUp(CProgram &Program,
 											  const DOMElement *pElement,
-											  const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_NETWORK_WAKE_UP);
 
@@ -1953,7 +1953,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkWakeUp(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadNetworkSleep(CProgram &Program,
 											 const DOMElement *pElement,
-											 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_NETWORK_SLEEP);
 
@@ -2001,7 +2001,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkSleep(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadReadFile(CProgram &Program,
 										 const DOMElement *pElement,
-										 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_READ_FILE);
 
@@ -2050,7 +2050,7 @@ ret_ CXMLLoaderTransaction::LoadReadFile(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadSaveFile(CProgram &Program,
 										 const DOMElement *pElement,
-										 const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_SAVE_FILE);
 
@@ -2097,7 +2097,7 @@ ret_ CXMLLoaderTransaction::LoadSaveFile(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadDeleteFile(CProgram &Program,
 										   const DOMElement *pElement,
-										   const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_DELETE_FILE);
 
@@ -2142,7 +2142,7 @@ ret_ CXMLLoaderTransaction::LoadDeleteFile(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 										  const DOMElement *pElement,
-										  const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_USE_MODULE);
 
@@ -2265,7 +2265,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 ret_ CXMLLoaderTransaction::LoadSplit(CProgram &Program,
 									  const DOMElement *pElement,
-									  const CPDUInfo *pPDU)
+        const CPduInfo *pPDU)
 {
 	_START(LOAD_SPLIT);
 
@@ -2320,7 +2320,7 @@ ret_ CXMLLoaderTransaction::LoadDie(CProgram &Program)
 	_RET(SUCCESS);
 }
 
-ret_ CXMLLoaderTransaction::LoadVariable(const CPDUInfo *pPDU,
+ret_ CXMLLoaderTransaction::LoadVariable(const CPduInfo *pPDU,
 										 const CData &Data,
 										 const DOMElement *pElement,
 										 CAutoVar *&pOV)
@@ -2381,7 +2381,7 @@ ret_ CXMLLoaderTransaction::LoadSolidVariable(const CData &Data,
 	auto_xerces_str	wsName	("name");
 	auto_xerces_str	sName	(pElement->getAttribute(wsName));
 
-	v_ *pV = Data.Value(sName);
+    v_ *pV = Data.value(sName);
 
 	if (!pV)
 		_RET(XML_LOADER_ERROR);
@@ -2431,7 +2431,7 @@ ret_ CXMLLoaderTransaction::LoadGroupVariable(const CData &Data,
 		sprintf(szName, "%s", (const ch_1 *)sGroupName);
 	}
 
-	v_ *pV = Data.Value(szName);
+    v_ *pV = Data.value(szName);
 
 	if (!pV)
 		_RET(XML_LOADER_ERROR); // There is no variable defined above
@@ -2444,7 +2444,7 @@ ret_ CXMLLoaderTransaction::LoadGroupVariable(const CData &Data,
 	_RET(SUCCESS);
 }
 
-ret_ CXMLLoaderTransaction::LoadNetworkVarialbe(const CPDUInfo *pPDU,
+ret_ CXMLLoaderTransaction::LoadNetworkVarialbe(const CPduInfo *pPDU,
 												const CData &Data,
 												const DOMElement *pElement,
 												CAutoVar *&pOV)
@@ -2486,7 +2486,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkVarialbe(const CPDUInfo *pPDU,
 
 	CField *pField = null_v;
 
-	if (SUCCESS != _ERR(((CPDUInfo *)pPDU)->GetField(szName, pField)))
+    if (SUCCESS != _ERR(((CPduInfo *) pPDU)->GetField(szName, pField)))
 		_RET(XML_LOADER_ERROR);
 
 	if (0 == strcmp(sIndex, SIGN_UNBOUNDED))
@@ -2499,7 +2499,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkVarialbe(const CPDUInfo *pPDU,
 
 ret_ CXMLLoaderTransaction::LoadExpression(const CData &Data,
 										   const DOMElement *pElement,
-										   const CPDUInfo *pPDU,
+        const CPduInfo *pPDU,
 										   CExpression *&pExpression)
 {
 	_START(LOAD_EXPRESSION);

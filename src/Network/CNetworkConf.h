@@ -4,21 +4,23 @@
 #include "NetworkCommon.h"
 #include "../Protocols/ProtocolCommon.h"
 #include "../Protocols/CProtocolInfo.h"
-#include "../Protocols/CPDUInfo.h"
+#include "CPduInfo.h"
 #include "../Transactions/CTransaction.h"
 
 #include <map>
 
 using namespace std;
 
-typedef map<size_, const CPDUInfo *> MapPduTable;
-typedef map<const CPDUInfo *, size_> MapIdTable;
+typedef map<size_, const CPduInfo *> MapPduTable;
+typedef map<const CPduInfo *, size_> MapIdTable;
 
 class CNetworkConf: public CBase {
 public:
-	b_4 configPdu(const v_ &id, const CPDUInfo *pduInfo, EDirection direction);
-	b_4 identifyId(const v_ &id, CPDUInfo *&pduInfo, EDirection direction);
-	b_4 identifyPdu(const CPDUInfo *pPDUInfo, v_ &id, EDirection direction);
+    b_4 configPdu(const v_ &id, const CPduInfo *pduInfo, EDirection direction);
+
+    b_4 identifyId(const v_ &id, CPduInfo *&pduInfo, EDirection direction);
+
+    b_4 identifyPdu(const CPduInfo *pPDUInfo, v_ &id, EDirection direction);
 
 	const CProtocolInfo *getProtocol() const {
 		return _protocol;
@@ -61,8 +63,9 @@ protected:
 	}
 
 private:
-	bool_ findPdu(const v_ &id, EDirection direction, CPDUInfo *&pduInfo);
-	bool_ findId(const CPDUInfo *pduInfo, EDirection direction, v_ &id);
+    bool_ findPdu(const v_ &id, EDirection direction, CPduInfo *&pduInfo);
+
+    bool_ findId(const CPduInfo *pduInfo, EDirection direction, v_ &id);
 
 	MapPduTable _pduInTableMap;
 	MapPduTable _pduOutTableMap;

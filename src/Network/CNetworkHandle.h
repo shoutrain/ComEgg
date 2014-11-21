@@ -21,7 +21,7 @@ public:
 					 const ch_1 *pszIP = null_v,
 					 ub_2 nPort = 0) = 0;
 
-	ret_ CheckSend(const CPDUInfo *pPDUInfo,
+    ret_ CheckSend(const CPduInfo *pPDUInfo,
 				   const ub_1 *pMsg,
 				   size_ nSize);
 

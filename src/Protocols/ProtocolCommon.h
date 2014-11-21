@@ -1,7 +1,7 @@
 #ifndef PROTOCOL_COMMON_H
 #define PROTOCOL_COMMON_H
 
-#include "../Common/CBaseClass.h"
+#include "../Common/CBase.h"
 #include "../Data/CFieldNumber.h"
 #include "../Data/CFieldString.h"
 #include "../Data/CFieldGroup.h"

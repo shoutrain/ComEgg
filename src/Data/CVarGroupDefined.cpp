@@ -1,143 +1,130 @@
 #include "CVarGroupDefined.h"
 
-CAutoVar *CVarGroupDefined::Clone() const
-{
-	return (CAutoVar *)new CVarGroupDefined(m_szGroupName,
-										     m_szSubName,
-										     m_szIndexName);
+CVariable *CVarGroupDefined::clone() const {
+    return (CVariable *) new CVarGroupDefined(_groupName,
+            _subName,
+            _indexName);
 }
 
-void CVarGroupDefined::Initialize(const CData *pData)
-{
-	m_pGroupData = null_v;
-	m_pField = (CField *)(obj_)*pData->Value(m_szGroupName,
-											 m_szSubName,
-											 m_pGroupData);
-	m_pIndex = pData->Value(m_szIndexName);
+void CVarGroupDefined::init(const CData *data) {
+    _groupData = null_v;
+    _field = (CField *) (obj_) *data->value(_groupName,
+            _subName,
+            _groupData);
+    _index = data->value(_indexName);
 
-	const CField *pParentField = m_pField->GetGroupField();
+    const CField *parentField = _field->getGroupField();
 
-	if (pParentField)
-		m_pSize = pData->Value(pParentField->GetSizeName());
-	else
-		m_pSize = pData->Value(m_pField->GetSizeName());
+    if (parentField) {
+        _size = data->value(parentField->getSizeName());
+    } else {
+        _size = data->value(_field->getSizeName());
+    }
 }
 
-v_ *CVarGroupDefined::Value(const TMessageUnit *pTMU)
-{
-	m_Value.clear();
-	
-	if (!m_pGroupData || !m_pGroupData->nSize || !m_pGroupData->pData)
-	{
-		v_ tmp;
-		
-		m_Value = tmp;
+v_ *CVarGroupDefined::value(const TMessageUnit *tmu) {
+    _value.clear();
 
-		return &m_Value;
-	}
+    if (!_groupData || !_groupData->size || !_groupData->data) {
+        v_ tmp;
 
-	try
-	{
-		size_ nIndex = 0;
-		size_ nOffset = 0;
+        _value = tmp;
 
-		if (m_pIndex)
-			nIndex = (size_)*m_pIndex;
+        return &_value;
+    }
 
-		if (FIELD_GROUP_STYLE == (GET_FIELD_STYLE & m_pField->Type()))
-		{
-			nOffset = m_pField->Offset((size_)*m_pSize,
-									   m_pGroupData->nSize,
-									   nIndex);
-		}
-		else
-		{
-			nOffset = m_pField->Offset(m_pGroupData->pData,
-									   m_pGroupData->nSize,
-									   nIndex);
-		}
+    size_ index = 0;
+    size_ offset = 0;
 
-		switch (m_pField->Type())
-		{
-		case FIELD_B_1_TYPE:
-			m_Value = (b_1 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_UB_1_TYPE:
-			m_Value = (ub_1 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_B_2_TYPE:
-			m_Value = (b_2 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_UB_2_TYPE:
-			m_Value = (ub_2 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_B_4_TYPE:
-			m_Value = (b_4 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_UB_4_TYPE:
-			m_Value = (ub_4 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_B_8_TYPE:
-			m_Value = (b_8 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_UB_8_TYPE:
-			m_Value = (ub_8 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_FB_4_TYPE:
-			m_Value = (fb_4 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_FB_8_TYPE:
-			m_Value = (fb_8 *)(m_pGroupData->pData + nOffset);
-			break;
-		case FIELD_STR_TYPE:
-		{
-			v_ tmp((const ch_1 *)(m_pGroupData->pData + nOffset), 
-					m_pField->Size());
+    if (_index) {
+        index = (size_) *_index;
+    }
 
-			m_Value = tmp;
-		}
-		break;
-		case FIELD_GROUP_TYPE:
-		{
-			if (nIndex)
-			{
-				v_ tmp((obj_ *)&(m_pGroupData->pData), 
-					   nOffset,
-					   m_pField->GetUnitSize());
+    if (FIELD_GROUP_STYLE == (GET_FIELD_STYLE & _field->type())) {
+        offset = _field->offset((size_) *_size,
+                _groupData->size,
+                index);
+    } else {
+        offset = _field->offset(_groupData->data,
+                _groupData->size,
+                index);
+    }
 
-				m_Value = tmp;
-			}
-			else
-			{
-				v_ tmp((obj_ *)&(m_pGroupData->pData), 0, m_pGroupData->nSize);
+    switch (_field->type()) {
+        case FIELD_B_1_TYPE:
+            _value = (b_1 *) (_groupData->data + offset);
+            break;
+        case FIELD_UB_1_TYPE:
+            _value = (ub_1 *) (_groupData->data + offset);
+            break;
+        case FIELD_B_2_TYPE:
+            _value = (b_2 *) (_groupData->data + offset);
+            break;
+        case FIELD_UB_2_TYPE:
+            _value = (ub_2 *) (_groupData->data + offset);
+            break;
+        case FIELD_B_4_TYPE:
+            _value = (b_4 *) (_groupData->data + offset);
+            break;
+        case FIELD_UB_4_TYPE:
+            _value = (ub_4 *) (_groupData->data + offset);
+            break;
+        case FIELD_B_8_TYPE:
+            _value = (b_8 *) (_groupData->data + offset);
+            break;
+        case FIELD_UB_8_TYPE:
+            _value = (ub_8 *) (_groupData->data + offset);
+            break;
+        case FIELD_FB_4_TYPE:
+            _value = (fb_4 *) (_groupData->data + offset);
+            break;
+        case FIELD_FB_8_TYPE:
+            _value = (fb_8 *) (_groupData->data + offset);
+            break;
+        case FIELD_STR_TYPE: {
+            v_ tmp((const ch_1 *) (_groupData->data + offset),
+                    _field->size());
 
-				m_Value = tmp;
-			}
-		}
-		break;
-		default:
-			throw FIELD_TYPE_ERROR;
-		}
-	}
-	catch (...)
-	{
-		throw;
-	}
+            _value = tmp;
+        }
+            break;
+        case FIELD_GROUP_TYPE: {
+            if (index) {
+                v_ tmp((obj_ *) &(_groupData->data),
+                        offset,
+                        _field->getUnitSize());
 
-	return &m_Value;
+                _value = tmp;
+            }
+            else {
+                v_ tmp((obj_ *) &(_groupData->data), 0, _groupData->size);
+
+                _value = tmp;
+            }
+        }
+            break;
+        default:
+            assert(0);
+            logError("Wrong type in CVarGroupDefined::value");
+            return null_v;
+    }
+
+    return &_value;
 }
 
-v_ *CVarGroupDefined::Value(obj_ &Parameter)
-{
-	if (Parameter || !m_pGroupData || !m_pField)
-		throw FIELD_DATA_NULL;
+v_ *CVarGroupDefined::value(obj_ &parameter) {
+    if (parameter || !_groupData || !_field) {
+        assert(0);
+        logError("Wrong type in CVarGroupDefined::value");
+        return null_v;
+    }
 
-	Parameter = (obj_)m_pField;
+    parameter = (obj_) _field;
 
-	v_ tmp((obj_)m_pGroupData);
+    v_ tmp((obj_) _groupData);
 
-	m_Value.clear();
-	m_Value = tmp;
+    _value.clear();
+    _value = tmp;
 
-	return &m_Value;
+    return &_value;
 }

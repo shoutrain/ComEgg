@@ -337,12 +337,12 @@ ret_ CXMLLoaderModule::LoadInterfaceField(const DOMElement *pElement,
 	TField Field;
 
 	memset(&Field, 0, sizeof(TField));
-	Field.Style	= FieldStyle;
+    Field.style = FieldStyle;
 
 	auto_xerces_str	wsName	("name");
 	auto_xerces_str sName	(pElement->getAttribute(wsName));
 
-	strncpy((ch_1 *)Field.sName, sName, VARIABLE_NAME_LENGTH);
+    strncpy((ch_1 *) Field.name, sName, VARIABLE_NAME_LENGTH);
 
 	auto_xerces_str	wsLength("length");
 	auto_xerces_str	wsSigned("signed");
@@ -354,15 +354,15 @@ ret_ CXMLLoaderModule::LoadInterfaceField(const DOMElement *pElement,
 		auto_xerces_str	sLength(pElement->getAttribute(wsLength));
 		auto_xerces_str	sSigned(pElement->getAttribute(wsSigned));
 
-		Field.nLength	= atoi(sLength);
-		Field.IsSigned	=
+        Field.length = atoi(sLength);
+        Field.isSigned =
 			(0 == strcmp(sSigned, "true") ? true_v : false_v);
 	}
 	else if (FIELD_STRING_STYLE == FieldStyle)
 	{
 		auto_xerces_str sSize(pElement->getAttribute(wsSize));
 
-		Field.nSize = (size_)atoi(sSize);
+        Field.size = (size_) atoi(sSize);
 	}
 	else if (FIELD_GROUP_STYLE == FieldStyle) // FIELD_GROUP_STYLE
 	{
@@ -371,13 +371,13 @@ ret_ CXMLLoaderModule::LoadInterfaceField(const DOMElement *pElement,
 			_RET(PARAMETER_TYPE_ERROR | PARAMETER_4);
 		
 		if (pszGroupName)
-			strncpy(pszGroupName, Field.sName, VARIABLE_NAME_LENGTH);
+            strncpy(pszGroupName, Field.name, VARIABLE_NAME_LENGTH);
 		else
 			_RET(PARAMETER_NULL | PARAMETER_5);
 
 		auto_xerces_str sSize(pElement->getAttribute(wsSize));
 
-		strncpy((ch_1 *)Field.sSizeName, sSize, VARIABLE_NAME_LENGTH);
+        strncpy((ch_1 *) Field.sizeName, sSize, VARIABLE_NAME_LENGTH);
 	}
 
 	ret_ Ret;

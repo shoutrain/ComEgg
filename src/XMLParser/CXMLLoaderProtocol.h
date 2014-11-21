@@ -29,7 +29,7 @@ private:
 	ret_ LoadPDU(const DOMElement *pElement, const ch_1 *pszPDUName = null_v);
 	ret_ LoadPDUField(const DOMElement *pElement, 
 					  EFieldStyle FieldStyle,
-					  CPDUInfo *pPDUInfo = null_v, 
+            CPduInfo *pPDUInfo = null_v,
 					  bool_ bIsSubField = false_v,
 					  ch_1 *pszGroupName = null_v);
 

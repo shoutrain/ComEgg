@@ -52,8 +52,8 @@ protected:
 	ret_ Stop();
 
 private:
-	map_field m_InFieldMap;
-	map_field m_OutFieldMap;
+    mapField m_InFieldMap;
+    mapField m_OutFieldMap;
 
 	CField *m_pInField;
 	CField *m_pInCurField;
