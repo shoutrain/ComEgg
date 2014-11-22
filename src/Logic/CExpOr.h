@@ -1,74 +1,58 @@
-#ifndef CEXP_OR_H
-#define CEXP_OR_H
+#ifndef _C_EXP_OR_H_
+#define _C_EXP_OR_H_
 
 #include "CExpression.h"
 
-class CExpOr: CExpression
-{
+class CExpOr : CExpression {
 public:
-	CExpOr(const CExpression *pLeftExp, const CExpression *pRightExp)
-	{
-		m_pLeftExp	= pLeftExp->Clone();
-		m_pRightExp	= pRightExp->Clone();
-	}
+    CExpOr(const CExpression *leftExp, const CExpression *rightExp) {
+        _leftExp = leftExp->clone();
+        _rightExp = rightExp->clone();
+    }
 
 
-	virtual ~CExpOr()
-	{
-		_DEL(m_pLeftExp);
-		_DEL(m_pRightExp);
-	}
+    virtual ~CExpOr() {
+        _DEL(_leftExp);
+        _DEL(_rightExp);
+    }
 
-	CExpOr(const CExpOr &exp)
-	{
-		m_pLeftExp	= exp.m_pLeftExp->Clone();
-		m_pRightExp	= exp.m_pRightExp->Clone();
-	}
+    CExpOr(const CExpOr &exp) {
+        _leftExp = exp._leftExp->clone();
+        _rightExp = exp._rightExp->clone();
+    }
 
-	const CExpOr &operator =(const CExpOr &exp)
-	{
-		if (this != &exp)
-		{
-			_DEL(m_pLeftExp);
-			_DEL(m_pRightExp);
-			m_pLeftExp	= exp.m_pLeftExp->Clone();
-			m_pRightExp	= exp.m_pRightExp->Clone();
-		}
+    const CExpOr &operator=(const CExpOr &exp) {
+        if (this != &exp) {
+            _DEL(_leftExp);
+            _DEL(_rightExp);
+            _leftExp = exp._leftExp->clone();
+            _rightExp = exp._rightExp->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual CExpression *Clone() const
-	{
-		return (CExpression *)new CExpOr(*this);
-	}
+    virtual CExpression *clone() const {
+        return (CExpression *) new CExpOr(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		m_pLeftExp->Initialize(pUnit);
-		m_pRightExp->Initialize(pUnit);
-	}
+    virtual void init(const optUnit *unit) {
+        _leftExp->init(unit);
+        _rightExp->init(unit);
+    }
 
-	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
-	{
-		try
-		{
-			return (bool_)(m_pLeftExp->Evaluate(pTMU)
-				|| m_pRightExp->Evaluate(pTMU));
-		}
-		catch (...)
-		{
-			throw;
-		}
-	}
+    virtual bool_ evaluate(const TMessageUnit *tmu) const {
+        return (bool_) (_leftExp->evaluate(tmu)
+                || _rightExp->evaluate(tmu));
+    }
 
 private:
-	CExpOr();
+    CExpOr();
 
-	CExpression	*m_pLeftExp;
-	CExpression	*m_pRightExp;
+    CExpression *_leftExp;
+    CExpression *_rightExp;
 };
 
-#endif // CEXP_OR_H
+#endif // _C_EXP_OR_H_
 
 

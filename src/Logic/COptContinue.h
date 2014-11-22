@@ -1,38 +1,33 @@
-#ifndef COPT_CONTINUE_H
-#define COPT_CONTINUE_H
+#ifndef _C_OPT_CONTINUE_H_
+#define _C_OPT_CONTINUE_H_
 
 #include "COperator.h"
 
-class COptContinue: public COperator
-{
+class COptContinue : public COperator {
 public:
-	COptContinue(): COperator(OT_CONTINUE)
-	{
-	}
+    COptContinue() : COperator(OT_CONTINUE) {
+    }
 
-	COptContinue(const COptContinue &opt): COperator(opt)
-	{
-	}
+    COptContinue(const COptContinue &opt) : COperator(opt) {
+    }
 
-	const COptContinue &operator =(const COptContinue &opt)
-	{
-		if (this != &opt)
-			COperator::operator =(opt);
+    const COptContinue &operator=(const COptContinue &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptContinue(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptContinue(*this);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU)
-	{
-		call_break Continue;
+    virtual void work(const TMessageUnit *tmu) {
+        callBreak Continue;
 
-		throw Continue;
-	}
+        throw Continue;
+    }
 };
 
-#endif // COPT_CONTINUE_H
+#endif // _C_OPT_CONTINUE_H_

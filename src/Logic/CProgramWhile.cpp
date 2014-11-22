@@ -1,22 +1,22 @@
 #include "CProgramWhile.h"
 
-void CProgramWhile::Work(const TMessageUnit *pTMU)
+void CProgramWhile::work(const TMessageUnit *tmu)
 {
 	try
 	{
 		if (m_bJudgeHead)
 		{
-			while (m_pExpression->Evaluate(pTMU))
+            while (m_pExpression->evaluate(tmu))
 			{
 				try
 				{
-					CProgram::Work(pTMU);
+                    CProgram::work(tmu);
 				}
-				catch (call_break)
+                catch (callBreak)
 				{
 					break;
 				}
-				catch (call_continue)
+                catch (callContinue)
 				{
 					continue;
 				}
@@ -32,13 +32,13 @@ void CProgramWhile::Work(const TMessageUnit *pTMU)
 			{
 				try
 				{
-					CProgram::Work(pTMU);
+                    CProgram::work(tmu);
 				}
-				catch (call_break)
+                catch (callBreak)
 				{
 					break;
 				}
-				catch (call_continue)
+                catch (callContinue)
 				{
 					continue;
 				}
@@ -46,15 +46,15 @@ void CProgramWhile::Work(const TMessageUnit *pTMU)
 				{
 					throw;
 				}
-			} while (m_pExpression->Evaluate(pTMU));
+            } while (m_pExpression->evaluate(tmu));
 		}
 	}
 	catch (...)
 	{
-		Reset();
+        reset();
 
 		throw;
 	}
 
-	Reset();
+    reset();
 }

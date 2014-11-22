@@ -1,28 +1,20 @@
 #include "COptReadFile.h"
-
 #include "../System/CFile.h"
 
-void COptReadFile::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		v_ OrnFileName = (*m_pFilePath->Value(pTMU))
-			+ (*m_pFileName->Value(pTMU));
-		ub_1 *pBuffer = new ub_1[REV_BUFFER_MAX_SIZE];
-		CFile ReadFile;
-		size_ ReadSize;
+void COptReadFile::work(const TMessageUnit *tmu) {
+    v_ ornFileName = (*_filePath->value(tmu))
+            + (*_fileName->value(tmu));
+    ub_1 *buffer = new ub_1[REV_BUFFER_MAX_SIZE];
+    CFile readFile;
+    size_ readSize;
 
-		if (!ReadFile.Read((const ch_1 *)OrnFileName, pBuffer,
-						   REV_BUFFER_MAX_SIZE, ReadSize))
-		{
-			throw FILE_READ_ERROR;
-		}
+    if (!readFile.Read((const ch_1 *) ornFileName, buffer,
+            REV_BUFFER_MAX_SIZE, readSize)) {
+        assert(0);
+        // TODO do something to let outside know
+        return;
+    }
 
-		(*m_pResult->Value(pTMU)) = v_((ub_1 *)pBuffer);
-	}
-	catch (...)
-	{
-		throw;
-	}
+    (*_result->Value(tmu)) = v_((ub_1 *) buffer);
 }
 

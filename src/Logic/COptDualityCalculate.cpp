@@ -1,57 +1,49 @@
 #include "COptDualityCalculate.h"
 
-void COptDualityCalculate::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		switch (m_Opt)
-		{
-		case EC_ADD:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				+ (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_SUB:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				- (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_MUL:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				* (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_DIV:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				/ (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_MOD:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				% (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_AND:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				& (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_OR:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				| (*m_pRightVariable->Value(pTMU));
-			return;
-		case EC_XOR:
-			(*m_pResultVariable->Value(pTMU))
-				= (*m_pLeftVariable->Value(pTMU))
-				^ (*m_pRightVariable->Value(pTMU));
-			return;
-		default:
-			throw OPERATOR_OPERAITON_ERROR;
-		}
-	}
-	catch (...)
-	{
-		throw;
-	}
+void COptDualityCalculate::work(const TMessageUnit *tmu) {
+    switch (_opt) {
+        case EC_ADD:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    + (*_rightVariable->value(tmu));
+            return;
+        case EC_SUB:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    - (*_rightVariable->value(tmu));
+            return;
+        case EC_MUL:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    * (*_rightVariable->value(tmu));
+            return;
+        case EC_DIV:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    / (*_rightVariable->value(tmu));
+            return;
+        case EC_MOD:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    % (*_rightVariable->value(tmu));
+            return;
+        case EC_AND:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    & (*_rightVariable->value(tmu));
+            return;
+        case EC_OR:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    | (*_rightVariable->value(tmu));
+            return;
+        case EC_XOR:
+            (*_resultVariable->value(tmu))
+                    = (*_leftVariable->value(tmu))
+                    ^ (*_rightVariable->value(tmu));
+            return;
+        default:
+            assert(0);
+            // TODO do something let outside know
+    }
 }

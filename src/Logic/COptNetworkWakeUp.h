@@ -1,66 +1,58 @@
-#ifndef COPT_NETWORK_WAKE_UP_H
-#define COPT_NETWORK_WAKE_UP_H
+#ifndef _C_OPT_NETWORK_WAKE_UP_H_
+#define _C_OPT_NETWORK_WAKE_UP_H_
 
 #include "COperator.h"
 
-class COptNetworkWakeUp: public COperator
-{
+class COptNetworkWakeUp : public COperator {
 public:
-	COptNetworkWakeUp(const CAutoVar *pNetworkName,
-					  const CAutoVar *pResult)
-		: COperator(OT_NETWORK_WAKE_UP)
-	{
-		m_pNetworkName	= pNetworkName->Clone();
-		m_pResult		= pResult->Clone();
-	}
+    COptNetworkWakeUp(const CVariable *networkName,
+            const CVariable *result)
+            : COperator(OT_NETWORK_WAKE_UP) {
+        _networkName = networkName->clone();
+        _result = result->clone();
+    }
 
-	virtual ~COptNetworkWakeUp()
-	{
-		_DEL(m_pNetworkName);
-		_DEL(m_pResult);
-	}
+    virtual ~COptNetworkWakeUp() {
+        _DEL(_networkName);
+        _DEL(_result);
+    }
 
-	COptNetworkWakeUp(const COptNetworkWakeUp &opt): COperator(opt)
-	{
-		m_pNetworkName	= opt.m_pNetworkName->Clone();
-		m_pResult		= opt.m_pResult->Clone();
-	}
+    COptNetworkWakeUp(const COptNetworkWakeUp &opt) : COperator(opt) {
+        _networkName = opt._networkName->clone();
+        _result = opt._result->clone();
+    }
 
-	const COptNetworkWakeUp &operator =(const COptNetworkWakeUp &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptNetworkWakeUp &operator=(const COptNetworkWakeUp &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pNetworkName);
-			_DEL(m_pResult);
-			m_pNetworkName	= opt.m_pNetworkName->Clone();
-			m_pResult		= opt.m_pResult->Clone();
-		}
+            _DEL(_networkName);
+            _DEL(_result);
+            _networkName = opt._networkName->clone();
+            _result = opt._result->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptNetworkWakeUp(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptNetworkWakeUp(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pNetworkName->Initialize(pUnit->pData);
-		m_pResult->Initialize(pUnit->pData);
-	}
+        _networkName->init(unit->data);
+        _result->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pNetworkName;
-	CAutoVar *m_pResult;
+    CVariable *_networkName;
+    CVariable *_result;
 };
 
-#endif // COPT_NETWORK_WAKE_UP_H
+#endif // _C_OPT_NETWORK_WAKE_UP_H_
 
 

@@ -16,8 +16,8 @@ public:
 
 	CProgramIf(const CProgramIf &opt);
 	const CProgramIf &operator =(const CProgramIf &opt);
-	
-	virtual COperator *Clone() const
+
+    virtual COperator *clone() const
 	{
 		return (COperator *)new CProgramIf(*this);
 	}
@@ -25,13 +25,14 @@ public:
 	virtual bool_ AddOperator(const COperator *pOperator);
 	bool_ AddExpression(const CExpression *pExpression);
 
-	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void init(const optUnit *unit);
+
+    virtual void work(const TMessageUnit *tmu);
 
 private:
 	void Clear();
 
-	vector_exp m_ExpVector;
+    vectorExp m_ExpVector;
 };
 
 #endif // COPT_IF_H

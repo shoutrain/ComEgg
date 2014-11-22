@@ -45,20 +45,20 @@ public:
 		return *this;
 	}
 
-	virtual COperator *Clone() const
+    virtual COperator *clone() const
 	{
 		return (COperator *)new COptUnitaryCalculate(*this);
 	}
 
-	virtual void Initialize(const opt_unit *pUnit)
+    virtual void init(const optUnit *unit)
 	{
-		COperator::Initialize(pUnit);
+        COperator::init(unit);
 
-		m_pResultVariable->Initialize(pUnit->pData);
-		m_pRightVariable->Initialize(pUnit->pData);
+        m_pResultVariable->Initialize(unit->data);
+        m_pRightVariable->Initialize(unit->data);
 	}
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
 	EUnitaryCalculate	m_Opt;

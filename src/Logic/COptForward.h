@@ -1,128 +1,109 @@
-#ifndef COPT_FORWARD_H
-#define COPT_FORWARD_H
+#ifndef _C_OPT_FORWARD_H_
+#define _C_OPT_FORWARD_H_
 
 #include "COperator.h"
-
 #include "../Transactions/CTransactionManager.h"
 
-class COptForward: public COperator
-{
+class COptForward : public COperator {
 public:
-	COptForward(const CAutoVar *pObject = null_v): COperator(OT_FORWARD)
-	{
-		m_pObject = null_v;
-		m_pIP = null_v;
-		m_pPort = null_v;
+    COptForward(const CVariable *object = null_v) : COperator(OT_FORWARD) {
+        _object = null_v;
+        _ip = null_v;
+        _port = null_v;
 
-		m_SendType = TCP_SEND;
+        _sendType = TCP_SEND;
 
-		if (pObject)
-			m_pObject = pObject->Clone();
-	}
+        if (object) {
+            _object = object->clone();
+        }
+    }
 
-	COptForward(b_4 nSign/*No meaning*/,
-			 const CAutoVar *pIP = null_v,
-			 const CAutoVar *pPort = null_v)
-		: COperator(OT_SEND)
-	{
-		m_pObject = null_v;
-		m_pIP = null_v;
-		m_pPort = null_v;
+    COptForward(b_4 sign/*No meaning*/,
+            const CVariable *ip = null_v,
+            const CVariable *port = null_v)
+            : COperator(OT_SEND) {
+        _object = null_v;
+        _ip = null_v;
+        _port = null_v;
 
-		m_SendType = UDP_SEND;
+        _sendType = UDP_SEND;
 
-		if (pIP && pPort)
-		{
-			m_pIP	= pIP->Clone();
-			m_pPort	= pPort->Clone();
-		}
-	}
+        if (ip && port) {
+            _ip = ip->clone();
+            _port = port->clone();
+        }
+    }
 
-	virtual ~COptForward()
-	{
-		_DEL(m_pObject);
-		_DEL(m_pIP);
-		_DEL(m_pPort);
-	}
+    virtual ~COptForward() {
+        _DEL(_object);
+        _DEL(_ip);
+        _DEL(_port);
+    }
 
-	COptForward(const COptForward &opt): COperator(opt)
-	{
-		m_pObject = null_v;
-		m_pIP = null_v;
-		m_pPort = null_v;
+    COptForward(const COptForward &opt) : COperator(opt) {
+        _object = null_v;
+        _ip = null_v;
+        _port = null_v;
 
-		m_SendType = opt.m_SendType;
+        _sendType = opt._sendType;
 
-		if (TCP_SEND == m_SendType)
-		{
-			m_pObject = opt.m_pObject->Clone();
-		}
-		else
-		{
-			m_pIP	= opt.m_pIP->Clone();
-			m_pPort	= opt.m_pPort->Clone();
-		}
-	}
+        if (TCP_SEND == _sendType) {
+            _object = opt._object->clone();
+        } else {
+            _ip = opt._ip->clone();
+            _port = opt._port->clone();
+        }
+    }
 
-	const COptForward &operator =(const COptForward &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptForward &operator=(const COptForward &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pObject);
-			_DEL(m_pIP);
-			_DEL(m_pPort);
+            _DEL(_object);
+            _DEL(_ip);
+            _DEL(_port);
 
-			m_SendType	= opt.m_SendType;
+            _sendType = opt._sendType;
 
-			if (TCP_SEND == m_SendType)
-			{
-				m_pObject = opt.m_pObject->Clone();
-			}
-			else
-			{
-				m_pIP	= opt.m_pIP->Clone();
-				m_pPort	= opt.m_pPort->Clone();
-			}
-		}
+            if (TCP_SEND == _sendType) {
+                _object = opt._object->clone();
+            }
+            else {
+                _ip = opt._ip->clone();
+                _port = opt._port->clone();
+            }
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptForward(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptForward(*this);
+    }
 
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		if (TCP_SEND == m_SendType)
-		{
-			m_pObject->Initialize(pUnit->pData);
-		}
-		else
-		{
-			m_pIP->Initialize(pUnit->pData);
-			m_pPort->Initialize(pUnit->pData);
-		}
-	}
+        if (TCP_SEND == _sendType) {
+            _object->init(unit->data);
+        } else {
+            _ip->init(unit->data);
+            _port->init(unit->data);
+        }
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	enum
-	{
-		TCP_SEND,
-		UDP_SEND
-	} m_SendType;
+    enum {
+        TCP_SEND,
+        UDP_SEND
+    } _sendType;
 
-	CAutoVar *m_pObject;
-	CAutoVar *m_pIP;
-	CAutoVar *m_pPort;
+    CVariable *_object;
+    CVariable *_ip;
+    CVariable *_port;
 };
 
 #endif // COPT_FORWARD_H

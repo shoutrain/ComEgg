@@ -1,59 +1,51 @@
-#ifndef COPT_EMPTY_H
-#define COPT_EMPTY_H
+#ifndef _C_OPT_EMPTY_H_
+#define _C_OPT_EMPTY_H_
 
 #include "COperator.h"
 
-class COptEmpty: public COperator
-{
+class COptEmpty : public COperator {
 public:
 
-	COptEmpty(const CAutoVar *pVariable)
-		: COperator(OT_EMPTY)
-	{
-		m_pVariable = pVariable->Clone();
-	}
+    COptEmpty(const CVariable *pVariable)
+            : COperator(OT_EMPTY) {
+        _variable = pVariable->clone();
+    }
 
-	virtual ~COptEmpty()
-	{
-		_DEL(m_pVariable);
-	}
+    virtual ~COptEmpty() {
+        _DEL(_variable);
+    }
 
-	COptEmpty(const COptEmpty &opt): COperator(opt)
-	{
-		m_pVariable = opt.m_pVariable->Clone();
-	}
+    COptEmpty(const COptEmpty &opt) : COperator(opt) {
+        _variable = opt._variable->clone();
+    }
 
-	const COptEmpty &operator =(const COptEmpty &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptEmpty &operator=(const COptEmpty &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pVariable);
-			m_pVariable = opt.m_pVariable->Clone();
-		}
+            _DEL(_variable);
+            _variable = opt._variable->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptEmpty(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptEmpty(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pVariable->Initialize(pUnit->pData);
-	}
+        _variable->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pVariable;
+    CVariable *_variable;
 };
 
-#endif // COPT_EMPTY_H
+#endif // _C_OPT_EMPTY_H_
 
 

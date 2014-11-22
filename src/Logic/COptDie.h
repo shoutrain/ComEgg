@@ -1,34 +1,32 @@
-#ifndef COPT_DIE_H
-#define COPT_DIE_H
+#ifndef _C_OPT_DIE_H_
+#define _C_OPT_DIE_H_
 
 #include "COperator.h"
-
 #include "../Network/CNetworkManager.h"
 
-class COptDie: public COperator
-{
+class COptDie : public COperator {
 public:
-	COptDie(): COperator(OT_DIE) {}
+    COptDie() : COperator(OT_DIE) {
+    }
 
-	COptDie(const COptDie &opt): COperator(opt)	{}
+    COptDie(const COptDie &opt) : COperator(opt) {
+    }
 
-	const COptDie &operator =(const COptDie &opt)
-	{
-		if (this != &opt)
-			COperator::operator =(opt);
+    const COptDie &operator=(const COptDie &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptDie(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptDie(*this);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU)
-	{
-		CNetworkManager::Instance()->Exit();
-	}
+    virtual void work(const TMessageUnit *tmu) {
+        CNetworkManager::Instance()->Exit();
+    }
 };
 
-#endif // COPT_DIE_H
+#endif // _C_OPT_DIE_H_

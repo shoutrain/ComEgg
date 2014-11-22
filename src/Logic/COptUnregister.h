@@ -44,20 +44,20 @@ public:
 		return *this;
 	}
 
-	virtual COperator *Clone() const
+    virtual COperator *clone() const
 	{
 		return (COperator *)new COptUnregister(*this);
 	}
 
-	virtual void Initialize(const opt_unit *pUnit)
+    virtual void init(const optUnit *unit)
 	{
-		COperator::Initialize(pUnit);
+        COperator::init(unit);
 
-		m_pCategory->Initialize(pUnit->pData);
-		m_pKey->Initialize(pUnit->pData);
+        m_pCategory->Initialize(unit->data);
+        m_pKey->Initialize(unit->data);
 	}
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
 	CAutoVar	*m_pCategory;

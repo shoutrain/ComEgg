@@ -9,7 +9,7 @@
             <filename>protocol.xsd</filename>
             <describe>
                 Used by binary protocols.
-                Instance documents follow this must be same with the protocol's
+                _instance documents follow this must be same with the protocol's
                 name.
             </describe>
         </xs:appinfo>

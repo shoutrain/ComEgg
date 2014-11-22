@@ -1,57 +1,49 @@
-#ifndef COPT_GET_USAGE_H
-#define COPT_GET_USAGE_H
+#ifndef _C_OPT_GET_USAGE_H_
+#define _C_OPT_GET_USAGE_H_
 
 #include "COperator.h"
 
-class COptGetUsage: public COperator
-{
+class COptGetUsage : public COperator {
 public:
-	COptGetUsage(const CAutoVar *pResult): COperator(OT_GET_USAGE)
-	{
-		m_pResult = pResult->Clone();
-	}
+    COptGetUsage(const CVariable *result) : COperator(OT_GET_USAGE) {
+        _result = result->clone();
+    }
 
-	virtual ~COptGetUsage()
-	{
-		_DEL(m_pResult);
-	}
+    virtual ~COptGetUsage() {
+        _DEL(_result);
+    }
 
-	COptGetUsage(const COptGetUsage &opt): COperator(opt)
-	{
-		m_pResult = opt.m_pResult->Clone();
-	}
+    COptGetUsage(const COptGetUsage &opt) : COperator(opt) {
+        _result = opt._result->clone();
+    }
 
-	const COptGetUsage &operator =(const COptGetUsage &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptGetUsage &operator=(const COptGetUsage &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pResult);
-			m_pResult = opt.m_pResult->Clone();
-		}
+            _DEL(_result);
+            _result = opt._result->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptGetUsage(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptGetUsage(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pResult->Initialize(pUnit->pData);
-	}
+        _result->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pResult;
+    CVariable *_result;
 };
 
-#endif // COPT_GET_USAGE_H
+#endif // _C_OPT_GET_USAGE_H_
 
 

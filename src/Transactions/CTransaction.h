@@ -16,8 +16,9 @@ public:
 
 	virtual ~CTransaction() {}
 
-	ret_ Allocate(CProcessor *&pUnit);
-	ret_ Release(CProcessor *&pUnit);
+    ret_ Allocate(CProcessor *&unit);
+
+    ret_ Release(CProcessor *&unit);
 
 	size_ GetFreeSize()
 	{	

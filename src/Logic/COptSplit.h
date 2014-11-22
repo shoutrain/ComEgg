@@ -1,66 +1,58 @@
-#ifndef COPT_SPLIT_H
-#define COPT_SPLIT_H
+#ifndef _C_OPT_SPLIT_H_
+#define _C_OPT_SPLIT_H_
 
 #include "COperator.h"
 
-class COptSplit: public COperator
-{
+class COptSplit : public COperator {
 public:
-	COptSplit(const CAutoVar *pEnvironment,
-			  const CAutoVar *pResult)
-		: COperator(OT_SPLIT)
-	{
-		m_pEnvironment	= pEnvironment->Clone();
-		m_pResult		= pResult->Clone();
-	}
+    COptSplit(const CVariable *environment,
+            const CVariable *result)
+            : COperator(OT_SPLIT) {
+        _environment = environment->clone();
+        _result = result->clone();
+    }
 
-	virtual ~COptSplit()
-	{
-		_DEL(m_pEnvironment);
-		_DEL(m_pResult);
-	}
+    virtual ~COptSplit() {
+        _DEL(_environment);
+        _DEL(_result);
+    }
 
-	COptSplit(const COptSplit &opt): COperator(opt)
-	{
-		m_pEnvironment	= opt.m_pEnvironment->Clone();
-		m_pResult		= opt.m_pResult->Clone();
-	}
+    COptSplit(const COptSplit &opt) : COperator(opt) {
+        _environment = opt._environment->clone();
+        _result = opt._result->clone();
+    }
 
-	const COptSplit &operator =(const COptSplit &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptSplit &operator=(const COptSplit &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pEnvironment);
-			_DEL(m_pResult);
-			m_pEnvironment	= opt.m_pEnvironment->Clone();
-			m_pResult		= opt.m_pResult->Clone();
-		}
+            _DEL(_environment);
+            _DEL(_result);
+            _environment = opt._environment->clone();
+            _result = opt._result->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptSplit(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptSplit(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pEnvironment->Initialize(pUnit->pData);
-		m_pResult->Initialize(pUnit->pData);
-	}
+        _environment->init(unit->data);
+        _result->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pEnvironment;
-	CAutoVar *m_pResult;
+    CVariable *_environment;
+    CVariable *_result;
 };
 
-#endif // COPT_SPLIT_H
+#endif // _C_OPT_SPLIT_H_
 
 

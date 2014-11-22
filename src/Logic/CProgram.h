@@ -17,8 +17,8 @@ public:
 
 	CProgram(const CProgram &opt);
 	const CProgram &operator =(const CProgram &opt);
-	
-	virtual COperator *Clone() const
+
+    virtual COperator *clone() const
 	{
 		return (COperator *)new CProgram(*this);
 	}
@@ -36,9 +36,11 @@ public:
 		return m_Data;
 	}
 
-	virtual void Reset();
-	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void reset();
+
+    virtual void init(const optUnit *unit);
+
+    virtual void work(const TMessageUnit *tmu);
 
 protected:
 	CProgram(const EOperatorType Type, const CData *pData = null_v)
@@ -55,7 +57,7 @@ protected:
 
 	void Clear();
 
-	vector_opt m_OptVector;
+    vectorOpt m_OptVector;
 
 	CData m_OrnData;
 	CData m_Data;

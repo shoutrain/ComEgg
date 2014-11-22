@@ -2,20 +2,11 @@
 
 #include "../System/CSysInfo.h"
 
-void COptGetUsage::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		CSysInfo si;
+void COptGetUsage::work(const TMessageUnit *tmu) {
+    CSysInfo si;
+    v_ usage((ub_1) si.GetUsage());
 
-		v_ Usage((ub_1)si.GetUsage());
-
-		(*m_pResult->Value(pTMU)) = Usage;
-	}
-	catch (...)
-	{
-		throw;
-	}
+    (*_result->value(tmu)) = usage;
 }
 
 

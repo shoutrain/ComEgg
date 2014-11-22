@@ -1,77 +1,69 @@
-#ifndef COPERATOR_H
-#define COPERATOR_H
+#ifndef _C_OPERATOR_H_
+#define _C_OPERATOR_H_
 
 #include "LogicCommon.h"
 #include "../Data/CVariable.h"
 
-class COperator
-{
+class COperator {
 public:
-	virtual COperator *Clone() const = 0;
+    virtual COperator *clone() const = 0;
 
-	EOperatorType GetType() const
-	{
-		return m_Type;
-	}
+    EOperatorType getType() const {
+        return _type;
+    }
 
-	const COperator *GetParent() const
-	{
-		return m_pParent;
-	}
+    const COperator *getParent() const {
+        return _parent;
+    }
 
-	const CProcessor *GetContainer() const
-	{
-		return m_pContainer;
-	}
+    const CProcessor *getContainer() const {
+        return _container;
+    }
 
-	virtual void Reset() {}
+    virtual void reset() {
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		m_pContainer = pUnit->pContainer;
-		m_pParent = pUnit->pParent;
-		m_pData = pUnit->pData;
-	}
+    virtual void init(const optUnit *unit) {
+        _container = unit->container;
+        _parent = unit->parent;
+        _data = unit->data;
+    }
 
-	virtual void Work(const TMessageUnit *pTMU) = 0;
+    virtual void work(const TMessageUnit *tmu) = 0;
 
 protected:
-	COperator(const EOperatorType Type)
-	{
-		m_Type = Type;
-		m_pContainer = null_v;
-		m_pParent = null_v;
-		m_pData = null_v;
-	}
+    COperator(const EOperatorType type) {
+        _type = type;
+        _container = null_v;
+        _parent = null_v;
+        _data = null_v;
+    }
 
-	COperator(const COperator &opt)
-	{
-		m_Type = opt.m_Type;
-		m_pContainer = null_v;
-		m_pParent = null_v;
-		m_pData = null_v;
-	}
+    COperator(const COperator &opt) {
+        _type = opt._type;
+        _container = null_v;
+        _parent = null_v;
+        _data = null_v;
+    }
 
-	const COperator &operator =(const COperator &opt)
-	{
-		if (this != &opt)
-		{
-			m_Type = opt.m_Type;
-			m_pContainer = null_v;
-			m_pParent = null_v;
-			m_pData = null_v;
-		}
+    const COperator &operator=(const COperator &opt) {
+        if (this != &opt) {
+            _type = opt._type;
+            _container = null_v;
+            _parent = null_v;
+            _data = null_v;
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	EOperatorType m_Type;
-	CProcessor *m_pContainer;
-	COperator *m_pParent;
-	CData *m_pData;
+    EOperatorType _type;
+    CProcessor *_container;
+    COperator *_parent;
+    CData *_data;
 
 private:
-	COperator();
+    COperator();
 };
 
-#endif // COPERATOR_H
+#endif // _C_OPERATOR_H_

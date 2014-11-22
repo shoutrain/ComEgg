@@ -1,53 +1,52 @@
-#ifndef COPT_SEND_H
-#define COPT_SEND_H
+#ifndef _C_OPT_SEND_H_
+#define _C_OPT_SEND_H_
 
 #include "COperator.h"
+#include "../Protocols/CPduInfo.h"
 
-#include "CPduInfo.h"
-
-class COptSend: public COperator
-{
+class COptSend : public COperator {
 public:
-    COptSend(const CPduInfo *pPDUInfo,
-			 const CAutoVar *pDestination = null_v);
-	COptSend(b_4 nSign,
-            const CPduInfo *pPDUInfo,
-			 const CAutoVar *pIP = null_v,
-			 const CAutoVar *pPort = null_v);
+    COptSend(const CPduInfo *pduInfo,
+            const CVariable *destination = null_v);
 
-	COptSend(const COptSend &opt);
-	const COptSend &operator =(const COptSend &opt);
+    COptSend(b_4 sign,
+            const CPduInfo *pduInfo,
+            const CVariable *ip = null_v,
+            const CVariable *port = null_v);
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptSend(*this);
-	}
+    COptSend(const COptSend &opt);
 
-	virtual ~COptSend();
+    const COptSend &operator=(const COptSend &opt);
 
-	bool_ AddEvaluate(const ch_1 *pszFieldName, const CAutoVar *pValue);
+    virtual COperator *clone() const {
+        return (COperator *) new COptSend(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual ~COptSend();
+
+    bool_ addEvaluate(const ch_1 *fieldName, const CVariable *value);
+
+    virtual void init(const optUnit *unit);
+
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	COptSend();
+    COptSend();
 
-	void Clear();
+    void clear();
 
-    CPduInfo *m_pPDUInfo;
-	vector_evaluate		m_EvaluateVector;
+    CPduInfo *_pduInfo;
+    vectorEvaluate _evaluateVector;
 
-	enum
-	{
-		NONE_SEND,
-		TCP_SEND,
-		UDP_SEND
-	} m_SendType;
+    enum {
+        NONE_SEND,
+        TCP_SEND,
+        UDP_SEND
+    } _sendType;
 
-	CAutoVar *m_pDestination;
-	CAutoVar *m_pIP;
-	CAutoVar *m_pPort;
+    CVariable *_destination;
+    CVariable *_ip;
+    CVariable *_port;
 };
 
-#endif // COPT_SEND_H
+#endif // _C_OPT_SEND_H_

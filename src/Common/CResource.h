@@ -51,12 +51,12 @@ public:
         CAutoLock al(_mutex);
 
         if (0 < _freeDeque.size()) {
-            T *pUnit = _freeDeque.front();
+            T *unit = _freeDeque.front();
 
-            assert(pUnit);
+            assert(unit);
             _freeDeque.pop_front();
 
-            return pUnit;
+            return unit;
         }
 
         return null_v;

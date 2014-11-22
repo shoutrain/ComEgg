@@ -1,72 +1,64 @@
-#ifndef COPT_READ_FILE_H
-#define COPT_READ_FILE_H
+#ifndef _C_OPT_READ_FILE_H_
+#define _C_OPT_READ_FILE_H_
 
 #include "COperator.h"
 
-class COptReadFile: public COperator
-{
+class COptReadFile : public COperator {
 public:
-	COptReadFile(const CAutoVar *pFilePath,
-				 const CAutoVar *pFileName,
-				 const CAutoVar *pResult)
-		: COperator(OT_READ_FILE)
-	{
-		m_pFilePath		= pFilePath->Clone();
-		m_pFileName		= pFileName->Clone();
-		m_pResult		= pResult->Clone();
-	}
+    COptReadFile(const CVariable *filePath,
+            const CVariable *fileName,
+            const CVariable *result)
+            : COperator(OT_READ_FILE) {
+        _filePath = filePath->clone();
+        _fileName = fileName->clone();
+        _result = result->clone();
+    }
 
-	virtual ~COptReadFile()
-	{
-		_DEL(m_pFilePath);
-		_DEL(m_pFileName);
-		_DEL(m_pResult);
-	}
+    virtual ~COptReadFile() {
+        _DEL(_filePath);
+        _DEL(_fileName);
+        _DEL(_result);
+    }
 
-	COptReadFile(const COptReadFile &opt): COperator(opt)
-	{
-		m_pFilePath		= opt.m_pFilePath->Clone();
-		m_pFileName		= opt.m_pFileName->Clone();
-		m_pResult		= opt.m_pResult->Clone();;
-	}
+    COptReadFile(const COptReadFile &opt) : COperator(opt) {
+        _filePath = opt._filePath->clone();
+        _fileName = opt._fileName->clone();
+        _result = opt._result->clone();;
+    }
 
-	const COptReadFile &operator =(const COptReadFile &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptReadFile &operator=(const COptReadFile &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pFilePath);
-			_DEL(m_pFileName);
-			_DEL(m_pResult);
-			m_pFilePath		= opt.m_pFilePath->Clone();
-			m_pFileName		= opt.m_pFileName->Clone();
-			m_pResult		= opt.m_pResult->Clone();
-		}
+            _DEL(_filePath);
+            _DEL(_fileName);
+            _DEL(_result);
+            _filePath = opt._filePath->clone();
+            _fileName = opt._fileName->clone();
+            _result = opt._result->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptReadFile(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptReadFile(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pFilePath->Initialize(pUnit->pData);
-		m_pFileName->Initialize(pUnit->pData);
-		m_pResult->Initialize(pUnit->pData);
-	}
+        _filePath->init(unit->data);
+        _fileName->init(unit->data);
+        _result->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pFilePath;
-	CAutoVar *m_pFileName;
-	CAutoVar *m_pResult;
+    CVariable *_filePath;
+    CVariable *_fileName;
+    CVariable *_result;
 };
 
-#endif // COPT_READ_FILE_H
+#endif // _C_OPT_READ_FILE_H_

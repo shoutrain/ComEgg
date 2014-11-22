@@ -1,31 +1,27 @@
 #include "COptSearch.h"
 
-void COptSearch::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		v_ *pCategory	= m_pCategory->Value(pTMU);
-		v_ *pKey		= m_pKey->Value(pTMU);
-		v_ *pObj		= m_pObject->Value(pTMU);
+void COptSearch::work(const TMessageUnit *tmu) {
+    v_ *category = m_pCategory->value(tmu);
+    v_ *key = m_pKey->value(tmu);
+    v_ *obj = m_pObject->value(tmu);
 
-		if (!pCategory || !pKey || !pObj)
-			throw OPERATOR_OPERAITON_ERROR;
+    if (!category || !key || !obj) {
+        assert(0);
+        // TODO do something to tell outsider
+        return;
+    }
 
-		if (STR != pCategory->get_type() || STR != pKey->get_type())
-			throw OPERATOR_OPERAITON_ERROR;
+    if (STR != category->getType() || STR != key->getType()) {
+        assert(0);
+        // TODO do something to tell outsider
+        return;
+    }
 
-		v_		*pObject	= null_v;
-		ret_	Ret			= _ERR(CRegister::Instance()->Search(
-									   (const ch_1 *)*pCategory, 
-									   (const ch_1 *)*pKey, pObject));
+    v_ *object = CRegister::instance()->searchItem(
+            (const ch_1 *) *category,
+            (const ch_1 *) *key);
 
-		if (SUCCESS == Ret)
-			*pObj = *pObject;
-		else if (NO_ELEMENT_IN_CONTAINER != Ret)
-			throw OPERATOR_OPERAITON_ERROR;
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (null_v != object) {
+        *obj = *object;
+    }
 }

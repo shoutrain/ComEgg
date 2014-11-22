@@ -731,7 +731,7 @@ ret_ CXMLLoaderTransaction::LoadProcessBlock(CProgram &Program,
 	auto_xerces_str	wsForward			("forward");
 	auto_xerces_str	wsGetAddress		("get_address");
 	auto_xerces_str	wsRegister			("register");
-	auto_xerces_str	wsUnregister		("unregister");
+    auto_xerces_str wsUnregister("unregisterItem");
 	auto_xerces_str	wsSearch			("search");
 	auto_xerces_str wsGetUsage			("get_usage");
 	auto_xerces_str wsNetworkWakeUp		("network_wake_up");
@@ -1564,7 +1564,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 					return XML_LOADER_ERROR;
 
 				//
-				if (false_v == pOperator->AddEvaluate(sFieldName, OV_.Ptr()))
+                if (false_v == pOperator->addEvaluate(sFieldName, OV_.Ptr()))
 					_RET(XML_LOADER_ERROR);
 			}
 

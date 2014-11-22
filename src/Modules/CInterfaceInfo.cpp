@@ -341,7 +341,7 @@ ret_ CInterfaceInfo::GetInField(const ch_1 *pszName,
 	if (0 == pszName[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (pField)
+	if (field)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 
@@ -379,7 +379,7 @@ ret_ CInterfaceInfo::GetOutField(const ch_1 *pszName,
 	if (0 == pszName[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (pField)
+	if (field)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 
@@ -409,7 +409,7 @@ ret_ CInterfaceInfo::GetInStruct(CField *&pField)
 {
 	_START(GET_IN_STRUCT);
 #ifdef _DEBUG_
-	if (pField)
+	if (field)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_1);
 #endif
 
@@ -422,7 +422,7 @@ ret_ CInterfaceInfo::GetOutStruct(CField *&pField)
 {
 	_START(GET_OUT_STRUCT);
 #ifdef _DEBUG_
-	if (pField)
+	if (field)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_1);
 #endif
 

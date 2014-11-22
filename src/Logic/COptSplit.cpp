@@ -1,31 +1,23 @@
 #include "COptSplit.h"
-
 #include "../System/CSysCall.h"
 
-void COptSplit::Work(const TMessageUnit *pTMU)
-{
-	v_ Success((b_4)true_v);
-	v_ Failure((b_4)false_v);
+void COptSplit::work(const TMessageUnit *tmu) {
+    v_ success((b_4) true_v);
+    v_ failure((b_4) false_v);
 
-	(*m_pResult->Value(pTMU)) = Failure;
+    (*_result->value(tmu)) = failure;
 
-	try
-	{
-		v_ Command("./ComEgg ", 0);
-		
-		Command = Command + (*m_pEnvironment->Value(pTMU));
+    v_ command("./ComEgg ", 0);
 
-		CSysCall SysCall;
+    command = command + (*_environment->value(tmu));
 
-		if (!SysCall.Exec((const ch_1 *)Command))
-			throw SYS_CALL_ERROR;
+    CSysCall sysCall;
 
-		(*m_pResult->Value(pTMU)) = Success;
-	}
-	catch (...)
-	{
-		
-	}
+    if (!sysCall.Exec((const ch_1 *) command)) {
+        return;
+    }
+
+    (*_result->value(tmu)) = success;
 }
 
 

@@ -9,7 +9,7 @@
             <filename>interface.xsd</filename>
             <describe>
                 All interfaces must be defined here.
-                Instance documents follow this must be named "module.xml".
+                _instance documents follow this must be named "module.xml".
             </describe>
         </xs:appinfo>
     </xs:annotation>

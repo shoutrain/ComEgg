@@ -10,14 +10,14 @@ CProcessor::CProcessor(): CBaseClass(CPROCESSOR)
 {
 	m_Data.SetParent((const CData *)&CTransactionManager::Instance()->Data());
 
-	opt_unit Unit;
+    optUnit Unit;
 
-	Unit.pData		= &m_Data;
-	Unit.pContainer = this;
-	Unit.pParent	= null_v;
+    Unit.data = &m_Data;
+    Unit.container = this;
+    Unit.parent = null_v;
 
 	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-		m_NormalHandle[i].Initialize(&Unit);
+        m_NormalHandle[i].init(&Unit);
 
 	m_pHandle = null_v;
 }
@@ -28,16 +28,16 @@ CProcessor::CProcessor(const CProcessor &Processor): CBaseClass(CPROCESSOR)
 	m_Data		= Processor.m_Data;
 	m_Data.SetParent((const CData *)&CTransactionManager::Instance()->Data());
 
-	opt_unit Unit;
+    optUnit Unit;
 
-	Unit.pContainer = this;
-	Unit.pData		= &m_Data;
-	Unit.pParent	= null_v;
+    Unit.container = this;
+    Unit.data = &m_Data;
+    Unit.parent = null_v;
 
 	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
 	{
 		m_NormalHandle[i] = Processor.m_NormalHandle[i];
-		m_NormalHandle[i].Initialize(&Unit);
+        m_NormalHandle[i].init(&Unit);
 	}
 
 	m_pHandle = null_v;
@@ -70,16 +70,16 @@ const CProcessor &CProcessor::operator =(const CProcessor &Processor)
 		m_OrnData	= Processor.m_OrnData;
 		m_Data		= Processor.m_Data;
 
-		opt_unit Unit;
+        optUnit Unit;
 
-		Unit.pContainer = this;
-		Unit.pData		= &m_Data;
-		Unit.pParent	= null_v;
+        Unit.container = this;
+        Unit.data = &m_Data;
+        Unit.parent = null_v;
 
 		for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
 		{
 			m_NormalHandle[i] = Processor.m_NormalHandle[i];
-			m_NormalHandle[i].Initialize(&Unit);
+            m_NormalHandle[i].init(&Unit);
 		}
 
 		m_pHandle = null_v;
@@ -173,7 +173,7 @@ ret_ CProcessor::Reset()
 	m_Data = m_OrnData;
 
 	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-		m_NormalHandle[i].Reset();
+        m_NormalHandle[i].reset();
 
 	m_pHandle = null_v;
 
@@ -185,7 +185,7 @@ ret_ CProcessor::Reset()
 		if (!pos->second)
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
-		((CProgram *)pos->second)->Reset();
+        ((CProgram *) pos->second)->reset();
 	}
 
 	for (pos = m_HandleOutMap.begin(); pos != m_HandleOutMap.end(); pos++)
@@ -194,7 +194,7 @@ ret_ CProcessor::Reset()
 		if (!pos->second)
 			_RET(ELEMENT_NULL_IN_CONTAINER);
 #endif
-		((CProgram *)pos->second)->Reset();
+        ((CProgram *) pos->second)->reset();
 	}
 
 	for (map_register::iterator pos_ = m_RegisterMap.begin();
@@ -292,7 +292,7 @@ ret_ CProcessor::ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh)
 
 	try
 	{
-		m_NormalHandle[enh].Work(&tmu);
+        m_NormalHandle[enh].work(&tmu);
 	}
 	catch (error_code err)
 	{
@@ -334,11 +334,11 @@ ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 	tmu.size		= nSize;
 	tmu.msgInfo	= (TMsgInfo *)pMsgInfo;
 
-	opt_unit Unit;
+    optUnit Unit;
 
-	Unit.pData		= &m_Data;
-	Unit.pContainer = this;
-	Unit.pParent	= null_v;
+    Unit.data = &m_Data;
+    Unit.container = this;
+    Unit.parent = null_v;
 
 	map_handle::const_iterator pos;
 
@@ -355,8 +355,8 @@ ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 
 			try
 			{
-				((CProgram *)pos->second)->Initialize(&Unit);
-				((CProgram *)pos->second)->Work(&tmu);
+                ((CProgram *) pos->second)->init(&Unit);
+                ((CProgram *) pos->second)->work(&tmu);
 			}
 			catch (error_code err)
 			{
@@ -367,7 +367,7 @@ ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 		{
 			try
 			{
-				m_NormalHandle[DEFAULT_IN_HANDLE].Work(&tmu);
+                m_NormalHandle[DEFAULT_IN_HANDLE].work(&tmu);
 			}
 			catch (error_code err)
 			{
@@ -388,8 +388,8 @@ ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 
 			try
 			{
-				((CProgram *)pos->second)->Initialize(&Unit);
-				((CProgram *)pos->second)->Work(&tmu);
+                ((CProgram *) pos->second)->init(&Unit);
+                ((CProgram *) pos->second)->work(&tmu);
 			}
 			catch (error_code err)
 			{
@@ -400,7 +400,7 @@ ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
 		{
 			try
 			{
-				m_NormalHandle[DEFAULT_OUT_HANDLE].Work(&tmu);
+                m_NormalHandle[DEFAULT_OUT_HANDLE].work(&tmu);
 			}
 			catch (error_code err)
 			{
@@ -479,16 +479,16 @@ ret_ CProcessor::Register(const ch_1 *pszCategory,
 	_START(PROCESSOR_REGISTER);
 
 #ifdef _DEBUG_
-	if (!pszCategory)
+	if (!category)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == pszCategory[0])
+	if (0 == category[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!pszKey)
+	if (!key)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == pszKey[0])
+	if (0 == key[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_2);
 #endif
 
@@ -540,16 +540,16 @@ ret_ CProcessor::Unregister(const ch_1 *pszCategory, const ch_1 *pszKey)
 	_START(PROCESSOR_UNREGISTER);
 
 #ifdef _DEBUG_
-	if (!pszCategory)
+	if (!category)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == pszCategory[0])
+	if (0 == category[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!pszKey)
+	if (!key)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == pszKey[0])
+	if (0 == key[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_2);
 #endif
 

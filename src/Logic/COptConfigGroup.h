@@ -1,65 +1,57 @@
-#ifndef COPT_CONFIG_GROUP_H
-#define COPT_CONFIG_GROUP_H
+#ifndef _C_OPT_CONFIG_GROUP_H_
+#define _C_OPT_CONFIG_GROUP_H_
 
 #include "COperator.h"
 
-class COptConfigGroup: public COperator
-{
+class COptConfigGroup : public COperator {
 public:
-	COptConfigGroup(const CAutoVar *pGroup, const CAutoVar *pSize)
-		: COperator(OT_CONFIG_GROUP)
-	{
-		m_pGroup = pGroup->Clone();
-		m_pSize = pGroup->Clone();
-	}
+    COptConfigGroup(const CVariable *group, const CVariable *size)
+            : COperator(OT_CONFIG_GROUP) {
+        _group = group->clone();
+        _size = group->clone();
+    }
 
-	virtual ~COptConfigGroup()
-	{
-		_DEL(m_pGroup);
-		_DEL(m_pSize);
-	}
+    virtual ~COptConfigGroup() {
+        _DEL(_group);
+        _DEL(_size);
+    }
 
-	COptConfigGroup(const COptConfigGroup &opt): COperator(opt)
-	{
-		m_pGroup = opt.m_pGroup->Clone();
-		m_pSize = opt.m_pGroup->Clone();
-	}
+    COptConfigGroup(const COptConfigGroup &opt) : COperator(opt) {
+        _group = opt._group->clone();
+        _size = opt._group->clone();
+    }
 
-	const COptConfigGroup &operator =(const COptConfigGroup &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptConfigGroup &operator=(const COptConfigGroup &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pGroup);
-			_DEL(m_pSize);
-			m_pGroup = opt.m_pGroup->Clone();
-			m_pSize = opt.m_pGroup->Clone();
-		}
+            _DEL(_group);
+            _DEL(_size);
+            _group = opt._group->clone();
+            _size = opt._group->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptConfigGroup(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptConfigGroup(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pGroup->Initialize(pUnit->pData);
-		m_pSize->Initialize(pUnit->pData);
-	}
+        _group->init(unit->data);
+        _size->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pGroup;
-	CAutoVar *m_pSize;
+    CVariable *_group;
+    CVariable *_size;
 };
 
-#endif // COPT_CONFIG_GROUP_H
+#endif // _C_OPT_CONFIG_GROUP_H_
 
 

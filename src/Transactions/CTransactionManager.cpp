@@ -113,13 +113,13 @@ ret_ CTransactionManager::Register(const ch_1 *pszCategory,
 	if (!pszCategory)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == pszCategory[0])
+	if (0 == category[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!pszKey)
+	if (!key)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == pszKey[0])
+	if (0 == key[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_2);
 
 	if (!pProcessor)
@@ -178,16 +178,16 @@ ret_ CTransactionManager::Unregister(const ch_1 *pszCategory, const ch_1 *pszKey
 	_START(UNREGISTER_PROCESSOR);
 
 #ifdef _DEBUG_
-	if (!pszCategory)
+	if (!category)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == pszCategory[0])
+	if (0 == category[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!pszKey)
+	if (!key)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == pszKey[0])
+	if (0 == key[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_2);
 #endif
 
@@ -242,16 +242,16 @@ ret_ CTransactionManager::Search(const ch_1 *pszCategory,
 	_START(SEARCH_PROCESSOR);
 
 #ifdef _DEBUG_
-	if (!pszCategory)
+	if (!category)
 		_RET(PARAMETER_NULL | PARAMETER_1);
 
-	if (0 == pszCategory[0])
+	if (0 == category[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!pszKey)
+	if (!key)
 		_RET(PARAMETER_NULL | PARAMETER_2);
 
-	if (0 == pszKey[0])
+	if (0 == key[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_2);
 
 	if (pProcessor)

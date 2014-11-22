@@ -13,7 +13,7 @@ public:
 		: CProgram(OT_WHILE, pData)
 	{
 		m_bJudgeHead	= bJudgeHead;
-		m_pExpression	= pExpression->Clone();
+        m_pExpression = pExpression->clone();
 	}
 
 	virtual ~CProgramWhile()
@@ -24,7 +24,7 @@ public:
 	CProgramWhile(const CProgramWhile &opt): CProgram(opt)
 	{
 		m_bJudgeHead	= opt.m_bJudgeHead;
-		m_pExpression	= opt.m_pExpression->Clone();
+        m_pExpression = opt.m_pExpression->clone();
 	}
 
 	const CProgramWhile &operator =(const CProgramWhile &opt)
@@ -36,31 +36,31 @@ public:
 			CProgram::operator =(opt);
 
 			m_bJudgeHead	= opt.m_bJudgeHead;
-			m_pExpression	= opt.m_pExpression->Clone();
+            m_pExpression = opt.m_pExpression->clone();
 		}
 
 		return *this;
 	}
 
-	virtual COperator *Clone() const
+    virtual COperator *clone() const
 	{
 		return (COperator *)new CProgramWhile(*this);
 	}
 
-	virtual void Initialize(const opt_unit *pUnit)
+    virtual void init(const optUnit *unit)
 	{
-		CProgram::Initialize(pUnit);
+        CProgram::init(unit);
 
-		opt_unit Unit;
+        optUnit Unit;
 
-		memcpy(&Unit, pUnit, sizeof(opt_unit));
-		Unit.pData		= &m_Data;
-		Unit.pParent	= this;
+        memcpy(&Unit, unit, sizeof(optUnit));
+        Unit.data = &m_Data;
+        Unit.parent = this;
 
-		m_pExpression->Initialize(&Unit);
+        m_pExpression->init(&Unit);
 	}
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
 	CProgramWhile();

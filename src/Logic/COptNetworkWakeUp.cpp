@@ -1,23 +1,15 @@
 #include "COptNetworkWakeUp.h"
-
 #include "../Network/CNetworkManager.h"
 
-void COptNetworkWakeUp::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		v_ NetworkName = (*m_pNetworkName->Value(pTMU));
+void COptNetworkWakeUp::work(const TMessageUnit *tmu) {
+    v_ networkName = (*_networkName->value(tmu));
 
-		CNetwork *pNetwork = (CNetwork *)
-			CNetworkManager::Instance()->GetNetwork((const ch_1 *)NetworkName);
+    CNetwork *network = (CNetwork *)
+            CNetworkManager::Instance()->GetNetwork((const ch_1 *) networkName);
 
-		if (pNetwork)
-			pNetwork->work();
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (network) {
+        network->work();
+    }
 }
 
 

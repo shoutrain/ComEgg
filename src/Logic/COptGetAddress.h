@@ -1,70 +1,61 @@
-#ifndef COPT_GET_ADDRESS_H
-#define COPT_GET_ADDRESS_H
+#ifndef _C_OPT_GET_ADDRESS_H_
+#define _C_OPT_GET_ADDRESS_H_
 
 #include "COperator.h"
-
 #include "../Transactions/CTransactionManager.h"
 
-class COptGetAddress: public COperator
-{
+class COptGetAddress : public COperator {
 public:
-	COptGetAddress(const CAutoVar *pIP,
-				   const CAutoVar *pPort,
-				   bool_ bRemote = true_v)
-		: COperator(OT_GET_ADDRESS)
-	{
-		m_pIP		= pIP->Clone();
-		m_pPort		= pPort->Clone();
-		m_bRemote	= bRemote;
-	}
+    COptGetAddress(const CVariable *ip,
+            const CVariable *port,
+            bool_ remote = true_v)
+            : COperator(OT_GET_ADDRESS) {
+        _ip = ip->clone();
+        _port = port->clone();
+        _remote = remote;
+    }
 
-	virtual ~COptGetAddress()
-	{
-		_DEL(m_pIP);
-		_DEL(m_pPort);
-	}
+    virtual ~COptGetAddress() {
+        _DEL(_ip);
+        _DEL(_port);
+    }
 
-	COptGetAddress(const COptGetAddress &opt): COperator(opt)
-	{
-		m_pIP		= opt.m_pIP->Clone();
-		m_pPort		= opt.m_pPort->Clone();
-		m_bRemote	= opt.m_bRemote;
-	}
+    COptGetAddress(const COptGetAddress &opt) : COperator(opt) {
+        _ip = opt._ip->clone();
+        _port = opt._port->clone();
+        _remote = opt._remote;
+    }
 
-	const COptGetAddress &operator =(const COptGetAddress &opt)
-	{
-		if (this != &opt)
-		{
-			_DEL(m_pIP);
-			_DEL(m_pPort);
-			m_pIP		= opt.m_pIP->Clone();
-			m_pPort		= opt.m_pPort->Clone();
-			m_bRemote	= opt.m_bRemote;
-		}
+    const COptGetAddress &operator=(const COptGetAddress &opt) {
+        if (this != &opt) {
+            _DEL(_ip);
+            _DEL(_port);
+            _ip = opt._ip->clone();
+            _port = opt._port->clone();
+            _remote = opt._remote;
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptGetAddress(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptGetAddress(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pIP->Initialize(pUnit->pData);
-		m_pPort->Initialize(pUnit->pData);
-	}
+        _ip->init(unit->data);
+        _port->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	bool_ m_bRemote;
+    bool_ _remote;
 
-	CAutoVar *m_pIP;
-	CAutoVar *m_pPort;
+    CVariable *_ip;
+    CVariable *_port;
 };
 
-#endif // COPT_GET_ADDRESS_H
+#endif // _C_OPT_GET_ADDRESS_H_

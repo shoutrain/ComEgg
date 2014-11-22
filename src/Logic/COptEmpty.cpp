@@ -2,31 +2,21 @@
 
 #include "../Data/CVarGroupDefined.h"
 
-void COptEmpty::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		CField *pField = null_v;
-		v_ *p = m_pVariable->Value((obj_ &)pField);
+void COptEmpty::work(const TMessageUnit *tmu) {
+    CField *field = null_v;
+    v_ *p = _variable->value((obj_ &) field);
 
-		if (p)
-		{
-			TFieldGroup *pFieldGroup = (TFieldGroup *)(obj_)*p;
+    if (p) {
+        TFieldGroup *fieldGroup = (TFieldGroup *) (obj_) *p;
 
-            if (pFieldGroup->size && pFieldGroup->data)
-			{
-                _DEL_ARR(pFieldGroup->data);
-                pFieldGroup->size = 0;
-			}
-		}
+        if (fieldGroup->size && fieldGroup->data) {
+            _DEL_ARR(fieldGroup->data);
+            fieldGroup->size = 0;
+        }
+    }
 
-		p = m_pVariable->Value(pTMU);
-		p->empty();
-	}
-	catch (...)
-	{
-		throw;
-	}
+    p = _variable->value(tmu);
+    p->empty();
 }
 
 

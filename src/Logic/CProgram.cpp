@@ -8,7 +8,7 @@ CProgram::CProgram(const CProgram &opt): COperator(opt)
 	size_ n = (size_)opt.m_OptVector.size();
 
 	for (size_ i = 0; i < n; i++)
-		m_OptVector.push_back(opt.m_OptVector[i]->Clone());
+        m_OptVector.push_back(opt.m_OptVector[i]->clone());
 }
 
 const CProgram &CProgram::operator =(const CProgram &opt)
@@ -25,7 +25,7 @@ const CProgram &CProgram::operator =(const CProgram &opt)
 		size_ n = (size_)opt.m_OptVector.size();
 
 		for (size_ i = 0; i < n; i++)
-			m_OptVector.push_back(opt.m_OptVector[i]->Clone());
+            m_OptVector.push_back(opt.m_OptVector[i]->clone());
 	}
 
 	return *this;
@@ -43,34 +43,34 @@ bool_ CProgram::AddOperator(const COperator *pOperator)
 	return true_v;
 }
 
-void CProgram::Reset()
+void CProgram::reset()
 {
 	m_Data = m_OrnData;
 
 	size_ n = (size_)m_OptVector.size();
 
 	for (size_ i = 0; i < n; i++)
-		((COperator *)m_OptVector[i])->Reset();
+        ((COperator *) m_OptVector[i])->reset();
 }
 
-void CProgram::Initialize(const opt_unit *pUnit)
+void CProgram::init(const optUnit *unit)
 {
-	COperator::Initialize(pUnit);
-	m_Data.SetParent(pUnit->pData);
+    COperator::init(unit);
+    m_Data.SetParent(unit->data);
 
-	opt_unit Unit;
+    optUnit Unit;
 
-	memcpy(&Unit, pUnit, sizeof(opt_unit));
-	Unit.pData		= &m_Data;
-	Unit.pParent	= this;
+    memcpy(&Unit, unit, sizeof(optUnit));
+    Unit.data = &m_Data;
+    Unit.parent = this;
 
 	size_ n = (size_)m_OptVector.size();
 
 	for (size_ i = 0; i < n; i++)
-		((COperator *)m_OptVector[i])->Initialize(&Unit);
+        ((COperator *) m_OptVector[i])->init(&Unit);
 }
 
-void CProgram::Work(const TMessageUnit *pTMU)
+void CProgram::work(const TMessageUnit *tmu)
 {
 	size_ n = (size_)m_OptVector.size();
 
@@ -78,26 +78,26 @@ void CProgram::Work(const TMessageUnit *pTMU)
 	{
 		try
 		{
-			((COperator *)m_OptVector[i])->Work(pTMU);
+            ((COperator *) m_OptVector[i])->work(tmu);
 		}
-		catch (call_block)
+        catch (callBlock)
 		{
-			Reset();
+            reset();
 
-			if (GetParent())
+            if (getParent())
 				throw;
 			else
 				return;
 		}
 		catch (...)
 		{
-			Reset();
+            reset();
 			
 			throw;
 		}
 	}
 
-	Reset();
+    reset();
 }
 
 void CProgram::Clear()

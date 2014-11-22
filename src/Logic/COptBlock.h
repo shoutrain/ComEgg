@@ -1,38 +1,33 @@
-#ifndef COPT_BLOCK_H
-#define COPT_BLOCK_H
+#ifndef _C_OPT_BLOCK_H_
+#define _C_OPT_BLOCK_H_
 
 #include "COperator.h"
 
-class COptBlock: public COperator
-{
+class COptBlock : public COperator {
 public:
-	COptBlock(): COperator(OT_BLOCK)
-	{
-	}
+    COptBlock() : COperator(OT_BLOCK) {
+    }
 
-	COptBlock(const COptBlock &opt): COperator(opt)
-	{
-	}
+    COptBlock(const COptBlock &opt) : COperator(opt) {
+    }
 
-	const COptBlock &operator =(const COptBlock &opt)
-	{
-		if (this != &opt)
-			COperator::operator =(opt);
+    const COptBlock &operator=(const COptBlock &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptBlock(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptBlock(*this);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU)
-	{
-		call_block Block;
+    virtual void work(const TMessageUnit *tmu) {
+        callBlock Block;
 
-		throw Block;
-	}
+        throw Block;
+    }
 };
 
-#endif // COPT_BLOCK_H
+#endif // _C_OPT_BLOCK_H_

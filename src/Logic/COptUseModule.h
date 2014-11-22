@@ -13,7 +13,7 @@ public:
 	COptUseModule(const COptUseModule &opt);
 	const COptUseModule &operator =(const COptUseModule &opt);
 
-	virtual COperator *Clone() const
+    virtual COperator *clone() const
 	{
 		return (COperator *)new COptUseModule(*this);
 	}
@@ -23,8 +23,9 @@ public:
 	bool_ AddInParameter(CAutoVar *pValue);
 	bool_ AddOutParameter(const ch_1 *pszFieldName, CAutoVar *pValue);
 
-	virtual void Initialize(const opt_unit *pUnit);
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void init(const optUnit *unit);
+
+    virtual void work(const TMessageUnit *tmu);
 
 private:
 	COptUseModule();
@@ -33,8 +34,8 @@ private:
 
 	CInterfaceInfo *m_pInterfaceInfo;
 
-	vector_evaluate	m_InEvaluateVector;
-	vector_evaluate m_OutEvaluateVector;
+    vectorEvaluate m_InEvaluateVector;
+    vectorEvaluate m_OutEvaluateVector;
 };
 
 #endif // COPT_USE_MODULE_H

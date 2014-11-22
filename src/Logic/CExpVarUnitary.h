@@ -1,100 +1,81 @@
-#ifndef CEXP_VAR_UNITARY_H
-#define CEXP_VAR_UNITARY_H
+#ifndef _C_EXP_VAR_UNITARY_H_
+#define _C_EXP_VAR_UNITARY_H_
 
 #include "CExpression.h"
 
-class CExpVarUnitary: public CExpression
-{
+class CExpVarUnitary : public CExpression {
 public:
-	CExpVarUnitary(const CAutoVar *pVariable)
-	{
-		m_pVariable = pVariable->Clone();
-	}
+    CExpVarUnitary(const CVariable *variable) {
+        _variable = variable->clone();
+    }
 
-	virtual ~CExpVarUnitary()
-	{
-		_DEL(m_pVariable);
-	}
+    virtual ~CExpVarUnitary() {
+        _DEL(_variable);
+    }
 
-	CExpVarUnitary(const CExpVarUnitary &exp)
-	{
-		m_pVariable = exp.m_pVariable->Clone();
-	}
+    CExpVarUnitary(const CExpVarUnitary &exp) {
+        _variable = exp._variable->clone();
+    }
 
-	const CExpVarUnitary &operator =(const CExpVarUnitary &exp)
-	{
-		if (this != &exp)
-		{
-			_DEL(m_pVariable);
+    const CExpVarUnitary &operator=(const CExpVarUnitary &exp) {
+        if (this != &exp) {
+            _DEL(_variable);
 
-			m_pVariable = exp.m_pVariable->Clone();
-		}
+            _variable = exp._variable->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual CExpression *Clone() const
-	{
-		return (CExpression *)new CExpVarUnitary(*this);
-	}
+    virtual CExpression *clone() const {
+        return (CExpression *) new CExpVarUnitary(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		m_pVariable->Initialize(pUnit->pData);
-	}
+    virtual void init(const optUnit *unit) {
+        _variable->init(unit->data);
+    }
 
-	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
-	{
+    virtual bool_ evaluate(const TMessageUnit *tmu) const {
+        bool_ result = false_v;
+        v_ value(*_variable->value(tmu));
+        eht_ style = (eht_) _STYLE(value.getType());
 
-		bool_ bResult;
+        switch (style) {
+            case NORMAL_STYLE:
+            case FLOAT_STYLE:
+                result = (0 == (b_4) value) ? false_v : true_v;
+                break;
+            case STRING_STYLE: {
+                const ch_1 *psz = (const ch_1 *) value;
 
-		try
-		{
-			v_		Value(*m_pVariable->Value(pTMU));
-			eht_	Style = (eht_)_STYLE(Value.get_type());
+                if (null_v == psz || 0 == psz[0]) {
+                    result = false_v;
+                } else {
+                    result = true_v;
+                }
+            }
+                break;
+            case OBJECT_STYLE: {
+                const obj_ p = (const obj_) value;
 
-			switch (Style)
-			{
-			case NORMAL_STYLE:
-			case FLOAT_STYLE:
-				bResult = (0 == (b_4)Value) ? false_v : true_v;
-				break;
-			case STRING_STYLE:
-			{
-				const ch_1 *psz = (const ch_1 *)Value;
+                if (null_v == p) {
+                    result = false_v;
+                } else {
+                    result = true_v;
+                }
+            }
+                break;
+        }
 
-				if (null_v == psz || 0 == psz[0])
-					bResult = false_v;
-				else
-					bResult = true_v;
-			}
-			break;
-			case OBJECT_STYLE:
-			{
-				const obj_ p = (const obj_)Value;
 
-				if (null_v == p)
-					bResult = false_v;
-				else
-					bResult = true_v;
-			}
-			break;
-			}
-
-		}
-		catch (...)
-		{
-			bResult = false_v;
-		}
-
-		return bResult;
-	}
+        return result;
+    }
 
 private:
-	CExpVarUnitary();
+    CExpVarUnitary();
 
-	CAutoVar *m_pVariable;
+    CVariable *_variable;
 };
 
-#endif // CEXP_VAR_UNITARY_H
+#endif // _C_EXP_VAR_UNITARY_H_
 

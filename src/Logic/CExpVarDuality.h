@@ -1,104 +1,86 @@
-#ifndef CEXP_VAR_DUALITY_H
-#define CEXP_VAR_DUALITY_H
+#ifndef _C_EXP_VAR_DUALITY_H_
+#define _C_EXP_VAR_DUALITY_H_
 
 #include "CExpression.h"
 
-class CExpVarDuality: public CExpression
-{
+class CExpVarDuality : public CExpression {
 public:
-	CExpVarDuality(const CAutoVar *pLeftVar,
-				   const ECompareCalculate ECC,
-				   const CAutoVar *pRightVar)
-	{
-		m_pLeftVar	= pLeftVar->Clone();
-		m_ECC		= ECC;
-		m_pRightVar	= pRightVar->Clone();
-	}
+    CExpVarDuality(const CVariable *leftVar,
+            const ECompareCalculate ecc,
+            const CVariable *rightVar) {
+        _leftVar = leftVar->clone();
+        _ecc = ecc;
+        _rightVar = rightVar->clone();
+    }
 
-	virtual ~CExpVarDuality()
-	{
-		_DEL(m_pLeftVar);
-		_DEL(m_pRightVar);
-	}
+    virtual ~CExpVarDuality() {
+        _DEL(_leftVar);
+        _DEL(_rightVar);
+    }
 
-	CExpVarDuality(const CExpVarDuality &exp)
-	{
-		m_pLeftVar	= exp.m_pLeftVar->Clone();
-		m_ECC		= exp.m_ECC;
-		m_pRightVar	= exp.m_pRightVar->Clone();
-	}
+    CExpVarDuality(const CExpVarDuality &exp) {
+        _leftVar = exp._leftVar->clone();
+        _ecc = exp._ecc;
+        _rightVar = exp._rightVar->clone();
+    }
 
-	const CExpVarDuality &operator =(const CExpVarDuality &exp)
-	{
-		if (this != &exp)
-		{
-			_DEL(m_pLeftVar);
-			_DEL(m_pRightVar);
-			m_pLeftVar	= exp.m_pLeftVar->Clone();
-			m_ECC		= exp.m_ECC;
-			m_pRightVar	= exp.m_pRightVar->Clone();
-		}
+    const CExpVarDuality &operator=(const CExpVarDuality &exp) {
+        if (this != &exp) {
+            _DEL(_leftVar);
+            _DEL(_rightVar);
+            _leftVar = exp._leftVar->clone();
+            _ecc = exp._ecc;
+            _rightVar = exp._rightVar->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual CExpression *Clone() const
-	{
-		return (CExpression *)new CExpVarDuality(*this);
-	}
+    virtual CExpression *clone() const {
+        return (CExpression *) new CExpVarDuality(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		m_pLeftVar->Initialize(pUnit->pData);
-		m_pRightVar->Initialize(pUnit->pData);
-	}
+    virtual void init(const optUnit *unit) {
+        _leftVar->init(unit->data);
+        _rightVar->init(unit->data);
+    }
 
-	virtual bool_ Evaluate(const TMessageUnit *pTMU) const
-	{
-		bool_ bResult = false_v;
+    virtual bool_ evaluate(const TMessageUnit *tmu) const {
+        bool_ result = false_v;
+        v_ leftValue(*_leftVar->value(tmu));
+        v_ rightValue(*_rightVar->value(tmu));
 
-		try
-		{
-			v_ LeftValue(*m_pLeftVar->Value(pTMU));
-			v_ RightValue(*m_pRightVar->Value(pTMU));
+        switch (_ecc) {
+            case CC_EQ:
+                result = (bool_) (leftValue == rightValue);
+                break;
+            case CC_GL:
+                result = (bool_) (leftValue != rightValue);
+                break;
+            case CC_GT:
+                result = (bool_) (leftValue > rightValue);
+                break;
+            case CC_GE:
+                result = (bool_) (leftValue >= rightValue);
+                break;
+            case CC_LS:
+                result = (bool_) (leftValue < rightValue);
+                break;
+            case CC_LE:
+                result = (bool_) (leftValue <= rightValue);
+                break;
+        }
 
-			switch (m_ECC)
-			{
-			case CC_EQ:
-				bResult = (bool_)(LeftValue == RightValue);
-				break;
-			case CC_GL:
-				bResult = (bool_)(LeftValue != RightValue);
-				break;
-			case CC_GT:
-				bResult = (bool_)(LeftValue > RightValue);
-				break;
-			case CC_GE:
-				bResult = (bool_)(LeftValue >= RightValue);
-				break;
-			case CC_LS:
-				bResult = (bool_)(LeftValue < RightValue);
-				break;
-			case CC_LE:
-				bResult = (bool_)(LeftValue <= RightValue);
-				break;
-			}
-		}
-		catch (...)
-		{
-			throw;
-		}
-
-		return bResult;
-	}
+        return result;
+    }
 
 private:
-	CExpVarDuality();
+    CExpVarDuality();
 
-	CAutoVar			*m_pLeftVar;
-	ECompareCalculate	m_ECC;
-	CAutoVar			*m_pRightVar;
+    CVariable *_leftVar;
+    ECompareCalculate _ecc;
+    CVariable *_rightVar;
 };
 
-#endif // CEXP_VAR_DUALITY_H
+#endif // _C_EXP_VAR_DUALITY_H_
 

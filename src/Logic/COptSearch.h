@@ -1,75 +1,66 @@
-#ifndef COPT_SEARCH_H
-#define COPT_SEARCH_H
+#ifndef _C_OPT_SEARCH_H_
+#define _C_OPT_SEARCH_H_
 
 #include "COperator.h"
-#include "../Tools/CRegister.h"
-
+#include "../Common/CRegister.h"
 #include "../Transactions/CTransactionManager.h"
 
-class COptSearch: public COperator
-{
+class COptSearch : public COperator {
 public:
-	COptSearch(const CAutoVar *pCategory,
-			   const CAutoVar *pKey,
-			   const CAutoVar *pObject)
-		: COperator(OT_SEARCH)
-	{
-		m_pCategory = pCategory->Clone();
-		m_pKey		= pKey->Clone();
-		m_pObject	= pObject->Clone();
-	}
+    COptSearch(const CVariable *category,
+            const CVariable *key,
+            const CVariable *object)
+            : COperator(OT_SEARCH) {
+        m_pCategory = category->clone();
+        m_pKey = key->clone();
+        m_pObject = object->clone();
+    }
 
-	virtual ~COptSearch()
-	{
-		_DEL(m_pCategory);
-		_DEL(m_pKey);
-		_DEL(m_pObject);
-	}
+    virtual ~COptSearch() {
+        _DEL(m_pCategory);
+        _DEL(m_pKey);
+        _DEL(m_pObject);
+    }
 
-	COptSearch(const COptSearch &opt): COperator(opt)
-	{
-		m_pCategory	= opt.m_pCategory->Clone();
-		m_pKey		= opt.m_pKey->Clone();
-		m_pObject	= opt.m_pObject->Clone();
-	}
+    COptSearch(const COptSearch &opt) : COperator(opt) {
+        m_pCategory = opt.m_pCategory->clone();
+        m_pKey = opt.m_pKey->clone();
+        m_pObject = opt.m_pObject->clone();
+    }
 
-	const COptSearch &operator =(const COptSearch &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptSearch &operator=(const COptSearch &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pCategory);
-			_DEL(m_pKey);
-			_DEL(m_pObject);
-			m_pCategory	= opt.m_pCategory->Clone();
-			m_pKey		= opt.m_pKey->Clone();
-			m_pObject	= opt.m_pObject->Clone();
-		}
+            _DEL(m_pCategory);
+            _DEL(m_pKey);
+            _DEL(m_pObject);
+            m_pCategory = opt.m_pCategory->clone();
+            m_pKey = opt.m_pKey->clone();
+            m_pObject = opt.m_pObject->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptSearch(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptSearch(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pCategory->Initialize(pUnit->pData);
-		m_pKey->Initialize(pUnit->pData);
-		m_pObject->Initialize(pUnit->pData);
-	}
+        m_pCategory->init(unit->data);
+        m_pKey->init(unit->data);
+        m_pObject->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar	*m_pCategory;
-	CAutoVar	*m_pKey;
-	CAutoVar	*m_pObject;
+    CVariable *m_pCategory;
+    CVariable *m_pKey;
+    CVariable *m_pObject;
 };
 
-#endif // COPT_SEARCH_H
+#endif // _C_OPT_SEARCH_H_

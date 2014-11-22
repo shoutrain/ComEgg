@@ -1,14 +1,14 @@
-#ifndef CEXPRESSION_H
-#define CEXPRESSION_H
+#ifndef _C_EXPRESSION_H_
+#define _C_EXPRESSION_H_
 
-class CExpression
-{
+class CExpression {
 public:
-	virtual CExpression *Clone() const = 0;
+    virtual CExpression *clone() const = 0;
 
-	virtual void Initialize(const opt_unit *pUnit) = 0;
-	virtual bool_ Evaluate(const TMessageUnit *pTMU) const = 0;
+    virtual void init(const optUnit *unit) = 0;
+
+    virtual bool_ evaluate(const TMessageUnit *tmu) const = 0;
 };
 
-#endif // CEXPRESSION_H
+#endif // _C_EXPRESSION_H_
 

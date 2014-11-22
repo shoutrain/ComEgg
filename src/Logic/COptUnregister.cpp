@@ -1,11 +1,11 @@
 #include "COptUnregister.h"
 
-void COptUnregister::Work(const TMessageUnit *pTMU)
+void COptUnregister::work(const TMessageUnit *tmu)
 {
 	try
 	{
-		v_ *pCategory	= m_pCategory->Value(pTMU);
-		v_ *pKey		= m_pKey->Value(pTMU);
+        v_ *pCategory = m_pCategory->Value(tmu);
+        v_ *pKey = m_pKey->Value(tmu);
 
 		if (!pCategory || !pKey)
 			throw OPERATOR_OPERAITON_ERROR;

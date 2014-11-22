@@ -192,7 +192,7 @@ ret_ CProtocolInfo::GetHeadField(const ch_1 *pszName, CField *&pField)
 	if (0 == pszName[0])
 		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (pField)
+	if (field)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 

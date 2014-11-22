@@ -2,48 +2,40 @@
 
 #include "../Network/NetworkCommon.h"
 
-void COptForward::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		TMsgInfo *pMsgInfo = ((TMessageUnit *)pTMU)->msgInfo;
-		TMsgInfo MsgInfo;
-		const CProcessor *pProcessor = GetContainer();
+void COptForward::work(const TMessageUnit *tmu) {
+    TMsgInfo *msgInfo = ((TMessageUnit *) tmu)->msgInfo;
+    TMsgInfo localMsgInfo;
+    const CProcessor *processor = getContainer();
 
-		if (!pProcessor)
-			throw OPERATOR_OPERAITON_ERROR;
+    if (!processor) {
+        assert(0);
+        // TODO do something to let outside know
+        return;
+    }
 
-		if (TCP_SEND == m_SendType && m_pObject)
-		{
-			v_ *pValue = m_pObject->Value(pTMU);
+    if (TCP_SEND == _sendType && _object) {
+        v_ *value = _object->value(tmu);
 
-			pProcessor = (CProcessor *)(obj_)*pValue;
-		}
-		else if (UDP_SEND == m_SendType && m_pIP && m_pPort)
-		{
-			v_ *pIP		= m_pIP->Value(pTMU);
-			v_ *pPort	= m_pPort->Value(pTMU);
+        processor = (CProcessor *) (obj_) *value;
+    } else if (UDP_SEND == _sendType && _ip && _port) {
+        v_ *ip = _ip->value(tmu);
+        v_ *port = _port->value(tmu);
 
-			memset(&MsgInfo, 0, sizeof(TMsgInfo));
-			strncpy(MsgInfo.localIP, pMsgInfo->localIP, IP_MAX_LENGTH);
-			MsgInfo.localPort	= pMsgInfo->localPort;
-			strncpy(MsgInfo.remoteIP, (const ch_1 *)*pIP, IP_MAX_LENGTH);
-			MsgInfo.remotePort = (ub_2)*pPort;
+        memset(&localMsgInfo, 0, sizeof(TMsgInfo));
+        strncpy(localMsgInfo.localIP, msgInfo->localIP, IP_MAX_LENGTH);
+        localMsgInfo.localPort = msgInfo->localPort;
+        strncpy(localMsgInfo.remoteIP, (const ch_1 *) *ip, IP_MAX_LENGTH);
+        localMsgInfo.remotePort = (ub_2) *port;
 
-			pMsgInfo = &MsgInfo;
-		}
+        msgInfo = &localMsgInfo;
+    }
 
-		if (SUCCESS != _ERR(((CProcessor *)pProcessor)->Send(
-                (const CPduInfo *) ((TMessageUnit *) pTMU)->pduInfo,
-								((TMessageUnit *)pTMU)->message,
-								((TMessageUnit *)pTMU)->size,
-								pMsgInfo)))
-		{
-			throw OPERATOR_OPERAITON_ERROR;
-		}
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (0 != ((CProcessor *) processor)->Send(
+            (const CPduInfo *) ((TMessageUnit *) tmu)->pduInfo,
+            ((TMessageUnit *) tmu)->message,
+            ((TMessageUnit *) tmu)->size,
+            msgInfo)) {
+        assert(0);
+        // TODO do something to let outside know
+    }
 }

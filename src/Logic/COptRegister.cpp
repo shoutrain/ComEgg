@@ -1,67 +1,65 @@
 #include "COptRegister.h"
 
-void COptRegister::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		v_ *pCategory	= m_pCategory->Value(pTMU);
-		v_ *pKey		= m_pKey->Value(pTMU);
+void COptRegister::work(const TMessageUnit *tmu) {
+    v_ *category = _category->value(tmu);
+    v_ *key = _key->value(tmu);
 
-		if (!pCategory || !pKey)
-			throw OPERATOR_OPERAITON_ERROR;
+    if (!category || !key) {
+        assert(0);
+        // TODO do something to tell outside
+        return;
+    }
 
-		if (STR != pCategory->get_type() || STR != pKey->get_type())
-			throw OPERATOR_OPERAITON_ERROR;
+    if (STR != category->getType() || STR != key->getType()) {
+        assert(0);
+        // TODO do something to tell outside
+        return;
+    }
 
-		v_ *pObj = m_pObject->Value(pTMU);
+    v_ *obj = _object->value(tmu);
 
-		if (pObj)
-		{
-			if (OBJ != pObj->get_type())
-			{
-				obj_		p			= (obj_)(*pObj);
-				CProcessor	*pProcessor = (CProcessor *)p;
+    if (obj) {
+        if (OBJ != obj->getType()) {
+            obj_ p = (obj_) (*obj);
+            CProcessor *processor = (CProcessor *) p;
 
-				if (!pProcessor)
-					throw OPERATOR_OPERAITON_ERROR;
+            if (!processor) {
+                assert(0);
+                // TODO do something to tell outside
+                return;
+            }
 
-				if (SUCCESS != _ERR(pProcessor->Register(
-										(const ch_1 *)*pCategory,
-										(const ch_1 *)*pKey, m_bIsCovered)))
-				{
-					throw OPERATOR_OPERAITON_ERROR;
-				}
-			}
-			else
-			{
-				if (SUCCESS != _ERR(CRegister::Instance()->Register(
-										(const ch_1 *)*pCategory,
-										(const ch_1 *)*pKey,
-										pObj,
-										m_bIsCovered)))
-				{
-					throw OPERATOR_OPERAITON_ERROR;
-				}
-			}
-		}
-		else
-		{
-			CProcessor *pProcessor = (CProcessor *)GetContainer();
+            if (0 != processor->Register(
+                    (const ch_1 *) *category,
+                    (const ch_1 *) *key, _isCovered)) {
+                assert(0);
+                // TODO do something to tell outside
+            }
+        } else {
+            if (CRegister::instance()->registerItem(
+                    (const ch_1 *) *category,
+                    (const ch_1 *) *key,
+                    obj,
+                    _isCovered)) {
+                assert(0);
+                // TODO do something to tell outside
+            }
+        }
+    } else {
+        CProcessor *processor = (CProcessor *) getContainer();
 
-			if (!pProcessor)
-				throw OPERATOR_OPERAITON_ERROR;
+        if (!processor) {
+            assert(0);
+            // TODO do something to tell outside
+            return;
+        }
 
-			if (SUCCESS != _ERR(pProcessor->Register(
-									(const ch_1 *)*pCategory,
-									(const ch_1 *)*pKey,
-									m_bIsCovered)))
-			{
-				throw OPERATOR_OPERAITON_ERROR;
-			}
-		}
-	}
-	catch (...)
-	{
-		throw;
-	}
+        if (0 != processor->Register(
+                (const ch_1 *) *category,
+                (const ch_1 *) *key,
+                _isCovered)) {
+            assert(0);
+            // TODO do something to tell outside
+        }
+    }
 }

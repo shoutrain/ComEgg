@@ -9,7 +9,7 @@
             <filename>network.xsd</filename>
             <describe>
                 All interfaces must be defined here.
-                Instance documents follow this must be named "network.xml".
+                _instance documents follow this must be named "network.xml".
             </describe>
         </xs:appinfo>
     </xs:annotation>

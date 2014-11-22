@@ -1,66 +1,58 @@
-#ifndef COPT_DELETE_FILE_H
-#define COPT_DELETE_FILE_H
+#ifndef _C_OPT_DELETE_FILE_H_
+#define _C_OPT_DELETE_FILE_H_
 
 #include "COperator.h"
 
-class COptDeleteFile: public COperator
-{
+class COptDeleteFile : public COperator {
 public:
-	COptDeleteFile(const CAutoVar *pFilePath,
-				   const CAutoVar *pResult)
-		: COperator(OT_DELETE_FILE)
-	{
-		m_pFilePath		= pFilePath->Clone();
-		m_pResult		= pResult->Clone();
-	}
+    COptDeleteFile(const CVariable *filePath,
+            const CVariable *result)
+            : COperator(OT_DELETE_FILE) {
+        _filePath = filePath->clone();
+        _result = result->clone();
+    }
 
-	virtual ~COptDeleteFile()
-	{
-		_DEL(m_pFilePath);
-		_DEL(m_pResult);
-	}
+    virtual ~COptDeleteFile() {
+        _DEL(_filePath);
+        _DEL(_result);
+    }
 
-	COptDeleteFile(const COptDeleteFile &opt): COperator(opt)
-	{
-		m_pFilePath		= opt.m_pFilePath->Clone();
-		m_pResult		= opt.m_pResult->Clone();
-	}
+    COptDeleteFile(const COptDeleteFile &opt) : COperator(opt) {
+        _filePath = opt._filePath->clone();
+        _result = opt._result->clone();
+    }
 
-	const COptDeleteFile &operator =(const COptDeleteFile &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptDeleteFile &operator=(const COptDeleteFile &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pFilePath);
-			_DEL(m_pResult);
+            _DEL(_filePath);
+            _DEL(_result);
 
-			m_pFilePath		= opt.m_pFilePath->Clone();
-			m_pResult		= opt.m_pResult->Clone();
-		}
+            _filePath = opt._filePath->clone();
+            _result = opt._result->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptDeleteFile(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptDeleteFile(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pFilePath->Initialize(pUnit->pData);
-		m_pResult->Initialize(pUnit->pData);
-	}
+        _filePath->init(unit->data);
+        _result->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar *m_pFilePath;
-	CAutoVar *m_pResult;
+    CVariable *_filePath;
+    CVariable *_result;
 };
 
-#endif // COPT_DELETE_FILE_H
+#endif // _C_OPT_DELETE_FILE_H_
 

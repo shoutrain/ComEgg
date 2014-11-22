@@ -1,77 +1,69 @@
-#ifndef COPT_DUALITY_CALCULATE_H
-#define COPT_DUALITY_CALCULATE_H
+#ifndef _C_OPT_DUALITY_CALCULATE_H_
+#define _C_OPT_DUALITY_CALCULATE_H_
 
 #include "COperator.h"
 
-class COptDualityCalculate: public COperator
-{
+class COptDualityCalculate : public COperator {
 public:
-	COptDualityCalculate(const CAutoVar *pLeftVariable,
-						 const EDualityCalculate Opt,
-						 const CAutoVar *pRightVariable,
-						 const CAutoVar *pResultVariable)
-		: COperator(OT_DUALITY_CALCULATE)
-	{
-		m_pLeftVariable		= pLeftVariable->Clone();
-		m_Opt				= Opt;
-		m_pRightVariable	= pRightVariable->Clone();
-		m_pResultVariable	= pResultVariable->Clone();
-	}
+    COptDualityCalculate(const CVariable *leftVariable,
+            const EDualityCalculate opt,
+            const CVariable *rightVariable,
+            const CVariable *resultVariable)
+            : COperator(OT_DUALITY_CALCULATE) {
+        _leftVariable = leftVariable->clone();
+        _opt = opt;
+        _rightVariable = rightVariable->clone();
+        _resultVariable = resultVariable->clone();
+    }
 
-	virtual ~COptDualityCalculate()
-	{
-		_DEL(m_pLeftVariable);
-		_DEL(m_pRightVariable);
-		_DEL(m_pResultVariable);
-	}
+    virtual ~COptDualityCalculate() {
+        _DEL(_leftVariable);
+        _DEL(_rightVariable);
+        _DEL(_resultVariable);
+    }
 
-	COptDualityCalculate(const COptDualityCalculate &opt): COperator(opt)
-	{
-		m_pLeftVariable		= opt.m_pLeftVariable->Clone();
-		m_Opt				= opt.m_Opt;
-		m_pRightVariable	= opt.m_pRightVariable->Clone();
-		m_pResultVariable	= opt.m_pResultVariable->Clone();
-	}
+    COptDualityCalculate(const COptDualityCalculate &opt) : COperator(opt) {
+        _leftVariable = opt._leftVariable->clone();
+        _opt = opt._opt;
+        _rightVariable = opt._rightVariable->clone();
+        _resultVariable = opt._resultVariable->clone();
+    }
 
-	const COptDualityCalculate &operator =(const COptDualityCalculate &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptDualityCalculate &operator=(const COptDualityCalculate &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pLeftVariable);
-			_DEL(m_pRightVariable);
-			_DEL(m_pResultVariable);
-			m_pLeftVariable		= opt.m_pLeftVariable->Clone();
-			m_Opt				= opt.m_Opt;
-			m_pRightVariable	= opt.m_pRightVariable->Clone();
-			m_pResultVariable	= opt.m_pResultVariable->Clone();
-		}
+            _DEL(_leftVariable);
+            _DEL(_rightVariable);
+            _DEL(_resultVariable);
+            _leftVariable = opt._leftVariable->clone();
+            _opt = opt._opt;
+            _rightVariable = opt._rightVariable->clone();
+            _resultVariable = opt._resultVariable->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-	virtual COperator *Clone() const
-	{
-		return (COperator *)new COptDualityCalculate(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptDualityCalculate(*this);
+    }
 
-	virtual void Initialize(const opt_unit *pUnit)
-	{
-		COperator::Initialize(pUnit);
+    virtual void init(const optUnit *unit) {
+        COperator::init(unit);
 
-		m_pLeftVariable->Initialize(pUnit->pData);
-		m_pRightVariable->Initialize(pUnit->pData);
-		m_pResultVariable->Initialize(pUnit->pData);
-	}
+        _leftVariable->init(unit->data);
+        _rightVariable->init(unit->data);
+        _resultVariable->init(unit->data);
+    }
 
-	virtual void Work(const TMessageUnit *pTMU);
+    virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar			*m_pLeftVariable;
-	EDualityCalculate	m_Opt;
-	CAutoVar			*m_pRightVariable;
-	CAutoVar			*m_pResultVariable;
+    CVariable *_leftVariable;
+    EDualityCalculate _opt;
+    CVariable *_rightVariable;
+    CVariable *_resultVariable;
 };
 
-#endif // COPT_DUALITY_CALCULATE_H
+#endif // _C_OPT_DUALITY_CALCULATE_H_

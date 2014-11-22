@@ -9,7 +9,7 @@
             <filename>transactions.xsd</filename>
             <describe>
                 All transactions must be defined here.
-                Instance documents follow this must be named "transactions.xml".
+                _instance documents follow this must be named "transactions.xml".
             </describe>
         </xs:appinfo>
     </xs:annotation>

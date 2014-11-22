@@ -2,33 +2,24 @@
 
 #include "../Data/CVarGroupDefined.h"
 
-void COptConfigGroup::Work(const TMessageUnit *pTMU)
-{
-	try
-	{
-		CField *pField = null_v;
-		v_ *pGroupData = null_v;
-		TFieldGroup *pFieldGroup = null_v;
-		v_ *pSize = null_v;
-	
-		pGroupData = m_pGroup->Value((obj_ &)pField);
-		pFieldGroup = (TFieldGroup *)(obj_)*pGroupData;
-		pSize = m_pSize->Value(pTMU);
+void COptConfigGroup::work(const TMessageUnit *tmu) {
+    CField *field = null_v;
+    v_ *groupData = null_v;
+    TFieldGroup *fieldGroup = null_v;
+    v_ *size = null_v;
 
-        if (pFieldGroup->size && pFieldGroup->data)
-		{
-            _DEL_ARR(pFieldGroup->data);
-            pFieldGroup->size = 0;
-		}
+    groupData = _group->value((obj_ &) field);
+    fieldGroup = (TFieldGroup *) (obj_) *groupData;
+    size = _size->value(tmu);
 
-        pFieldGroup->size = pField->getUnitSize() * ((size_) *pSize);
-        pFieldGroup->data = new ub_1[pFieldGroup->size];
-        memset(pFieldGroup->data, 0, pFieldGroup->size);
-	}
-	catch (...)
-	{
-		throw;
-	}
+    if (fieldGroup->size && fieldGroup->data) {
+        _DEL_ARR(fieldGroup->data);
+        fieldGroup->size = 0;
+    }
+
+    fieldGroup->size = field->getUnitSize() * ((size_) *size);
+    fieldGroup->data = new ub_1[fieldGroup->size];
+    memset(fieldGroup->data, 0, fieldGroup->size);
 }
 
 
