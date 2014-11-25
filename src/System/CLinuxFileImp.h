@@ -1,29 +1,30 @@
-#ifndef CLINUX_FILE_IMP_H
-#define CLINUX_FILE_IMP_H
+#ifndef _C_LINUX_FILE_IMP_H_
+#define _C_LINUX_FILE_IMP_H_
 
 #include "CFileImp.h"
 
-class CLinuxFileImp: CFileImp
-{
+class CLinuxFileImp : CFileImp {
 public:
-	CLinuxFileImp(): m_File(-1) {}
+    CLinuxFileImp() : _file(-1) {
+    }
 
-	virtual ~CLinuxFileImp()
-	{
-		Close();
-	}
+    virtual ~CLinuxFileImp() {
+        closeFile();
+    }
 
-	virtual bool_ Open(const ch_1 *pszFullPath, bool_ bIsRead);
-	virtual void Close();
+    virtual bool_ openFile(const ch_1 *fullPath, bool_ isRead);
 
-	virtual bool_ Read(ub_1 *&pBuffer, size_ BufferSize, size_ &ReadSize);
-	virtual bool_ Write(const ub_1 *pBuffer, size_ BufferSize);
+    virtual void closeFile();
 
-	virtual bool_ Delete(const ch_1 *pszFullPath);
+    virtual bool_ readFile(ub_1 *&buffer, size_ bufferSize, size_ &readSize);
+
+    virtual bool_ writeFile(const ub_1 *buffer, size_ bufferSize);
+
+    virtual bool_ delFile(const ch_1 *fullPath);
 
 private:
-	b_4		m_File;
-	bool_	m_bIsRead;
+    b_4   _file;
+    bool_ _isRead;
 };
 
-#endif // CLINUX_FILE_IMP_H
+#endif // _C_LINUX_FILE_IMP_H_

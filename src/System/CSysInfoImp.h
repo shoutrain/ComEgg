@@ -1,12 +1,12 @@
-#ifndef CSYS_INFO_IMP_H
-#define CSYS_INFO_IMP_H
+#ifndef _C_SYS_INFO_IMP_H_
+#define _C_SYS_INFO_IMP_H_
 
-#include "../Common/Common.h"
+#include "../Common/BaseType.h"
 
 class CSysInfoImp
 {
 public:
-	virtual ub_1 GetMemoryUsage() = 0;
+    virtual ub_1 getMemoryUsage() = 0;
 };
 
-#endif // CSYS_INFO_IMP_H
+#endif // _C_SYS_INFO_IMP_H_

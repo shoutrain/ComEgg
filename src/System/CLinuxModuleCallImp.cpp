@@ -1,86 +1,80 @@
 #include "CLinuxModuleCallImp.h"
 #include "../Modules/ModuleCommon.h"
 
-#include <string.h>
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <dlfcn.h>
 
-bool_ CLinuxModuleCallImp::Open(const ch_1 *pszModulePath, 
-								const ch_1 *pszModuleName, 
-								const ch_1 *pszModuleType)
-{
-	if ((!pszModulePath || 0 == pszModulePath[0] 
-		 || MODULE_PATH_LENGTH <= strlen(pszModulePath))
-		|| 
-		(!pszModuleName || 0 == pszModuleName[0] 
-		 || MODULE_NAME_LENGTH <= strlen(pszModuleName))
-		|| 
-		(!pszModuleType || 0 == pszModuleType[0]
-		 || MODULE_EXT_LENGTH <= strlen(pszModuleType)))
-	{
-		return false_v;
-	}
+bool_ CLinuxModuleCallImp::open(const ch_1 *modulePath,
+        const ch_1 *moduleName,
+        const ch_1 *moduleType) {
+    if ((!modulePath || 0 == modulePath[0]
+            || MODULE_PATH_LENGTH <= strlen(modulePath))
+            ||
+            (!moduleName || 0 == moduleName[0]
+                    || MODULE_NAME_LENGTH <= strlen(moduleName))
+                    ||
+            (!moduleType || 0 == moduleType[0]
+                    || MODULE_EXT_LENGTH <= strlen(moduleType))) {
+        return false_v;
+    }
 
-	
-	size_ nLength = MODULE_PATH_LENGTH 
-		+ MODULE_NAME_LENGTH 
-		+ MODULE_EXT_LENGTH;
-	ch_1 szModule[nLength];
 
-	memset(szModule, 0, nLength);
-	sprintf(szModule, "%s/lib%s.%s", pszModulePath, pszModuleName, pszModuleType);
+    size_ length = MODULE_PATH_LENGTH
+            + MODULE_NAME_LENGTH
+            + MODULE_EXT_LENGTH;
+    ch_1  module[length];
 
-	m_Handle = dlopen(szModule, RTLD_NOW);
+    memset(module, 0, length);
+    sprintf(module, "%s/lib%s.%s", modulePath, moduleName, moduleType);
 
-	if (!m_Handle)
-		return false_v;
+    _handle = dlopen(module, RTLD_NOW);
 
-	return true_v;
+    if (!_handle) {
+        return false_v;
+    }
+
+    return true_v;
 }
 
-bool_ CLinuxModuleCallImp::Close()
-{
-	if (m_Handle)
-	{
-		dlclose(m_Handle);
-		m_Handle = null_v;
-	}
+bool_ CLinuxModuleCallImp::close() {
+    if (_handle) {
+        dlclose(_handle);
+        _handle = null_v;
+    }
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CLinuxModuleCallImp::Call(const ch_1 *pszInterfaceName,
-								const ub_1 *pIn,
-								size_ nInSize,
-								ub_1 *&pOut,
-								size_ &nOutSize)
-{
-	if (!pszInterfaceName 
-		|| 0 == pszInterfaceName[0]
-		|| INTERFACE_NAME_LEGNTH <= strlen(pszInterfaceName))
-	{
-		return false_v;
-	}
+bool_ CLinuxModuleCallImp::call(const ch_1 *interfaceName,
+        const ub_1 *in,
+        size_ inSize,
+        ub_1 *&out,
+        size_ &outSize) {
+    if (!interfaceName
+            || 0 == interfaceName[0]
+            || INTERFACE_NAME_LEGNTH <= strlen(interfaceName)) {
+        return false_v;
+    }
 
-	if (pOut)
-		return false_v;
+    if (out) {
+        return false_v;
+    }
 
-	if (!m_Handle)
-		return false_v;
-	
-	void (*CallFun)(const ub_1 *, size_, ub_1 *&, size_ &);
+    if (!_handle) {
+        return false_v;
+    }
 
-	CallFun = (void (*)(const ub_1 *, size_, ub_1 *&, size_ &))
-		dlsym(m_Handle, pszInterfaceName);
+    void (*callFun)(const ub_1 *, size_, ub_1 *&, size_ &);
 
-	const ch_1 *pszErrMsg = dlerror();
+    callFun = (void (*)(const ub_1 *, size_, ub_1 *&, size_ &))
+            dlsym(_handle, interfaceName);
 
-	if (NULL != pszErrMsg)
-		return false_v;
+    const ch_1 *errMsg = dlerror();
 
-	CallFun(pIn, nInSize, pOut, nOutSize);
-	
-	return true_v;
+    if (NULL != errMsg) {
+        return false_v;
+    }
+
+    callFun(in, inSize, out, outSize);
+
+    return true_v;
 }

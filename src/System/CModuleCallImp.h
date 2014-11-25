@@ -1,20 +1,21 @@
-#ifndef CMODULE_CALL_IMP_H
-#define CMODULE_CALL_IMP_H
+#ifndef _C_MODULE_CALL_IMP_H_
+#define _C_MODULE_CALL_IMP_H_
 
-#include "../Common/Common.h"
+#include "../Common/BaseType.h"
 
-class CModuleCallImp
-{
+class CModuleCallImp {
 public:
-	virtual bool_ Open(const ch_1 *pszModulePath, 
-					   const ch_1 *pszModuleName, 
-					   const ch_1 *pszModuleType) = 0;
-	virtual bool_ Close() = 0;
-	virtual bool_ Call(const ch_1 *pszInterfaceName,
-					   const ub_1 *pIn,
-					   size_ nInSize,
-					   ub_1 *&pOut,
-					   size_ &nOutSize) = 0;
+    virtual bool_ open(const ch_1 *modulePath,
+            const ch_1 *moduleName,
+            const ch_1 *moduleType) = 0;
+
+    virtual bool_ close() = 0;
+
+    virtual bool_ call(const ch_1 *interfaceName,
+            const ub_1 *in,
+            size_ inSize,
+            ub_1 *&out,
+            size_ &outSize) = 0;
 };
 
-#endif // CMODULE_CALL_IMP_H
+#endif // _C_MODULE_CALL_IMP_H_

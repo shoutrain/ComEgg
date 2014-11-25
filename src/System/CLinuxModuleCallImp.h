@@ -1,31 +1,32 @@
-#ifndef CLINUX_MODULE_CALL_IMP_H
-#define CLINUX_MODULE_CALL_IMP_H
+#ifndef _C_LINUX_MODULE_CALL_IMP_H_
+#define _C_LINUX_MODULE_CALL_IMP_H_
 
-#include "../Common/Common.h"
+#include "../Common/BaseType.h"
 #include "CModuleCallImp.h"
 
-class CLinuxModuleCallImp: public CModuleCallImp
-{
+class CLinuxModuleCallImp : public CModuleCallImp {
 public:
-	CLinuxModuleCallImp(): m_Handle(null_v) {}
+    CLinuxModuleCallImp() : _handle(null_v) {
+    }
 
-	virtual ~CLinuxModuleCallImp()
-	{
-		Close();
-	}
+    virtual ~CLinuxModuleCallImp() {
+        close();
+    }
 
-	virtual bool_ Open(const ch_1 *pszModulePath, 
-					   const ch_1 *pszModuleName, 
-					   const ch_1 *pszModuleType);
-	virtual bool_ Close();
-	virtual bool_ Call(const ch_1 *pszInterfaceName,
-					   const ub_1 *pIn,
-					   size_ nInSize,
-					   ub_1 *&pOut,
-					   size_ &nOutSize);
+    virtual bool_ open(const ch_1 *modulePath,
+            const ch_1 *moduleName,
+            const ch_1 *moduleType);
+
+    virtual bool_ close();
+
+    virtual bool_ call(const ch_1 *interfaceName,
+            const ub_1 *in,
+            size_ inSize,
+            ub_1 *&out,
+            size_ &outSize);
 
 private:
-	obj_ m_Handle;
+    obj_ _handle;
 };
 
 #endif // CLINUX_MODULE_CALL_IMP_H

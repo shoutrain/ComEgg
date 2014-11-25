@@ -1,28 +1,24 @@
-#ifndef CSYS_INFO_H
-#define CSYS_INFO_H
+#ifndef _C_SYS_INFO_H_
+#define _C_SYS_INFO_H_
 
 #include "CSysFactory.h"
 
-class CSysInfo
-{
+class CSysInfo {
 public:
-	CSysInfo()
-	{
-		m_pSysInfo = CSysFactory::Instance()->MakeSysInfo();
-	}
+    CSysInfo() {
+        _sysInfo = CSysFactory::instance()->makeSysInfo();
+    }
 
-	~CSysInfo()
-	{
-		_DEL(m_pSysInfo);
-	}
+    ~CSysInfo() {
+        _DEL(_sysInfo);
+    }
 
-	ub_1 GetUsage()
-	{
-		return m_pSysInfo->GetMemoryUsage();
-	}
+    ub_1 getUsage() {
+        return _sysInfo->getMemoryUsage();
+    }
 
 private:
-	CSysInfoImp *m_pSysInfo;
+    CSysInfoImp *_sysInfo;
 };
 
-#endif // CSYS_INFO_H
+#endif // _C_SYS_INFO_H_

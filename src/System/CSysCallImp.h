@@ -1,10 +1,9 @@
-#ifndef CSYS_CALL_IMP_H
-#define CSYS_CALL_IMP_H
+#ifndef _C_SYS_CALL_IMP_H_
+#define _C_SYS_CALL_IMP_H_
 
-class CSysCallImp
-{
+class CSysCallImp {
 public:
-	virtual bool_ Exec(const ch_1 *pszCommand) = 0;
+    virtual bool_ exec(const ch_1 *command) = 0;
 };
 
 #endif // CSYS_CALL_IMP_H

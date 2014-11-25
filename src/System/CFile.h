@@ -1,60 +1,58 @@
-#ifndef CFILE_H
-#define CFILE_H
+#ifndef _C_FILE_H_
+#define _C_FILE_H_
 
 #include "CSysFactory.h"
 
-class CFile
-{
+class CFile {
 public:
-	CFile()
-	{
-		m_pFile = CSysFactory::Instance()->MakeFile();
-	}
+    CFile() {
+        _file = CSysFactory::instance()->makeFile();
+    }
 
-	virtual ~CFile()
-	{
-		_DEL(m_pFile);
-	}
+    virtual ~CFile() {
+        _DEL(_file);
+    }
 
-	bool_ Read(const ch_1 *pszFullPath, 
-				ub_1 *&pBuffer, 
-				size_ BufferSize, 
-				size_ &ReadSize)
-	{
-		if (!m_pFile->Open(pszFullPath, true_v))
-			return false_v;
+    bool_ readFile(const ch_1 *fullPath,
+            ub_1 *&buffer,
+            size_ bufferSize,
+            size_ &readSize) {
+        if (!_file->openFile(fullPath, true_v)) {
+            return false_v;
+        }
 
-		if (!m_pFile->Read(pBuffer, BufferSize, ReadSize))
-			return false_v;
+        if (!_file->readFile(buffer, bufferSize, readSize)) {
+            return false_v;
+        }
 
-		m_pFile->Close();
+        _file->closeFile();
 
-		return true_v;
-	}
+        return true_v;
+    }
 
 
-	bool_ Write(const ch_1 *pszFullPath, 
-				const ub_1 *pBuffer, 
-				size_ BufferSize)
-	{
-		if (!m_pFile->Open(pszFullPath, false_v))
-			return false_v;
+    bool_ writeFile(const ch_1 *fullPath,
+            const ub_1 *buffer,
+            size_ bufferSize) {
+        if (!_file->openFile(fullPath, false_v)) {
+            return false_v;
+        }
 
-		if (!m_pFile->Write(pBuffer, BufferSize))
-			return false_v;
+        if (!_file->writeFile(buffer, bufferSize)) {
+            return false_v;
+        }
 
-		m_pFile->Close();
+        _file->closeFile();
 
-		return true_v;		
-	}
+        return true_v;
+    }
 
-	bool_ Delete(const ch_1 *pszFullPath)
-	{
-		return m_pFile->Delete(pszFullPath);
-	}
+    bool_ delFile(const ch_1 *fullPath) {
+        return _file->delFile(fullPath);
+    }
 
 private:
-	CFileImp *m_pFile;
+    CFileImp *_file;
 };
 
-#endif // CFILE_H
+#endif // _C_FILE_H_

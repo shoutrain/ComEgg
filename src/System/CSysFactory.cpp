@@ -1,3 +1,3 @@
 #include "CSysFactory.h"
 
-CSysFactory *CSysFactory::m_pInstance = null_v;
+CSysFactory *CSysFactory::_instance = null_v;

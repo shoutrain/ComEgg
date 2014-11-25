@@ -1,18 +1,19 @@
-#ifndef CFILE_IMP_H
-#define CFILE_IMP_H
+#ifndef _C_FILE_IMP_H_
+#define _C_FILE_IMP_H_
 
-#include "../Common/Common.h"
+#include "../Common/BaseType.h"
 
-class CFileImp
-{
+class CFileImp {
 public:
-	virtual bool_ Open(const ch_1 *pszFullPath, bool_ bIsRead) = 0;
-	virtual void Close() = 0;
+    virtual bool_ openFile(const ch_1 *fullPath, bool_ isRead) = 0;
 
-	virtual bool_ Read(ub_1 *&pBuffer, size_ BufferSize, size_ &ReadSize) = 0;
-	virtual bool_ Write(const ub_1 *pBuffer, size_ BufferSize) = 0;
+    virtual void closeFile() = 0;
 
-	virtual bool_ Delete(const ch_1 *pszFullPath) = 0;
+    virtual bool_ readFile(ub_1 *&buffer, size_ bufferSize, size_ &readSize) = 0;
+
+    virtual bool_ writeFile(const ub_1 *buffer, size_ bufferSize) = 0;
+
+    virtual bool_ delFile(const ch_1 *fullPath) = 0;
 };
 
 #endif // CFILE_IMP_H

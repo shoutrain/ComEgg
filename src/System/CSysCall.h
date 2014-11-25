@@ -1,28 +1,24 @@
-#ifndef CSYS_CALL_H
-#define CSYS_CALL_H
+#ifndef _C_SYS_CALL_H_
+#define _C_SYS_CALL_H_
 
 #include "CSysFactory.h"
 
-class CSysCall
-{
+class CSysCall {
 public:
-	CSysCall()
-	{
-		m_pSysCall = CSysFactory::Instance()->MakeSysCall();
-	}
+    CSysCall() {
+        _sysCall = CSysFactory::instance()->makeSysCall();
+    }
 
-	virtual ~CSysCall()
-	{
-		_DEL(m_pSysCall);
-	}
+    virtual ~CSysCall() {
+        _DEL(_sysCall);
+    }
 
-	bool_ Exec(const ch_1 *pszCommand)
-	{
-		return m_pSysCall->Exec(pszCommand);
-	}
+    bool_ exec(const ch_1 *command) {
+        return _sysCall->exec(command);
+    }
 
 private:
-	CSysCallImp *m_pSysCall;
+    CSysCallImp *_sysCall;
 };
 
-#endif // CSYS_CALL_H
+#endif // _C_SYS_CALL_H_

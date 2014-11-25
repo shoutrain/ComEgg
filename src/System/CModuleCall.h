@@ -1,45 +1,41 @@
-#ifndef CMODULE_CALL_H
-#define CMODULE_CALL_H
+#ifndef _C_MODULE_CALL_H_
+#define _C_MODULE_CALL_H_
 
 #include "CSysFactory.h"
 
-class CModuleCall
-{
+class CModuleCall {
 public:
-	CModuleCall()
-	{
-		m_pModuleCall = CSysFactory::Instance()->MakeModuleCall();
-	}
+    CModuleCall() {
+        _moduleCall = CSysFactory::instance()->makeModuleCall();
+    }
 
-	virtual ~CModuleCall()
-	{
-		_DEL(m_pModuleCall);
-	}
+    virtual ~CModuleCall() {
+        _DEL(_moduleCall);
+    }
 
-	bool_ Call(const ch_1 *pszModulePath,
-			   const ch_1 *pszModuleName, 
-			   const ch_1 *pszModuleType,
-			   const ch_1 *pszInterfaceName,
-			   const ub_1 *pIn,
-			   size_ nInSize, 
-			   ub_1 *&pOut,
-			   size_ &nOutSize)
-	{
-		if (!m_pModuleCall->Open(pszModulePath, pszModuleName, pszModuleType))
-			return false_v;
+    bool_ call(const ch_1 *modulePath,
+            const ch_1 *moduleName,
+            const ch_1 *moduleType,
+            const ch_1 *interfaceName,
+            const ub_1 *in,
+            size_ inSize,
+            ub_1 *&out,
+            size_ &outSize) {
+        if (!_moduleCall->open(modulePath, moduleName, moduleType)) {
+            return false_v;
+        }
 
-		if (!m_pModuleCall->Call(pszInterfaceName, pIn, nInSize, pOut, nOutSize))
-		{
-			m_pModuleCall->Close();
+        if (!_moduleCall->call(interfaceName, in, inSize, out, outSize)) {
+            _moduleCall->close();
 
-			return false_v;
-		}
+            return false_v;
+        }
 
-		return m_pModuleCall->Close();
-	}
+        return _moduleCall->close();
+    }
 
 private:
-	CModuleCallImp *m_pModuleCall;
+    CModuleCallImp *_moduleCall;
 };
 
-#endif // CMODULE_CALL_H
+#endif // _C_MODULE_CALL_H_

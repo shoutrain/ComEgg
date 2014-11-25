@@ -1,56 +1,53 @@
-#ifndef CSYS_FACTORY_H
-#define CSYS_FACTORY_H
+#ifndef _C_SYS_FACTORY_H_
+#define _C_SYS_FACTORY_H_
 
 #include "CLinuxFileImp.h"
 #include "CLinuxSysInfoImp.h"
 #include "CLinuxSysCallImp.h"
 #include "CLinuxModuleCallImp.h"
+#include "../Common/BaseType.h"
 
-class CSysFactory
-{
+class CSysFactory {
 public:
-	static CSysFactory *Instance()
-	{
-		if (!m_pInstance)
-			m_pInstance = new CSysFactory();
+    static CSysFactory *instance() {
+        if (!_instance) {
+            _instance = new CSysFactory();
+        }
 
-		return m_pInstance;
-	}
+        return _instance;
+    }
 
-	static void Destory()
-	{
-		_DEL(m_pInstance);
-	}
+    static void destroy() {
+        _DEL(_instance);
+    }
 
-	CFileImp *MakeFile()
-	{
-		return (CFileImp *)new CLinuxFileImp();
-	}
+    CFileImp *makeFile() {
+        return (CFileImp *) new CLinuxFileImp();
+    }
 
-	CSysInfoImp *MakeSysInfo()
-	{
-		return (CSysInfoImp *)new CLinuxSysInfoImp();
-	}
+    CSysInfoImp *makeSysInfo() {
+        return (CSysInfoImp *) new CLinuxSysInfoImp();
+    }
 
-	CSysCallImp *MakeSysCall()
-	{
-		return (CSysCallImp *)new CLinuxSysCallImp();
-	}
+    CSysCallImp *makeSysCall() {
+        return (CSysCallImp *) new CLinuxSysCallImp();
+    }
 
-	CModuleCallImp *MakeModuleCall()
-	{
-		return (CModuleCallImp *)new CLinuxModuleCallImp();
-	}
+    CModuleCallImp *makeModuleCall() {
+        return (CModuleCallImp *) new CLinuxModuleCallImp();
+    }
 
 private:
-	CSysFactory() {};
+    CSysFactory() {
+    };
 
-	CSysFactory(const CSysFactory &);
-	const CSysFactory &operator =(const CSysFactory &);
+    CSysFactory(const CSysFactory &);
 
-	~CSysFactory();
+    const CSysFactory &operator=(const CSysFactory &);
 
-	static CSysFactory *m_pInstance;
+    ~CSysFactory();
+
+    static CSysFactory *_instance;
 };
 
-#endif // CSYS_FACTORY_H
+#endif // _C_SYS_FACTORY_H_
