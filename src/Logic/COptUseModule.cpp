@@ -3,423 +3,377 @@
 #include "../System/CModuleCall.h"
 #include "../Modules/CModuleInfo.h"
 
-COptUseModule::COptUseModule(const CInterfaceInfo *pInterfaceInfo)
-	: COperator(OT_USE_MODULE)
-{
-	m_pInterfaceInfo = (CInterfaceInfo *)pInterfaceInfo;
+COptUseModule::COptUseModule(const CInterfaceInfo *interfaceInfo)
+        : COperator(OT_USE_MODULE) {
+    _interfaceInfo = (CInterfaceInfo *) interfaceInfo;
 
-	CField *pFieldInfo = null_v;
-	TEvaluate *pEvaluate = null_v;
+    CField    *fieldInfo = _interfaceInfo->getInStruct();
+    TEvaluate *evaluate  = null_v;
 
-	m_pInterfaceInfo->GetInStruct(pFieldInfo);
+    while (fieldInfo) {
+        if (null_v == fieldInfo->getGroupField()) {
+            evaluate = new TEvaluate;
 
-	while (pFieldInfo)
-	{
-        if (null_v == pFieldInfo->getGroupField())
-		{
-			pEvaluate = new TEvaluate;
+            evaluate->fieldInfo = fieldInfo;
+            evaluate->field     = null_v;
+            evaluate->value     = null_v;
 
-            pEvaluate->fieldInfo = pFieldInfo;
-            pEvaluate->field = null_v;
-            pEvaluate->value = null_v;
+            _inEvaluateVector.push_back(evaluate);
+        }
 
-			m_InEvaluateVector.push_back(pEvaluate);
-		}
+        fieldInfo = fieldInfo->getNextField();
+    }
 
-        pFieldInfo = (CField *) pFieldInfo->getNextField();
-	}
+    fieldInfo = _interfaceInfo->getOutStruct();
 
-	m_pInterfaceInfo->GetOutStruct(pFieldInfo);
+    while (fieldInfo) {
+        if (null_v == fieldInfo->getGroupField()) {
+            evaluate = new TEvaluate;
 
-	while (pFieldInfo)
-	{
-        if (null_v == pFieldInfo->getGroupField())
-		{
-			pEvaluate = new TEvaluate;
+            evaluate->fieldInfo = fieldInfo;
+            evaluate->field     = null_v;
+            evaluate->value     = null_v;
 
-            pEvaluate->fieldInfo = pFieldInfo;
-            pEvaluate->field = null_v;
-            pEvaluate->value = null_v;
-			
-			m_OutEvaluateVector.push_back(pEvaluate);
-		}
+            _outEvaluateVector.push_back(evaluate);
+        }
 
-        pFieldInfo = (CField *) pFieldInfo->getNextField();
-	}
+        fieldInfo = fieldInfo->getNextField();
+    }
 }
 
-COptUseModule::COptUseModule(const COptUseModule &opt): COperator(opt)
-{
-	m_pInterfaceInfo = opt.m_pInterfaceInfo;
+COptUseModule::COptUseModule(const COptUseModule &opt) : COperator(opt) {
+    _interfaceInfo = opt._interfaceInfo;
 
-    for (vectorEvaluate::const_iterator pos = opt.m_InEvaluateVector.begin();
-		pos != opt.m_InEvaluateVector.end(); pos++)
-	{
-		TEvaluate *pEvaluate = new TEvaluate;
+    for (vectorEvaluate::const_iterator pos = opt._inEvaluateVector.begin();
+         pos != opt._inEvaluateVector.end(); pos++) {
+        TEvaluate *evaluate = new TEvaluate;
 
-		memset(pEvaluate, 0, sizeof(TEvaluate));
-        pEvaluate->fieldInfo = (*pos)->fieldInfo;
+        memset(evaluate, 0, sizeof(TEvaluate));
+        evaluate->fieldInfo = (*pos)->fieldInfo;
 
-        if ((*pos)->field)
-            pEvaluate->field = (*pos)->field->Clone();
+        if ((*pos)->field) {
+            evaluate->field = (*pos)->field->clone();
+        }
 
-        if ((*pos)->value)
-            pEvaluate->value = (*pos)->value->Clone();
+        if ((*pos)->value) {
+            evaluate->value = (*pos)->value->clone();
+        }
 
-		m_InEvaluateVector.push_back(pEvaluate);
-	}
+        _inEvaluateVector.push_back(evaluate);
+    }
 
-    for (vectorEvaluate::const_iterator pos_ = opt.m_OutEvaluateVector.begin();
-		pos_ != opt.m_OutEvaluateVector.end(); pos_++)
-	{
-		TEvaluate *pEvaluate = new TEvaluate;
+    for (vectorEvaluate::const_iterator pos_ = opt._outEvaluateVector.begin();
+         pos_ != opt._outEvaluateVector.end(); pos_++) {
+        TEvaluate *evaluate = new TEvaluate;
 
-		memset(pEvaluate, 0, sizeof(TEvaluate));
-        pEvaluate->fieldInfo = (*pos_)->fieldInfo;
+        memset(evaluate, 0, sizeof(TEvaluate));
+        evaluate->fieldInfo = (*pos_)->fieldInfo;
 
-        if ((*pos_)->field)
-            pEvaluate->field = (*pos_)->field->Clone();
+        if ((*pos_)->field) {
+            evaluate->field = (*pos_)->field->clone();
+        }
 
-        if ((*pos_)->value)
-            pEvaluate->value = (*pos_)->value->Clone();
+        if ((*pos_)->value) {
+            evaluate->value = (*pos_)->value->clone();
+        }
 
-		m_OutEvaluateVector.push_back(pEvaluate);
-	}
+        _outEvaluateVector.push_back(evaluate);
+    }
 }
 
-const COptUseModule &COptUseModule::operator =(const COptUseModule &opt)
-{
-	if (this != &opt)
-	{
-		COperator::operator =(opt);
+const COptUseModule &COptUseModule::operator=(const COptUseModule &opt) {
+    if (this != &opt) {
+        COperator::operator=(opt);
 
-		Clear();
+        clear();
 
-		m_pInterfaceInfo = opt.m_pInterfaceInfo;
+        _interfaceInfo = opt._interfaceInfo;
 
         for (vectorEvaluate::const_iterator pos
-				 = opt.m_InEvaluateVector.begin();
-			 pos != opt.m_InEvaluateVector.end(); pos++)
-		{
-			TEvaluate *pEvaluate = new TEvaluate;
+                                                    = opt._inEvaluateVector.begin();
+             pos != opt._inEvaluateVector.end(); pos++) {
+            TEvaluate *evaluate = new TEvaluate;
 
-			memset(pEvaluate, 0, sizeof(TEvaluate));
-            pEvaluate->fieldInfo = (*pos)->fieldInfo;
+            memset(evaluate, 0, sizeof(TEvaluate));
+            evaluate->fieldInfo = (*pos)->fieldInfo;
 
-            if ((*pos)->field)
-                pEvaluate->field = (*pos)->field->Clone();
+            if ((*pos)->field) {
+                evaluate->field = (*pos)->field->clone();
+            }
 
-            if ((*pos)->value)
-                pEvaluate->value = (*pos)->value->Clone();
+            if ((*pos)->value) {
+                evaluate->value = (*pos)->value->clone();
+            }
 
-			m_InEvaluateVector.push_back(pEvaluate);
-		}
+            _inEvaluateVector.push_back(evaluate);
+        }
 
         for (vectorEvaluate::const_iterator pos_
-				 = opt.m_OutEvaluateVector.begin();
-			 pos_ != opt.m_OutEvaluateVector.end(); pos_++)
-		{
-			TEvaluate *pEvaluate = new TEvaluate;
+                                                    = opt._outEvaluateVector.begin();
+             pos_ != opt._outEvaluateVector.end(); pos_++) {
+            TEvaluate *evaluate = new TEvaluate;
 
-			memset(pEvaluate, 0, sizeof(TEvaluate));
-            pEvaluate->fieldInfo = (*pos_)->fieldInfo;
+            memset(evaluate, 0, sizeof(TEvaluate));
+            evaluate->fieldInfo = (*pos_)->fieldInfo;
 
-            if ((*pos_)->field)
-                pEvaluate->field = (*pos_)->field->Clone();
+            if ((*pos_)->field) {
+                evaluate->field = (*pos_)->field->clone();
+            }
 
-            if ((*pos_)->value)
-                pEvaluate->value = (*pos_)->value->Clone();
+            if ((*pos_)->value) {
+                evaluate->value = (*pos_)->value->clone();
+            }
 
-			m_OutEvaluateVector.push_back(pEvaluate);
-		}
-	}
+            _outEvaluateVector.push_back(evaluate);
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
-COptUseModule::~COptUseModule()
-{
-	Clear();
+COptUseModule::~COptUseModule() {
+    clear();
 }
 
-void COptUseModule::Clear()
-{
-	m_pInterfaceInfo = null_v;
+void COptUseModule::clear() {
+    _interfaceInfo = null_v;
 
-    for (vectorEvaluate::iterator pos = m_InEvaluateVector.begin();
-		 pos != m_InEvaluateVector.end(); pos++)
-	{
+    for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
+         pos != _inEvaluateVector.end(); pos++) {
         _DEL((*pos)->field);
         _DEL((*pos)->value);
-		_DEL(*pos);
-	}
+        _DEL(*pos);
+    }
 
-    for (vectorEvaluate::iterator pos = m_OutEvaluateVector.begin();
-		 pos != m_OutEvaluateVector.end(); pos++)
-	{
+    for (vectorEvaluate::iterator pos = _outEvaluateVector.begin();
+         pos != _outEvaluateVector.end(); pos++) {
         _DEL((*pos)->field);
         _DEL((*pos)->value);
-		_DEL(*pos);
-	}
+        _DEL(*pos);
+    }
 
-	m_InEvaluateVector.clear();
-	m_OutEvaluateVector.clear();
+    _inEvaluateVector.clear();
+    _outEvaluateVector.clear();
 }
 
-void COptUseModule::init(const optUnit *unit)
-{
+void COptUseModule::init(const optUnit *unit) {
     COperator::init(unit);
 
-    for (vectorEvaluate::iterator pos = m_InEvaluateVector.begin();
-        pos != m_InEvaluateVector.end(); pos++)
-    {
-        if ((*pos)->field)
-            (*pos)->field->Initialize(unit->data);
+    for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
+         pos != _inEvaluateVector.end(); pos++) {
+        if ((*pos)->field) {
+            (*pos)->field->init(unit->data);
+        }
 
-        if ((*pos)->value)
-            (*pos)->value->Initialize(unit->data);
+        if ((*pos)->value) {
+            (*pos)->value->init(unit->data);
+        }
     }
 
-    for (vectorEvaluate::iterator pos_ = m_OutEvaluateVector.begin();
-        pos_ != m_OutEvaluateVector.end(); pos_++)
-    {
-        if ((*pos_)->field)
-            (*pos_)->field->Initialize(unit->data);
+    for (vectorEvaluate::iterator pos_ = _outEvaluateVector.begin();
+         pos_ != _outEvaluateVector.end(); pos_++) {
+        if ((*pos_)->field) {
+            (*pos_)->field->init(unit->data);
+        }
 
-        if ((*pos_)->value)
-            (*pos_)->value->Initialize(unit->data);
+        if ((*pos_)->value) {
+            (*pos_)->value->init(unit->data);
+        }
     }
 }
 
-bool_ COptUseModule::AddInParameter(CAutoVar *pValue)
-{
-#ifdef _DEBUG_
-	if (!m_pInterfaceInfo)
-		return false_v;
-
-	if (!value)
-		return false_v;
-#endif
+bool_ COptUseModule::addInParameter(CVariable *value) {
+    if (!_interfaceInfo || !value) {
+        return false_v;
+    }
 
     vectorEvaluate::iterator pos;
 
-	for (pos = m_InEvaluateVector.begin();
-		 pos != m_InEvaluateVector.end(); pos++)
-	{
-        if (!(*pos)->field || !(*pos)->value)
-		{
-            (*pos)->field = (CAutoVar *) new CVarModule((*pos)->fieldInfo);
-            (*pos)->value = pValue->Clone();
+    for (pos = _inEvaluateVector.begin();
+         pos != _inEvaluateVector.end(); pos++) {
+        if (!(*pos)->field || !(*pos)->value) {
+            (*pos)->field = (CVariable *) new CVarModule((*pos)->fieldInfo);
+            (*pos)->value = value->clone();
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	if (m_InEvaluateVector.end() == pos)
-		return false_v;
+    if (_inEvaluateVector.end() == pos) {
+        return false_v;
+    }
 
-	return true_v;
+    return true_v;
 }
 
-bool_ COptUseModule::AddOutParameter(const ch_1 *pszFieldName, 
-									  CAutoVar *pValue)
-{
-#ifdef _DEBUG_
-	if (!m_pInterfaceInfo)
-		return false_v;
+bool_ COptUseModule::addOutParameter(const ch_1 *fieldName,
+        CVariable *value) {
+    if (!_interfaceInfo) {
+        return false_v;
+    }
 
-	if (!pszFieldName || 0 == pszFieldName[0])
-		return false_v;
+    if (!fieldName || 0 == fieldName[0]) {
+        return false_v;
+    }
 
-	if (!value)
-		return false_v;
-#endif
+    if (!value) {
+        return false_v;
+    }
 
-	CField *pFieldInfo = null_v;
+    CField *fieldInfo = _interfaceInfo->getOutField(fieldName);
 
-	if (SUCCESS != _ERR(m_pInterfaceInfo->GetOutField(pszFieldName, pFieldInfo)))
-		return false_v;
+    if (null_v == fieldInfo) {
+        return false_v;
+    }
 
     vectorEvaluate::iterator pos;
 
-	for (pos = m_OutEvaluateVector.begin();
-		 pos != m_OutEvaluateVector.end(); pos++)
-	{
-        if ((*pos)->fieldInfo == pFieldInfo)
-		{
-            if ((*pos)->field || (*pos)->value)
-				return false_v;
+    for (pos = _outEvaluateVector.begin();
+         pos != _outEvaluateVector.end(); pos++) {
+        if ((*pos)->fieldInfo == fieldInfo) {
+            if ((*pos)->field || (*pos)->value) {
+                return false_v;
+            }
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 
-	if (m_OutEvaluateVector.end() == pos)
-		return false_v;
+    if (_outEvaluateVector.end() == pos) {
+        return false_v;
+    }
 
-    (*pos)->field = (CAutoVar *) new CVarModule(pFieldInfo);
-    (*pos)->value = pValue->Clone();
+    (*pos)->field = (CVariable *) new CVarModule(fieldInfo);
+    (*pos)->value = value->clone();
 
-	return true_v;
+    return true_v;
 }
 
-void COptUseModule::work(const TMessageUnit *tmu)
-{
-	size_ nSize = 0;
+void COptUseModule::work(const TMessageUnit *tmu) {
+    size_ size = 0;
 
-    for (vectorEvaluate::const_iterator pos = m_InEvaluateVector.begin();
-		 pos != m_InEvaluateVector.end(); pos++)
-	{
-        if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type())
-		{
-			// If it's Group, check if it's available.
-            if ((*pos)->field && (*pos)->value)
-			{
-				obj_ Temp;
-				bool_ bIsCountSize = false_v;
+    for (vectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
+         pos != _inEvaluateVector.end(); pos++) {
+        if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) {
+            // If it's Group, check if it's available.
+            if ((*pos)->field && (*pos)->value) {
+                obj_  temp;
+                bool_ isCountSize = false_v;
 
-				 // If ture, Defined Group
-                if ((*pos)->value->Value(Temp))
-					bIsCountSize = true_v;
-				// If ture, Network Group
-                else if ((*pos)->fieldInfo->size(tmu->message, tmu->size))
-					bIsCountSize = true_v;
+                if ((*pos)->value->value(temp)) {
+                    // If ture, Defined Group
+                    isCountSize = true_v;
+                } else if ((*pos)->fieldInfo->size(tmu->message, tmu->size)) {
+                    // If ture, Network Group
+                    isCountSize = true_v;
+                }
 
-				if (bIsCountSize)
-				{
-					try
-					{
-                        nSize += (*pos)->value->Value(tmu)->size();
-					}
-					catch (...)
-					{
-						throw;
-					}
-				}
-			}
-		}
-        else // if (null_v == (*pos)->fieldInfo->getGroupField())
-		{
-            nSize += (*pos)->fieldInfo->getUnitSize();
-		}
-	}	
+                if (isCountSize) {
+                    size += (*pos)->value->value(tmu)->size();
+                }
+            }
+        } else {
+            size += (*pos)->fieldInfo->getUnitSize();
+        }
+    }
 
-	TMessageUnit InMU;
+    TMessageUnit inMU;
 
-	memset(&InMU, 0, sizeof(TMessageUnit));
-	InMU.size = nSize;
+    memset(&inMU, 0, sizeof(TMessageUnit));
+    inMU.size = size;
 
-	if (InMU.size)
-	{
-		InMU.message = new ub_1[InMU.size];
-		memset(InMU.message, 0, InMU.size);		
-	}
+    if (inMU.size) {
+        inMU.message = new ub_1[inMU.size];
+        memset(inMU.message, 0, inMU.size);
+    }
 
-	TMessageUnit OutMU;
+    TMessageUnit outMU;
 
-	memset(&OutMU, 0, sizeof(TMessageUnit));
+    memset(&outMU, 0, sizeof(TMessageUnit));
 
-	try
-	{
-        for (vectorEvaluate::const_iterator pos = m_InEvaluateVector.begin();
-			 pos != m_InEvaluateVector.end(); pos++)
-		{
-            v_ *pField = (*pos)->field->Value(&InMU);
-            v_ *pValue = (*pos)->value->Value(tmu);
+    for (vectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
+         pos != _inEvaluateVector.end(); pos++) {
+        v_ *field = (*pos)->field->value(&inMU);
+        v_ *value = (*pos)->value->value(tmu);
 
-			(*pField) = (*pValue);
-		}
+        (*field) = (*value);
+    }
 
-		CModuleCall mc;
+    CModuleCall mc;
 
-		if (!mc.Call(m_pInterfaceInfo->GetModuleInfo()->GetPath(),
-					 m_pInterfaceInfo->GetModuleInfo()->GetName(),
-					 m_pInterfaceInfo->GetModuleInfo()->GetExt(),
-					 m_pInterfaceInfo->Name(),
-					 InMU.message,
-					 InMU.size,
-					 OutMU.message,
-					 OutMU.size))
-		{
-			throw OPERATOR_OPERAITON_ERROR;
-		}
+    if (!mc.Call(_interfaceInfo->getModuleInfo()->getPath(),
+            _interfaceInfo->getModuleInfo()->getName(),
+            _interfaceInfo->getModuleInfo()->getExt(),
+            _interfaceInfo->name(),
+            inMU.message,
+            inMU.size,
+            outMU.message,
+            outMU.size)) {
+        _DEL_ARR(inMU.message);
+        _DEL_ARR(outMU.message);
+        // TODO tell outside
+        return;
+    }
 
-		// Get variable size first, so that can create enough memory to keep it.
-        for (vectorEvaluate::const_iterator pos = m_OutEvaluateVector.begin();
-			 pos != m_OutEvaluateVector.end(); pos++)
-		{
-            if ((*pos)->field && (*pos)->value)
-			{
-                if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type() &&
-					// It must be CFieldGroup(Module), check if it's available.
-                            (*pos)->fieldInfo->size(OutMU.message, OutMU.size))
-				{
-					try
-					{
-                        v_ *pField = (*pos)->field->Value(&OutMU);
-						CField *pValueField = null_v;
-						v_ *pValueData =
-                                (*pos)->value->Value((obj_ &) pValueField);
-						TFieldGroup *pValueGroup =
-							(TFieldGroup *)(obj_)*pValueData;
+    // Get variable size first, so that can create enough memory to keep it.
+    for (vectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
+         pos != _outEvaluateVector.end(); pos++) {
+        if ((*pos)->field && (*pos)->value) {
+            if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type() &&
+                    // It must be CFieldGroup(Module), check if it's available.
+                            (*pos)->fieldInfo->size(outMU.message, outMU.size)) {
+                v_          *field      = (*pos)->field->value(&outMU);
+                CField      *valueField = null_v;
+                v_          *valueData  =
+                                    (*pos)->value->value((obj_ &) valueField);
+                TFieldGroup *valueGroup =
+                                    (TFieldGroup *) (obj_) *valueData;
 
-                        if (pValueGroup->size && pValueGroup->data)
-						{
-                            _DEL_ARR(pValueGroup->data);
-                            pValueGroup->size = 0;
-						}
+                if (valueGroup->size && valueGroup->data) {
+                    _DEL_ARR(valueGroup->data);
+                    valueGroup->size = 0;
+                }
 
-                        pValueGroup->size = pField->size();
+                valueGroup->size = field->size();
 
-                        if (pValueGroup->size) // should be true
-						{
-                            pValueGroup->data = new ub_1[pValueGroup->size];
-                            memset(pValueGroup->data, 0, pValueGroup->size);
-						}
-						else
-						{
-							throw OPERATOR_OPERAITON_ERROR;
-						}
-					}
-					catch (...)
-					{
-						throw;
-					}
-				}
-			}
-			else
-			{
-				throw OPERATOR_OPERAITON_ERROR;
-			}
-		}
+                if (valueGroup->size) {
+                    // should be true
+                    valueGroup->data = new ub_1[valueGroup->size];
+                    memset(valueGroup->data, 0, valueGroup->size);
+                }
+                else {
+                    _DEL_ARR(inMU.message);
+                    _DEL_ARR(outMU.message);
+                    // TODO tell outside
+                    return;
+                }
+            }
+        } else {
+            _DEL_ARR(inMU.message);
+            _DEL_ARR(outMU.message);
+            // TODO tell outside
+            return;
+        }
+    }
 
-        for (vectorEvaluate::const_iterator pos = m_OutEvaluateVector.begin();
-			 pos != m_OutEvaluateVector.end(); pos++)
-		{
-            if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type())
-			{
-				CField *pValueField = null_v;
-                v_ *pValueData = (*pos)->value->Value((obj_ &) pValueField);
-				TFieldGroup *pValueGroup = (TFieldGroup *)(obj_)*pValueData;
+    for (vectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
+         pos != _outEvaluateVector.end(); pos++) {
+        if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) {
+            CField      *valueField = null_v;
+            v_          *valueData  = (*pos)->value->value((obj_ &) valueField);
+            TFieldGroup *valueGroup = (TFieldGroup *) (obj_) *valueData;
 
-                if (!pValueGroup->size)
-					continue;
-			}
+            if (!valueGroup->size) {
+                continue;
+            }
+        }
 
-            v_ *pField = (*pos)->field->Value(&OutMU);
-            v_ *pValue = (*pos)->value->Value(tmu);
+        v_ *field = (*pos)->field->value(&outMU);
+        v_ *value = (*pos)->value->value(tmu);
 
-			(*pValue) = (*pField);
-		}
-	}
-	catch (...)
-	{
-		_DEL_ARR(InMU.message);
-		_DEL_ARR(OutMU.message);
-		
-		throw;
-	}
+        (*value) = (*field);
+    }
 
-	_DEL_ARR(InMU.message);
-	_DEL_ARR(OutMU.message);
+    _DEL_ARR(inMU.message);
+    _DEL_ARR(outMU.message);
 }

@@ -1,33 +1,25 @@
 #include "COptUnitaryCalculate.h"
 
-void COptUnitaryCalculate::work(const TMessageUnit *tmu)
-{
-	try
-	{
-		switch (m_Opt)
-		{
-		case UC_EQL:
-            (*m_pResultVariable->Value(tmu)) =
-                    (*m_pRightVariable->Value(tmu));
-			return;
-		case UC_NEG:
-            (*m_pResultVariable->Value(tmu)) =
-                    -(*m_pRightVariable->Value(tmu));
-			return;
-		case UC_OBV:
-            (*m_pResultVariable->Value(tmu)) =
-                    ~(*m_pRightVariable->Value(tmu));
-			return;
-		case UC_NOT:
-            (*m_pResultVariable->Value(tmu)) =
-                    v_(!(*m_pRightVariable->Value(tmu)));
-			return;
-		default:
-			throw OPERATOR_OPERAITON_ERROR;
-		}
-	}
-	catch (...)
-	{
-		throw;
-	}
+void COptUnitaryCalculate::work(const TMessageUnit *tmu) {
+    switch (_opt) {
+        case UC_EQL:
+            (*_resultVariable->value(tmu)) =
+                    (*_rightVariable->value(tmu));
+            return;
+        case UC_NEG:
+            (*_resultVariable->value(tmu)) =
+                    -(*_rightVariable->value(tmu));
+            return;
+        case UC_OBV:
+            (*_resultVariable->value(tmu)) =
+                    ~(*_rightVariable->value(tmu));
+            return;
+        case UC_NOT:
+            (*_resultVariable->value(tmu)) =
+                    v_(!(*_rightVariable->value(tmu)));
+            return;
+        default:
+            assert(0);
+            // TODO do something to tell outside
+    }
 }

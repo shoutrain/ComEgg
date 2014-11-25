@@ -81,7 +81,7 @@ typedef enum {
     P_OBJ = REFERENCE_VARIABLE | OBJ,
 } p_evt_;
 
-// Data type info mask
+// data type info mask
 #define LEGNTH_SIGN        0x0000000F
 #define STYLE_SIGN        0x000000F0
 #define EVT_SIGN        0x0000FFFF

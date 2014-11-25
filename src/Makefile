@@ -5,7 +5,7 @@ LDFLAGS = -L$(XERCESC_PATH).libs -lxerces-c
 MAKE = make
 
 COMMON_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Common/*.cpp))
-DATA_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Data/*.cpp))
+DATA_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./data/*.cpp))
 NETWORK_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Network/*.cpp))
 MODULES_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Modules/*.cpp))
 LOGIC_OBJS := $(patsubst %.cpp, %.o, $(wildcard ./Logic/*.cpp))

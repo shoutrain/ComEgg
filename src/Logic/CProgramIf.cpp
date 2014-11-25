@@ -1,111 +1,96 @@
 #include "CProgramIf.h"
 
-CProgramIf::CProgramIf(const CProgramIf &opt): CProgram(opt)
-{
-	size_ nNum = (size_)opt.m_ExpVector.size();
+CProgramIf::CProgramIf(const CProgramIf &opt) : CProgram(opt) {
+    size_ num = (size_) opt._expVector.size();
 
-	for (size_ n = 0; n < nNum; n++)
-        m_ExpVector.push_back(opt.m_ExpVector[n]->clone());
+    for (size_ n = 0; n < num; n++) {
+        _expVector.push_back(opt._expVector[n]->clone());
+    }
 }
 
-const CProgramIf &CProgramIf::operator =(const CProgramIf &opt)
-{
-	if (this != &opt)
-	{
-		Clear();
+const CProgramIf &CProgramIf::operator=(const CProgramIf &opt) {
+    if (this != &opt) {
+        clear();
 
-		CProgram::operator =(opt);
+        CProgram::operator=(opt);
 
-		size_ nNum = (size_)opt.m_ExpVector.size();
+        size_ num = (size_) opt._expVector.size();
 
-		for (size_ n = 0; n < nNum; n++)
-            m_ExpVector.push_back(opt.m_ExpVector[n]->clone());
-	}
+        for (size_ n = 0; n < num; n++) {
+            _expVector.push_back(opt._expVector[n]->clone());
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
-bool_ CProgramIf::AddOperator(const COperator *pOperator)
-{
-#ifdef _DEBUG_
-	if (!pOperator)
-		return false_v;
-#endif
+bool_ CProgramIf::addOperator(const COperator *opt) {
+    assert(opt);
 
-    if (OT_PROGRAM != pOperator->getType())
-		return false_v;
+    if (OT_PROGRAM != opt->getType()) {
+        return false_v;
+    }
 
-	m_OptVector.push_back(pOperator);
+    _optVector.push_back(opt);
 
-	return true_v;
+    return true_v;
 }
 
-bool_ CProgramIf::AddExpression(const CExpression *pExpression)
-{
-#ifdef _DEBUG_
-	if (!pExpression)
-		return false_v;
-#endif
+bool_ CProgramIf::addExpression(const CExpression *expression) {
+    assert(expression);
+    _expVector.push_back(expression);
 
-	m_ExpVector.push_back(pExpression);
-
-	return true_v;
+    return true_v;
 }
 
-void CProgramIf::init(const optUnit *unit)
-{
+void CProgramIf::init(const optUnit *unit) {
     CProgram::init(unit);
 
-    optUnit Unit;
+    optUnit ou;
 
-    memcpy(&Unit, unit, sizeof(optUnit));
-    Unit.data = &m_Data;
-    Unit.parent = this;
+    memcpy(&ou, unit, sizeof(optUnit));
+    ou.data   = &_data;
+    ou.parent = this;
 
-	size_ nNum = (size_)m_ExpVector.size();
+    size_ num = (size_) _expVector.size();
 
-	for (size_ n = 0; n < nNum; n++)
-        ((CExpression *) m_ExpVector[n])->init(&Unit);
+    for (size_ n = 0; n < num; n++) {
+        ((CExpression *) _expVector[n])->init(&ou);
+    }
 }
 
-void CProgramIf::work(const TMessageUnit *tmu)
-{
-	size_ nNum = (size_)m_ExpVector.size();
+void CProgramIf::work(const TMessageUnit *tmu) {
+    size_ num = (size_) _expVector.size();
 
-	try
-	{
-		for (size_ n = 0; n < nNum; n++)
-            if (m_ExpVector[n]->evaluate(tmu))
-			{
-                ((COperator *) m_OptVector[n])->work(tmu);
+    try {
+        for (size_ n = 0; n < num; n++)
+            if (_expVector[n]->evaluate(tmu)) {
+                ((COperator *) _optVector[n])->work(tmu);
                 reset();
 
-				return;
-			}
+                return;
+            }
 
-		if (nNum < (size_)m_OptVector.size())
-            ((COperator *) m_OptVector[nNum])->work(tmu);
-	}
-	catch (...)
-	{
+        if (num < (size_) _optVector.size()) {
+            ((COperator *) _optVector[num])->work(tmu);
+        }
+    } catch (...) {
         reset();
 
-		throw;
-	}
+        throw;
+    }
 
     reset();
 }
 
-void CProgramIf::Clear()
-{
-	CProgram::Clear();
+void CProgramIf::clear() {
+    CProgram::clear();
 
-    for (vectorExp::iterator pos = m_ExpVector.begin();
-		pos != m_ExpVector.end(); pos++)
-	{
-		_DEL(*pos);
-	}
+    for (vectorExp::iterator pos = _expVector.begin();
+         pos != _expVector.end(); pos++) {
+        _DEL(*pos);
+    }
 
-	m_ExpVector.clear();
+    _expVector.clear();
 }
 

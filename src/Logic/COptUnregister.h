@@ -1,67 +1,59 @@
-#ifndef COPT_UNREGISTER_H
-#define COPT_UNREGISTER_H
+#ifndef _C_OPT_UNREGISTER_H_
+#define _C_OPT_UNREGISTER_H_
 
 #include "COperator.h"
 
-#include "../Tools/CRegister.h"
+#include "../Common/CRegister.h"
 #include "../Transactions/CTransactionManager.h"
 
-class COptUnregister: public COperator
-{
+class COptUnregister : public COperator {
 public:
-	COptUnregister(const CAutoVar *pCategory,
-				   const CAutoVar *pKey)
-		: COperator(OT_UNREGISTER)
-	{
-		m_pCategory	= pCategory->Clone();
-		m_pKey		= pKey->Clone();
-	}
+    COptUnregister(const CVariable *category,
+            const CVariable *key)
+            : COperator(OT_UNREGISTER) {
+        _category = category->clone();
+        _key      = key->clone();
+    }
 
-	virtual ~COptUnregister()
-	{
-		_DEL(m_pCategory);
-		_DEL(m_pKey);
-	}
+    virtual ~COptUnregister() {
+        _DEL(_category);
+        _DEL(_key);
+    }
 
-	COptUnregister(const COptUnregister &opt): COperator(opt)
-	{
-		m_pCategory	= opt.m_pCategory->Clone();
-		m_pKey		= opt.m_pKey->Clone();
-	}
+    COptUnregister(const COptUnregister &opt) : COperator(opt) {
+        _category = opt._category->clone();
+        _key      = opt._key->clone();
+    }
 
-	const COptUnregister &operator =(const COptUnregister &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptUnregister &operator=(const COptUnregister &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pCategory);
-			_DEL(m_pKey);
-			m_pCategory	= opt.m_pCategory->Clone();
-			m_pKey		= opt.m_pKey->Clone();
-		}
+            _DEL(_category);
+            _DEL(_key);
+            _category = opt._category->clone();
+            _key      = opt._key->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-    virtual COperator *clone() const
-	{
-		return (COperator *)new COptUnregister(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptUnregister(*this);
+    }
 
-    virtual void init(const optUnit *unit)
-	{
+    virtual void init(const optUnit *unit) {
         COperator::init(unit);
 
-        m_pCategory->Initialize(unit->data);
-        m_pKey->Initialize(unit->data);
-	}
+        _category->init(unit->data);
+        _key->init(unit->data);
+    }
 
     virtual void work(const TMessageUnit *tmu);
 
 private:
-	CAutoVar	*m_pCategory;
-	CAutoVar	*m_pKey;
+    CVariable *_category;
+    CVariable *_key;
 };
 
-#endif // COPT_UNREGISTER_H
+#endif // _C_OPT_UNREGISTER_H_

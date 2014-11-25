@@ -1,114 +1,98 @@
 #include "CProgram.h"
 
-CProgram::CProgram(const CProgram &opt): COperator(opt)
-{
-	m_OrnData	= opt.m_OrnData;
-	m_Data		= opt.m_Data;
+CProgram::CProgram(const CProgram &opt) : COperator(opt) {
+    _ornData = opt._ornData;
+    _data    = opt._data;
 
-	size_ n = (size_)opt.m_OptVector.size();
+    size_ n = (size_) opt._optVector.size();
 
-	for (size_ i = 0; i < n; i++)
-        m_OptVector.push_back(opt.m_OptVector[i]->clone());
+    for (size_ i = 0; i < n; i++) {
+        _optVector.push_back(opt._optVector[i]->clone());
+    }
 }
 
-const CProgram &CProgram::operator =(const CProgram &opt)
-{
-	if (this != &opt)
-	{
-		COperator::operator =(opt);
+const CProgram &CProgram::operator=(const CProgram &opt) {
+    if (this != &opt) {
+        COperator::operator=(opt);
 
-		Clear();
+        clear();
 
-		m_OrnData	= opt.m_OrnData;
-		m_Data		= opt.m_Data;
+        _ornData = opt._ornData;
+        _data    = opt._data;
 
-		size_ n = (size_)opt.m_OptVector.size();
+        size_ n = (size_) opt._optVector.size();
 
-		for (size_ i = 0; i < n; i++)
-            m_OptVector.push_back(opt.m_OptVector[i]->clone());
-	}
+        for (size_ i = 0; i < n; i++) {
+            _optVector.push_back(opt._optVector[i]->clone());
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
-bool_ CProgram::AddOperator(const COperator *pOperator)
-{
-#ifdef _DEBUG_
-	if (!pOperator)
-		return false_v;
-#endif
+bool_ CProgram::addOperator(const COperator *opt) {
+    assert(opt);
+    _optVector.push_back(opt);
 
-	m_OptVector.push_back(pOperator);
-
-	return true_v;
+    return true_v;
 }
 
-void CProgram::reset()
-{
-	m_Data = m_OrnData;
+void CProgram::reset() {
+    _data = _ornData;
 
-	size_ n = (size_)m_OptVector.size();
+    size_ n = (size_) _optVector.size();
 
-	for (size_ i = 0; i < n; i++)
-        ((COperator *) m_OptVector[i])->reset();
+    for (size_ i = 0; i < n; i++) {
+        ((COperator *) _optVector[i])->reset();
+    }
 }
 
-void CProgram::init(const optUnit *unit)
-{
+void CProgram::init(const optUnit *unit) {
     COperator::init(unit);
-    m_Data.SetParent(unit->data);
+    _data.SetParent(unit->data);
 
-    optUnit Unit;
+    optUnit ou;
 
-    memcpy(&Unit, unit, sizeof(optUnit));
-    Unit.data = &m_Data;
-    Unit.parent = this;
+    memcpy(&ou, unit, sizeof(optUnit));
+    ou.data   = &_data;
+    ou.parent = this;
 
-	size_ n = (size_)m_OptVector.size();
+    size_ n = (size_) _optVector.size();
 
-	for (size_ i = 0; i < n; i++)
-        ((COperator *) m_OptVector[i])->init(&Unit);
+    for (size_ i = 0; i < n; i++) {
+        ((COperator *) _optVector[i])->init(&ou);
+    }
 }
 
-void CProgram::work(const TMessageUnit *tmu)
-{
-	size_ n = (size_)m_OptVector.size();
+void CProgram::work(const TMessageUnit *tmu) {
+    size_ n = (size_) _optVector.size();
 
-	for (size_ i = 0; i < n; i++)
-	{
-		try
-		{
-            ((COperator *) m_OptVector[i])->work(tmu);
-		}
-        catch (callBlock)
-		{
+    for (size_ i = 0; i < n; i++) {
+        try {
+            ((COperator *) _optVector[i])->work(tmu);
+        } catch (callBlock) {
             reset();
 
-            if (getParent())
-				throw;
-			else
-				return;
-		}
-		catch (...)
-		{
-            reset();
-			
-			throw;
-		}
-	}
+            if (getParent()) {
+                throw;
+            } else {
+                return;
+            }
+        }
+    }
 
     reset();
 }
 
-void CProgram::Clear()
-{
-    m_Data.clear();
-    m_OrnData.clear();
+void CProgram::clear() {
+    _data.clear();
+    _ornData.clear();
 
-	size_ n = (size_)m_OptVector.size();
+    size_ n = (size_) _optVector.size();
 
-	for (size_ i = 0; i < n; i++)
-		_DEL(m_OptVector[i]);
+    for (size_ i = 0; i < n; i++) {
+        _DEL(_optVector[i])
+    };
 
-	m_OptVector.clear();
+    _optVector.clear();
 }

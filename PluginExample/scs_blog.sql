@@ -1,5 +1,5 @@
 /*
-MySQL Data Transfer
+MySQL data Transfer
 Source Host: localhost
 Source Database: scs_blog
 Target Host: localhost

@@ -669,7 +669,7 @@ ret_ CXMLLoaderTransaction::LoadProgram(const CData *pParentData,
 	if (!pChild)
 		_RET(XML_LOADER_ERROR);
 
-	Program.Data().SetParent(pParentData);
+    Program.data().SetParent(pParentData);
 	
 	while (pChild)
 	{
@@ -975,7 +975,7 @@ ret_ CXMLLoaderTransaction::LoadProcessBlock(CProgram &Program,
 		{
 			CProgram *pSubProgram = new CProgram();
 
-			if (SUCCESS != _ERR(LoadProgram(&Program.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Program.data(),
 											*pSubProgram,
 											pChild,
 											pPDU)))
@@ -1017,7 +1017,7 @@ ret_ CXMLLoaderTransaction::LoadEmpty(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV.Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV.Ptr());
 		
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1069,7 +1069,7 @@ ret_ CXMLLoaderTransaction::LoadUnitaryCalculate(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 		
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1125,7 +1125,7 @@ ret_ CXMLLoaderTransaction::LoadDualityCalculate(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1169,7 +1169,7 @@ ret_ CXMLLoaderTransaction::LoadConfigGroup(CProgram &Program,
 		if (0 == XMLString::compareString(pSub->getNodeName(),
 										  m_wsGroupVariable))
 		{
-			if (SUCCESS != _ERR(LoadGroupVariable(Program.Data(), 
+            if (SUCCESS != _ERR(LoadGroupVariable(Program.data(),
 												  pElement, 
 												  OV[0].Ptr())))
 			{
@@ -1190,7 +1190,7 @@ ret_ CXMLLoaderTransaction::LoadConfigGroup(CProgram &Program,
 		if (0 == XMLString::compareString(pSub->getNodeName(),
 										  m_wsSolidVariable))
 		{
-			if (SUCCESS != _ERR(LoadSolidVariable(Program.Data(), 
+            if (SUCCESS != _ERR(LoadSolidVariable(Program.data(),
 												  pElement, 
 												  OV[1].Ptr())))
 			{
@@ -1243,7 +1243,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 
 	CProgramIf *pPI = new CProgramIf();
 
-	pPI->Data().SetParent(&Program.Data());
+    pPI->data().SetParent(&Program.data());
 	
 	while (pSub)
 	{
@@ -1268,7 +1268,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 		{
 			CExpression *pExpression = null_v;
 
-			if (SUCCESS != _ERR(LoadExpression(pPI->Data(),
+            if (SUCCESS != _ERR(LoadExpression(pPI->data(),
 											   pSub,
 											   pPDU,
 											   pExpression)))
@@ -1276,7 +1276,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 				_RET(XML_LOADER_ERROR);
 			}
 
-			if (false_v == pPI->AddExpression(pExpression))
+            if (false_v == pPI->addExpression(pExpression))
 				_RET(XML_LOADER_ERROR);
 		}
 		else if (0 == XMLString::compareString(pSub->getNodeName(),
@@ -1284,7 +1284,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 		{
 			CProgram *pProgram = new CProgram();
 
-			if (SUCCESS != _ERR(LoadProgram(&pPI->Data(),
+            if (SUCCESS != _ERR(LoadProgram(&pPI->data(),
 											*pProgram,
 											pSub,
 											pPDU)))
@@ -1292,7 +1292,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 				_RET(XML_LOADER_ERROR);
 			}
 
-			if (false_v == pPI->AddOperator(pProgram))
+            if (false_v == pPI->addOperator(pProgram))
 				_RET(XML_LOADER_ERROR);
 		}
 
@@ -1345,7 +1345,7 @@ ret_ CXMLLoaderTransaction::LoadWhile(CProgram &Program,
 	CExpression *pExpression = null_v;
 	CProgramWhile *pPW = null_v;
 
-	Data.SetParent(&Program.Data());
+    Data.SetParent(&Program.data());
 
 	while (pSub)
 	{
@@ -1368,7 +1368,7 @@ ret_ CXMLLoaderTransaction::LoadWhile(CProgram &Program,
 				_RET(XML_LOADER_ERROR);
 
 			pPW = new CProgramWhile(b, pExpression, &Data);
-			pPW->Data().SetParent(&Program.Data());
+            pPW->data().SetParent(&Program.data());
 		}
 		else if (0 == XMLString::compareString(pSub->getNodeName(),
 											   wsProcessBlock))
@@ -1469,7 +1469,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1542,8 +1542,8 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 
 				while (pVariable)
 				{
-					ret_ Ret = LoadVariable(pPDU, 
-											Program.Data(), 
+                    ret_ Ret = LoadVariable(pPDU,
+                            Program.data(),
 											pVariable, 
 											OV_.Ptr());
 
@@ -1601,7 +1601,7 @@ ret_ CXMLLoaderTransaction::LoadForward(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1686,7 +1686,7 @@ ret_ CXMLLoaderTransaction::LoadGetAddress(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1742,7 +1742,7 @@ ret_ CXMLLoaderTransaction::LoadRegister(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1798,7 +1798,7 @@ ret_ CXMLLoaderTransaction::LoadUnregister(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1843,7 +1843,7 @@ ret_ CXMLLoaderTransaction::LoadSearch(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1887,7 +1887,7 @@ ret_ CXMLLoaderTransaction::LoadGetUsage(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV.Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV.Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1930,7 +1930,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkWakeUp(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -1975,7 +1975,7 @@ ret_ CXMLLoaderTransaction::LoadNetworkSleep(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -2023,7 +2023,7 @@ ret_ CXMLLoaderTransaction::LoadReadFile(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -2072,7 +2072,7 @@ ret_ CXMLLoaderTransaction::LoadSaveFile(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -2119,7 +2119,7 @@ ret_ CXMLLoaderTransaction::LoadDeleteFile(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);
@@ -2160,8 +2160,8 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 	CModuleInfo *pModule = null_v;
 
-	if (SUCCESS != _ERR(CModuleManager::Instance()->GetModule(sModuleName, 
-															  pModule)))
+    if (SUCCESS != _ERR(CModuleManager::instance()->getModule(sModuleName,
+            pModule)))
 	{
 		_RET(XML_LOADER_ERROR);
 	}
@@ -2172,7 +2172,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 	CInterfaceInfo *pInterface = null_v;
 
-	if (SUCCESS != _ERR(pModule->GetInterface(sInterface, pInterface)))
+    if (SUCCESS != _ERR(pModule->getInterface(sInterface, pInterface)))
 		_RET(XML_LOADER_ERROR);
 
 	COptUseModule *pOperator = new COptUseModule(pInterface);
@@ -2199,16 +2199,15 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 			{
 				CAutoPtr<CAutoVar> OV;
 
-				ret_ Ret = LoadVariable(pPDU, 
-										Program.Data(), 
+                ret_ Ret = LoadVariable(pPDU,
+                        Program.data(),
 										pSub, 
 										OV.Ptr());
 
 				if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 					_RET_BY(Ret);
 
-				if (SUCCESS == _ERR(Ret))
-					if (!pOperator->AddInParameter(OV.Ptr()))
+				if (SUCCESS == _ERR(Ret)) if (!pOperator->addInParameter(OV.Ptr()))
 						_RET(XML_LOADER_ERROR);
 
 				pSub = (DOMElement *)pSub->getNextSibling();
@@ -2223,7 +2222,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 			CField *pField = null_v;
 
-			if (SUCCESS != _ERR(pInterface->GetOutField(sFieldName, pField)))
+            if (SUCCESS != _ERR(pInterface->getOutField(sFieldName, pField)))
 				_RET(XML_LOADER_ERROR);
 
 			//
@@ -2236,8 +2235,8 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 
 			while (pSub)
 			{
-				ret_ Ret = LoadVariable(pPDU, 
-										Program.Data(), 
+                ret_ Ret = LoadVariable(pPDU,
+                        Program.data(),
 										pSub, 
 										OV.Ptr());
 
@@ -2250,7 +2249,7 @@ ret_ CXMLLoaderTransaction::LoadUseModule(CProgram &Program,
 				pSub = (DOMElement *)pSub->getNextSibling();
 			}
 
-			if (!pOperator->AddOutParameter(sFieldName, OV.Ptr()))
+            if (!pOperator->addOutParameter(sFieldName, OV.Ptr()))
 				_RET(XML_LOADER_ERROR);
 		}
 
@@ -2287,7 +2286,7 @@ ret_ CXMLLoaderTransaction::LoadSplit(CProgram &Program,
 
 	while (pSub)
 	{
-		ret_ Ret = LoadVariable(pPDU, Program.Data(), pSub, OV[n].Ptr());
+        ret_ Ret = LoadVariable(pPDU, Program.data(), pSub, OV[n].Ptr());
 
 		if (SUCCESS != _ERR(Ret) && XML_INVALID_ELEMENT != _ERR(Ret))
 			_RET_BY(Ret);

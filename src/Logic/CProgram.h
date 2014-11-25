@@ -1,40 +1,35 @@
-#ifndef CPROGRAM_H
-#define CPROGRAM_H
+#ifndef _C_PROGRAM_H_
+#define _C_PROGRAM_H_
 
 #include "COperator.h"
 
-class CProgram: public COperator
-{
+class CProgram : public COperator {
 public:
-	CProgram(const CData *pData = null_v): COperator(OT_PROGRAM)
-	{
-		if (pData)
-		{
-			m_OrnData	= *pData;
-			m_Data		= *pData;
-		}
-	}
+    CProgram(const CData *data = null_v) : COperator(OT_PROGRAM) {
+        if (data) {
+            _ornData = *data;
+            _data    = *data;
+        }
+    }
 
-	CProgram(const CProgram &opt);
-	const CProgram &operator =(const CProgram &opt);
+    CProgram(const CProgram &opt);
 
-    virtual COperator *clone() const
-	{
-		return (COperator *)new CProgram(*this);
-	}
-	
-	virtual bool_ AddOperator(const COperator *pOperator);
+    const CProgram &operator=(const CProgram &opt);
 
-	virtual void SetData(const CData &Data)
-	{
-		m_OrnData	= Data;
-		m_Data		= Data;
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new CProgram(*this);
+    }
 
-	virtual CData &Data()
-	{
-		return m_Data;
-	}
+    virtual bool_ addOperator(const COperator *opt);
+
+    virtual void setData(const CData &data) {
+        _ornData = data;
+        _data    = data;
+    }
+
+    virtual CData &data() {
+        return _data;
+    }
 
     virtual void reset();
 
@@ -43,25 +38,21 @@ public:
     virtual void work(const TMessageUnit *tmu);
 
 protected:
-	CProgram(const EOperatorType Type, const CData *pData = null_v)
-		: COperator(Type)
-	{
-		if (pData)
-		{
-			m_OrnData	= *pData;
-			m_Data		= *pData;
-		}
-	}
-	
-	virtual 
+    CProgram(const EOperatorType type, const CData *data = null_v)
+            : COperator(type) {
+        if (data) {
+            _ornData = *data;
+            _data    = *data;
+        }
+    }
 
-	void Clear();
+    virtual void clear();
 
-    vectorOpt m_OptVector;
+    vectorOpt _optVector;
 
-	CData m_OrnData;
-	CData m_Data;
+    CData _ornData;
+    CData _data;
 };
 
-#endif // CPROGRAM_H
+#endif // _C_PROGRAM_H_
 

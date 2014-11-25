@@ -1,69 +1,61 @@
-#ifndef COPT_UNITARY_CALCULATE_H
-#define COPT_UNITARY_CALCULATE_H
+#ifndef _C_OPT_UNITARY_CALCULATE_H_
+#define _C_OPT_UNITARY_CALCULATE_H_
 
 #include "COperator.h"
 
-class COptUnitaryCalculate: public COperator
-{
+class COptUnitaryCalculate : public COperator {
 public:
-	COptUnitaryCalculate(const EUnitaryCalculate Opt,
-						 const CAutoVar *pResultVariable,
-						 const CAutoVar *pRightVariable)
-		: COperator(OT_UNITARY_CALCULATE)
-	{
-		m_Opt				= Opt;
-		m_pResultVariable	= pResultVariable->Clone();
-		m_pRightVariable	= pRightVariable->Clone();
-	}
+    COptUnitaryCalculate(const EUnitaryCalculate opt,
+            const CVariable *resultVariable,
+            const CVariable *rightVariable)
+            : COperator(OT_UNITARY_CALCULATE) {
+        _opt            = opt;
+        _resultVariable = resultVariable->clone();
+        _rightVariable  = rightVariable->clone();
+    }
 
-	virtual ~COptUnitaryCalculate()
-	{
-		_DEL(m_pResultVariable);
-		_DEL(m_pRightVariable);
-	}
+    virtual ~COptUnitaryCalculate() {
+        _DEL(_resultVariable);
+        _DEL(_rightVariable);
+    }
 
-	COptUnitaryCalculate(const COptUnitaryCalculate &opt): COperator(opt)
-	{
-		m_Opt				= opt.m_Opt;
-		m_pResultVariable	= opt.m_pResultVariable->Clone();
-		m_pRightVariable	= opt.m_pRightVariable->Clone();
-	}
+    COptUnitaryCalculate(const COptUnitaryCalculate &opt) : COperator(opt) {
+        _opt            = opt._opt;
+        _resultVariable = opt._resultVariable->clone();
+        _rightVariable  = opt._rightVariable->clone();
+    }
 
-	const COptUnitaryCalculate &operator =(const COptUnitaryCalculate &opt)
-	{
-		if (this != &opt)
-		{
-			COperator::operator =(opt);
+    const COptUnitaryCalculate &operator=(const COptUnitaryCalculate &opt) {
+        if (this != &opt) {
+            COperator::operator=(opt);
 
-			_DEL(m_pRightVariable);
-			_DEL(m_pResultVariable);
-			m_Opt				= opt.m_Opt;
-			m_pResultVariable	= opt.m_pResultVariable->Clone();
-			m_pRightVariable	= opt.m_pRightVariable->Clone();
-		}
+            _DEL(_rightVariable);
+            _DEL(_resultVariable);
+            _opt            = opt._opt;
+            _resultVariable = opt._resultVariable->clone();
+            _rightVariable  = opt._rightVariable->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-    virtual COperator *clone() const
-	{
-		return (COperator *)new COptUnitaryCalculate(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new COptUnitaryCalculate(*this);
+    }
 
-    virtual void init(const optUnit *unit)
-	{
+    virtual void init(const optUnit *unit) {
         COperator::init(unit);
 
-        m_pResultVariable->Initialize(unit->data);
-        m_pRightVariable->Initialize(unit->data);
-	}
+        _resultVariable->init(unit->data);
+        _rightVariable->init(unit->data);
+    }
 
     virtual void work(const TMessageUnit *tmu);
 
 private:
-	EUnitaryCalculate	m_Opt;
-	CAutoVar			*m_pResultVariable;
-	CAutoVar			*m_pRightVariable;
+    EUnitaryCalculate _opt;
+    CVariable         *_resultVariable;
+    CVariable         *_rightVariable;
 };
 
-#endif // COPT_UNITARY_CALCULATE_H
+#endif // _C_OPT_UNITARY_CALCULATE_H_

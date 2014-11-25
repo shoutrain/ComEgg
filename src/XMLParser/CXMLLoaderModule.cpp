@@ -91,10 +91,10 @@ ret_ CXMLLoaderModule::Load(XercesDOMParser *pParser,
 
 			m_pModule = null_v;
 
-			ret_ Ret = CModuleManager::Instance()->AddModule(sPath, 
-															 sName, 
-															 sExt, 
-															 m_pModule);
+            ret_ Ret = CModuleManager::instance()->addModule(sPath,
+                    sName,
+                    sExt,
+                    m_pModule);
 
 #ifdef _DEBUG_
 			if (SUCCESS != _ERR(Ret))
@@ -136,7 +136,7 @@ ret_ CXMLLoaderModule::LoadModule(const DOMElement *pElement)
 			
 			m_pInterface = null_v;
 
-			ret_ Ret = m_pModule->AddInterface(sName, m_pInterface);
+            ret_ Ret = m_pModule->addInterface(sName, m_pInterface);
 
 #ifdef _DEBUG_
 			if (SUCCESS != _ERR(Ret))
@@ -394,12 +394,13 @@ ret_ CXMLLoaderModule::LoadInterfaceField(const DOMElement *pElement,
 		pszGN = pszGroupName;
 	}
 
-	if (bIsInField)
-		Ret = m_pInterface->AddInField(Field, pszGN);
-	else
-		Ret = m_pInterface->AddOutField(Field, pszGN);
-	
-	if (SUCCESS != _ERR(Ret))
+	if (bIsInField) {
+        Ret = m_pInterface->addInField(Field, pszGN);
+    } else {
+Ret = m_pInterface->addOutField(Field, pszGN);
+    }
+
+    if (SUCCESS != _ERR(Ret))
 		_RET(XML_LOADER_ERROR);
 
 	_RET(SUCCESS);

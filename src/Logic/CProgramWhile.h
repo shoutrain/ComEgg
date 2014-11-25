@@ -1,79 +1,70 @@
-#ifndef COPT_WHILE_H
-#define COPT_WHILE_H
+#ifndef _C_OPT_WHILE_H_
+#define _C_OPT_WHILE_H_
 
 #include "CProgram.h"
 #include "CExpression.h"
 
-class CProgramWhile: public CProgram
-{
+class CProgramWhile : public CProgram {
 public:
-	CProgramWhile(bool_ bJudgeHead,
-				  const CExpression *pExpression,
-				  const CData *pData = null_v)
-		: CProgram(OT_WHILE, pData)
-	{
-		m_bJudgeHead	= bJudgeHead;
-        m_pExpression = pExpression->clone();
-	}
+    CProgramWhile(bool_ judgeHead,
+            const CExpression *expression,
+            const CData *data = null_v)
+            : CProgram(OT_WHILE, data) {
+        _judgeHead  = judgeHead;
+        _expression = expression->clone();
+    }
 
-	virtual ~CProgramWhile()
-	{
-		Clear();
-	}
+    virtual ~CProgramWhile() {
+        clear();
+    }
 
-	CProgramWhile(const CProgramWhile &opt): CProgram(opt)
-	{
-		m_bJudgeHead	= opt.m_bJudgeHead;
-        m_pExpression = opt.m_pExpression->clone();
-	}
+    CProgramWhile(const CProgramWhile &opt) : CProgram(opt) {
+        _judgeHead  = opt._judgeHead;
+        _expression = opt._expression->clone();
+    }
 
-	const CProgramWhile &operator =(const CProgramWhile &opt)
-	{
-		if (this != &opt)
-		{
-			Clear();
+    const CProgramWhile &operator=(const CProgramWhile &opt) {
+        if (this != &opt) {
+            clear();
 
-			CProgram::operator =(opt);
+            CProgram::operator=(opt);
 
-			m_bJudgeHead	= opt.m_bJudgeHead;
-            m_pExpression = opt.m_pExpression->clone();
-		}
+            _judgeHead  = opt._judgeHead;
+            _expression = opt._expression->clone();
+        }
 
-		return *this;
-	}
+        return *this;
+    }
 
-    virtual COperator *clone() const
-	{
-		return (COperator *)new CProgramWhile(*this);
-	}
+    virtual COperator *clone() const {
+        return (COperator *) new CProgramWhile(*this);
+    }
 
-    virtual void init(const optUnit *unit)
-	{
+    virtual void init(const optUnit *unit) {
         CProgram::init(unit);
 
-        optUnit Unit;
+        optUnit ou;
 
-        memcpy(&Unit, unit, sizeof(optUnit));
-        Unit.data = &m_Data;
-        Unit.parent = this;
+        memcpy(&ou, unit, sizeof(optUnit));
+        ou.data   = &_data;
+        ou.parent = this;
 
-        m_pExpression->init(&Unit);
-	}
+        _expression->init(&ou);
+    }
 
     virtual void work(const TMessageUnit *tmu);
 
 private:
-	CProgramWhile();
+    CProgramWhile();
 
-	void Clear()
-	{
-		CProgram::Clear();
+    void clear() {
+        CProgram::clear();
 
-		_DEL(m_pExpression);
-	}
+        _DEL(_expression);
+    }
 
-	bool_		m_bJudgeHead;
-	CExpression	*m_pExpression;
+    bool_       _judgeHead;
+    CExpression *_expression;
 };
 
-#endif // COPT_WHILE_H
+#endif // _C_OPT_WHILE_H_
