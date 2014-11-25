@@ -1,68 +1,71 @@
-#ifndef CINTERFACE_INFO_H
-#define CINTERFACE_INFO_H
+#ifndef _C_INTERFACE_INFO_H_
+#define _C_INTERFACE_INFO_H_
 
 #include "ModuleCommon.h"
 #include "CModuleInfo.h"
 
 #include <string.h>
 
-class CInterfaceInfo: public CBaseClass
-{
+class CInterfaceInfo : public CBase {
 public:
-	CInterfaceInfo(const CModuleInfo *pModuleInfo, const ch_1 *pszName)
-		: CBaseClass(CINTERFACEINFO) 
-	{
-		m_pInField = null_v;
-		m_pInCurField = null_v;
-		m_pOutField = null_v;
-		m_pOutCurField = null_v;
-		m_pModuleInfo = (CModuleInfo *)pModuleInfo;
-		memset(m_szName, 0, INTERFACE_NAME_LEGNTH);
-		strncpy(m_szName, pszName, INTERFACE_NAME_LEGNTH);
-	}
+    CInterfaceInfo(const CModuleInfo *moduleInfo, const ch_1 *name) {
+        _inField = null_v;
+        _inCurField = null_v;
+        _outField = null_v;
+        _outCurField = null_v;
+        _moduleInfo = (CModuleInfo *) moduleInfo;
+        memset(_name, 0, INTERFACE_NAME_LEGNTH);
+        strncpy(_name, name, INTERFACE_NAME_LEGNTH);
+    }
 
-	virtual ~CInterfaceInfo() {}
+    virtual ~CInterfaceInfo() {
+    }
 
-	const CModuleInfo *GetModuleInfo() const
-	{
-		return m_pModuleInfo;
-	}
+    const CModuleInfo *getModuleInfo() const {
+        return _moduleInfo;
+    }
 
-	const ch_1 *Name() const
-	{
-		return m_szName;
-	}
+    const ch_1 *name() const {
+        return _name;
+    }
 
-	// If GroupName is not null, Field is sub-field, GroupName is the name
-	// of group.
-	ret_ AddInField(const TField &Field,
-				  const ch_1 *pszGroupName = null_v);
-	ret_ AddOutField(const TField &Field,
-				  const ch_1 *pszGroupName = null_v);
+    // If GroupName is not null, Field is sub-field, GroupName is the name
+    // of group.
+    b_4 addInField(const TField &field,
+            const ch_1 *groupName = null_v);
 
-	// Get field
-	ret_ GetInField(const ch_1 *pszName, CField *&pField);
-	ret_ GetOutField(const ch_1 *pszName, CField *&pField);
+    b_4 addOutField(const TField &field,
+            const ch_1 *groupName = null_v);
 
-	// Get struct
-	ret_ GetInStruct(CField *&pField);
-	ret_ GetOutStruct(CField *&pField);
+    // Get field
+    CField *getInField(const ch_1 *name);
+
+    CField *getOutField(const ch_1 *name);
+
+    // Get struct
+    CField *getInStruct() {
+        return _inField;
+    }
+
+    CField *getOutStruct() {
+        return _outField;
+    }
 
 protected:
-	ret_ Stop();
+    void stop();
 
 private:
-    mapField m_InFieldMap;
-    mapField m_OutFieldMap;
+    mapField _inFieldMap;
+    mapField _outFieldMap;
 
-	CField *m_pInField;
-	CField *m_pInCurField;
+    CField *_inField;
+    CField *_inCurField;
 
-	CField *m_pOutField;
-	CField *m_pOutCurField;
+    CField *_outField;
+    CField *_outCurField;
 
-	CModuleInfo *m_pModuleInfo;
-	ch_1 m_szName[INTERFACE_NAME_LEGNTH];
+    CModuleInfo *_moduleInfo;
+    ch_1 _name[INTERFACE_NAME_LEGNTH];
 };
 
-#endif // CINTERFACE_INFO_H
+#endif // _C_INTERFACE_INFO_H_

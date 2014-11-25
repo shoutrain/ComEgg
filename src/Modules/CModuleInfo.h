@@ -1,5 +1,5 @@
-#ifndef CMODULE_INFO_H
-#define CMODULE_INFO_H
+#ifndef _C_MODULE_INFO_H_
+#define _C_MODULE_INFO_H_
 
 #include "ModuleCommon.h"
 #include "../Data/CData.h"
@@ -11,62 +11,56 @@ using namespace std;
 
 class CInterfaceInfo;
 
-typedef map<string, const CInterfaceInfo *> map_interface;
+typedef map<string, const CInterfaceInfo *> mapInterface;
 
-class CModuleInfo: public CBaseClass
-{
+class CModuleInfo : public CBase {
 public:
-	CModuleInfo(const ch_1 *pszPath, const ch_1 *pszName, const ch_1 *pszExt)
-		: CBaseClass(CMODULEINFO)
-	{
-		memset(m_szPath, 0, MODULE_PATH_LENGTH);
-		strncpy(m_szPath, pszPath, MODULE_PATH_LENGTH);
-		memset(m_szName, 0, MODULE_NAME_LENGTH);
-		strncpy(m_szName, pszName, MODULE_NAME_LENGTH);
-		memset(m_szExt, 0, MODULE_EXT_LENGTH);
-		strncpy(m_szExt, pszExt, MODULE_EXT_LENGTH);
-	}
+    CModuleInfo(const ch_1 *path, const ch_1 *name, const ch_1 *ext) {
+        memset(_path, 0, MODULE_PATH_LENGTH);
+        strncpy(_path, path, MODULE_PATH_LENGTH);
+        memset(_name, 0, MODULE_NAME_LENGTH);
+        strncpy(_name, name, MODULE_NAME_LENGTH);
+        memset(_ext, 0, MODULE_EXT_LENGTH);
+        strncpy(_ext, ext, MODULE_EXT_LENGTH);
+    }
 
-	virtual ~CModuleInfo()
-	{
-		Stop();
-	}
+    virtual ~CModuleInfo() {
+        stop();
+    }
 
-	const char *GetPath() const
-	{
-		return m_szPath;
-	}
+    const char *getPath() const {
+        return _path;
+    }
 
-	const char *GetName() const
-	{
-		return m_szName;
-	}
+    const char *getName() const {
+        return _name;
+    }
 
-	const char *GetExt() const
-	{
-		return m_szExt;
-	}
+    const char *getExt() const {
+        return _ext;
+    }
 
-	ret_ AddInterface(const ch_1 *pszName, CInterfaceInfo *&pInterfaceInfo);
-	ret_ GetInterface(const ch_1 *pszName, CInterfaceInfo *&pInterfaceInfo);
+    b_4 addInterface(const ch_1 *name, CInterfaceInfo *&interfaceInfo);
 
-	bool_ IsInterfaceReady(const ch_1 *pszName)
-	{
-		if (m_InterfaceInfoMap.end() != m_InterfaceInfoMap.find(pszName))
-			return true_v;
+    CInterfaceInfo *getInterface(const ch_1 *name);
 
-		return false_v;
-	}
+    bool_ isInterfaceReady(const ch_1 *name) {
+        if (_interfaceInfoMap.end() != _interfaceInfoMap.find(name)) {
+            return true_v;
+        }
+
+        return false_v;
+    }
 
 protected:
-	ret_ Stop();
+    void stop();
 
 private:
-	map_interface m_InterfaceInfoMap;
+    mapInterface _interfaceInfoMap;
 
-	ch_1 m_szPath[MODULE_PATH_LENGTH];
-	ch_1 m_szName[MODULE_NAME_LENGTH];
-	ch_1 m_szExt[MODULE_EXT_LENGTH];
+    ch_1 _path[MODULE_PATH_LENGTH];
+    ch_1 _name[MODULE_NAME_LENGTH];
+    ch_1 _ext[MODULE_EXT_LENGTH];
 };
 
-#endif // CMODULE_INFO_H
+#endif // _C_MODULE_INFO_H_

@@ -1,5 +1,5 @@
-#ifndef CMODULE_MANAGER_H
-#define CMODULE_MANAGER_H
+#ifndef _C_MODULE_MANAGER_H_
+#define _C_MODULE_MANAGER_H_
 
 #include "ModuleCommon.h"
 
@@ -10,60 +10,61 @@ using namespace std;
 
 class CModuleInfo;
 
-typedef map<string, const CModuleInfo *> map_module;
+typedef map<string, const CModuleInfo *> mapModule;
 
-class CModuleManager: public CBaseClass
-{
+class CModuleManager : public CBase {
 public:
-	static CModuleManager *Instance()
-	{
-		if (m_pInstance)
-			return m_pInstance;
+    static CModuleManager *instance() {
+        if (_instance) {
+            return _instance;
+        }
 
-		m_pInstance = new CModuleManager;
+        _instance = new CModuleManager;
 
-		return m_pInstance;
-	}
+        return _instance;
+    }
 
-	static void Destory()
-	{
-		_DEL(m_pInstance);
-	}
+    static void destroy() {
+        _DEL(_instance);
+    }
 
-	ret_ AddModule(const ch_1 *pszPath, 
-				   const ch_1 *pszName,
-				   const ch_1 *pszExt,
-				   CModuleInfo *&pModule);
-	ret_ GetModule(const ch_1 *pszName, CModuleInfo *&pModule);
+    b_4 addModule(const ch_1 *path,
+            const ch_1 *name,
+            const ch_1 *ext,
+            CModuleInfo *&module);
 
-	bool_ IsModuleReady(const ch_1 *pszName)
-	{
-		if (!pszName)
-			return false_v;
+    CModuleInfo *getModule(const ch_1 *name);
 
-		if (m_ModuleMap.end() != m_ModuleMap.find(pszName))
-			return true_v;
+    bool_ isModuleReady(const ch_1 *name) {
+        if (!name) {
+            return false_v;
+        }
 
-		return false_v;
-	}
+        if (_moduleMap.end() == _moduleMap.find(name)) {
+            return false_v;
+        }
+
+        return true_v;
+    }
 
 protected:
-	ret_ Stop();
+    void stop();
 
 private:
-	CModuleManager(): CBaseClass(CMODULEMANAGER) {}
+    CModuleManager() {
+    }
 
-	CModuleManager(const CModuleManager &);
-	const CModuleManager &operator =(const CModuleManager &);
+    CModuleManager(const CModuleManager &);
 
-	virtual ~CModuleManager()
-	{
-		Stop();
-	}
+    const CModuleManager &operator=(const CModuleManager &);
 
-	map_module m_ModuleMap;
+    virtual ~CModuleManager() {
+        stop();
+    }
 
-	static CModuleManager *m_pInstance;
+    mapModule _moduleMap;
+
+    static CModuleManager *_instance;
 };
 
-#endif // CMODULE_MANAGER_H
+#endif // _C_MODULE_MANAGER_H_

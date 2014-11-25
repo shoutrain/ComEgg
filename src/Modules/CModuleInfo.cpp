@@ -1,83 +1,46 @@
 #include "CInterfaceInfo.h"
 #include "CModuleInfo.h"
 
-ret_ CModuleInfo::Stop()
-{
-	_START(STOP);
+void CModuleInfo::stop() {
+    for (mapInterface::iterator pos = _interfaceInfoMap.begin();
+         pos != _interfaceInfoMap.end(); pos++) {
+        assert(null_v != pos->second);
+        _DEL(pos->second);
+    }
 
-	for (map_interface::iterator pos = m_InterfaceInfoMap.begin();
-		 pos != m_InterfaceInfoMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos->second);
-	}
-
-	m_InterfaceInfoMap.clear();
-
-	_RET(SUCCESS);
+    _interfaceInfoMap.clear();
 }
 
-ret_ CModuleInfo::AddInterface(const ch_1 *pszName,
-							   CInterfaceInfo *&pInterfaceInfo)
-{
-	_START(ADD_INTERFACE);
+b_4 CModuleInfo::addInterface(const ch_1 *name,
+        CInterfaceInfo *&interfaceInfo) {
+    if (!name || 0 == name[0]) {
+        assert(0);
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    if (interfaceInfo) {
+        assert(0);
+        return 2;
+    }
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    interfaceInfo = new CInterfaceInfo(this, name);
+    _interfaceInfoMap.insert(mapInterface::value_type(name, interfaceInfo));
 
-	if (pInterfaceInfo)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-
-	// pInterfaceInfo should be valid, no check code here.
-#endif
-
-	pInterfaceInfo = new CInterfaceInfo(this, pszName);
-	m_InterfaceInfoMap.insert(map_interface::value_type(pszName, pInterfaceInfo));
-
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CModuleInfo::GetInterface(const ch_1 *pszName, 
-							   CInterfaceInfo *&pInterfaceInfo)
-{
-	_START(GET_INTERFACE);
+CInterfaceInfo *CModuleInfo::getInterface(const ch_1 *name) {
+    if (!name || 0 == name[0]) {
+        assert(0);
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapInterface::iterator pos = _interfaceInfoMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_interfaceInfoMap.end() != pos) {
+        assert(null_v != pos->second);
+        return pos->second;
+    }
 
-	if (pInterfaceInfo)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-	map_interface::iterator pos = m_InterfaceInfoMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_InterfaceInfoMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pInterfaceInfo = (CInterfaceInfo *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
+    return null_v;
 }

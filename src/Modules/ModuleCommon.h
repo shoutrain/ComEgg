@@ -1,7 +1,7 @@
-#ifndef MODULE_COMMON_H
-#define MODULE_COMMON_H
+#ifndef _MODULE_COMMON_H_
+#define _MODULE_COMMON_H_
 
-#include "../Common/CBaseClass.h"
+#include "../Common/CBase.h"
 #include "../Data/DataCommon.h"
 
 using namespace std;

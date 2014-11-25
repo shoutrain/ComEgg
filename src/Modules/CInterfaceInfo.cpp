@@ -4,429 +4,311 @@
 #include "../Data/CFieldString.h"
 #include "../Data/CFieldGroup.h"
 
-ret_ CInterfaceInfo::Stop()
-{
-	_START(STOP);
+void CInterfaceInfo::stop() {
+    for (mapField::iterator pos1 = _inFieldMap.begin();
+         pos1 != _inFieldMap.end();
+         pos1++) {
+        assert(pos1->second);
+        _DEL(pos1->second);
+    }
 
-    for (mapField::iterator pos1 = m_InFieldMap.begin();
-		 pos1 != m_InFieldMap.end();
-		 pos1++)
-	{
-#ifdef _DEBUG_
-		if (!pos1->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos1->second);
-	}
+    for (mapField::iterator pos2 = _outFieldMap.begin();
+         pos2 != _outFieldMap.end();
+         pos2++) {
+        assert(pos2->second);
+        _DEL(pos2->second);
+    }
 
-    for (mapField::iterator pos2 = m_OutFieldMap.begin();
-		 pos2 != m_OutFieldMap.end();
-		 pos2++)
-	{
-#ifdef _DEBUG_
-		if (!pos2->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos2->second);
-	}
-
-	m_InFieldMap.clear();
-	m_OutFieldMap.clear();
-	m_pInField = null_v;
-	m_pInCurField = null_v;
-	m_pOutField = null_v;
-	m_pOutCurField = null_v;
-
-	_RET(SUCCESS);
+    _inFieldMap.clear();
+    _outFieldMap.clear();
+    _inField = null_v;
+    _inCurField = null_v;
+    _outField = null_v;
+    _outCurField = null_v;
 }
 
-ret_ CInterfaceInfo::AddInField(const TField &Field, const ch_1 *pszGroupName)
-{
-	_START(ADD_IN_FIELD);
+b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
+    if (!field.name || 0 == field.name[0]) {
+        assert(0);
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!Field.name ||	0 == Field.name[0])
-		_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+    CField *localField = null_v;
+    CField *groupField = null_v;
+    ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-	ret_ Ret;
-	CField *pField = null_v;
-	CField *pGroupField = null_v;
-	ch_1 sName[VARIABLE_NAME_LENGTH * 2] = {0};
+    if (groupName && 0 != groupName[0]) {
+        groupField = getInField(groupName);
 
-	if (pszGroupName && 0 != pszGroupName[0])
-	{
-		Ret = _ERR(GetInField(pszGroupName, pGroupField));
+        if (null_v == groupField) {
+            assert(0);
+            return 2;
+        }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
+        sprintf(name, "%s.%s", groupName, field.name);
+    } else {
+        sprintf(name, "%s", field.name);
+    }
 
-        sprintf(sName, "%s.%s", pszGroupName, Field.name);
-	}
-	else
-	{
-        sprintf(sName, "%s", Field.name);
-	}
+    // Check if there is a localField which name is same as the localField's name,
+    // in the map.
+    if (_inFieldMap.end() != _inFieldMap.find(name)) {
+        assert(0);
+        return 3;
+    }
 
-	// Check if there is a field which name is same as the field's name,
-	// in the map.
-	if (m_InFieldMap.end() != m_InFieldMap.find(sName))
-		_RET(ELEMENT_EXIST_IN_CONTAINER);
+    switch (field.style) {
+        case FIELD_NORMAL_STYLE: {
+            EFieldType type;
 
-    switch (Field.style)
-	{
-	case FIELD_NORMAL_STYLE:
-	{
-		EFieldType Type;
+            if (1 == field.length && field.isSigned) {
+                type = FIELD_B_1_TYPE;
+            } else if (1 == field.length && !field.isSigned) {
+                type = FIELD_UB_1_TYPE;
+            } else if (2 == field.length && field.isSigned) {
+                type = FIELD_B_2_TYPE;
+            } else if (2 == field.length && !field.isSigned) {
+                type = FIELD_UB_2_TYPE;
+            } else if (4 == field.length && field.isSigned) {
+                type = FIELD_B_4_TYPE;
+            } else if (4 == field.length && !field.isSigned) {
+                type = FIELD_UB_4_TYPE;
+            } else if (8 == field.length && field.isSigned) {
+                type = FIELD_B_8_TYPE;
+            } else if (8 == field.length && !field.isSigned) {
+                type = FIELD_UB_8_TYPE;
+            } else {
+                assert(0);
+                return 4;
+            }
 
-        if (1 == Field.length && Field.isSigned)
-			Type = FIELD_B_1_TYPE;
-        else if (1 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_1_TYPE;
-        else if (2 == Field.length && Field.isSigned)
-			Type = FIELD_B_2_TYPE;
-        else if (2 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_2_TYPE;
-        else if (4 == Field.length && Field.isSigned)
-			Type = FIELD_B_4_TYPE;
-        else if (4 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_4_TYPE;
-        else if (8 == Field.length && Field.isSigned)
-			Type = FIELD_B_8_TYPE;
-        else if (8 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 5;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_FLOAT_STYLE: {
+            EFieldType type;
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_FLOAT_STYLE:
-	{
-		EFieldType Type;
+            if (4 == field.length) {
+                type = FIELD_FB_4_TYPE;
+            } else if (8 == field.length) {
+                type = FIELD_FB_8_TYPE;
+            } else {
+                assert(0);
+                return 6;
+            }
 
-        if (4 == Field.length)
-			Type = FIELD_FB_4_TYPE;
-        else if (8 == Field.length)
-			Type = FIELD_FB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 7;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_STRING_STYLE: {
+            if (0 == field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 8;
+            }
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_STRING_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 == Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            localField = new CFieldString(name, field.size, groupField);
+        }
+            break;
+        case FIELD_GROUP_STYLE: {
+            if (0 != field.size || 0 == field.sizeName[0]) {
+                assert(0);
+                return 9;
+            }
 
-        pField = new CFieldString(sName, Field.size, pGroupField);
-	}
-	break;
-	case FIELD_GROUP_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 != Field.size)
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            CField *sizeField = getInField(field.sizeName);
+            assert(sizeField);
 
-		if (0 == Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
-		
-		CField *pSizeField = null_v;
+            localField = new CFieldGroup(name, sizeField);
+        }
+            break;
+        default:
+            assert(0);
+            return 10;
+    }
 
-        Ret = _ERR(GetInField(Field.sizeName, pSizeField));
+    if (!groupField) {
+        if (_inCurField) {
+            _inCurField->attach(localField);
+        } else {
+            _inField = localField;
+        }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
-				
-		pField = new CFieldGroup(sName, pSizeField);
-	}
-	break;
-#ifdef _DEBUG_
-	default:
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_1);
-#endif
-	}
+        _inCurField = localField;
+    } else {
+        groupField->setSubField(localField);
+    }
 
-	if (!pGroupField)
-	{
-		if (m_pInCurField)
-            m_pInCurField->attach(pField);
-		else
-			m_pInField = pField;
+    _inFieldMap.insert(mapField::value_type(name, localField));
 
-		m_pInCurField = pField;
-	}
-	else
-	{
-        pGroupField->setSubField(pField);
-	}
-
-    m_InFieldMap.insert(mapField::value_type(sName, pField));
-
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CInterfaceInfo::AddOutField(const TField &Field, const ch_1 *pszGroupName)
-{
-	_START(ADD_OUT_FIELD);
+b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
+    if (!field.name || 0 == field.name[0]) {
+        assert(0);
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!Field.name ||	0 == Field.name[0])
-		_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+    CField *localField = null_v;
+    CField *groupField = null_v;
+    ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-	ret_ Ret;
-	CField *pField = null_v;
-	CField *pGroupField = null_v;
-	ch_1 sName[VARIABLE_NAME_LENGTH * 2] = {0};
+    if (groupName && 0 != groupName[0]) {
+        groupField = getOutField(groupName);
 
-	if (pszGroupName && 0 != pszGroupName[0])
-	{
-		Ret = _ERR(GetOutField(pszGroupName, pGroupField));
+        if (null_v == groupField) {
+            assert(0);
+            return 2;
+        }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
+        sprintf(name, "%s.%s", groupName, field.name);
+    } else {
+        sprintf(name, "%s", field.name);
+    }
 
-        sprintf(sName, "%s.%s", pszGroupName, Field.name);
-	}
-	else
-	{
-        sprintf(sName, "%s", Field.name);
-	}
+    // Check if there is a field which name is same as the field's name,
+    // in the map.
+    if (_outFieldMap.end() != _outFieldMap.find(name)) {
+        assert(0);
+        return 3;
+    }
 
-	// Check if there is a field which name is same as the field's name,
-	// in the map.
-	if (m_OutFieldMap.end() != m_OutFieldMap.find(sName))
-		_RET(ELEMENT_EXIST_IN_CONTAINER);
+    switch (field.style) {
+        case FIELD_NORMAL_STYLE: {
+            EFieldType type;
 
-    switch (Field.style)
-	{
-	case FIELD_NORMAL_STYLE:
-	{
-		EFieldType Type;
+            if (1 == field.length && field.isSigned) {
+                type = FIELD_B_1_TYPE;
+            } else if (1 == field.length && !field.isSigned) {
+                type = FIELD_UB_1_TYPE;
+            } else if (2 == field.length && field.isSigned) {
+                type = FIELD_B_2_TYPE;
+            } else if (2 == field.length && !field.isSigned) {
+                type = FIELD_UB_2_TYPE;
+            } else if (4 == field.length && field.isSigned) {
+                type = FIELD_B_4_TYPE;
+            } else if (4 == field.length && !field.isSigned) {
+                type = FIELD_UB_4_TYPE;
+            } else if (8 == field.length && field.isSigned) {
+                type = FIELD_B_8_TYPE;
+            } else if (8 == field.length && !field.isSigned) {
+                type = FIELD_UB_8_TYPE;
+            } else {
+                assert(0);
+                return 4;
+            }
 
-        if (1 == Field.length && Field.isSigned)
-			Type = FIELD_B_1_TYPE;
-        else if (1 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_1_TYPE;
-        else if (2 == Field.length && Field.isSigned)
-			Type = FIELD_B_2_TYPE;
-        else if (2 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_2_TYPE;
-        else if (4 == Field.length && Field.isSigned)
-			Type = FIELD_B_4_TYPE;
-        else if (4 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_4_TYPE;
-        else if (8 == Field.length && Field.isSigned)
-			Type = FIELD_B_8_TYPE;
-        else if (8 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 5;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_FLOAT_STYLE: {
+            EFieldType type;
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_FLOAT_STYLE:
-	{
-		EFieldType Type;
+            if (4 == field.length) {
+                type = FIELD_FB_4_TYPE;
+            } else if (8 == field.length) {
+                type = FIELD_FB_8_TYPE;
 
-        if (4 == Field.length)
-			Type = FIELD_FB_4_TYPE;
-        else if (8 == Field.length)
-			Type = FIELD_FB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            } else {
+                assert(0);
+                return 6;
+            }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            if (0 != field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 7;
+            }
 
-		pField = new CFieldNumber(sName, Type, pGroupField);
-	}
-	break;
-	case FIELD_STRING_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 == Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_STRING_STYLE: {
+            if (0 == field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 8;
+            }
 
-        pField = new CFieldString(sName, Field.size, pGroupField);
-	}
-	break;
-	case FIELD_GROUP_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 != Field.size)
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            localField = new CFieldString(name, field.size, groupField);
+        }
+            break;
+        case FIELD_GROUP_STYLE: {
+            if (0 == field.size || 0 != field.sizeName[0]) {
+                assert(0);
+                return 9;
+            }
 
-		if (0 == Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+            CField *sizeField = getOutField(field.sizeName);
+            assert(sizeField);
 
-		CField *pSizeField = null_v;
+            localField = new CFieldGroup(name, sizeField);
+        }
+            break;
+        default:
+            assert(0);
+            return 10;
+    }
 
-        Ret = _ERR(GetOutField(Field.sizeName, pSizeField));
+    if (!groupField) {
+        if (_outCurField) {
+            _outCurField->attach(localField);
+        } else {
+            _outField = localField;
+        }
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
+        _outCurField = localField;
+    } else {
+        groupField->setSubField(localField);
+    }
 
-		pField = new CFieldGroup(sName, pSizeField);
-	}
-	break;
-#ifdef _DEBUG_
-	default:
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_1);
-#endif
-	}
+    _outCurField = localField;
+    _outFieldMap.insert(mapField::value_type(name, localField));
 
-	if (!pGroupField)
-	{
-		if (m_pOutCurField)
-            m_pOutCurField->attach(pField);
-		else
-			m_pOutField = pField;
-
-		m_pOutCurField = pField;
-	}
-	else
-	{
-        pGroupField->setSubField(pField);
-	}
-
-	m_pOutCurField = pField;
-    m_OutFieldMap.insert(mapField::value_type(sName, pField));
-
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CInterfaceInfo::GetInField(const ch_1 *pszName, 
-								CField *&pField)
-{
-	_START(GET_IN_FIELD);
+CField *CInterfaceInfo::getInField(const ch_1 *name) {
+    if (!name || 0 == name[0]) {
+        assert(0);
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapField::iterator pos = _inFieldMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_inFieldMap.end() != pos) {
+        assert(pos->second);
+        return pos->second;
+    }
 
-	if (field)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-    mapField::iterator pos = m_InFieldMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_InFieldMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pField = (CField *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
+    return null_v;
 }
 
-ret_ CInterfaceInfo::GetOutField(const ch_1 *pszName, 
-								 CField *&pField)
-{
-	_START(GET_OUT_FIELD);
+CField *CInterfaceInfo::getOutField(const ch_1 *name) {
+    if (!name || 0 == name[0]) {
+        assert(0);
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapField::iterator pos = _outFieldMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_outFieldMap.end() != pos) {
+        assert(pos->second);
+        return pos->second;
+    }
 
-	if (field)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-    mapField::iterator pos = m_OutFieldMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_OutFieldMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pField = (CField *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
-}
-
-ret_ CInterfaceInfo::GetInStruct(CField *&pField)
-{
-	_START(GET_IN_STRUCT);
-#ifdef _DEBUG_
-	if (field)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_1);
-#endif
-
-	pField = m_pInField;
-
-	_RET(SUCCESS);
-}
-
-ret_ CInterfaceInfo::GetOutStruct(CField *&pField)
-{
-	_START(GET_OUT_STRUCT);
-#ifdef _DEBUG_
-	if (field)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_1);
-#endif
-
-	pField = m_pOutField;
-
-	_RET(SUCCESS);
+    return null_v;
 }
