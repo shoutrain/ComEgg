@@ -24,7 +24,7 @@ public:
         return (COperator *) new COptDie(*this);
     }
 
-    virtual void work(const TMessageUnit *tmu) {
+    virtual none_ work(const TMessageUnit *tmu) {
         CNetworkManager::Instance()->Exit();
     }
 };

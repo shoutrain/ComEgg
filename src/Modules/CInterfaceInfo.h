@@ -52,7 +52,7 @@ public:
     }
 
 protected:
-    void stop();
+    none_ stop();
 
 private:
     mapField _inFieldMap;

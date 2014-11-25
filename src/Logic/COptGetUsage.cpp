@@ -2,9 +2,9 @@
 
 #include "../System/CSysInfo.h"
 
-void COptGetUsage::work(const TMessageUnit *tmu) {
+none_ COptGetUsage::work(const TMessageUnit *tmu) {
     CSysInfo si;
-    v_ usage((ub_1) si.GetUsage());
+    v_ usage((ub_1) si.getUsage());
 
     (*_result->value(tmu)) = usage;
 }

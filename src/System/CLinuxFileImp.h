@@ -14,7 +14,7 @@ public:
 
     virtual bool_ openFile(const ch_1 *fullPath, bool_ isRead);
 
-    virtual void closeFile();
+    virtual none_ closeFile();
 
     virtual bool_ readFile(ub_1 *&buffer, size_ bufferSize, size_ &readSize);
 

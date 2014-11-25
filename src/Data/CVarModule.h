@@ -12,7 +12,7 @@ public:
 
     virtual CVariable *clone() const;
 
-    virtual void init(const CData *data);
+    virtual none_ init(const CData *data);
 
     virtual v_ *value(const TMessageUnit *tmu);
 

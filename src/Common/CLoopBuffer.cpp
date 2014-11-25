@@ -137,7 +137,7 @@ bool_ CLoopBuffer::read(ch_1 *buffer, ub_4 &size) {
     return true_v;
 }
 
-void CLoopBuffer::reset() {
+none_ CLoopBuffer::reset() {
     CAutoLock al(_mutex);
 
     _actualSize = _totalSize;

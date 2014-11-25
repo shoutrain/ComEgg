@@ -34,5 +34,6 @@ Log
 4. replace the error handle stack with normal log system
 5. replace eclipse with clion(from jetbrains) due to xml and scheme supports
 6. refine schemes and xml files accordingly
+7. use new code style
 
 

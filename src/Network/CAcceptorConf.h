@@ -42,7 +42,7 @@ public:
 	}
 
 	// Just for counting, actual action will be launched in CAcceptor
-	void CloseConnection()
+    none_ CloseConnection()
 	{
 		m_Mutex.acquire();
 		m_nCurrentConnection--;

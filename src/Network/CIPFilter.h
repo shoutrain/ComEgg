@@ -24,7 +24,7 @@ public:
 		m_IPSet.clear();
 	}
 
-	void SetForbid(bool_ bIsForbid = true_v)
+    none_ SetForbid(bool_ bIsForbid = true_v)
 	{
 		m_bIsForbid = bIsForbid;
 		m_bIsWork	= true_v;

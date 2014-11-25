@@ -82,7 +82,7 @@ public:
     }
 
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         COperator::init(unit);
 
         if (TCP_SEND == _sendType) {
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     enum {

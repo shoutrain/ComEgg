@@ -1,7 +1,7 @@
 #include "COptSaveFile.h"
 #include "../System/CFile.h"
 
-void COptSaveFile::work(const TMessageUnit *tmu) {
+none_ COptSaveFile::work(const TMessageUnit *tmu) {
     v_ success((b_4) true_v);
     v_ failure((b_4) false_v);
 
@@ -11,7 +11,7 @@ void COptSaveFile::work(const TMessageUnit *tmu) {
             + (*_fileName->value(tmu));
     CFile writeFile;
 
-    if (!writeFile.Write((const ch_1 *) dstFileName,
+    if (!writeFile.writeFile((const ch_1 *) dstFileName,
             (const ub_1 *)
                     (const obj_) (*_fileContent->value(tmu)),
             REV_BUFFER_MAX_SIZE)) {

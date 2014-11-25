@@ -31,7 +31,7 @@ public:
         return _p;
     }
 
-    void reset(const T *p = null_v) {
+    none_ reset(const T *p = null_v) {
         if (p != _p) {
             _DEL(_p);
             _p = p;

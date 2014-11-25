@@ -4,7 +4,7 @@ CVariable *CVarModule::clone() const {
     return (CVariable *) new CVarModule(field);
 }
 
-void CVarModule::init(const CData *data) {
+none_ CVarModule::init(const CData *data) {
 }
 
 v_ *CVarModule::value(const TMessageUnit *tmu) {

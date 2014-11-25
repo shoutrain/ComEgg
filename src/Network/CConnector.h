@@ -35,12 +35,12 @@ public:
 		close();
 	}
 
-	virtual void work()
+    virtual none_ work()
 	{
-		ACE_Thread::spawn((ACE_THR_FUNC)Svc, (void *)this);
+        ACE_Thread::spawn((ACE_THR_FUNC) Svc, (obj_) this);
 	}
 
-	virtual void sleep()
+    virtual none_ sleep()
 	{
 		m_bConnected = false_v;
 		close();
@@ -76,7 +76,7 @@ public:
 		return -1;
 	}
 
-	static b_4 Svc(void *p)
+    static b_4 Svc(obj_ p)
 	{
 		if (p)
 			return ((CConnector *)p)->Run();
@@ -84,7 +84,7 @@ public:
 		return -1;
 	}
 
-	void Disconnect()
+    none_ Disconnect()
 	{
 		m_bConnected = false_v;
 	}

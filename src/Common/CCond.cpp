@@ -26,7 +26,7 @@ bool_ CCond::lock(bool_ check) {
     return true_v;
 }
 
-void CCond::unlock() {
+none_ CCond::unlock() {
     if (0 != pthread_cond_signal(&_cond)) {
         logFatal("CCond::unlock failed to call pthread_cond_signal");
     }

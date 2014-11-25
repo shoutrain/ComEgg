@@ -4,7 +4,7 @@ CVariable *CVarNetwork::clone() const {
     return (CVariable *) new CVarNetwork(_field, _indexName);
 }
 
-void CVarNetwork::init(const CData *data) {
+none_ CVarNetwork::init(const CData *data) {
     _index = data->value(_indexName);
 }
 

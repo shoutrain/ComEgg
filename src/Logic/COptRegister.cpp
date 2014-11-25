@@ -1,6 +1,6 @@
 #include "COptRegister.h"
 
-void COptRegister::work(const TMessageUnit *tmu) {
+none_ COptRegister::work(const TMessageUnit *tmu) {
     v_ *category = _category->value(tmu);
     v_ *key = _key->value(tmu);
 

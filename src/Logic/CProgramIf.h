@@ -25,12 +25,12 @@ public:
 
     bool_ addExpression(const CExpression *expression);
 
-    virtual void init(const optUnit *unit);
+    virtual none_ init(const optUnit *unit);
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
-    void clear();
+    none_ clear();
 
     vectorExp _expVector;
 };

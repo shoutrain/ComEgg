@@ -1,7 +1,7 @@
 #include "CInterfaceInfo.h"
 #include "CModuleInfo.h"
 
-void CModuleInfo::stop() {
+none_ CModuleInfo::stop() {
     for (mapInterface::iterator pos = _interfaceInfoMap.begin();
          pos != _interfaceInfoMap.end(); pos++) {
         assert(null_v != pos->second);

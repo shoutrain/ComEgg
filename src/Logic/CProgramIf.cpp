@@ -43,7 +43,7 @@ bool_ CProgramIf::addExpression(const CExpression *expression) {
     return true_v;
 }
 
-void CProgramIf::init(const optUnit *unit) {
+none_ CProgramIf::init(const optUnit *unit) {
     CProgram::init(unit);
 
     optUnit ou;
@@ -59,7 +59,7 @@ void CProgramIf::init(const optUnit *unit) {
     }
 }
 
-void CProgramIf::work(const TMessageUnit *tmu) {
+none_ CProgramIf::work(const TMessageUnit *tmu) {
     size_ num = (size_) _expVector.size();
 
     try {
@@ -83,7 +83,7 @@ void CProgramIf::work(const TMessageUnit *tmu) {
     reset();
 }
 
-void CProgramIf::clear() {
+none_ CProgramIf::clear() {
     CProgram::clear();
 
     for (vectorExp::iterator pos = _expVector.begin();

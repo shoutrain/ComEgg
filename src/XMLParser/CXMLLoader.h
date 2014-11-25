@@ -8,7 +8,7 @@ class CXMLLoader: public CBaseClass
 protected:
 	CXMLLoader(class_sign ClassID): CBaseClass(ClassID), m_pParser(null_v) {}
 
-	void SetParser(XercesDOMParser *pParser)
+    none_ SetParser(XercesDOMParser *pParser)
 	{
 		m_pParser = pParser;
 	}

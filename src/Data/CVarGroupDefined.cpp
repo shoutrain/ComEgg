@@ -6,7 +6,7 @@ CVariable *CVarGroupDefined::clone() const {
             _indexName);
 }
 
-void CVarGroupDefined::init(const CData *data) {
+none_ CVarGroupDefined::init(const CData *data) {
     _groupData = null_v;
     _field = (CField *) (obj_) *data->value(_groupName,
             _subName,

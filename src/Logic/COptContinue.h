@@ -23,7 +23,7 @@ public:
         return (COperator *) new COptContinue(*this);
     }
 
-    virtual void work(const TMessageUnit *tmu) {
+    virtual none_ work(const TMessageUnit *tmu) {
         callBreak Continue;
 
         throw Continue;

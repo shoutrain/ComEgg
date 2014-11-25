@@ -13,7 +13,7 @@ public:
 
     bool_ lock(bool_ check = false_v);
 
-    void unlock();
+    none_ unlock();
 
     pthread_mutex_t *getMutex() {
         return &_mutex;

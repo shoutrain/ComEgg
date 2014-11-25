@@ -5,7 +5,7 @@ class CExpression {
 public:
     virtual CExpression *clone() const = 0;
 
-    virtual void init(const optUnit *unit) = 0;
+    virtual none_ init(const optUnit *unit) = 0;
 
     virtual bool_ evaluate(const TMessageUnit *tmu) const = 0;
 };

@@ -25,14 +25,14 @@ public:
 		close();
 	}
 
-	virtual void work()
+    virtual none_ work()
 	{
 		ACE_INET_Addr Addr(m_Conf.getLocalPort());
 
 		open(Addr, ACE_Reactor::instance());
 	}
 
-	virtual void sleep()
+    virtual none_ sleep()
 	{
 		close();
 	}

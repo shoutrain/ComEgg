@@ -332,7 +332,7 @@ v_ *CData::value(const ch_1 *groupName,
     }
 }
 
-void CData::clear() {
+none_ CData::clear() {
     for (mapVariable::iterator pos = _variableMap.begin();
          pos != _variableMap.end(); pos++) {
         _DEL(pos->second);

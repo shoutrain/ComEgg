@@ -1,7 +1,7 @@
 #include "COptNetworkSleep.h"
 #include "../Network/CNetworkManager.h"
 
-void COptNetworkSleep::work(const TMessageUnit *tmu) {
+none_ COptNetworkSleep::work(const TMessageUnit *tmu) {
     v_ networkName = (*_networkName->value(tmu));
 
     CNetwork *network = (CNetwork *)

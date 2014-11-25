@@ -38,7 +38,7 @@ public:
 		return _localPort;
 	}
 
-	void setTransaction(const CTransaction *transaction) {
+    none_ setTransaction(const CTransaction *transaction) {
 		_transaction = (CTransaction *) transaction;
 	}
 

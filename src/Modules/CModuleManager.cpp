@@ -3,7 +3,7 @@
 
 CModuleManager *CModuleManager::_instance = null_v;
 
-void CModuleManager::stop() {
+none_ CModuleManager::stop() {
     for (mapModule::iterator pos = _moduleMap.begin();
          pos != _moduleMap.end(); pos++) {
         assert(pos->second);

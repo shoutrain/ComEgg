@@ -1,6 +1,6 @@
 #include "COptSearch.h"
 
-void COptSearch::work(const TMessageUnit *tmu) {
+none_ COptSearch::work(const TMessageUnit *tmu) {
     v_ *category = m_pCategory->value(tmu);
     v_ *key = m_pKey->value(tmu);
     v_ *obj = m_pObject->value(tmu);

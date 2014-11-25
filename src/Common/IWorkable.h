@@ -4,7 +4,7 @@
 class IWorkable {
 public:
     virtual ~IWorkable() {
-    } // to avoid waring
+    } // to anone_ waring
     virtual bool_ working() = 0;
 };
 

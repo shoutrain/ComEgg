@@ -13,10 +13,13 @@ public:
     
 	virtual ~CXMLLoaderErrorHandle() {}
 
-    void warning(const SAXParseException &toCatch);
-    void error(const SAXParseException &toCatch);
-    void fatalError(const SAXParseException &toCatch);
-    void resetErrors();
+    none_ warning(const SAXParseException &toCatch);
+
+    none_ error(const SAXParseException &toCatch);
+
+    none_ fatalError(const SAXParseException &toCatch);
+
+    none_ resetErrors();
 
     bool IsError() const
     {

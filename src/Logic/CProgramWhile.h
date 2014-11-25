@@ -40,7 +40,7 @@ public:
         return (COperator *) new CProgramWhile(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         CProgram::init(unit);
 
         optUnit ou;
@@ -52,12 +52,12 @@ public:
         _expression->init(&ou);
     }
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     CProgramWhile();
 
-    void clear() {
+    none_ clear() {
         CProgram::clear();
 
         _DEL(_expression);

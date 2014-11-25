@@ -27,7 +27,7 @@ public:
 		return m_pInstance;
 	}
 
-	static void Destory()
+    static none_ Destory()
 	{
 		_DEL(m_pInstance);
 	}

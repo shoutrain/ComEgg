@@ -36,7 +36,7 @@ public:
         return (CExpression *) new CExpOr(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         _leftExp->init(unit);
         _rightExp->init(unit);
     }

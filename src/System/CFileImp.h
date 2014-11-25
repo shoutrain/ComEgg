@@ -7,7 +7,7 @@ class CFileImp {
 public:
     virtual bool_ openFile(const ch_1 *fullPath, bool_ isRead) = 0;
 
-    virtual void closeFile() = 0;
+    virtual none_ closeFile() = 0;
 
     virtual bool_ readFile(ub_1 *&buffer, size_ bufferSize, size_ &readSize) = 0;
 

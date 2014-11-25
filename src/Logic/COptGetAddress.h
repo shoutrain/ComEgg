@@ -42,14 +42,14 @@ public:
         return (COperator *) new COptGetAddress(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         COperator::init(unit);
 
         _ip->init(unit->data);
         _port->init(unit->data);
     }
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     bool_ _remote;

@@ -1,20 +1,20 @@
 #include "CXMLLoaderErrorHandle.h"
 
-void CXMLLoaderErrorHandle::warning(const SAXParseException &)
+none_ CXMLLoaderErrorHandle::warning(const SAXParseException &)
 {
 }
 
-void CXMLLoaderErrorHandle::error(const SAXParseException &toCatch)
-{
-    m_bIsError = true_v;
-}
-
-void CXMLLoaderErrorHandle::fatalError(const SAXParseException &toCatch)
+none_ CXMLLoaderErrorHandle::error(const SAXParseException &toCatch)
 {
     m_bIsError = true_v;
 }
 
-void CXMLLoaderErrorHandle::resetErrors()
+none_ CXMLLoaderErrorHandle::fatalError(const SAXParseException &toCatch)
+{
+    m_bIsError = true_v;
+}
+
+none_ CXMLLoaderErrorHandle::resetErrors()
 {
     m_bIsError = false_v;
 }

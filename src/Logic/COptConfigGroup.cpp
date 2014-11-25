@@ -2,7 +2,7 @@
 
 #include "../Data/CVarGroupDefined.h"
 
-void COptConfigGroup::work(const TMessageUnit *tmu) {
+none_ COptConfigGroup::work(const TMessageUnit *tmu) {
     CField *field = null_v;
     v_ *groupData = null_v;
     TFieldGroup *fieldGroup = null_v;

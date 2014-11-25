@@ -147,7 +147,7 @@ COptSend::~COptSend() {
     clear();
 }
 
-void COptSend::clear() {
+none_ COptSend::clear() {
     _pduInfo = null_v;
     _sendType = NONE_SEND;
 
@@ -165,7 +165,7 @@ void COptSend::clear() {
     _evaluateVector.clear();
 }
 
-void COptSend::init(const optUnit *unit) {
+none_ COptSend::init(const optUnit *unit) {
     COperator::init(unit);
 
     for (vectorEvaluate::iterator pos = _evaluateVector.begin();
@@ -222,7 +222,7 @@ bool_ COptSend::addEvaluate(const ch_1 *fieldName,
     return true_v;
 }
 
-void COptSend::work(const TMessageUnit *tmu) {
+none_ COptSend::work(const TMessageUnit *tmu) {
     size_ size = 0;
 
     for (vectorEvaluate::const_iterator pos = _evaluateVector.begin();

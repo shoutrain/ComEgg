@@ -135,7 +135,7 @@ COptUseModule::~COptUseModule() {
     clear();
 }
 
-void COptUseModule::clear() {
+none_ COptUseModule::clear() {
     _interfaceInfo = null_v;
 
     for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
@@ -156,7 +156,7 @@ void COptUseModule::clear() {
     _outEvaluateVector.clear();
 }
 
-void COptUseModule::init(const optUnit *unit) {
+none_ COptUseModule::init(const optUnit *unit) {
     COperator::init(unit);
 
     for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
@@ -249,7 +249,7 @@ bool_ COptUseModule::addOutParameter(const ch_1 *fieldName,
     return true_v;
 }
 
-void COptUseModule::work(const TMessageUnit *tmu) {
+none_ COptUseModule::work(const TMessageUnit *tmu) {
     size_ size = 0;
 
     for (vectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
@@ -301,7 +301,7 @@ void COptUseModule::work(const TMessageUnit *tmu) {
 
     CModuleCall mc;
 
-    if (!mc.Call(_interfaceInfo->getModuleInfo()->getPath(),
+    if (!mc.call(_interfaceInfo->getModuleInfo()->getPath(),
             _interfaceInfo->getModuleInfo()->getName(),
             _interfaceInfo->getModuleInfo()->getExt(),
             _interfaceInfo->name(),

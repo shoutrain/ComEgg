@@ -17,7 +17,7 @@ CWorker::CWorker(ub_4 threadStackSize) :
 CWorker::~CWorker() {
 }
 
-void CWorker::work(IWorkable *workable, bool_ informed, bool_ sync) {
+none_ CWorker::work(IWorkable *workable, bool_ informed, bool_ sync) {
     if (_handle) {
         return;
     }
@@ -97,7 +97,7 @@ bool_ CWorker::createThread() {
         return false_v;
     }
 
-    if (0 != pthread_create(&_handle, &attr, CWorker::run, (void *) this)) {
+    if (0 != pthread_create(&_handle, &attr, CWorker::run, (obj_) this)) {
         logFatal("CWorker::createThread: failed to call pthread_create");
 
         return false_v;

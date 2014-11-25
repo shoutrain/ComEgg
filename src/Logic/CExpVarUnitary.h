@@ -31,7 +31,7 @@ public:
         return (CExpression *) new CExpVarUnitary(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         _variable->init(unit->data);
     }
 

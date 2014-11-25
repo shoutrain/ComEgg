@@ -2,7 +2,7 @@
 
 #include "../Data/CVarGroupDefined.h"
 
-void COptEmpty::work(const TMessageUnit *tmu) {
+none_ COptEmpty::work(const TMessageUnit *tmu) {
     CField *field = null_v;
     v_ *p = _variable->value((obj_ &) field);
 

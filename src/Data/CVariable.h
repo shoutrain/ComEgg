@@ -11,7 +11,7 @@ class CVariable
 public:
     virtual CVariable *clone() const = 0;
 
-    virtual void init(const CData *data) = 0;
+    virtual none_ init(const CData *data) = 0;
 
     virtual v_ *value(const TMessageUnit *tmu) = 0;
 

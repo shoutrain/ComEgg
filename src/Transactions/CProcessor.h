@@ -30,13 +30,13 @@ public:
 
 	ret_ Reset();
 
-	void SetData(const CData &Data)
+    none_ SetData(const CData &Data)
 	{
 		m_OrnData	= Data;
 		m_Data		= Data;
 	}
 
-	void SetNormalHandle(const CProgram &Program, ENormalHandle enh)
+    none_ SetNormalHandle(const CProgram &Program, ENormalHandle enh)
 	{
 		m_NormalHandle[enh] = Program;
 	}

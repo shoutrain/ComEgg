@@ -82,7 +82,7 @@ BREAK_EXIT_A:
 		return -1;
 	}
 
-	ACE_HANDLE get_handle(void) const
+    ACE_HANDLE get_handle(none_) const
 	{
 		if (m_bIsInited)
 			return m_Peer.get_handle();

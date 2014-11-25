@@ -26,7 +26,7 @@ public:
 
     const CData &operator=(const CData &data);
 
-    void SetParent(const CData *pParent) {
+    none_ SetParent(const CData *pParent) {
         _parent = (CData *) pParent;
     }
 
@@ -90,7 +90,7 @@ public:
             const ch_1 *subName,
             TFieldGroup *&data) const;
 
-    void clear();
+    none_ clear();
 
 private:
     CData *_parent;

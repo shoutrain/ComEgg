@@ -4,7 +4,7 @@
 #include "../Data/CFieldString.h"
 #include "../Data/CFieldGroup.h"
 
-void CInterfaceInfo::stop() {
+none_ CInterfaceInfo::stop() {
     for (mapField::iterator pos1 = _inFieldMap.begin();
          pos1 != _inFieldMap.end();
          pos1++) {

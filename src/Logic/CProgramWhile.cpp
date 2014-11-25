@@ -1,6 +1,6 @@
 #include "CProgramWhile.h"
 
-void CProgramWhile::work(const TMessageUnit *tmu) {
+none_ CProgramWhile::work(const TMessageUnit *tmu) {
     try {
         if (_judgeHead) {
             while (_expression->evaluate(tmu)) {

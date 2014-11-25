@@ -47,7 +47,7 @@ public:
         return (COperator *) new COptSearch(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         COperator::init(unit);
 
         m_pCategory->init(unit->data);
@@ -55,7 +55,7 @@ public:
         m_pObject->init(unit->data);
     }
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     CVariable *m_pCategory;

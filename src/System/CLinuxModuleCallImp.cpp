@@ -63,9 +63,9 @@ bool_ CLinuxModuleCallImp::call(const ch_1 *interfaceName,
         return false_v;
     }
 
-    void (*callFun)(const ub_1 *, size_, ub_1 *&, size_ &);
+    none_ (*callFun)(const ub_1 *, size_, ub_1 *&, size_ &);
 
-    callFun = (void (*)(const ub_1 *, size_, ub_1 *&, size_ &))
+    callFun = (none_ (*)(const ub_1 *, size_, ub_1 *&, size_ &))
             dlsym(_handle, interfaceName);
 
     const ch_1 *errMsg = dlerror();

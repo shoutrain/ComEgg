@@ -13,7 +13,7 @@ public:
 		m_bIsRunning = false_v;
 	}
 
-	int open(void *p)
+    int open(obj_ p)
 	{
 		if (SUCCESS != _ERR(OnOpen((const ub_1 *)p)))
 			return -1;
@@ -97,7 +97,7 @@ public:
 
 	int close(ulong)
 	{
-		// Just overriding to avoid call handle_close twice
+        // Just overriding to anone_ call handle_close twice
 		return 0;
 	}
 	

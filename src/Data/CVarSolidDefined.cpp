@@ -4,7 +4,7 @@ CVariable *CVarSolidDefined::clone() const {
     return (CVariable *) new CVarSolidDefined(_name);
 }
 
-void CVarSolidDefined::init(const CData *data) {
+none_ CVarSolidDefined::init(const CData *data) {
     _value = data->value(_name);
 }
 

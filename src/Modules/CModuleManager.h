@@ -24,7 +24,7 @@ public:
         return _instance;
     }
 
-    static void destroy() {
+    static none_ destroy() {
         _DEL(_instance);
     }
 
@@ -48,7 +48,7 @@ public:
     }
 
 protected:
-    void stop();
+    none_ stop();
 
 private:
     CModuleManager() {

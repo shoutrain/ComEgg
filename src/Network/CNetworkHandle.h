@@ -11,7 +11,7 @@ public:
 	CNetworkHandle(class_sign ClassID): CBaseClass(ClassID)
 	{
 		m_pProcessor = null_v;
-		memset((void *)&m_MsgInfo, 0, sizeof(TMsgInfo));
+        memset((obj_) &m_MsgInfo, 0, sizeof(TMsgInfo));
 		memset(m_Buf, 0, REV_BUFFER_MAX_SIZE);
 		m_nRecvSize = 0;
 	}

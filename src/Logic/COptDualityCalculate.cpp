@@ -1,6 +1,6 @@
 #include "COptDualityCalculate.h"
 
-void COptDualityCalculate::work(const TMessageUnit *tmu) {
+none_ COptDualityCalculate::work(const TMessageUnit *tmu) {
     switch (_opt) {
         case EC_ADD:
             (*_resultVariable->value(tmu))

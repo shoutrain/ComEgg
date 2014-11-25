@@ -1,6 +1,6 @@
 #include "COptUnregister.h"
 
-void COptUnregister::work(const TMessageUnit *tmu) {
+none_ COptUnregister::work(const TMessageUnit *tmu) {
     v_ *category = _category->value(tmu);
     v_ *key      = _key->value(tmu);
 

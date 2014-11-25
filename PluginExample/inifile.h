@@ -1,6 +1,6 @@
 /**
 * @file
-* @brief initialization file read and write API
+* @brief initialization file readFile and writeFile API
 *	-size of the ini file must less than 16K
 *	-after '=' in key value pair, can not support empty char. this would not like WIN32 API
 *	-support comment using ';' prefix

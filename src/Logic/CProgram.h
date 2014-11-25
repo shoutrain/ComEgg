@@ -22,7 +22,7 @@ public:
 
     virtual bool_ addOperator(const COperator *opt);
 
-    virtual void setData(const CData &data) {
+    virtual none_ setData(const CData &data) {
         _ornData = data;
         _data    = data;
     }
@@ -31,11 +31,11 @@ public:
         return _data;
     }
 
-    virtual void reset();
+    virtual none_ reset();
 
-    virtual void init(const optUnit *unit);
+    virtual none_ init(const optUnit *unit);
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 protected:
     CProgram(const EOperatorType type, const CData *data = null_v)
@@ -46,7 +46,7 @@ protected:
         }
     }
 
-    virtual void clear();
+    virtual none_ clear();
 
     vectorOpt _optVector;
 

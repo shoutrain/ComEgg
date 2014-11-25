@@ -1,7 +1,7 @@
 #include "COptSplit.h"
 #include "../System/CSysCall.h"
 
-void COptSplit::work(const TMessageUnit *tmu) {
+none_ COptSplit::work(const TMessageUnit *tmu) {
     v_ success((b_4) true_v);
     v_ failure((b_4) false_v);
 
@@ -13,7 +13,7 @@ void COptSplit::work(const TMessageUnit *tmu) {
 
     CSysCall sysCall;
 
-    if (!sysCall.Exec((const ch_1 *) command)) {
+    if (!sysCall.exec((const ch_1 *) command)) {
         return;
     }
 

@@ -1,6 +1,6 @@
 #include "COptUnitaryCalculate.h"
 
-void COptUnitaryCalculate::work(const TMessageUnit *tmu) {
+none_ COptUnitaryCalculate::work(const TMessageUnit *tmu) {
     switch (_opt) {
         case UC_EQL:
             (*_resultVariable->value(tmu)) =

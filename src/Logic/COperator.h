@@ -20,16 +20,16 @@ public:
         return _container;
     }
 
-    virtual void reset() {
+    virtual none_ reset() {
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         _container = unit->container;
         _parent = unit->parent;
         _data = unit->data;
     }
 
-    virtual void work(const TMessageUnit *tmu) = 0;
+    virtual none_ work(const TMessageUnit *tmu) = 0;
 
 protected:
     COperator(const EOperatorType type) {

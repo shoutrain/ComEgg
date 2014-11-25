@@ -2,7 +2,7 @@
 
 #include "../Network/NetworkCommon.h"
 
-void COptForward::work(const TMessageUnit *tmu) {
+none_ COptForward::work(const TMessageUnit *tmu) {
     TMsgInfo *msgInfo = ((TMessageUnit *) tmu)->msgInfo;
     TMsgInfo localMsgInfo;
     const CProcessor *processor = getContainer();

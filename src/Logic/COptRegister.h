@@ -51,7 +51,7 @@ public:
         return (COperator *) new COptRegister(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         COperator::init(unit);
 
         _category->init(unit->data);
@@ -59,7 +59,7 @@ public:
         _object->init(unit->data);
     }
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     CVariable *_category;

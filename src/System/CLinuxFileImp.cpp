@@ -33,7 +33,7 @@ bool_ CLinuxFileImp::openFile(const ch_1 *fullPath, bool_ isRead) {
     return true_v;
 }
 
-void CLinuxFileImp::closeFile() {
+none_ CLinuxFileImp::closeFile() {
     if (0 <= _file) {
         close(_file);
     }

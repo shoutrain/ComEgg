@@ -53,7 +53,7 @@ public:
     }
 
 protected:
-    void stop();
+    none_ stop();
 
 private:
     mapInterface _interfaceInfoMap;

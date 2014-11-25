@@ -40,7 +40,7 @@ public:
         return (CExpression *) new CExpVarDuality(*this);
     }
 
-    virtual void init(const optUnit *unit) {
+    virtual none_ init(const optUnit *unit) {
         _leftVar->init(unit->data);
         _rightVar->init(unit->data);
     }

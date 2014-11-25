@@ -29,7 +29,7 @@ public:
         return _name;
     }
 
-    void attach(const CField *field) {
+    none_ attach(const CField *field) {
         ((CField *) field)->setPrevField(this);
         setNextField(field);
     }
@@ -40,7 +40,7 @@ public:
     }
 
     // for group
-    void setSubField(const CField *field) {
+    none_ setSubField(const CField *field) {
         CField *rollField = (CField *) field;
         size_ size = 0;
 
@@ -69,11 +69,11 @@ public:
         return _subField;
     }
 
-    void setPrevField(const CField *field) {
+    none_ setPrevField(const CField *field) {
         _prevField = (CField *) field;
     }
 
-    void setNextField(const CField *field) {
+    none_ setNextField(const CField *field) {
         _nextField = (CField *) field;
     }
 

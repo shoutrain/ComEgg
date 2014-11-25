@@ -1,6 +1,6 @@
 /**
 * @file
-* @brief initialization file read and write API implementation
+* @brief initialization file readFile and writeFile API implementation
 * @author Deng Yangjun
 * @date 2007-1-9
 * @version 0.2
@@ -142,7 +142,7 @@ static int parse_file(const char *section, const char *key, const char *buf,
 }
 
 /**
-*@brief read string in initialization file\n
+*@brief readFile string in initialization file\n
 * retrieves a string from the specified section in an initialization file
 *@param section [in] name of the section containing the key name
 *@param key [in] name of the key pairs to value
@@ -150,7 +150,7 @@ static int parse_file(const char *section, const char *key, const char *buf,
 *@param size [in] size of result's buffer
 *@param default_value [in] default value of result
 *@param file [in] path of the initialization file
-*@return 1 : read success; \n 0 : read fail
+*@return 1 : readFile success; \n 0 : read fail
 */
 int read_profile_string(const char *section, const char *key, char *value,
         int size, const char *default_value, const char *file) {
@@ -194,13 +194,13 @@ int read_profile_string(const char *section, const char *key, char *value,
 }
 
 /**
-*@brief read int value in initialization file\n
+*@brief readFile int value in initialization file\n
 * retrieves int value from the specified section in an initialization file
 *@param section [in] name of the section containing the key name
 *@param key [in] name of the key pairs to value
 *@param default_value [in] default value of result
 *@param file [in] path of the initialization file
-*@return profile int value,if read fail, return default value
+*@return profile int value,if readFile fail, return default value
 */
 int read_profile_int(const char *section, const char *key, int default_value,
         const char *file) {
@@ -213,7 +213,7 @@ int read_profile_int(const char *section, const char *key, int default_value,
 }
 
 /**
-* @brief write a profile string to a ini file
+* @brief writeFile a profile string to a ini file
 * @param section [in] name of the section,can't be NULL and empty string
 * @param key [in] name of the key pairs to value, can't be NULL and empty string
 * @param value [in] profile string value

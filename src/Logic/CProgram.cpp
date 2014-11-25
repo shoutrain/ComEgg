@@ -37,7 +37,7 @@ bool_ CProgram::addOperator(const COperator *opt) {
     return true_v;
 }
 
-void CProgram::reset() {
+none_ CProgram::reset() {
     _data = _ornData;
 
     size_ n = (size_) _optVector.size();
@@ -47,7 +47,7 @@ void CProgram::reset() {
     }
 }
 
-void CProgram::init(const optUnit *unit) {
+none_ CProgram::init(const optUnit *unit) {
     COperator::init(unit);
     _data.SetParent(unit->data);
 
@@ -64,7 +64,7 @@ void CProgram::init(const optUnit *unit) {
     }
 }
 
-void CProgram::work(const TMessageUnit *tmu) {
+none_ CProgram::work(const TMessageUnit *tmu) {
     size_ n = (size_) _optVector.size();
 
     for (size_ i = 0; i < n; i++) {
@@ -84,7 +84,7 @@ void CProgram::work(const TMessageUnit *tmu) {
     reset();
 }
 
-void CProgram::clear() {
+none_ CProgram::clear() {
     _data.clear();
     _ornData.clear();
 

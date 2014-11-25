@@ -22,14 +22,14 @@ public:
 
     bool_ addOutParameter(const ch_1 *fieldName, CVariable *value);
 
-    virtual void init(const optUnit *unit);
+    virtual none_ init(const optUnit *unit);
 
-    virtual void work(const TMessageUnit *tmu);
+    virtual none_ work(const TMessageUnit *tmu);
 
 private:
     COptUseModule();
 
-    void clear();
+    none_ clear();
 
     CInterfaceInfo *_interfaceInfo;
 

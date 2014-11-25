@@ -102,7 +102,7 @@ typedef enum {
 #define _EVT(TYPE)                \
     ((evt_)((TYPE) & EVT_SIGN))
 
-// Delete object or object array
+// del object or object array
 #define _DEL(POINT)     \
     { \
         if (POINT) \

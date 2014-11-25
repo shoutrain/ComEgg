@@ -11,13 +11,13 @@ public:
 
     virtual ~CLoopBuffer();
 
-    // buffer: the buffer to be write to the LoopBuffer
+    // buffer: the buffer to be writeFile to the LoopBuffer
     // size: the buffer size
     // Return true if success, otherwise false
     bool_ write(const ch_1 *buffer, ub_4 size);
 
-    // buffer: the buffer to be read in
-    // size: the buffer size, the actual read size
+    // buffer: the buffer to be readFile in
+    // size: the buffer size, the actual readFile size
     // Return true if success, otherwise false
     bool_ read(ch_1 *uffer, ub_4 &size);
 

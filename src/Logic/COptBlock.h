@@ -23,7 +23,7 @@ public:
         return (COperator *) new COptBlock(*this);
     }
 
-    virtual void work(const TMessageUnit *tmu) {
+    virtual none_ work(const TMessageUnit *tmu) {
         callBlock Block;
 
         throw Block;
