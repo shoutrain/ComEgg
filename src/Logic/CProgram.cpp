@@ -49,7 +49,7 @@ none_ CProgram::reset() {
 
 none_ CProgram::init(const optUnit *unit) {
     COperator::init(unit);
-    _data.SetParent(unit->data);
+    _data.setParent(unit->data);
 
     optUnit ou;
 

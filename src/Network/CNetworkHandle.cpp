@@ -10,8 +10,8 @@ ret_ CNetworkHandle::Open()
 	if (SUCCESS != _ERR(Ret))
 		_RET(_ERR(Ret));
 
-	m_pProcessor->SetHandle(this);
-	m_pProcessor->ExecNormalHandle(&m_MsgInfo, START_HANDLE);
+    m_pProcessor->setHandle(this);
+    m_pProcessor->execNormalHandle(&m_MsgInfo, START_HANDLE);
 
 	_RET(SUCCESS);
 }
@@ -23,8 +23,8 @@ ret_ CNetworkHandle::Close()
 	if (!m_pProcessor)
 		_RET(FAILURE);
 
-	m_pProcessor->ExecNormalHandle(&m_MsgInfo, OVER_HANDLE);
-	m_pProcessor->Reset();
+    m_pProcessor->execNormalHandle(&m_MsgInfo, OVER_HANDLE);
+    m_pProcessor->reset();
 
 	CTransaction *pTransaction = (CTransaction *)GetConf()->getTransaction();
 	
@@ -148,6 +148,6 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 		_RET(FAILURE);
 #endif
 
-	_RET_BY(m_pProcessor->ExecMsgHandle(pPDUInfo, pMsg, nSize, pMsgInfo,
-										DIRECTION_IN));
+    _RET_BY(m_pProcessor->execMsgHandle(pPDUInfo, pMsg, nSize, pMsgInfo,
+            DIRECTION_IN));
 }

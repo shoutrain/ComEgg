@@ -1,36 +1,38 @@
-#ifndef CTRANSACTION_H
-#define CTRANSACTION_H
+#ifndef _C_TRANSACTION_H_
+#define _C_TRANSACTION_H_
 
 #include "CProcessor.h"
+#include "../Common/CResource.h"
 
-#include "../Tools/CResource.h"
-
-class CTransaction: public CBaseClass
-{
+class CTransaction : public CBase {
 public:
-	CTransaction(const CProcessor &Processor, const size_ &nSize)
-		: CBaseClass(CTRANSACTION) 
-	{
-		m_Resource.Initialize(Processor, nSize);
-	}
+    CTransaction(const CProcessor *processor, const size_ &size) : _resource(size, processor) {
+    }
 
-	virtual ~CTransaction() {}
+    virtual ~CTransaction() {
+    }
 
-    ret_ Allocate(CProcessor *&unit);
+    CProcessor *allocate() {
+        return _resource.allocate();
+    }
 
-    ret_ Release(CProcessor *&unit);
+    b_4 release(CProcessor *&unit) {
+        assert(unit);
+        return _resource.reclaim(unit);
+    }
 
-	size_ GetFreeSize()
-	{	
-		return m_Resource.GetFreeSize();
-	}
+    size_ getFreeSize() {
+        return _resource.size();
+    }
 
 private:
-	CTransaction();
-	CTransaction(const CTransaction &);
-	const CTransaction &operator =(const CTransaction &);
+    CTransaction();
 
-	CResource<CProcessor> m_Resource;
+    CTransaction(const CTransaction &);
+
+    const CTransaction &operator=(const CTransaction &);
+
+    CResource<CProcessor> _resource;
 };
 
-#endif // CTRANSACTION_H
+#endif // _C_TRANSACTION_H_

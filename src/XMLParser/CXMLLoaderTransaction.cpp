@@ -428,7 +428,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	//
 	CProcessor Processor;
 
-	Processor.Data().SetParent(&CTransactionManager::Instance()->Data());
+    Processor.data().setParent(&CTransactionManager::Instance()->Data());
 	
 	auto_xerces_str	wsName	("name");
 	auto_xerces_str sName	(pElement->getAttribute(wsName));
@@ -487,16 +487,16 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 			}
 
-			Processor.SetData(Data);
-			Processor.Data().SetParent(
-				&CTransactionManager::Instance()->Data());
+            Processor.setData(Data);
+            Processor.data().setParent(
+                    &CTransactionManager::Instance()->Data());
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(),
 											   wsStartHandle))
 		{
 			CProgram Program;
 
-			if (SUCCESS != _ERR(LoadProgram(&Processor.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Processor.data(),
 											Program,
 											pChild,
 											null_v)))
@@ -504,14 +504,14 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 			}
 
-			Processor.SetNormalHandle(Program, START_HANDLE);
+            Processor.setNormalHandle(Program, START_HANDLE);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(),
 											   wsOverHandle))
 		{
 			CProgram Program;
 
-			if (SUCCESS != _ERR(LoadProgram(&Processor.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Processor.data(),
 											Program,
 											pChild,
 											null_v)))
@@ -519,7 +519,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 			}
 
-			Processor.SetNormalHandle(Program, OVER_HANDLE);
+            Processor.setNormalHandle(Program, OVER_HANDLE);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(), wsHandle))
 		{
@@ -538,7 +538,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 
 			CProgram Program;
 
-			if (SUCCESS != _ERR(LoadProgram(&Processor.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Processor.data(),
 											Program,
 											pChild,
 											pPDUInfo)))
@@ -556,9 +556,9 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 
 			//
-			if (SUCCESS != _ERR(Processor.SetMsgHandle(Program,
-													   Direction,
-													   pPDUInfo)))
+            if (SUCCESS != _ERR(Processor.setMsgHandle(Program,
+                    Direction,
+                    pPDUInfo)))
             {
 				_RET(XML_LOADER_ERROR);
             }
@@ -568,7 +568,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 		{
 			CProgram Program;
 
-			if (SUCCESS != _ERR(LoadProgram(&Processor.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Processor.data(),
 											Program,
 											pChild,
 											null_v)))
@@ -576,14 +576,14 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 			}
 
-			Processor.SetNormalHandle(Program, DEFAULT_IN_HANDLE);
+            Processor.setNormalHandle(Program, DEFAULT_IN_HANDLE);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(),
 											   wsElseOutHandle))
 		{
 			CProgram Program;
 
-			if (SUCCESS != _ERR(LoadProgram(&Processor.Data(),
+            if (SUCCESS != _ERR(LoadProgram(&Processor.data(),
 											Program,
 											pChild,
 											null_v)))
@@ -591,7 +591,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 				_RET(XML_LOADER_ERROR);
 			}
 
-			Processor.SetNormalHandle(Program, DEFAULT_OUT_HANDLE);
+            Processor.setNormalHandle(Program, DEFAULT_OUT_HANDLE);
 		}
 
 		pChild = (DOMElement *)pChild->getNextSibling();
@@ -669,7 +669,7 @@ ret_ CXMLLoaderTransaction::LoadProgram(const CData *pParentData,
 	if (!pChild)
 		_RET(XML_LOADER_ERROR);
 
-    Program.data().SetParent(pParentData);
+    Program.data().setParent(pParentData);
 	
 	while (pChild)
 	{
@@ -1243,7 +1243,7 @@ ret_ CXMLLoaderTransaction::LoadIf(CProgram &Program,
 
 	CProgramIf *pPI = new CProgramIf();
 
-    pPI->data().SetParent(&Program.data());
+    pPI->data().setParent(&Program.data());
 	
 	while (pSub)
 	{
@@ -1345,7 +1345,7 @@ ret_ CXMLLoaderTransaction::LoadWhile(CProgram &Program,
 	CExpression *pExpression = null_v;
 	CProgramWhile *pPW = null_v;
 
-    Data.SetParent(&Program.data());
+    Data.setParent(&Program.data());
 
 	while (pSub)
 	{
@@ -1368,7 +1368,7 @@ ret_ CXMLLoaderTransaction::LoadWhile(CProgram &Program,
 				_RET(XML_LOADER_ERROR);
 
 			pPW = new CProgramWhile(b, pExpression, &Data);
-            pPW->data().SetParent(&Program.data());
+            pPW->data().setParent(&Program.data());
 		}
 		else if (0 == XMLString::compareString(pSub->getNodeName(),
 											   wsProcessBlock))

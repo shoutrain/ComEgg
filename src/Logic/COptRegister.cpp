@@ -29,7 +29,7 @@ none_ COptRegister::work(const TMessageUnit *tmu) {
                 return;
             }
 
-            if (0 != processor->Register(
+            if (0 != processor->registerItem(
                     (const ch_1 *) *category,
                     (const ch_1 *) *key, _isCovered)) {
                 assert(0);
@@ -54,7 +54,7 @@ none_ COptRegister::work(const TMessageUnit *tmu) {
             return;
         }
 
-        if (0 != processor->Register(
+        if (0 != processor->registerItem(
                 (const ch_1 *) *category,
                 (const ch_1 *) *key,
                 _isCovered)) {

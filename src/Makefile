@@ -22,7 +22,7 @@ all: depend ComEgg
 .PHONY: depend
 depend: 
 	cd Common && $(MAKE)
-	cd Data && $(MAKE)
+	cd data && $(MAKE)
 	cd Network && $(MAKE)
 	cd Modules && $(MAKE)
 	cd Logic && $(MAKE)

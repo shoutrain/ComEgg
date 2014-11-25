@@ -30,7 +30,7 @@ none_ COptForward::work(const TMessageUnit *tmu) {
         msgInfo = &localMsgInfo;
     }
 
-    if (0 != ((CProcessor *) processor)->Send(
+    if (0 != ((CProcessor *) processor)->send(
             (const CPduInfo *) ((TMessageUnit *) tmu)->pduInfo,
             ((TMessageUnit *) tmu)->message,
             ((TMessageUnit *) tmu)->size,

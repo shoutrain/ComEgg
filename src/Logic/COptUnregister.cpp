@@ -30,7 +30,7 @@ none_ COptUnregister::work(const TMessageUnit *tmu) {
                 return;
             }
 
-            if (0 != processor->Unregister((const ch_1 *) *category,
+            if (0 != processor->unregisterItem((const ch_1 *) *category,
                     (const ch_1 *) *key)) {
                 assert(0);
                 // TODO do something to tell outside

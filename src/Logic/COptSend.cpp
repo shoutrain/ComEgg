@@ -300,7 +300,7 @@ none_ COptSend::work(const TMessageUnit *tmu) {
         msgInfo = &localMsgInfo;
     }
 
-    if (0 != ((CProcessor *) processor)->Send(_pduInfo,
+    if (0 != ((CProcessor *) processor)->send(_pduInfo,
             mu.message,
             mu.size,
             msgInfo)) {

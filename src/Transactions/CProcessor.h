@@ -1,5 +1,5 @@
-#ifndef CPROCESSOR_H
-#define CPROCESSOR_H
+#ifndef _C_PROCESSOR_H_
+#define _C_PROCESSOR_H_
 
 #include "TransactionCommon.h"
 
@@ -11,81 +11,78 @@ class CNetworkHandle;
 
 using namespace std;
 
-typedef map<const CPduInfo *, const CProgram *> map_handle;
+typedef map<const CPduInfo *, const CProgram *> mapHandle;
 
-typedef set<string>								set_register;
-typedef map<string, set_register *>				map_register;
+typedef set<string>                setRegister;
+typedef map<string, setRegister *> mapRegister;
 
-class CProcessor: public CBaseClass
-{
+class CProcessor : public CBase {
 public:
-	CProcessor();
-	CProcessor(const CProcessor &Processor);
-	const CProcessor &operator =(const CProcessor &Processor);
+    CProcessor();
 
-	virtual ~CProcessor()
-	{
-		Stop();
-	}
+    CProcessor(const CProcessor &processor);
 
-	ret_ Reset();
+    const CProcessor &operator=(const CProcessor &processor);
 
-    none_ SetData(const CData &Data)
-	{
-		m_OrnData	= Data;
-		m_Data		= Data;
-	}
+    virtual ~CProcessor() {
+        stop();
+    }
 
-    none_ SetNormalHandle(const CProgram &Program, ENormalHandle enh)
-	{
-		m_NormalHandle[enh] = Program;
-	}
+    none_ reset();
 
-	ret_ SetMsgHandle(const CProgram &Program,
-					  EDirection Direction,
-            const CPduInfo *pPDUInfo);
+    none_ setData(const CData &data) {
+        _ornData = data;
+        _data    = data;
+    }
 
-	ret_ ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh);
+    none_ setNormalHandle(const CProgram &program, ENormalHandle enh) {
+        _normalHandle[enh] = program;
+    }
 
-    ret_ ExecMsgHandle(const CPduInfo *pPDUInfo,
-					   const ub_1 *pMsg,
-					   size_ nSize,
-					   const TMsgInfo *pMsgInfo,
-					   EDirection Direction);
+    b_4 setMsgHandle(const CProgram &program,
+            EDirection direction,
+            const CPduInfo *pduInfo);
 
-	ret_ SetHandle(const CNetworkHandle *pHandle);
+    none_ execNormalHandle(const TMsgInfo *msgInfo, ENormalHandle enh);
 
-    ret_ Send(const CPduInfo *pPDUInfo,
-			  const ub_1 *pMsg,
-			  size_ nSize,
-			  const TMsgInfo *pMsgInfo);
+    b_4 execMsgHandle(const CPduInfo *pduInfo,
+            const ub_1 *msg,
+            size_ size,
+            const TMsgInfo *msgInfo,
+            EDirection direction);
 
-	ret_ Register(const ch_1 *pszCategory,
-				  const ch_1 *pszKey,
-				  bool_ bIsCovered = false_v);
-	ret_ Unregister(const ch_1 *pszCategory, const ch_1 *pszKey);
+    none_ setHandle(const CNetworkHandle *handle);
 
-	CData &Data()
-	{
-		return m_Data;
-	}
+    b_4 send(const CPduInfo *pduInfo,
+            const ub_1 *msg,
+            size_ size,
+            const TMsgInfo *msgInfo);
+
+    b_4 registerItem(const ch_1 *category,
+            const ch_1 *key,
+            bool_ isCovered = false_v);
+
+    b_4 unregisterItem(const ch_1 *category, const ch_1 *key);
+
+    CData &data() {
+        return _data;
+    }
 
 protected:
-	ret_ Stop();
+    none_ stop();
 
 private:
-	CData m_OrnData;
-	CData m_Data;
+    CData _ornData;
+    CData _data;
 
-	CProgram m_NormalHandle[NORMAL_HANDLE];
+    CProgram _normalHandle[NORMAL_HANDLE];
 
-	map_handle m_HandleInMap;
-	map_handle m_HandleOutMap;
+    mapHandle _handleInMap;
+    mapHandle _handleOutMap;
 
-	CNetworkHandle *m_pHandle;
+    CNetworkHandle *_handle;
 
-	map_register m_RegisterMap;
+    mapRegister _registerMap;
 };
 
-#endif // CPROCESSOR_H
-
+#endif // _C_PROCESSOR_H_

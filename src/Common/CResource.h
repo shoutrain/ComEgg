@@ -90,7 +90,7 @@ public:
 
 private:
     const ub_4 _maxNum;
-    T **_unitGroup;
+    T      **_unitGroup;
     CMutex *_mutex;
 
     std::deque<T *> _freeDeque;

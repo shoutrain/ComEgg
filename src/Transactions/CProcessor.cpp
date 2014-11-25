@@ -4,589 +4,381 @@
 
 #include "../Logic/LogicCommon.h"
 #include "../Network/CNetworkHandle.h"
-#include "../Tools/CRegister.h"
+#include "../Common/CRegister.h"
 
-CProcessor::CProcessor(): CBaseClass(CPROCESSOR)
-{
-	m_Data.SetParent((const CData *)&CTransactionManager::Instance()->Data());
+CProcessor::CProcessor() {
+    _data.setParent((const CData *) &CTransactionManager::Instance()->Data());
 
-    optUnit Unit;
+    optUnit unit;
 
-    Unit.data = &m_Data;
-    Unit.container = this;
-    Unit.parent = null_v;
+    unit.data      = &_data;
+    unit.container = this;
+    unit.parent    = null_v;
 
-	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-        m_NormalHandle[i].init(&Unit);
+    for (size_ i = 0; i < (size_) NORMAL_HANDLE; i++) {
+        _normalHandle[i].init(&unit);
+    }
 
-	m_pHandle = null_v;
+    _handle = null_v;
 }
 
-CProcessor::CProcessor(const CProcessor &Processor): CBaseClass(CPROCESSOR)
-{
-	m_OrnData	= Processor.m_OrnData;
-	m_Data		= Processor.m_Data;
-	m_Data.SetParent((const CData *)&CTransactionManager::Instance()->Data());
+CProcessor::CProcessor(const CProcessor &processor) {
+    _ornData = processor._ornData;
+    _data    = processor._data;
+    _data.setParent((const CData *) &CTransactionManager::Instance()->Data());
 
-    optUnit Unit;
+    optUnit unit;
 
-    Unit.container = this;
-    Unit.data = &m_Data;
-    Unit.parent = null_v;
+    unit.container = this;
+    unit.data      = &_data;
+    unit.parent    = null_v;
 
-	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-	{
-		m_NormalHandle[i] = Processor.m_NormalHandle[i];
-        m_NormalHandle[i].init(&Unit);
-	}
+    for (size_ i = 0; i < (size_) NORMAL_HANDLE; i++) {
+        _normalHandle[i] = processor._normalHandle[i];
+        _normalHandle[i].init(&unit);
+    }
 
-	m_pHandle = null_v;
+    _handle = null_v;
 
-	map_handle::const_iterator pos;
+    mapHandle::const_iterator pos;
 
-	for (pos = Processor.m_HandleInMap.begin();
-		 pos != Processor.m_HandleInMap.end(); pos++)
-	{
-		CProgram *pHandle = new CProgram(*pos->second);
+    for (pos = processor._handleInMap.begin();
+         pos != processor._handleInMap.end(); pos++) {
+        CProgram *handle = new CProgram(*pos->second);
 
-		m_HandleInMap.insert(map_handle::value_type(pos->first, pHandle));
-	}
+        _handleInMap.insert(mapHandle::value_type(pos->first, handle));
+    }
 
-	for (pos = Processor.m_HandleOutMap.begin();
-		 pos != Processor.m_HandleOutMap.end(); pos++)
-	{
-		CProgram *pHandle = new CProgram(*pos->second);
+    for (pos = processor._handleOutMap.begin();
+         pos != processor._handleOutMap.end(); pos++) {
+        CProgram *handle = new CProgram(*pos->second);
 
-		m_HandleOutMap.insert(map_handle::value_type(pos->first, pHandle));
-	}
+        _handleOutMap.insert(mapHandle::value_type(pos->first, handle));
+    }
 }
 
-const CProcessor &CProcessor::operator =(const CProcessor &Processor)
-{
-	if (this != &Processor)
-	{
-		Stop();
+const CProcessor &CProcessor::operator=(const CProcessor &processor) {
+    if (this != &processor) {
+        stop();
 
-		m_OrnData	= Processor.m_OrnData;
-		m_Data		= Processor.m_Data;
+        _ornData = processor._ornData;
+        _data    = processor._data;
 
-        optUnit Unit;
+        optUnit unit;
 
-        Unit.container = this;
-        Unit.data = &m_Data;
-        Unit.parent = null_v;
+        unit.container = this;
+        unit.data      = &_data;
+        unit.parent    = null_v;
 
-		for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-		{
-			m_NormalHandle[i] = Processor.m_NormalHandle[i];
-            m_NormalHandle[i].init(&Unit);
-		}
+        for (size_ i = 0; i < (size_) NORMAL_HANDLE; i++) {
+            _normalHandle[i] = processor._normalHandle[i];
+            _normalHandle[i].init(&unit);
+        }
 
-		m_pHandle = null_v;
+        _handle = null_v;
 
-		map_handle::const_iterator pos;
+        mapHandle::const_iterator pos;
 
-		for (pos = Processor.m_HandleInMap.begin();
-			 pos != Processor.m_HandleInMap.end(); pos++)
-		{
-			CProgram *pHandle = new CProgram(*pos->second);
+        for (pos = processor._handleInMap.begin();
+             pos != processor._handleInMap.end(); pos++) {
+            CProgram *handle = new CProgram(*pos->second);
 
-			m_HandleInMap.insert(map_handle::value_type(pos->first, pHandle));
-		}
+            _handleInMap.insert(mapHandle::value_type(pos->first, handle));
+        }
 
-		for (pos = Processor.m_HandleOutMap.begin();
-			 pos != Processor.m_HandleOutMap.end(); pos++)
-		{
-			CProgram *pHandle = new CProgram(*pos->second);
+        for (pos = processor._handleOutMap.begin();
+             pos != processor._handleOutMap.end(); pos++) {
+            CProgram *handle = new CProgram(*pos->second);
 
-			m_HandleOutMap.insert(map_handle::value_type(pos->first, pHandle));
-		}
-	}
+            _handleOutMap.insert(mapHandle::value_type(pos->first, handle));
+        }
+    }
 
-	return *this;
+    return *this;
 }
 
-ret_ CProcessor::Stop()
-{
-	_START(STOP);
+none_ CProcessor::stop() {
+    mapHandle::iterator pos;
 
-	map_handle::iterator pos;
+    for (pos = _handleInMap.begin(); pos != _handleInMap.end(); pos++) {
+        assert(pos->second);
+        _DEL(pos->second);
+    }
 
-	for (pos = m_HandleInMap.begin(); pos != m_HandleInMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos->second);
-	}
+    for (pos = _handleOutMap.begin(); pos != _handleOutMap.end(); pos++) {
+        assert(pos->second);
+        _DEL(pos->second);
+    }
 
-	for (pos = m_HandleOutMap.begin(); pos != m_HandleOutMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos->second);
-	}
+    _handleInMap.clear();
+    _handleOutMap.clear();
 
-	m_HandleInMap.clear();
-	m_HandleOutMap.clear();
+    for (mapRegister::iterator pos_ = _registerMap.begin();
+         pos_ != _registerMap.end(); pos_++) {
+        assert(pos->second);
 
-	for (map_register::iterator pos_ = m_RegisterMap.begin();
-		 pos_ != m_RegisterMap.end(); pos_++)
-	{
-#ifdef _DEBUG_
-		if (!pos_->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+        for (setRegister::iterator pos_1 = pos_->second->begin();
+             pos_1 != pos_->second->end(); pos_1++) {
+            ch_1 *category = (ch_1 *) pos_->first.data();
+            ch_1 *key      = (ch_1 *) pos_1->data();
+            b_4  ret       = CRegister::instance()->unregisterItem(category, key);
 
-		for (set_register::iterator pos_1 = pos_->second->begin();
-			 pos_1 != pos_->second->end(); pos_1++)
-		{
-			ch_1 *sCategory	= (ch_1 *)pos_->first.data();
-			ch_1 *pszKey		= (ch_1 *)pos_1->data();
-			ret_ Ret		=
-				CRegister::Instance()->Unregister(sCategory, pszKey);
+            assert(0 == ret);
+            CTransactionManager::Instance()->Unregister(category, key);
+        }
 
-#ifdef _DEBUG_
-			if (SUCCESS != _ERR(Ret))
-				_RET_BY(Ret);
-#endif
+        pos_->second->clear();
+        _DEL(pos_->second);
+    }
 
-			CTransactionManager::Instance()->Unregister(sCategory, pszKey);
-		}
-
-		pos_->second->clear();
-		_DEL(pos_->second);
-	}
-
-	m_RegisterMap.clear();
-
-	_RET(SUCCESS);
+    _registerMap.clear();
 }
 
-ret_ CProcessor::Reset()
-{
-	_START(RESET);
+none_ CProcessor::reset() {
+    _data = _ornData;
 
-	m_Data = m_OrnData;
+    for (size_ i = 0; i < (size_) NORMAL_HANDLE; i++) {
+        _normalHandle[i].reset();
+    }
 
-	for (size_ i = 0; i < (size_)NORMAL_HANDLE; i++)
-        m_NormalHandle[i].reset();
+    _handle = null_v;
 
-	m_pHandle = null_v;
+    mapHandle::iterator pos;
 
-	map_handle::iterator pos;
-
-	for (pos = m_HandleInMap.begin(); pos != m_HandleInMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+    for (pos = _handleInMap.begin(); pos != _handleInMap.end(); pos++) {
+        assert(pos->second);
         ((CProgram *) pos->second)->reset();
-	}
+    }
 
-	for (pos = m_HandleOutMap.begin(); pos != m_HandleOutMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+    for (pos = _handleOutMap.begin(); pos != _handleOutMap.end(); pos++) {
+        assert(pos->second);
         ((CProgram *) pos->second)->reset();
-	}
+    }
 
-	for (map_register::iterator pos_ = m_RegisterMap.begin();
-		 pos_ != m_RegisterMap.end(); pos_++)
-	{
-#ifdef _DEBUG_
-		if (!pos_->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+    for (mapRegister::iterator pos_ = _registerMap.begin();
+         pos_ != _registerMap.end(); pos_++) {
+        assert(pos->second);
 
-		for (set_register::iterator pos_1 = pos_->second->begin();
-			 pos_1 != pos_->second->end(); pos_1++)
-		{
-			ch_1 *sCategory	= (ch_1 *)pos_->first.data();
-			ch_1 *pszKey		= (ch_1 *)pos_1->data();
-			ret_ Ret		=
-				CRegister::Instance()->Unregister(sCategory, pszKey);
+        for (setRegister::iterator pos_1 = pos_->second->begin();
+             pos_1 != pos_->second->end(); pos_1++) {
+            ch_1 *category = (ch_1 *) pos_->first.data();
+            ch_1 *key      = (ch_1 *) pos_1->data();
+            b_4  ret       =
+                         CRegister::instance()->unregisterItem(category, key);
 
-#ifdef _DEBUG_
-			if (SUCCESS != _ERR(Ret))
-				_RET_BY(Ret);
-#endif
+            assert(0 == ret);
+            CTransactionManager::Instance()->Unregister((const ch_1 *) category,
+                    key);
+        }
 
-			CTransactionManager::Instance()->Unregister((const ch_1 *)sCategory,
-														pszKey);
-		}
+        pos_->second->clear();
+        _DEL(pos_->second);
+    }
 
-		pos_->second->clear();
-		_DEL(pos_->second);
-	}
-
-	m_RegisterMap.clear();
-
-	_RET(SUCCESS);
+    _registerMap.clear();
 }
 
-ret_ CProcessor::SetMsgHandle(const CProgram &Program,
-							  EDirection Direction,
-        const CPduInfo *pPDUInfo)
-{
-	_START(SET_MSG_HANDLE);
+b_4 CProcessor::setMsgHandle(const CProgram &program,
+        EDirection direction,
+        const CPduInfo *pduInfo) {
+    if (DIRECTION_IN != direction &&
+            DIRECTION_OUT != direction &&
+            DIRECTION_ALL != direction) {
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (DIRECTION_IN		!= Direction &&
-		DIRECTION_OUT		!= Direction &&
-		DIRECTION_ALL		!= Direction)
+    if (!pduInfo) {
+        return 2;
+    }
 
-	{
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_2);
-	}
+    if (DIRECTION_IN == (EDirection) (direction & DIRECTION_IN)) {
+        if (_handleInMap.end() == _handleInMap.find(pduInfo)) {
+            assert(0);
+            return 3;
+        }
 
-	if (!pPDUInfo)
-		_RET(PARAMETER_NULL | PARAMETER_3);
-#endif
+        CProgram *handle = new CProgram(program);
 
-	if (DIRECTION_IN == (EDirection)(Direction & DIRECTION_IN))
-	{
-#ifdef _DEBUG_
-		map_handle::const_iterator pos = m_HandleInMap.find(pPDUInfo);
+        _handleInMap.insert(mapHandle::value_type(pduInfo, handle));
+    }
 
-		if (pos != m_HandleInMap.end())
-			_RET(ELEMENT_EXIST_IN_CONTAINER);
-#endif
+    if (DIRECTION_OUT == (EDirection) (direction & DIRECTION_OUT)) {
+        if (_handleOutMap.end() == _handleOutMap.find(pduInfo)) {
+            assert(0);
+            return 4;
+        }
 
-		CProgram *pHandle = new CProgram(Program);
+        CProgram *handle = new CProgram(program);
 
-		m_HandleInMap.insert(map_handle::value_type(pPDUInfo, pHandle));
-	}
+        _handleOutMap.insert(mapHandle::value_type(pduInfo, handle));
+    }
 
-	if (DIRECTION_OUT == (EDirection)(Direction & DIRECTION_OUT))
-	{
-#ifdef _DEBUG_
-		map_handle::const_iterator pos = m_HandleOutMap.find(pPDUInfo);
-
-		if (pos != m_HandleOutMap.end())
-			_RET(ELEMENT_EXIST_IN_CONTAINER);
-#endif
-
-		CProgram *pHandle = new CProgram(Program);
-
-		m_HandleOutMap.insert(map_handle::value_type(pPDUInfo, pHandle));
-	}
-
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CProcessor::ExecNormalHandle(const TMsgInfo *pMsgInfo, ENormalHandle enh)
-{
-	_START(EXEC_NORMAL_HANDLE);
+none_ CProcessor::execNormalHandle(const TMsgInfo *msgInfo, ENormalHandle enh) {
+    TMessageUnit tmu;
 
-	TMessageUnit tmu;
+    memset(&tmu, 0, sizeof(TMessageUnit));
+    tmu.msgInfo = (TMsgInfo *) msgInfo;
 
-	memset(&tmu, 0, sizeof(TMessageUnit));
-	tmu.msgInfo = (TMsgInfo *)pMsgInfo;
-
-	try
-	{
-        m_NormalHandle[enh].work(&tmu);
-	}
-	catch (error_code err)
-	{
-		_RET(err);
-	}
-
-	_RET(SUCCESS);
+    _normalHandle[enh].work(&tmu);
 }
 
-ret_ CProcessor::ExecMsgHandle(const CPduInfo *pPDUInfo,
-							   const ub_1 *pMsg,
-							   size_ nSize,
-							   const TMsgInfo *pMsgInfo,
-							   EDirection Direction)
-{
-	_START(EXEC_MSG_HANDLE);
+b_4 CProcessor::execMsgHandle(const CPduInfo *pduInfo,
+        const ub_1 *msg,
+        size_ size,
+        const TMsgInfo *msgInfo,
+        EDirection direction) {
+    if (!pduInfo || !msg || 0 >= size) {
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!pPDUInfo)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    if (DIRECTION_IN != direction &&
+            DIRECTION_OUT != direction) {
+        return 2;
+    }
 
-	if (!pMsg)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+    TMessageUnit tmu;
 
-	if (0 >= size)
-		_RET(PARAMETER_ERROR | PARAMETER_3);
+    tmu.pduInfo = (CPduInfo *) pduInfo;
+    tmu.message = (ub_1 *) msg;
+    tmu.size    = size;
+    tmu.msgInfo = (TMsgInfo *) msgInfo;
 
-	if (DIRECTION_IN		!= Direction &&
-		DIRECTION_OUT		!= Direction)
-	{
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_4);
-	}
-#endif
+    optUnit unit;
 
-	TMessageUnit tmu;
+    unit.data      = &_data;
+    unit.container = this;
+    unit.parent    = null_v;
 
-    tmu.pduInfo = (CPduInfo *) pPDUInfo;
-	tmu.message	= (ub_1 *)pMsg;
-	tmu.size		= nSize;
-	tmu.msgInfo	= (TMsgInfo *)pMsgInfo;
+    mapHandle::const_iterator pos;
 
-    optUnit Unit;
+    if (DIRECTION_IN == direction) {
+        pos = _handleInMap.find(pduInfo);
 
-    Unit.data = &m_Data;
-    Unit.container = this;
-    Unit.parent = null_v;
+        if (pos != _handleInMap.end()) {
+            assert(pos->second);
 
-	map_handle::const_iterator pos;
+            ((CProgram *) pos->second)->init(&unit);
+            ((CProgram *) pos->second)->work(&tmu);
+        } else {
+            _normalHandle[DEFAULT_IN_HANDLE].work(&tmu);
+        }
+    } else if (DIRECTION_OUT == direction) {
+        pos = _handleOutMap.find(pduInfo);
 
-	if (DIRECTION_IN == Direction)
-	{
-		pos = m_HandleInMap.find(pPDUInfo);
+        if (pos != _handleOutMap.end()) {
+            assert(pos->second);
 
-		if (pos != m_HandleInMap.end())
-		{
-#ifdef _DEBUG_
-			if (!pos->second)
-				_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+            ((CProgram *) pos->second)->init(&unit);
+            ((CProgram *) pos->second)->work(&tmu);
+        } else {
+            _normalHandle[DEFAULT_OUT_HANDLE].work(&tmu);
+        }
+    }
 
-			try
-			{
-                ((CProgram *) pos->second)->init(&Unit);
-                ((CProgram *) pos->second)->work(&tmu);
-			}
-			catch (error_code err)
-			{
-				_RET(err);
-			}
-		}
-		else
-		{
-			try
-			{
-                m_NormalHandle[DEFAULT_IN_HANDLE].work(&tmu);
-			}
-			catch (error_code err)
-			{
-				_RET(err);
-			}
-		}
-	}
-	else if (DIRECTION_OUT == Direction)
-	{
-		pos = m_HandleOutMap.find(pPDUInfo);
-
-		if (pos != m_HandleOutMap.end())
-		{
-#ifdef _DEBUG_
-			if (!pos->second)
-				_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-			try
-			{
-                ((CProgram *) pos->second)->init(&Unit);
-                ((CProgram *) pos->second)->work(&tmu);
-			}
-			catch (error_code err)
-			{
-				_RET(err);
-			}
-		}
-		else
-		{
-			try
-			{
-                m_NormalHandle[DEFAULT_OUT_HANDLE].work(&tmu);
-			}
-			catch (error_code err)
-			{
-				_RET(err);
-			}
-		}
-	}
-
-	_RET(SUCCESS);
+    return 0;
 }
 
-ret_ CProcessor::SetHandle(const CNetworkHandle *pHandle)
-{
-	_START(SET_HANDLE);
-
-#ifdef _DEBUG_
-	if (!pHandle)
-		_RET(PARAMETER_NULL | PARAMETER_1);
-#endif
-
-	m_pHandle = (CNetworkHandle *)pHandle;
-
-	_RET(SUCCESS);
+none_ CProcessor::setHandle(const CNetworkHandle *handle) {
+    assert(handle);
+    _handle = (CNetworkHandle *) handle;
 }
 
-ret_ CProcessor::Send(const CPduInfo *pPDUInfo,
-					  const ub_1 *pMsg,
-					  size_ nSize,
-					  const TMsgInfo *pMsgInfo)
-{
-	_START(SEND);
+b_4 CProcessor::send(const CPduInfo *pduInfo,
+        const ub_1 *msg,
+        size_ size,
+        const TMsgInfo *msgInfo) {
+    if (!_handle || !pduInfo || !msg || 0 >= size || !msgInfo) {
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!m_pHandle)
-		_RET(FAILURE);
+    if (0 != _handle->CheckSend(pduInfo, msg, size)) {
+        return 2;
+    }
 
-	if (!pPDUInfo)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    TMsgInfo localMsgInfo;
 
-	if (!pMsg)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+    memcpy(&localMsgInfo, msgInfo, sizeof(TMsgInfo));
+    memcpy(localMsgInfo.localIP, _handle->GetLocalIP(), IP_MAX_LENGTH);
+    localMsgInfo.localPort = _handle->GetLocalPort();
 
-	if (0 >= size)
-		_RET(PARAMETER_ERROR | PARAMETER_3);
+    if (0 != execMsgHandle(pduInfo, msg, size, &localMsgInfo, DIRECTION_OUT)) {
+        return 3;
+    }
 
-	if (!pMsgInfo)
-		_RET(PARAMETER_NULL | PARAMETER_4);
-#endif
-
-	ret_ Ret = m_pHandle->CheckSend(pPDUInfo, pMsg, nSize);
-
-	if (SUCCESS != _ERR(Ret))
-		_RET_BY(Ret);
-
-	TMsgInfo MsgInfo;
-
-	memcpy(&MsgInfo, pMsgInfo, sizeof(TMsgInfo));
-	memcpy(MsgInfo.localIP, m_pHandle->GetLocalIP(), IP_MAX_LENGTH);
-	MsgInfo.localPort = m_pHandle->GetLocalPort();
-
-	Ret = ExecMsgHandle(pPDUInfo, pMsg, nSize, &MsgInfo, DIRECTION_OUT);
-
-	if (SUCCESS != _ERR(Ret))
-		_RET(Ret);
-
-	_RET_BY(m_pHandle->Send(pMsg,
-							nSize,
-							MsgInfo.remoteIP,
-							MsgInfo.remotePort));
+    return _handle->Send(msg,
+            size,
+            localMsgInfo.remoteIP,
+            localMsgInfo.remotePort);
 }
 
-ret_ CProcessor::Register(const ch_1 *pszCategory,
-						  const ch_1 *pszKey,
-						  bool_ bIsCovered)
-{
-	_START(PROCESSOR_REGISTER);
+b_4 CProcessor::registerItem(const ch_1 *category, const ch_1 *key, bool_ isCovered) {
+    if (!category || 0 == category[0] || !key || 0 == key[0]) {
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!category)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    v_ variable((obj_) this);
 
-	if (0 == category[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (0 != CRegister::instance()->registerItem(category,
+            key,
+            &variable,
+            isCovered)) {
+        return 2;
+    }
 
-	if (!key)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+    mapRegister::iterator pos = _registerMap.find(category);
 
-	if (0 == key[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_2);
-#endif
+    if (_registerMap.end() != pos) {
+        setRegister::iterator pos_ = pos->second->find(key);
 
-	try
-	{
-		v_		Varialbe((obj_)this);
-		ret_	Ret = CRegister::Instance()->Register(pszCategory,
-													  pszKey,
-													  &Varialbe,
-													  bIsCovered);
+        if (pos->second->end() == pos_) {
+            pos->second->insert(key);
+        }
+    } else {
+        setRegister *set = new setRegister;
 
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-	}
-	catch (...)
-	{
-		_RET(DEFINE_VARIABLE_FAILURE);
-	}
+        set->insert(key);
+        _registerMap.insert(mapRegister::value_type(category, set));
+    }
 
-	map_register::iterator pos = m_RegisterMap.find(pszCategory);
+    CProcessor *processor = this;
 
-	if (m_RegisterMap.end() != pos)
-	{
-		set_register::iterator pos_ = pos->second->find(pszKey);
-
-		if (pos->second->end() == pos_)
-			pos->second->insert(pszKey);
-	}
-	else
-	{
-		set_register *pSet = new set_register;
-
-		pSet->insert(pszKey);
-		m_RegisterMap.insert(map_register::value_type(pszCategory, pSet));
-	}
-
-    CProcessor *pProcessor = this;
-
-	CTransactionManager::Instance()->Register(pszCategory,
-											  pszKey,
-											  pProcessor,
-											  bIsCovered);
-
-	_RET(SUCCESS);
+    CTransactionManager::Instance()->Register(category,
+            key,
+            processor,
+            isCovered);
 }
 
-ret_ CProcessor::Unregister(const ch_1 *pszCategory, const ch_1 *pszKey)
-{
-	_START(PROCESSOR_UNREGISTER);
+b_4 CProcessor::unregisterItem(const ch_1 *category, const ch_1 *key) {
+    if (!category || 0 == category[0] || !key || 0 == key[0]) {
+        return 1;
+    }
 
-#ifdef _DEBUG_
-	if (!category)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    CProcessor *processor = null_v;
 
-	if (0 == category[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (0 == CTransactionManager::Instance()->Search(category,
+            key,
+            processor)) {
+        assert(processor);
+        mapRegister::iterator pos = _registerMap.find(category);
 
-	if (!key)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+        if (_registerMap.end() != pos) {
+            setRegister::iterator pos_ = pos->second->find(key);
 
-	if (0 == key[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_2);
-#endif
+            if (pos->second->end() != pos_) {
+                pos->second->erase(key);
 
-	CProcessor *pProcessor = null_v;
+                if (0 == pos->second->size()) {
+                    _registerMap.erase(category);
+                }
+            }
+        }
 
-	if (SUCCESS == _ERR(CTransactionManager::Instance()->Search(pszCategory,
-																pszKey,
-																pProcessor)))
-	{
-#ifdef _DEUB_
-		if (!pProcessor)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+        CTransactionManager::Instance()->Unregister(category, key);
+    }
 
-		map_register::iterator pos = m_RegisterMap.find(pszCategory);
-
-		if (m_RegisterMap.end() != pos)
-		{
-			set_register::iterator pos_ = pos->second->find(pszKey);
-
-			if (pos->second->end() != pos_)
-			{
-				pos->second->erase(pszKey);
-
-				if (0 == pos->second->size())
-					m_RegisterMap.erase(pszCategory);
-			}
-		}
-
-		CTransactionManager::Instance()->Unregister(pszCategory, pszKey);
-	}
-
-	ret_ Ret = CRegister::Instance()->Unregister(pszCategory, pszKey);
-
-	if (SUCCESS != _ERR(Ret))
-		_RET_BY(Ret);
-
-	_RET(SUCCESS);
+    return CRegister::instance()->unregisterItem(category, key);
 }
 
