@@ -1,7 +1,7 @@
-#ifndef CTRANSACTION_MANAGER_H
-#define CTRANSACTION_MANAGER_H
+#ifndef _C_TRANSACTION_MANAGER_H_
+#define _C_TRANSACTION_MANAGER_H_
 
-#include "../Tools/CResource.h"
+#include "../Common/CResource.h"
 #include "CTransaction.h"
 
 #include <string>
@@ -9,78 +9,79 @@
 
 using namespace std;
 
-typedef map<string, const CTransaction *>	map_transaction;
+typedef map<string, const CTransaction *> mapTransaction;
+typedef map<string, const CProcessor *>   mapProcessor;
+typedef map<string, mapProcessor *>       mapProcessorCategory;
 
-typedef map<string, const CProcessor *>		map_processor;
-typedef map<string, map_processor *>		map_processor_category;
-
-class CTransactionManager: public CBaseClass
-{
+class CTransactionManager : public CBase {
 public:
-	static CTransactionManager *Instance()
-	{
-		if (m_pInstance)
-			return m_pInstance;
+    static CTransactionManager *instance() {
+        if (_instance) {
+            return _instance;
+        }
 
-		m_pInstance = new CTransactionManager;
+        _instance = new CTransactionManager;
 
-		return m_pInstance;
-	}
+        return _instance;
+    }
 
-    static none_ Destory()
-	{
-		_DEL(m_pInstance);
-	}
+    static none_ destroy() {
+        _DEL(_instance);
+    }
 
-	CData &Data()
-	{
-		return m_Data;
-	}
+    CData &data() {
+        return _data;
+    }
 
-	ret_ AddTransaction(const ch_1 *pszTransactionName, 
-						const CProcessor &Processor, 
-						const size_ nSize);
-	ret_ GetTransaction(const ch_1 *pszTransactionName, 
-						CTransaction *&pTransaction);
+    none_ addTransaction(const ch_1 *transactionName,
+            const CProcessor &processor,
+            const size_ size);
 
-	bool_ IsTransactionReady(const ch_1 *pszTransactionName)
-	{
-		if (!pszTransactionName)
-			return false_v;
+    CTransaction *getTransaction(const ch_1 *transactionName);
 
-		if (m_TransactionMap.end() != m_TransactionMap.find(pszTransactionName))
-			return true_v;
+    bool_ isTransactionReady(const ch_1 *transactionName) {
+        if (!transactionName) {
+            return false_v;
+        }
 
-		return false_v;
-	}
+        if (_transactionMap.end() != _transactionMap.find(transactionName)) {
+            return true_v;
+        }
+
+        return false_v;
+    }
 
 protected:
-	ret_ Stop();
+    none_ stop();
 
 private:
-	friend class CProcessor;
+    friend class CProcessor;
 
-	// Just CProcessor can use following three methods.
-	ret_ Register(const ch_1 *pszCategory, const ch_1 *pszKey, const CProcessor *pProcessor,
-				  const bool_ bIsCovered = false_v);
-	ret_ Unregister(const ch_1 *pszCategory, const ch_1 *pszKey);
-	ret_ Search(const ch_1 *pszCategory, const ch_1 *pszKey, CProcessor *&pProcessor);
+    // Just CProcessor can use following three methods.
+    none_ registerItem(const ch_1 *category, const ch_1 *key,
+            const CProcessor *processor,
+            const bool_ isCovered = false_v);
 
-	CTransactionManager(): CBaseClass(CTRANSACTIONMANAGER) {}
+    none_ unregisterItem(const ch_1 *category, const ch_1 *key);
 
-	CTransactionManager(const CTransactionManager &);
-	const CTransactionManager &operator =(const CTransactionManager &);
+    CProcessor *searchItem(const ch_1 *category, const ch_1 *key);
 
-	virtual ~CTransactionManager()
-	{
-		Stop();
-	}
+    CTransactionManager() {
+    }
 
-	static CTransactionManager	*m_pInstance;
+    CTransactionManager(const CTransactionManager &);
 
-	CData m_Data;
-	map_transaction m_TransactionMap;
-	map_processor_category m_CategoryMap;
+    const CTransactionManager &operator=(const CTransactionManager &);
+
+    virtual ~CTransactionManager() {
+        stop();
+    }
+
+    static CTransactionManager *_instance;
+
+    CData                _data;
+    mapTransaction       _transactionMap;
+    mapProcessorCategory _categoryMap;
 };
 
-#endif // CTRANSACTION_MANAGER_H
+#endif // _C_TRANSACTION_MANAGER_H_

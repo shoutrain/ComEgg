@@ -7,7 +7,7 @@
 #include "../Common/CRegister.h"
 
 CProcessor::CProcessor() {
-    _data.setParent((const CData *) &CTransactionManager::Instance()->Data());
+    _data.setParent((const CData *) &CTransactionManager::instance()->data());
 
     optUnit unit;
 
@@ -25,7 +25,7 @@ CProcessor::CProcessor() {
 CProcessor::CProcessor(const CProcessor &processor) {
     _ornData = processor._ornData;
     _data    = processor._data;
-    _data.setParent((const CData *) &CTransactionManager::Instance()->Data());
+    _data.setParent((const CData *) &CTransactionManager::instance()->data());
 
     optUnit unit;
 
@@ -124,7 +124,7 @@ none_ CProcessor::stop() {
             b_4  ret       = CRegister::instance()->unregisterItem(category, key);
 
             assert(0 == ret);
-            CTransactionManager::Instance()->Unregister(category, key);
+            CTransactionManager::instance()->unregisterItem(category, key);
         }
 
         pos_->second->clear();
@@ -167,7 +167,7 @@ none_ CProcessor::reset() {
                          CRegister::instance()->unregisterItem(category, key);
 
             assert(0 == ret);
-            CTransactionManager::Instance()->Unregister((const ch_1 *) category,
+            CTransactionManager::instance()->unregisterItem((const ch_1 *) category,
                     key);
         }
 
@@ -345,7 +345,7 @@ b_4 CProcessor::registerItem(const ch_1 *category, const ch_1 *key, bool_ isCove
 
     CProcessor *processor = this;
 
-    CTransactionManager::Instance()->Register(category,
+    CTransactionManager::instance()->registerItem(category,
             key,
             processor,
             isCovered);
@@ -358,7 +358,7 @@ b_4 CProcessor::unregisterItem(const ch_1 *category, const ch_1 *key) {
 
     CProcessor *processor = null_v;
 
-    if (0 == CTransactionManager::Instance()->Search(category,
+    if (0 == CTransactionManager::instance()->searchItem(category,
             key,
             processor)) {
         assert(processor);
@@ -376,7 +376,7 @@ b_4 CProcessor::unregisterItem(const ch_1 *category, const ch_1 *key) {
             }
         }
 
-        CTransactionManager::Instance()->Unregister(category, key);
+        CTransactionManager::instance()->unregisterItem(category, key);
     }
 
     return CRegister::instance()->unregisterItem(category, key);

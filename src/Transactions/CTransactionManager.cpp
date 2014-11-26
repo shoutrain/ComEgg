@@ -1,288 +1,132 @@
 #include "CTransactionManager.h"
 
-CTransactionManager *CTransactionManager::m_pInstance = null_v;
+CTransactionManager *CTransactionManager::_instance = null_v;
 
-ret_ CTransactionManager::Stop()
-{
-	_START(STOP);
+none_ CTransactionManager::stop() {
+    for (mapTransaction::iterator pos1 = _transactionMap.begin();
+         pos1 != _transactionMap.end(); pos1++) {
+        assert(pos1->second);
+        _DEL(pos1->second);
+    }
 
-	for (map_transaction::iterator pos1 = m_TransactionMap.begin();
-		 pos1 != m_TransactionMap.end(); pos1++)
-	{
-#ifdef _DEBUG_
-		if (!pos1->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
+    for (mapProcessorCategory::iterator pos2 = _categoryMap.begin();
+         pos2 != _categoryMap.end(); pos2++) {
+        assert(pos2->second);
+        pos2->second->clear();
+        _DEL(pos2->second);
+    }
 
-		_DEL(pos1->second);
-	}
-
-	for (map_processor_category::iterator pos2 = m_CategoryMap.begin();
-		 pos2 != m_CategoryMap.end(); pos2++)
-	{
-#ifdef _DEBUG_
-		if (!pos2->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-		pos2->second->clear();
-		_DEL(pos2->second);
-	}
-
-	m_TransactionMap.clear();
-	m_CategoryMap.clear();
-
-	_RET(SUCCESS);
+    _transactionMap.clear();
+    _categoryMap.clear();
 }
 
-ret_ CTransactionManager::AddTransaction(const ch_1 *pszTransactionName,
-										 const CProcessor &Processor,
-										 const size_ nSize)
-{
-	_START(ADD_TRANSACTION);
+none_ CTransactionManager::addTransaction(const ch_1 *transactionName,
+        const CProcessor &processor,
+        const size_ size) {
+    if (!transactionName || 0 == transactionName[0] || 0 == size) {
+        assert(0);
+        return;
+    }
 
-#ifdef _DEBUG_
-	if (!pszTransactionName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
-
-	if (0 == pszTransactionName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
-
-	if (0 == size)
-		_RET(PARAMETER_ERROR | PARAMETER_3);
-#endif
-
-#ifdef _DEBUG_
-	map_transaction::iterator pos = m_TransactionMap.find(pszTransactionName);
-
-	if (m_TransactionMap.end() != pos)
-		_RET(ELEMENT_EXIST_IN_CONTAINER);
-#endif
-
-	CTransaction *pTransaction = new CTransaction(Processor, nSize);
-
-	m_TransactionMap.insert(map_transaction::value_type(pszTransactionName,
-														pTransaction));
-
-	_RET(SUCCESS);
+    assert(_transactionMap.end() == _transactionMap.find(transactionName));
+    _transactionMap.insert(mapTransaction::value_type(transactionName,
+            new CTransaction(&processor, size)));
 }
 
-ret_ CTransactionManager::GetTransaction(const ch_1 *pszTransactionName,
-										 CTransaction *&pTransaction)
-{
-	_START(GET_TRANSACTION);
+CTransaction *CTransactionManager::getTransaction(const ch_1 *transactionName) {
+    if (!transactionName || 0 == transactionName[0]) {
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!pszTransactionName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapTransaction::iterator pos = _transactionMap.find(transactionName);
 
-	if (0 == pszTransactionName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_transactionMap.end() != pos) {
+        assert(pos->second);
+        return pos->second;
+    }
 
-	if (pTransaction)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-	map_transaction::iterator pos = m_TransactionMap.find(pszTransactionName);
-
-	if (m_TransactionMap.end() != pos)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-		pTransaction = (CTransaction *)pos->second;
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-
-	_RET(SUCCESS);
+    return null_v;
 }
 
-ret_ CTransactionManager::Register(const ch_1 *pszCategory,
-								   const ch_1 *pszKey,
-								   const CProcessor *pProcessor,
-								   const bool_ bIsCovered)
-{
-	_START(REGITSTER_PROCESSOR);
+none_ CTransactionManager::registerItem(const ch_1 *category,
+        const ch_1 *key,
+        const CProcessor *processor,
+        const bool_ isCovered) {
+    if (!category || 0 == category[0] || !key || 0 == key[0] || !processor) {
+        assert(0);
+        return;
+    }
 
-#ifdef _DEBUG_
-	if (!pszCategory)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
 
-	if (0 == category[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_categoryMap.end() != pos1) {
+        assert(pos1->second);
+        mapProcessor           *processorMap = pos1->second;
+        mapProcessor::iterator pos2          = processorMap->find(key);
 
-	if (!key)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+        if (processorMap->end() == pos2) {
+            processorMap->insert(
+                    mapProcessor::value_type(key, processor));
+        }
+        else {
+            assert(pos2->second);
 
-	if (0 == key[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_2);
+            if (isCovered) {
+                processorMap->erase(key);
+                processorMap->insert(
+                        mapProcessor::value_type(key, processor));
+            }
+        }
+    }
+    else {
+        mapProcessor *processorMap = new mapProcessor;
 
-	if (!pProcessor)
-		_RET(PARAMETER_NULL | PARAMETER_3);
-#endif
-
-	map_processor_category::iterator pos = m_CategoryMap.find(pszCategory);
-
-	if (m_CategoryMap.end() != pos)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-		map_processor *pProcessorMap = pos->second;
-
-		map_processor::iterator pos_ = pProcessorMap->find(pszKey);
-
-		if (pProcessorMap->end() == pos_)
-		{
-			pProcessorMap->insert(
-				map_processor::value_type(pszKey, pProcessor));
-		}
-		else
-		{
-			if (bIsCovered)
-			{
-				pProcessorMap->erase(pszKey);
-				pProcessorMap->insert(
-					map_processor::value_type(pszKey, pProcessor));
-			}
-#ifdef _DEBUG_
-			else
-			{
-				if (!pos_->second)
-					_RET(ELEMENT_NULL_IN_CONTAINER);
-			}
-#endif
-		}
-	}
-	else
-	{
-		map_processor *pProcessorMap = new map_processor;
-
-		pProcessorMap->insert(map_processor::value_type(pszKey, pProcessor));
-		m_CategoryMap.insert(map_processor_category::value_type(pszCategory,
-																pProcessorMap));
-	}
-
-	_RET(SUCCESS);
+        processorMap->insert(mapProcessor::value_type(key, processor));
+        _categoryMap.insert(mapProcessorCategory::value_type(category,
+                processorMap));
+    }
 }
 
-ret_ CTransactionManager::Unregister(const ch_1 *pszCategory, const ch_1 *pszKey)
-{
-	_START(UNREGISTER_PROCESSOR);
+none_ CTransactionManager::unregisterItem(const ch_1 *category, const ch_1 *key) {
+    if (!category || 0 == category[0] || !key || 0 == key[0]) {
+        assert(0);
+        return;
+    }
 
-#ifdef _DEBUG_
-	if (!category)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
 
-	if (0 == category[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
 
-	if (!key)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+    assert(_categoryMap.end() != pos1);
+    assert(pos1->second);
+    mapProcessor           *pProcessorMap = pos1->second;
+    mapProcessor::iterator pos2           = pProcessorMap->find(key);
 
-	if (0 == key[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_2);
-#endif
+    assert(pProcessorMap->end() != pos2);
+    assert(pos2->second);
+    pProcessorMap->erase(key);
 
-	map_processor_category::iterator pos = m_CategoryMap.find(pszCategory);
-
-	if (m_CategoryMap.end() != pos)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-		map_processor *pProcessorMap = pos->second;
-
-		map_processor::iterator pos_ = pProcessorMap->find(pszKey);
-
-		if (pProcessorMap->end() != pos_)
-		{
-#ifdef _DEBUG_
-			if (!pos_->second)
-				_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-			pProcessorMap->erase(pszKey);
-
-			if (0 == pProcessorMap->size())
-			{
-				_DEL(pProcessorMap);
-				m_CategoryMap.erase(pszCategory);
-			}
-		}
-#ifdef _DEBUG_
-		else
-		{
-			_RET(NO_ELEMENT_IN_CONTAINER);
-		}
-#endif
-	}
-#ifdef _DEBUG_
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
+    if (0 == pProcessorMap->size()) {
+        _DEL(pProcessorMap);
+        _categoryMap.erase(category);
+    }
 }
 
-ret_ CTransactionManager::Search(const ch_1 *pszCategory,
-								 const ch_1 *pszKey,
-								 CProcessor *&pProcessor)
-{
-	_START(SEARCH_PROCESSOR);
+CProcessor *CTransactionManager::searchItem(const ch_1 *category,
+        const ch_1 *key) {
+    if (!category || 0 == category[0] || !key || 0 == key[0]) {
+        assert(0);
+        return null_v;
+    }
 
-#ifdef _DEBUG_
-	if (!category)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
 
-	if (0 == category[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    assert(_categoryMap.end() != pos1);
+    assert(pos1->second);
 
-	if (!key)
-		_RET(PARAMETER_NULL | PARAMETER_2);
+    mapProcessor           *pProcessorMap = pos1->second;
+    mapProcessor::iterator pos2           = pProcessorMap->find(key);
 
-	if (0 == key[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_2);
-
-	if (pProcessor)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_3);
-#endif
-
-	map_processor_category::iterator pos = m_CategoryMap.find(pszCategory);
-
-	if (m_CategoryMap.end() != pos)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-		map_processor *pProcessorMap = pos->second;
-
-		map_processor::iterator pos_ = pProcessorMap->find(pszKey);
-
-		if (pProcessorMap->end() != pos_)
-		{
-#ifdef _DEBUG_
-			if (!pos_->second)
-				_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-
-			pProcessor = (CProcessor *)pos_->second;
-
-			_RET(SUCCESS);
-		}
-	}
-
-	_RET(NO_ELEMENT_IN_CONTAINER);
+    assert(pProcessorMap->end() != pos2);
+    assert(pos2->second);
+    return pos2->second;
 }
