@@ -1,31 +1,31 @@
+#include "CPduInfo.h"
+
 none_ CPduInfo::start(const CField *headField) {
     _field = null_v;
     _curField = null_v;
 
     if (headField) {
-        _field = (CField *) headField->clone(null_v, null_v);
+        _field = headField->clone(null_v, null_v);
     }
 
     CField *p = _field;
 
     while (p) {
         if (FIELD_GROUP_TYPE == p->type()) {
-            CField *q = (CField *) p->getSubField();
+            CField *q = p->getSubField();
 
             while (q) {
                 ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
 
                 sprintf(name, "%s.%s", p->name(), q->name());
                 _fieldMap.insert(mapField::value_type(name, q));
-
-                q = (CField *) q->getNextField();
+                q = q->getNextField();
             }
         }
 
         _curField = p;
         _fieldMap.insert(mapField::value_type(p->name(), p));
-
-        p = (CField *) p->getNextField();
+        p = p->getNextField();
     }
 }
 
@@ -43,7 +43,6 @@ none_ CPduInfo::stop() {
 none_ CPduInfo::addField(const TField &field, const ch_1 *groupName) {
     assert(field.name && 0 != field.name[0]);
 
-    b_4    ret;
     CField *singleField                   = null_v;
     CField *groupField                    = null_v;
     ch_1   name[VARIABLE_NAME_LENGTH * 2] = {0};
@@ -144,5 +143,5 @@ CField *CPduInfo::getField(const ch_1 *name) {
         return null_v;
     }
 
-    return (CField *) pos->second;
+    return pos->second;
 }

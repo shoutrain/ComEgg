@@ -148,8 +148,8 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 
 		//
 		if (SUCCESS != _ERR(
-				CProtocolManager::Instance()->GetProtocol(sProtocolName,
-														  pProtocol)))
+                CProtocolManager::instance()->getProtocol(sProtocolName,
+                        pProtocol)))
 		{
 			_RET(XML_LOADER_ERROR);
 		}

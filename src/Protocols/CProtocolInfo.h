@@ -11,7 +11,7 @@ using namespace std;
 
 class CPduInfo;
 
-typedef map<string, const CPduInfo *> mapPdu;
+typedef map<string, CPduInfo *> mapPdu;
 
 class CProtocolInfo : public CBase {
 public:

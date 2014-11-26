@@ -40,11 +40,13 @@ public:
         return _ext;
     }
 
-    b_4 addInterface(const ch_1 *name, CInterfaceInfo *&interfaceInfo);
+    none_ addInterface(const ch_1 *name, CInterfaceInfo *&interfaceInfo);
 
     CInterfaceInfo *getInterface(const ch_1 *name);
 
     bool_ isInterfaceReady(const ch_1 *name) {
+        assert(name && 0 != name[0]);
+
         if (_interfaceInfoMap.end() != _interfaceInfoMap.find(name)) {
             return true_v;
         }

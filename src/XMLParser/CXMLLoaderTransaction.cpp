@@ -1446,8 +1446,8 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 
 	CProtocolInfo *pProtocol = null_v;
 
-	if (SUCCESS != _ERR(CProtocolManager::Instance()->GetProtocol(
-							sProtocolName, pProtocol)))
+    if (SUCCESS != _ERR(CProtocolManager::instance()->getProtocol(
+            sProtocolName, pProtocol)))
 	{
 		_RET(XML_LOADER_ERROR);
 	}

@@ -35,7 +35,7 @@ public:
     }
 
     // For field in group
-    const CField *getGroupField() const {
+    CField *getGroupField() const {
         return _groupField;
     }
 
@@ -65,7 +65,7 @@ public:
     }
 
     // for group
-    const CField *getSubField() const {
+    CField *getSubField() const {
         return _subField;
     }
 
@@ -77,7 +77,7 @@ public:
         _nextField = (CField *) field;
     }
 
-    const CField *getNextField() const {
+    CField *getNextField() const {
         return _nextField;
     }
 

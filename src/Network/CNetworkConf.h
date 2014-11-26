@@ -4,7 +4,7 @@
 #include "NetworkCommon.h"
 #include "../Protocols/ProtocolCommon.h"
 #include "../Protocols/CProtocolInfo.h"
-#include "CPduInfo.h"
+#include "../Protocols/CPduInfo.h"
 #include "../Transactions/CTransaction.h"
 
 #include <map>

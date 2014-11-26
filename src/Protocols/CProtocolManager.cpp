@@ -1,85 +1,34 @@
 #include "CProtocolManager.h"
 #include "CProtocolInfo.h"
 
-CProtocolManager *CProtocolManager::m_pInstance = null_v;
+CProtocolManager *CProtocolManager::_instance = null_v;
 
-ret_ CProtocolManager::Stop()
-{
-	_START(STOP);
+none_ CProtocolManager::stop() {
+    for (mapProtocol::iterator pos = _protocolMap.begin();
+         pos != _protocolMap.end(); pos++) {
+        assert(pos->second);
+        _DEL(pos->second);
+    }
 
-	for (map_protocol::iterator pos = m_ProtocolMap.begin(); 
-		 pos != m_ProtocolMap.end(); pos++)
-	{
-#ifdef _DEBUG_
-		if (!pos->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos->second);
-	}
-
-	m_ProtocolMap.clear();
-
-	_RET(SUCCESS);
+    _protocolMap.clear();
 }
 
-ret_ CProtocolManager::AddProtocol(const ch_1 *pszName, CProtocolInfo *&pProtocol)
-{
-	_START(ADD_PROTOCOL);
+none_ CProtocolManager::addProtocol(const ch_1 *name, CProtocolInfo *&protocolInfo) {
+    assert(name && 0 != name && !protocolInfo);
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
-
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
-
-	if (pProtocol)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-
-	// pProtocol should be valid, no check code here.
-#endif
-
-	pProtocol = new CProtocolInfo();
-	m_ProtocolMap.insert(map_protocol::value_type(pszName, pProtocol));
-
-	_RET(SUCCESS);
+    protocolInfo = new CProtocolInfo();
+    _protocolMap.insert(mapProtocol::value_type(name, protocolInfo));
 }
 
-ret_ CProtocolManager::GetProtocol(const ch_1 *pszName, CProtocolInfo *&pProtocol)
-{
-	_START(GET_PROTOCOL);
+CProtocolInfo *CProtocolManager::getProtocol(const ch_1 *name) {
+    assert(name && 0 != name[0]);
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapProtocol::iterator pos = _protocolMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_protocolMap.end() != pos) {
+        assert(pos->second);
+        return pos->second;
+    }
 
-	if (pProtocol)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-
-	// pProtocol should be valid, no check code here.
-#endif
-
-	map_protocol::iterator pos = m_ProtocolMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_ProtocolMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pProtocol = (CProtocolInfo *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
+    return pos->second;
 }

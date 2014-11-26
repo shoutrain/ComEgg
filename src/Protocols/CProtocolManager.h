@@ -1,5 +1,5 @@
-#ifndef CPROTOCOL_MANAGER_H
-#define CPROTOCOL_MANAGER_H
+#ifndef _C_PROTOCOL_MANAGER_H_
+#define _C_PROTOCOL_MANAGER_H_
 
 #include "ProtocolCommon.h"
 
@@ -10,58 +10,56 @@ using namespace std;
 
 class CProtocolInfo;
 
-typedef map<string, const CProtocolInfo *> map_protocol;
+typedef map<string, CProtocolInfo *> mapProtocol;
 
-class CProtocolManager: public CBaseClass
-{
+class CProtocolManager : public CBase {
 public:
-	static CProtocolManager *Instance()
-	{
-		if (m_pInstance)
-			return m_pInstance;
+    static CProtocolManager *instance() {
+        if (_instance) {
+            return _instance;
+        }
 
-		m_pInstance = new CProtocolManager;
+        _instance = new CProtocolManager;
 
-		return m_pInstance;
-	}
+        return _instance;
+    }
 
-    static none_ Destory()
-	{
-		_DEL(m_pInstance);
-	}
+    static none_ destroy() {
+        _DEL(_instance);
+    }
 
-	//ret_ InitProtocol(CProtocolInfo *&pProtocol);
-	ret_ AddProtocol(const ch_1 *pszName, CProtocolInfo *&pProtocol);
-	ret_ GetProtocol(const ch_1 *pszName, CProtocolInfo *&pProtocol);
+    none_ addProtocol(const ch_1 *name, CProtocolInfo *&protocolInfo);
 
-	bool_ IsProtocolReady(const ch_1 *pszName)
-	{
-		if (!pszName)
-			return false_v;
+    CProtocolInfo *getProtocol(const ch_1 *pszName);
 
-		if (m_ProtocolMap.end() != m_ProtocolMap.find(pszName))
-			return true_v;
+    bool_ isProtocolReady(const ch_1 *name) {
+        assert(name && 0 != name[0]);
 
-		return false_v;
-	}
+        if (_protocolMap.end() != _protocolMap.find(name)) {
+            return true_v;
+        }
+
+        return false_v;
+    }
 
 protected:
-	ret_ Stop();
+    none_ stop();
 
 private:
-	CProtocolManager(): CBaseClass(CPROTOCOLMANAGER) {}
+    CProtocolManager() {
+    }
 
-	CProtocolManager(const CProtocolManager &);
-	const CProtocolManager &operator =(const CProtocolManager &);
+    CProtocolManager(const CProtocolManager &);
 
-	virtual ~CProtocolManager()
-	{
-		Stop();
-	}
+    const CProtocolManager &operator=(const CProtocolManager &);
 
-	map_protocol m_ProtocolMap;
+    virtual ~CProtocolManager() {
+        stop();
+    }
 
-	static CProtocolManager *m_pInstance;
+    mapProtocol _protocolMap;
+
+    static CProtocolManager *_instance;
 };
 
-#endif // CPROTOCOL_MANAGER_H
+#endif // _C_PROTOCOL_MANAGER_H_

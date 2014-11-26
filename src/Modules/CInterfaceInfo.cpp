@@ -27,11 +27,8 @@ none_ CInterfaceInfo::stop() {
     _outCurField = null_v;
 }
 
-b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
-    if (!field.name || 0 == field.name[0]) {
-        assert(0);
-        return 1;
-    }
+none_ CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
+    assert(field.name && 0 != field.name[0]);
 
     CField *localField = null_v;
     CField *groupField = null_v;
@@ -39,12 +36,7 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
 
     if (groupName && 0 != groupName[0]) {
         groupField = getInField(groupName);
-
-        if (null_v == groupField) {
-            assert(0);
-            return 2;
-        }
-
+        assert(groupField);
         sprintf(name, "%s.%s", groupName, field.name);
     } else {
         sprintf(name, "%s", field.name);
@@ -52,10 +44,7 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
 
     // Check if there is a localField which name is same as the localField's name,
     // in the map.
-    if (_inFieldMap.end() != _inFieldMap.find(name)) {
-        assert(0);
-        return 3;
-    }
+    assert(_inFieldMap.end() == _inFieldMap.find(name));
 
     switch (field.style) {
         case FIELD_NORMAL_STYLE: {
@@ -79,14 +68,9 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
                 type = FIELD_UB_8_TYPE;
             } else {
                 assert(0);
-                return 4;
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 5;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             localField = new CFieldNumber(name, type, groupField);
         }
             break;
@@ -99,32 +83,19 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
                 type = FIELD_FB_8_TYPE;
             } else {
                 assert(0);
-                return 6;
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 7;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             localField = new CFieldNumber(name, type, groupField);
         }
             break;
         case FIELD_STRING_STYLE: {
-            if (0 == field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 8;
-            }
-
+            assert(0 != field.size && 0 == field.sizeName[0]);
             localField = new CFieldString(name, field.size, groupField);
         }
             break;
         case FIELD_GROUP_STYLE: {
-            if (0 != field.size || 0 == field.sizeName[0]) {
-                assert(0);
-                return 9;
-            }
-
+            assert(0 == field.size && 0 != field.sizeName[0]);
             CField *sizeField = getInField(field.sizeName);
             assert(sizeField);
 
@@ -133,7 +104,6 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
             break;
         default:
             assert(0);
-            return 10;
     }
 
     if (!groupField) {
@@ -149,15 +119,10 @@ b_4 CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
     }
 
     _inFieldMap.insert(mapField::value_type(name, localField));
-
-    return 0;
 }
 
-b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
-    if (!field.name || 0 == field.name[0]) {
-        assert(0);
-        return 1;
-    }
+none_ CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
+    assert(field.name && 0 != field.name[0]);
 
     CField *localField = null_v;
     CField *groupField = null_v;
@@ -165,12 +130,7 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
 
     if (groupName && 0 != groupName[0]) {
         groupField = getOutField(groupName);
-
-        if (null_v == groupField) {
-            assert(0);
-            return 2;
-        }
-
+        assert(groupField);
         sprintf(name, "%s.%s", groupName, field.name);
     } else {
         sprintf(name, "%s", field.name);
@@ -178,10 +138,7 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
 
     // Check if there is a field which name is same as the field's name,
     // in the map.
-    if (_outFieldMap.end() != _outFieldMap.find(name)) {
-        assert(0);
-        return 3;
-    }
+    assert(_outFieldMap.end() == _outFieldMap.find(name));
 
     switch (field.style) {
         case FIELD_NORMAL_STYLE: {
@@ -205,14 +162,9 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
                 type = FIELD_UB_8_TYPE;
             } else {
                 assert(0);
-                return 4;
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 5;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             localField = new CFieldNumber(name, type, groupField);
         }
             break;
@@ -226,32 +178,19 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
 
             } else {
                 assert(0);
-                return 6;
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 7;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             localField = new CFieldNumber(name, type, groupField);
         }
             break;
         case FIELD_STRING_STYLE: {
-            if (0 == field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 8;
-            }
-
+            assert(0 != field.size && 0 == field.sizeName[0]);
             localField = new CFieldString(name, field.size, groupField);
         }
             break;
         case FIELD_GROUP_STYLE: {
-            if (0 == field.size || 0 != field.sizeName[0]) {
-                assert(0);
-                return 9;
-            }
-
+            assert(0 == field.size && 0 != field.sizeName[0]);
             CField *sizeField = getOutField(field.sizeName);
             assert(sizeField);
 
@@ -260,7 +199,6 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
             break;
         default:
             assert(0);
-            return 10;
     }
 
     if (!groupField) {
@@ -277,15 +215,10 @@ b_4 CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
 
     _outCurField = localField;
     _outFieldMap.insert(mapField::value_type(name, localField));
-
-    return 0;
 }
 
 CField *CInterfaceInfo::getInField(const ch_1 *name) {
-    if (!name || 0 == name[0]) {
-        assert(0);
-        return null_v;
-    }
+    assert(name && 0 != name[0]);
 
     mapField::iterator pos = _inFieldMap.find(name);
 
@@ -298,10 +231,7 @@ CField *CInterfaceInfo::getInField(const ch_1 *name) {
 }
 
 CField *CInterfaceInfo::getOutField(const ch_1 *name) {
-    if (!name || 0 == name[0]) {
-        assert(0);
-        return null_v;
-    }
+    assert(name && 0 != name[0]);
 
     mapField::iterator pos = _outFieldMap.find(name);
 

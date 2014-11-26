@@ -5,7 +5,7 @@
 #include "../Common/CRegister.h"
 
 CProcessor::CProcessor() {
-    _data.setParent((const CData *) &CTransactionManager::instance()->data());
+    _data.setParent(CTransactionManager::instance()->data());
 
     optUnit unit;
 
@@ -23,7 +23,7 @@ CProcessor::CProcessor() {
 CProcessor::CProcessor(const CProcessor &processor) {
     _ornData = processor._ornData;
     _data    = processor._data;
-    _data.setParent((const CData *) &CTransactionManager::instance()->data());
+    _data.setParent(CTransactionManager::instance()->data());
 
     optUnit unit;
 
@@ -310,7 +310,7 @@ none_ CProcessor::registerItem(const ch_1 *category, const ch_1 *key, bool_ isCo
 
     CTransactionManager::instance()->registerItem(category,
             key,
-            this,
+            *this,
             isCovered);
 }
 

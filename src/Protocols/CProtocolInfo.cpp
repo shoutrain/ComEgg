@@ -26,7 +26,6 @@ none_ CProtocolInfo::addHeadField(const TField &field,
         const ch_1 *groupName) {
     assert(field.name && 0 != field.name[0]);
 
-    b_4    ret;
     CField *localField                    = null_v;
     CField *groupField                    = null_v;
     ch_1   name[VARIABLE_NAME_LENGTH * 2] = {0};
@@ -94,7 +93,7 @@ none_ CProtocolInfo::addHeadField(const TField &field,
             break;
         case FIELD_GROUP_STYLE: {
             assert(0 == field.size && 0 != field.sizeName[0]);
-            CField *pSizeField = getHeadField(field.sizeName);
+            const CField *pSizeField = getHeadField(field.sizeName);
             assert(pSizeField);
 
             localField = new CFieldGroup(name, pSizeField);
@@ -130,7 +129,7 @@ CField *CProtocolInfo::getHeadField(const ch_1 *name) {
     return pos->second;
 }
 
-none_ CProtocolInfo::addPDU(const ch_1 *name,
+none_ CProtocolInfo::addPdu(const ch_1 *name,
         CPduInfo *&pduInfo) {
     assert(name && 0 != name[0] && !pduInfo);
 
@@ -138,38 +137,15 @@ none_ CProtocolInfo::addPDU(const ch_1 *name,
     _pduInfoMap.insert(mapPdu::value_type(name, pduInfo));
 }
 
-b_4 CProtocolInfo::GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo) {
-    _START(GET_PDU);
+CPduInfo *CProtocolInfo::getPdu(const ch_1 *name) {
+    assert(name && 0 != name[0]);
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapPdu::iterator pos = _pduInfoMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
+    if (_pduInfoMap.end() != pos) {
+        assert(pos->second);
+        return pos->second;
+    }
 
-	if (pPDUInfo)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-    mapPdu::iterator pos = _pduInfoMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (_pduInfoMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-    pPDUInfo = (CPduInfo *) pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-    _RET(SUCCESS);
+    return null_v;
 }

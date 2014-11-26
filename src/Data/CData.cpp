@@ -1,8 +1,5 @@
 #include "CData.h"
 
-#include <stdio.h>
-#include <string.h>
-
 CData::CData(const CData &data) {
     for (mapVariable::const_iterator pos = data._variableMap.begin();
          pos != data._variableMap.end(); pos++) {

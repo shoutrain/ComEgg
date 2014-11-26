@@ -11,7 +11,7 @@ class CNetworkHandle;
 
 using namespace std;
 
-typedef map<const CPduInfo *, const CProgram *> mapHandle;
+typedef map<CPduInfo *, CProgram *> mapHandle;
 
 typedef set<string>                setRegister;
 typedef map<string, setRegister *> mapRegister;

@@ -5,11 +5,11 @@
 
 class CPduInfo : public CBase {
 public:
-    CPDUInfo(const CField *field) {
+    CPduInfo(const CField *field) {
         start(field);
     }
 
-    virtual ~CPDUInfo() {
+    virtual ~CPduInfo() {
     }
 
     // If groupName is not null, field is sub-field, groupName is the name

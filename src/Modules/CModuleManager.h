@@ -28,7 +28,7 @@ public:
         _DEL(_instance);
     }
 
-    b_4 addModule(const ch_1 *path,
+    none_ addModule(const ch_1 *path,
             const ch_1 *name,
             const ch_1 *ext,
             CModuleInfo *&module);
@@ -36,9 +36,7 @@ public:
     CModuleInfo *getModule(const ch_1 *name);
 
     bool_ isModuleReady(const ch_1 *name) {
-        if (!name) {
-            return false_v;
-        }
+        assert(name && 0 != name[0]);
 
         if (_moduleMap.end() == _moduleMap.find(name)) {
             return false_v;

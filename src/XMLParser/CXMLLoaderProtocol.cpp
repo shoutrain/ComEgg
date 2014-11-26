@@ -35,11 +35,11 @@ ret_ CXMLLoaderProtocol::Load(XercesDOMParser *pParser,
 	strncat(sProtocol, pszProtocolName, ENVIRONMENT_PATH_LENGTH);
 	strncat(sProtocol, XML_FILE_EXTENSION, ENVIRONMENT_PATH_LENGTH);
 
-	if (CProtocolManager::Instance()->IsProtocolReady(pszProtocolName))
+    if (CProtocolManager::instance()->isProtocolReady(pszProtocolName))
 		_RET(SUCCESS);
 
-	ret_ Ret = CProtocolManager::Instance()->AddProtocol(pszProtocolName,
-														 m_pProtocol);
+    ret_ Ret = CProtocolManager::instance()->addProtocol(pszProtocolName,
+            m_pProtocol);
 
 #ifdef _DEBUG_
 	if (SUCCESS != _ERR(Ret))

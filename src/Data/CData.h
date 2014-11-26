@@ -26,8 +26,8 @@ public:
 
     const CData &operator=(const CData &data);
 
-    none_ setParent(const CData *parent) {
-        _parent = (CData *) parent;
+    none_ setParent(const CData &parent) {
+        _parent = (CData *) &parent;
     }
 
     // define variables for any type without initialized value.

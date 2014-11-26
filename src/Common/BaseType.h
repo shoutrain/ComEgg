@@ -2,13 +2,13 @@
 #define _BASE_TYPE_H_
 
 // Base type
-typedef char b_1;
-typedef unsigned char ub_1;
-typedef short b_2;
+typedef char           b_1;
+typedef unsigned char  ub_1;
+typedef short          b_2;
 typedef unsigned short ub_2;
-typedef int b_4;
-typedef unsigned int ub_4;
-typedef long long b_8;
+typedef int            b_4;
+typedef unsigned int   ub_4;
+typedef long long      b_8;
 typedef unsigned long long ub_8;
 
 typedef float fb_4;
@@ -20,7 +20,7 @@ typedef char ch_1;
 // Base bool type
 typedef enum {
     false_v, true_v
-} bool_;
+}             bool_;
 
 #define null_v 0
 
@@ -28,7 +28,7 @@ typedef enum {
 typedef ub_4 size_;
 typedef void none_;
 typedef void *obj_;
-typedef b_4 type_;
+typedef b_4   type_;
 
 // High level data type
 typedef enum {
@@ -36,7 +36,7 @@ typedef enum {
     FLOAT_STYLE = 0x00000020,
     STRING_STYLE = 0x00000030,
     OBJECT_STYLE = 0x00000040
-} eht_;
+}             eht_;
 
 #define UNSIGNED_SIGN 0x00001000
 
@@ -59,7 +59,7 @@ typedef enum {
     STR = 0x00000000 | STRING_STYLE,
 
     OBJ = 0x00000000 | OBJECT_STYLE
-} evt_;
+}             evt_;
 
 typedef enum {
     REFERENCE_VARIABLE = 0x00010000,
@@ -79,7 +79,7 @@ typedef enum {
     P_STR = REFERENCE_VARIABLE | STR,
 
     P_OBJ = REFERENCE_VARIABLE | OBJ,
-} p_evt_;
+}             p_evt_;
 
 // data type info mask
 #define LEGNTH_SIGN        0x0000000F

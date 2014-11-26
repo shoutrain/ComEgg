@@ -9,9 +9,9 @@
 class CInterfaceInfo : public CBase {
 public:
     CInterfaceInfo(const CModuleInfo *moduleInfo, const ch_1 *name) {
-        _inField = null_v;
+        _inField    = null_v;
         _inCurField = null_v;
-        _outField = null_v;
+        _outField   = null_v;
         _outCurField = null_v;
         _moduleInfo = (CModuleInfo *) moduleInfo;
         memset(_name, 0, INTERFACE_NAME_LEGNTH);
@@ -21,7 +21,7 @@ public:
     virtual ~CInterfaceInfo() {
     }
 
-    const CModuleInfo *getModuleInfo() const {
+    CModuleInfo *getModuleInfo() const {
         return _moduleInfo;
     }
 
@@ -31,10 +31,10 @@ public:
 
     // If GroupName is not null, Field is sub-field, GroupName is the name
     // of group.
-    b_4 addInField(const TField &field,
+    none_ addInField(const TField &field,
             const ch_1 *groupName = null_v);
 
-    b_4 addOutField(const TField &field,
+    none_ addOutField(const TField &field,
             const ch_1 *groupName = null_v);
 
     // Get field
@@ -65,7 +65,7 @@ private:
     CField *_outCurField;
 
     CModuleInfo *_moduleInfo;
-    ch_1 _name[INTERFACE_NAME_LEGNTH];
+    ch_1  _name[INTERFACE_NAME_LEGNTH];
 };
 
 #endif // _C_INTERFACE_INFO_H_
