@@ -157,8 +157,8 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 		//
 		auto_xerces_str sCommandID(pChild->getAttribute(wsCommandID));
 
-		if (SUCCESS != _ERR(pProtocol->GetHeadField(sCommandID,
-													pCommandIDField))
+        if (SUCCESS != _ERR(pProtocol->getHeadField(sCommandID,
+                pCommandIDField))
 			|| FIELD_NORMAL_STYLE !=
                 (pCommandIDField->type() & FIELD_NORMAL_STYLE)
                 || 4 < _LEN(pCommandIDField->type()))
@@ -169,8 +169,8 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 		//
 		auto_xerces_str sSizeID(pChild->getAttribute(wsSizeID));
 
-		if (SUCCESS != _ERR(pProtocol->GetHeadField(sSizeID,
-													pSizeIDField))
+        if (SUCCESS != _ERR(pProtocol->getHeadField(sSizeID,
+                pSizeIDField))
 			|| FIELD_NORMAL_STYLE !=
                 (pSizeIDField->type() & FIELD_NORMAL_STYLE)
                 || 4 < _LEN(pSizeIDField->type()))
@@ -276,7 +276,7 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 				if (SUCCESS != _ERR(GetLastName(sIdentity, sIdentityName)))
 					_RET(XML_LOADER_ERROR);
 
-                v_ *pV = pProtocol->Data().value(sIdentityName);
+                v_ *pV = pProtocol->data().value(sIdentityName);
 
 				if (!pV)
 					_RET(XML_LOADER_ERROR);
@@ -285,7 +285,7 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 				auto_xerces_str	sPDU(pSub->getAttribute(wsPDU));
                 CPduInfo *pPDU = null_v;
 
-				if (SUCCESS != _ERR(pProtocol->GetPDU(sPDU, pPDU)))
+                if (SUCCESS != _ERR(pProtocol->getPdu(sPDU, pPDU)))
 					_RET(XML_LOADER_ERROR);
 
 				//

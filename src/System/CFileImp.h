@@ -16,4 +16,4 @@ public:
     virtual bool_ delFile(const ch_1 *fullPath) = 0;
 };
 
-#endif // CFILE_IMP_H
+#endif // _C_FILE_IMP_H_

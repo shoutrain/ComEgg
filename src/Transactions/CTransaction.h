@@ -6,7 +6,8 @@
 
 class CTransaction : public CBase {
 public:
-    CTransaction(const CProcessor *processor, const size_ &size) : _resource(size, processor) {
+    CTransaction(const CProcessor *processor, const size_ &size)
+            : _resource(size, processor) {
     }
 
     virtual ~CTransaction() {

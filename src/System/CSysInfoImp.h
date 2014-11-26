@@ -3,8 +3,7 @@
 
 #include "../Common/BaseType.h"
 
-class CSysInfoImp
-{
+class CSysInfoImp {
 public:
     virtual ub_1 getMemoryUsage() = 0;
 };

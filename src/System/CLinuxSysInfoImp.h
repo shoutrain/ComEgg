@@ -2,6 +2,7 @@
 #define _C_LINUX_SYS_INFO_IMP_H_
 
 #include "CSysInfoImp.h"
+
 #include <sys/sysinfo.h>
 
 class CLinuxSysInfoImp : public CSysInfoImp {

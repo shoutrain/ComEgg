@@ -23,10 +23,7 @@ none_ CTransactionManager::stop() {
 none_ CTransactionManager::addTransaction(const ch_1 *transactionName,
         const CProcessor &processor,
         const size_ size) {
-    if (!transactionName || 0 == transactionName[0] || 0 == size) {
-        assert(0);
-        return;
-    }
+    assert(transactionName && 0 != transactionName[0] || 0 <= size);
 
     assert(_transactionMap.end() == _transactionMap.find(transactionName));
     _transactionMap.insert(mapTransaction::value_type(transactionName,
@@ -50,12 +47,9 @@ CTransaction *CTransactionManager::getTransaction(const ch_1 *transactionName) {
 
 none_ CTransactionManager::registerItem(const ch_1 *category,
         const ch_1 *key,
-        const CProcessor *processor,
+        const CProcessor &processor,
         const bool_ isCovered) {
-    if (!category || 0 == category[0] || !key || 0 == key[0] || !processor) {
-        assert(0);
-        return;
-    }
+    assert (category || 0 != category[0] || key || 0 != key[0]);
 
     mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
 
@@ -66,35 +60,29 @@ none_ CTransactionManager::registerItem(const ch_1 *category,
 
         if (processorMap->end() == pos2) {
             processorMap->insert(
-                    mapProcessor::value_type(key, processor));
-        }
-        else {
+                    mapProcessor::value_type(key, &processor));
+        } else {
             assert(pos2->second);
 
             if (isCovered) {
                 processorMap->erase(key);
                 processorMap->insert(
-                        mapProcessor::value_type(key, processor));
+                        mapProcessor::value_type(key, &processor));
             }
         }
-    }
-    else {
+    } else {
         mapProcessor *processorMap = new mapProcessor;
 
-        processorMap->insert(mapProcessor::value_type(key, processor));
+        processorMap->insert(mapProcessor::value_type(key, &processor));
         _categoryMap.insert(mapProcessorCategory::value_type(category,
                 processorMap));
     }
 }
 
 none_ CTransactionManager::unregisterItem(const ch_1 *category, const ch_1 *key) {
-    if (!category || 0 == category[0] || !key || 0 == key[0]) {
-        assert(0);
-        return;
-    }
+    assert(category && 0 != category[0] && key && 0 != key[0]);
 
     mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
-
 
     assert(_categoryMap.end() != pos1);
     assert(pos1->second);
@@ -113,10 +101,7 @@ none_ CTransactionManager::unregisterItem(const ch_1 *category, const ch_1 *key)
 
 CProcessor *CTransactionManager::searchItem(const ch_1 *category,
         const ch_1 *key) {
-    if (!category || 0 == category[0] || !key || 0 == key[0]) {
-        assert(0);
-        return null_v;
-    }
+    assert(category && 0 != category[0] && key && 0 != key[0]);
 
     mapProcessorCategory::iterator pos1 = _categoryMap.find(category);
 

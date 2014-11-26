@@ -112,7 +112,7 @@ ret_ CXMLLoaderProtocol::Load(XercesDOMParser *pParser,
 			auto_xerces_str sName(pChild->getAttribute(wsName));
 			auto_xerces_str sValue(pChild->getAttribute(wsValue));
 
-            if (!m_pProtocol->Data().define(sName, UB_4, (ub_4) atoi(sValue)))
+            if (!m_pProtocol->data().define(sName, UB_4, (ub_4) atoi(sValue)))
 				_RET(XML_LOADER_ERROR);
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(), wsHead))
@@ -164,7 +164,7 @@ ret_ CXMLLoaderProtocol::LoadPDU(const DOMElement *pElement,
 		auto_xerces_str	sName(pElement->getAttribute(wsName));
         CPduInfo *pPDUInfo = null_v;
 
-		if (SUCCESS != _ERR(m_pProtocol->AddPDU(sName, pPDUInfo)))
+        if (SUCCESS != _ERR(m_pProtocol->addPdu(sName, pPDUInfo)))
 			_RET(XML_LOADER_ERROR);
 
 		DOMElement *pChild = (DOMElement *)pElement->getFirstChild();
@@ -463,7 +463,7 @@ ret_ CXMLLoaderProtocol::LoadPDUField(const DOMElement *pElement,
 	{
 		if (!bIsSubField)
 		{
-			if (SUCCESS != _ERR(m_pProtocol->AddHeadField(Field)))
+            if (SUCCESS != _ERR(m_pProtocol->addHeadField(Field)))
 				_RET(XML_LOADER_ERROR);
 		}
 		else
@@ -475,8 +475,8 @@ ret_ CXMLLoaderProtocol::LoadPDUField(const DOMElement *pElement,
 			if (null_v == pszGroupName[0])
 				_RET(PARAMETER_EMPTY | PARAMETER_5);
 #endif
-			if (SUCCESS != _ERR(m_pProtocol->AddHeadField(Field, 
-					pszGroupName)))
+            if (SUCCESS != _ERR(m_pProtocol->addHeadField(Field,
+                    pszGroupName)))
 			{
 				_RET(XML_LOADER_ERROR);
 			}

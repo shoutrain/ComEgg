@@ -3,7 +3,6 @@
 
 #include "BaseType.h"
 
-#include <assert.h>
 #include <log4c.h>
 
 class CBase {

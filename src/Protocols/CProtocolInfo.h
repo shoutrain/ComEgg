@@ -1,8 +1,7 @@
-#ifndef CPROTOCOL_INFO_H
-#define CPROTOCOL_INFO_H
+#ifndef _C_PROTOCOL_INFO_H_
+#define _C_PROTOCOL_INFO_H_
 
 #include "ProtocolCommon.h"
-
 #include "../Data/CData.h"
 
 #include <string>
@@ -12,58 +11,54 @@ using namespace std;
 
 class CPduInfo;
 
-typedef map<string, const CPduInfo *> map_pdu;
+typedef map<string, const CPduInfo *> mapPdu;
 
-class CProtocolInfo: public CBaseClass
-{
+class CProtocolInfo : public CBase {
 public:
-	CProtocolInfo(): CBaseClass(CPROTOCOLINFO)
-	{
-		m_pField = null_v;
-		m_pCurField = null_v;
-	}
+    CProtocolInfo() {
+        _field    = null_v;
+        _curField = null_v;
+    }
 
-	virtual ~CProtocolInfo()
-	{
-		Stop();
-	}
+    virtual ~CProtocolInfo() {
+        stop();
+    }
 
-	// If GroupName is not null, Field is sub-field, GroupName is the name
-	// of group.
-	ret_ AddHeadField(const TField &Field, 
-					  const ch_1 *pszGroupName = null_v);
+    // If GroupName is not null, Field is sub-field, GroupName is the name
+    // of group.
+    none_ addHeadField(const TField &field,
+            const ch_1 *groupName = null_v);
 
-	// Get field
-	ret_ GetHeadField(const ch_1 *pszName, CField *&pField);
+    // Get field
+    CField *getHeadField(const ch_1 *name);
 
-    ret_ AddPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo);
+    none_ addPdu(const ch_1 *name, CPduInfo *&pduInfo);
 
-    ret_ GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo);
+    CPduInfo *getPdu(const ch_1 *name);
 
-	CData &Data()
-	{
-		return m_Data;
-	}
+    CData &data() {
+        return _data;
+    }
 
-	bool_ IsPDUReady(const ch_1 *pszName)
-	{
-		if (m_PDUInfoMap.end() != m_PDUInfoMap.find(pszName))
-			return true_v;
+    bool_ isPduReady(const ch_1 *name) {
+        if (_pduInfoMap.end() != _pduInfoMap.find(name)) {
+            return true_v;
+        }
 
-		return false_v;
-	}
+        return false_v;
+    }
 
 protected:
-	ret_ Stop();
+    none_ stop();
 
 private:
-    mapField m_HeadFieldMap;
-	map_pdu	m_PDUInfoMap;
+    mapField _headFieldMap;
+    mapPdu   _pduInfoMap;
 
-	CField *m_pField;
-	CField *m_pCurField;
+    CField *_field;
+    CField *_curField;
 
-	CData m_Data;
+    CData _data;
 };
 
-#endif // CPROTOCOL_INFO_H
+#endif // _C_PROTOCOL_INFO_H_

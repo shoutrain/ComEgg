@@ -8,9 +8,7 @@
 #include <string.h>
 
 bool_ CLinuxFileImp::openFile(const ch_1 *fullPath, bool_ isRead) {
-    if (!fullPath || null_v == fullPath[0]) {
-        return false_v;
-    }
+    assert(fullPath && 0 != fullPath[0]);
 
     if (0 <= _file) {
         closeFile();

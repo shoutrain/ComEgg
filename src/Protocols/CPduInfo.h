@@ -12,9 +12,9 @@ public:
     virtual ~CPDUInfo() {
     }
 
-    // If GroupName is not null, Field is sub-field, GroupName is the name
+    // If groupName is not null, field is sub-field, groupName is the name
     // of group.
-    b_4 addField(const TField &field,
+    none_ addField(const TField &field,
             const ch_1 *groupName = null_v);
 
     // Get field
@@ -26,7 +26,7 @@ public:
     }
 
 protected:
-    b_4 start(const CField *headField);
+    none_ start(const CField *headField);
 
     none_ stop();
 

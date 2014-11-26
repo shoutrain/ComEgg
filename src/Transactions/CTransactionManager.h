@@ -59,7 +59,7 @@ private:
 
     // Just CProcessor can use following three methods.
     none_ registerItem(const ch_1 *category, const ch_1 *key,
-            const CProcessor *processor,
+            const CProcessor &processor,
             const bool_ isCovered = false_v);
 
     none_ unregisterItem(const ch_1 *category, const ch_1 *key);

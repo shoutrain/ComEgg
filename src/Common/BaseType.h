@@ -121,4 +121,6 @@ typedef enum {
         } \
     }
 
+#include <assert.h>
+
 #endif // _BASE_TYPE_H_

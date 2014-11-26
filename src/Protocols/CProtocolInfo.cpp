@@ -1,250 +1,145 @@
 #include "CPduInfo.h"
 #include "CProtocolInfo.h"
 
-ret_ CProtocolInfo::Stop()
-{
-	_START(STOP);
+none_ CProtocolInfo::stop() {
+    for (mapPdu::iterator pos1 = _pduInfoMap.begin();
+         pos1 != _pduInfoMap.end(); pos1++) {
+        assert(pos1->second);
+        _DEL(pos1->second);
+    }
 
-	for (map_pdu::iterator pos1 = m_PDUInfoMap.begin();
-		 pos1 != m_PDUInfoMap.end(); pos1++)
-	{
-#ifdef _DEBUG_
-		if (!pos1->second)
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-		_DEL(pos1->second);
-	}
+    _pduInfoMap.clear();
 
-	m_PDUInfoMap.clear();
+    for (mapField::iterator pos2 = _headFieldMap.begin();
+         pos2 != _headFieldMap.end(); pos2++) {
+        assert(pos2->second);
+        _DEL(pos2->second);
+    }
 
-    for (mapField::iterator pos2 = m_HeadFieldMap.begin();
-		 pos2 != m_HeadFieldMap.end(); pos2++)
-	{
-#ifdef _DEBUG_
-			if (!pos2->second)
-				_RET(ELEMENT_NULL_IN_CONTAINER);
-#endif
-			_DEL(pos2->second);
-	}
+    _headFieldMap.clear();
 
-	m_HeadFieldMap.clear();
-
-	m_pField = null_v;
-	m_pCurField = null_v;
-
-	_RET(SUCCESS);
+    _field    = null_v;
+    _curField = null_v;
 }
 
-ret_ CProtocolInfo::AddHeadField(const TField &Field, 
-								 const ch_1 *pszGroupName)
-{
-	_START(ADD_HEAD_FIELD);
+none_ CProtocolInfo::addHeadField(const TField &field,
+        const ch_1 *groupName) {
+    assert(field.name && 0 != field.name[0]);
 
-#ifdef _DEBUG_
-	if (!Field.name ||	0 == Field.name[0])
-		_RET(PARAMETER_ERROR | PARAMETER_1);
+    b_4    ret;
+    CField *localField                    = null_v;
+    CField *groupField                    = null_v;
+    ch_1   name[VARIABLE_NAME_LENGTH * 2] = {0};
 
-#endif
+    if (groupName && 0 != groupName[0]) {
+        groupField = getHeadField(groupName);
+        assert(groupField);
+        sprintf(name, "%s.%s", groupName, field.name);
+    }
+    else {
+        sprintf(name, "%s", field.name);
+    }
 
-	ret_ Ret;
-	CField *pField = null_v;
-	CField *pGroupField = null_v;
-	ch_1 szName[VARIABLE_NAME_LENGTH * 2] = {0};
+    // Check if there is a field which name is same as the field's name,
+    // in the map.
+    assert(_headFieldMap.end() == _headFieldMap.find(name));
 
-	if (pszGroupName && 0 != pszGroupName[0])
-	{
-		Ret = _ERR(GetHeadField(pszGroupName, pGroupField));
+    switch (field.style) {
+        case FIELD_NORMAL_STYLE: {
+            EFieldType type;
 
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
+            if (1 == field.length && field.isSigned) {
+                type = FIELD_B_1_TYPE;
+            } else if (1 == field.length && !field.isSigned) {
+                type = FIELD_UB_1_TYPE;
+            } else if (2 == field.length && field.isSigned) {
+                type = FIELD_B_2_TYPE;
+            } else if (2 == field.length && !field.isSigned) {
+                type = FIELD_UB_2_TYPE;
+            } else if (4 == field.length && field.isSigned) {
+                type = FIELD_B_4_TYPE;
+            } else if (4 == field.length && !field.isSigned) {
+                type = FIELD_UB_4_TYPE;
+            } else if (8 == field.length && field.isSigned) {
+                type = FIELD_B_8_TYPE;
+            } else if (8 == field.length && !field.isSigned) {
+                type = FIELD_UB_8_TYPE;
+            } else {
+                assert(0);
+            }
 
-        sprintf(szName, "%s.%s", pszGroupName, Field.name);
-	}
-	else
-	{
-        sprintf(szName, "%s", Field.name);
-	}
+            assert(0 == field.size && 0 == field.sizeName[0]);
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_FLOAT_STYLE: {
+            EFieldType type;
 
-	// Check if there is a field which name is same as the field's name,
-	// in the map.
-	if (m_HeadFieldMap.end() != m_HeadFieldMap.find(szName))
-		_RET(ELEMENT_EXIST_IN_CONTAINER);
+            if (4 == field.length) {
+                type = FIELD_FB_4_TYPE;
+            } else if (8 == field.length) {
+                type = FIELD_FB_8_TYPE;
+            } else {
+                assert(0);
+            }
 
-    switch (Field.style)
-	{
-	case FIELD_NORMAL_STYLE:
-	{
-		EFieldType Type;
+            assert (0 == field.size && 0 == field.sizeName[0]);
+            localField = new CFieldNumber(name, type, groupField);
+        }
+            break;
+        case FIELD_STRING_STYLE: {
+            assert(0 != field.size && 0 == field.sizeName[0]);
+            localField = new CFieldString(name, field.size, groupField);
+        }
+            break;
+        case FIELD_GROUP_STYLE: {
+            assert(0 == field.size && 0 != field.sizeName[0]);
+            CField *pSizeField = getHeadField(field.sizeName);
+            assert(pSizeField);
 
-        if (1 == Field.length && Field.isSigned)
-			Type = FIELD_B_1_TYPE;
-        else if (1 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_1_TYPE;
-        else if (2 == Field.length && Field.isSigned)
-			Type = FIELD_B_2_TYPE;
-        else if (2 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_2_TYPE;
-        else if (4 == Field.length && Field.isSigned)
-			Type = FIELD_B_4_TYPE;
-        else if (4 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_4_TYPE;
-        else if (8 == Field.length && Field.isSigned)
-			Type = FIELD_B_8_TYPE;
-        else if (8 == Field.length && !Field.isSigned)
-			Type = FIELD_UB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
+            localField = new CFieldGroup(name, pSizeField);
+        }
+            break;
+        default:
+            assert(0);
+    }
 
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
+    if (!groupField) {
+        if (_curField) {
+            _curField->attach(localField);
+        } else {
+            _field = localField;
+        }
 
-		pField = new CFieldNumber(szName, Type, pGroupField);
-	}
-	break;
-	case FIELD_FLOAT_STYLE:
-	{
-		EFieldType Type;
+        _curField = localField;
+    }
+    else {
+        groupField->setSubField(localField);
+    }
 
-        if (4 == Field.length)
-			Type = FIELD_FB_4_TYPE;
-        else if (8 == Field.length)
-			Type = FIELD_FB_8_TYPE;
-#ifdef _DEBUG_
-		else
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-
-		if (0 != Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
-
-		pField = new CFieldNumber(szName, Type, pGroupField);
-	}
-	break;
-	case FIELD_STRING_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 == Field.size ||	0 != Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
-
-        pField = new CFieldString(szName, Field.size, pGroupField);
-	}
-	break;
-	case FIELD_GROUP_STYLE:
-	{
-#ifdef _DEBUG_
-		if (0 != Field.size)
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-
-		if (0 == Field.sizeName[0])
-			_RET(PARAMETER_ERROR | PARAMETER_1);
-#endif
-		
-		CField *pSizeField = null_v;
-
-        Ret = _ERR(GetHeadField(Field.sizeName, pSizeField));
-
-#ifdef _DEBUG_
-		if (SUCCESS != _ERR(Ret))
-			_RET_BY(Ret);
-#endif
-				
-		pField = new CFieldGroup(szName, pSizeField);
-	}
-	break;
-#ifdef _DEBUG_
-	default:
-		_RET(PARAMETER_TYPE_ERROR | PARAMETER_1);
-#endif
-	}
-
-	if (!pGroupField)
-	{
-		if (m_pCurField)
-            m_pCurField->attach(pField);
-		else
-			m_pField = pField;
-
-		m_pCurField = pField;
-	}
-	else
-	{
-        pGroupField->setSubField(pField);
-	}
-
-    m_HeadFieldMap.insert(mapField::value_type(szName, pField));
-
-	_RET(SUCCESS);
+    _headFieldMap.insert(mapField::value_type(name, localField));
 }
 
-ret_ CProtocolInfo::GetHeadField(const ch_1 *pszName, CField *&pField)
-{
-	_START(GET_HEAD_FIELD);
+CField *CProtocolInfo::getHeadField(const ch_1 *name) {
+    assert(name && 0 != name[0]);
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
+    mapField::iterator pos = _headFieldMap.find(name);
 
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
-
-	if (field)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-#endif
-
-    mapField::iterator pos = m_HeadFieldMap.find(pszName);
-
-#ifdef _DEBUG_
-	if (m_HeadFieldMap.end() != pos)
-	{
-		if (pos->second)
-#endif
-			pField = (CField *)pos->second;
-
-#ifdef _DEBUG_
-		else
-			_RET(ELEMENT_NULL_IN_CONTAINER);
-	}
-	else
-	{
-		_RET(NO_ELEMENT_IN_CONTAINER);
-	}
-#endif
-
-	_RET(SUCCESS);
+    assert(_headFieldMap.end() != pos);
+    assert(pos->second);
+    return pos->second;
 }
 
-ret_ CProtocolInfo::AddPDU(const ch_1 *pszName,
-        CPduInfo *&pPDUInfo)
-{
-	_START(ADD_PDU);
+none_ CProtocolInfo::addPDU(const ch_1 *name,
+        CPduInfo *&pduInfo) {
+    assert(name && 0 != name[0] && !pduInfo);
 
-#ifdef _DEBUG_
-	if (!pszName)
-		_RET(PARAMETER_NULL | PARAMETER_1);
-
-	if (0 == pszName[0])
-		_RET(PARAMETER_EMPTY | PARAMETER_1);
-
-	if (pPDUInfo)
-		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
-
-	// pPDUInfo should be valid, no check code here.
-#endif
-
-    pPDUInfo = new CPduInfo(m_pField);
-	m_PDUInfoMap.insert(map_pdu::value_type(pszName, pPDUInfo));
-
-	_RET(SUCCESS);
+    pduInfo = new CPduInfo(_field);
+    _pduInfoMap.insert(mapPdu::value_type(name, pduInfo));
 }
 
-ret_ CProtocolInfo::GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo)
-{
-	_START(GET_PDU);
+b_4 CProtocolInfo::GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo) {
+    _START(GET_PDU);
 
 #ifdef _DEBUG_
 	if (!pszName)
@@ -257,10 +152,10 @@ ret_ CProtocolInfo::GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo)
 		_RET(PARAMETER_NOT_NULL | PARAMETER_2);
 #endif
 
-	map_pdu::iterator pos = m_PDUInfoMap.find(pszName);
+    mapPdu::iterator pos = _pduInfoMap.find(pszName);
 
 #ifdef _DEBUG_
-	if (m_PDUInfoMap.end() != pos)
+	if (_pduInfoMap.end() != pos)
 	{
 		if (pos->second)
 #endif
@@ -276,5 +171,5 @@ ret_ CProtocolInfo::GetPDU(const ch_1 *pszName, CPduInfo *&pPDUInfo)
 	}
 #endif
 
-	_RET(SUCCESS);
+    _RET(SUCCESS);
 }

@@ -40,24 +40,17 @@ none_ CPduInfo::stop() {
     _curField = null_v;
 }
 
-b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
-    if (!field.name || 0 == field.name[0]) {
-        assert(0);
-        return -1;
-    }
+none_ CPduInfo::addField(const TField &field, const ch_1 *groupName) {
+    assert(field.name && 0 != field.name[0]);
 
-    b_4 ret;
-    CField *singleField = null_v;
-    CField *groupField = null_v;
-    ch_1 name[VARIABLE_NAME_LENGTH * 2] = {0};
+    b_4    ret;
+    CField *singleField                   = null_v;
+    CField *groupField                    = null_v;
+    ch_1   name[VARIABLE_NAME_LENGTH * 2] = {0};
 
     if (groupName && 0 != groupName[0]) {
         groupField = getField(groupName);
-
-        if (null_v == groupField) {
-            return -2;
-        }
-
+        assert(groupField);
         sprintf(name, "%s.%s", groupName, field.name);
     } else {
         sprintf(name, "%s", field.name);
@@ -65,9 +58,7 @@ b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
 
     // Check if there is a field which name is same as the field's name,
     // in the map.
-    if (_fieldMap.end() != _fieldMap.find(name)) {
-        return -3;
-    }
+    assert(_fieldMap.end() == _fieldMap.find(name));
 
     switch (field.style) {
         case FIELD_NORMAL_STYLE: {
@@ -90,13 +81,10 @@ b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
             } else if (8 == field.length && !field.isSigned) {
                 type = FIELD_UB_8_TYPE;
             } else {
-                return -4;
+                assert(0);
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                return -5;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             singleField = new CFieldNumber(name, type, groupField);
         }
             break;
@@ -108,44 +96,28 @@ b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
             } else if (8 == field.length) {
                 type = FIELD_FB_8_TYPE;
             } else {
-                return -6;
+                assert(0);
             }
 
-            if (0 != field.size || 0 != field.sizeName[0]) {
-                return -7;
-            }
-
+            assert(0 == field.size && 0 == field.sizeName[0]);
             singleField = new CFieldNumber(name, type, groupField);
         }
             break;
         case FIELD_STRING_STYLE: {
-            if (0 == field.size || 0 != field.sizeName[0]) {
-                return -8;
-            }
-
+            assert(0 != field.size && 0 == field.sizeName[0]);
             singleField = new CFieldString(name, field.size, groupField);
         }
             break;
         case FIELD_GROUP_STYLE: {
-            if (0 != field.size) {
-                return -9;
-            }
-
-            if (0 == field.sizeName[0]) {
-                return -10;
-            }
-
-            CField *sizeField = null_v;
-
-            if (0 != getField(field.sizeName, sizeField)) {
-                return -11;
-            }
+            assert(0 == field.size && 0 != field.sizeName[0]);
+            CField *sizeField = getField(field.sizeName);
+            assert(sizeField);
 
             singleField = new CFieldGroup(name, sizeField);
         }
             break;
         default:
-            return -12;
+            assert(0);
     }
 
     if (!groupField) {
@@ -161,14 +133,10 @@ b_4 CPduInfo::addField(const TField &field, const ch_1 *groupName) {
     }
 
     _fieldMap.insert(mapField::value_type(name, singleField));
-
-    return 0;
 }
 
 CField *CPduInfo::getField(const ch_1 *name) {
-    if (!name || 0 == name[0]) {
-        return null_v;
-    }
+    assert(name && 0 != name[0]);
 
     mapField::const_iterator pos = _fieldMap.find(name);
 

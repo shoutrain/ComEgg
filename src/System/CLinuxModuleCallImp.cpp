@@ -6,17 +6,12 @@
 bool_ CLinuxModuleCallImp::open(const ch_1 *modulePath,
         const ch_1 *moduleName,
         const ch_1 *moduleType) {
-    if ((!modulePath || 0 == modulePath[0]
-            || MODULE_PATH_LENGTH <= strlen(modulePath))
-            ||
-            (!moduleName || 0 == moduleName[0]
-                    || MODULE_NAME_LENGTH <= strlen(moduleName))
-                    ||
-            (!moduleType || 0 == moduleType[0]
-                    || MODULE_EXT_LENGTH <= strlen(moduleType))) {
-        return false_v;
-    }
-
+    assert(modulePath && 0 != modulePath[0]
+            && MODULE_PATH_LENGTH > strlen(modulePath));
+    assert(moduleName && 0 != moduleName[0]
+            && MODULE_NAME_LENGTH > strlen(moduleName));
+    assert(moduleType && 0 != moduleType[0]
+            && MODULE_EXT_LENGTH > strlen(moduleType));
 
     size_ length = MODULE_PATH_LENGTH
             + MODULE_NAME_LENGTH
@@ -25,7 +20,6 @@ bool_ CLinuxModuleCallImp::open(const ch_1 *modulePath,
 
     memset(module, 0, length);
     sprintf(module, "%s/lib%s.%s", modulePath, moduleName, moduleType);
-
     _handle = dlopen(module, RTLD_NOW);
 
     if (!_handle) {
@@ -49,15 +43,10 @@ bool_ CLinuxModuleCallImp::call(const ch_1 *interfaceName,
         size_ inSize,
         ub_1 *&out,
         size_ &outSize) {
-    if (!interfaceName
-            || 0 == interfaceName[0]
-            || INTERFACE_NAME_LEGNTH <= strlen(interfaceName)) {
-        return false_v;
-    }
-
-    if (out) {
-        return false_v;
-    }
+    assert(interfaceName
+            && 0 != interfaceName[0]
+            && INTERFACE_NAME_LEGNTH > strlen(interfaceName));
+    assert(!out);
 
     if (!_handle) {
         return false_v;
@@ -70,7 +59,7 @@ bool_ CLinuxModuleCallImp::call(const ch_1 *interfaceName,
 
     const ch_1 *errMsg = dlerror();
 
-    if (NULL != errMsg) {
+    if (null_v != errMsg) {
         return false_v;
     }
 

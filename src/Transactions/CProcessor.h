@@ -39,13 +39,13 @@ public:
         _normalHandle[enh] = program;
     }
 
-    b_4 setMsgHandle(const CProgram &program,
+    none_ setMsgHandle(const CProgram &program,
             EDirection direction,
             const CPduInfo *pduInfo);
 
     none_ execNormalHandle(const TMsgInfo *msgInfo, ENormalHandle enh);
 
-    b_4 execMsgHandle(const CPduInfo *pduInfo,
+    none_ execMsgHandle(const CPduInfo *pduInfo,
             const ub_1 *msg,
             size_ size,
             const TMsgInfo *msgInfo,
@@ -58,11 +58,11 @@ public:
             size_ size,
             const TMsgInfo *msgInfo);
 
-    b_4 registerItem(const ch_1 *category,
+    none_ registerItem(const ch_1 *category,
             const ch_1 *key,
             bool_ isCovered = false_v);
 
-    b_4 unregisterItem(const ch_1 *category, const ch_1 *key);
+    none_ unregisterItem(const ch_1 *category, const ch_1 *key);
 
     CData &data() {
         return _data;

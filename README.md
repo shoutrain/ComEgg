@@ -26,14 +26,14 @@ Log
 3. port Xerces C++ 3.0.1 to 3.1.1
 4. decided to replace ACE with native epoll socket
 
-2014/11/20 ~ 2014/11/25
+2014/11/20 ~ 2014/11/26
 ---------
-1. refactor network part and has not completed
+1. refactor everything
 2. only keep TCP supports and removed UDP supports, maybe add UDP supports later
 3. enhance common supports classes and tools
 4. replace the error handle stack with normal log system
 5. replace eclipse with clion(from jetbrains) due to xml and scheme supports
 6. refine schemes and xml files accordingly
-7. use new code style
+7. use the new code-style
 
 

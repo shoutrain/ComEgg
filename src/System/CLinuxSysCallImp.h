@@ -5,10 +5,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 class CLinuxSysCallImp : CSysCallImp {
 public:
     virtual bool_ exec(const ch_1 *command) {
+        assert(command && 0 != command[0] && 1022 >= strlen(command));
+
         char localCommand[1024] = {0};
 
         sprintf(localCommand, "%s&", command);

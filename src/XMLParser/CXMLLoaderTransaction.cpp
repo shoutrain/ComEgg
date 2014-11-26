@@ -85,7 +85,7 @@ ret_ CXMLLoaderTransaction::Load(XercesDOMParser *pParser,
 										  wsDataBlock))
 		{
 			if (SUCCESS != _ERR(LoadDataBlock(
-									CTransactionManager::Instance()->Data(),
+                    CTransactionManager::instance()->data(),
 									pChild)))
             {
 				_RET(XML_LOADER_ERROR);
@@ -428,7 +428,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	//
 	CProcessor Processor;
 
-    Processor.data().setParent(&CTransactionManager::Instance()->Data());
+    Processor.data().setParent(&CTransactionManager::instance()->data());
 	
 	auto_xerces_str	wsName	("name");
 	auto_xerces_str sName	(pElement->getAttribute(wsName));
@@ -440,7 +440,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	auto_xerces_str wsElseInHandle	("else_in_handle");
 	auto_xerces_str wsElseOutHandle	("else_out_handle");
 
-	if (true_v == CTransactionManager::Instance()->IsTransactionReady(sName))
+    if (true_v == CTransactionManager::instance()->isTransactionReady(sName))
 		_RET(XML_LOADER_ERROR);
 
 	CNetwork *pNetwork =
@@ -489,7 +489,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 
             Processor.setData(Data);
             Processor.data().setParent(
-                    &CTransactionManager::Instance()->Data());
+                    &CTransactionManager::instance()->data());
 		}
 		else if (0 == XMLString::compareString(pChild->getNodeName(),
 											   wsStartHandle))
@@ -533,7 +533,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 
             CPduInfo *pPDUInfo = null_v;
 
-			if (SUCCESS != _ERR(pProtocol->GetPDU(sLastName, pPDUInfo)))
+            if (SUCCESS != _ERR(pProtocol->getPdu(sLastName, pPDUInfo)))
 				_RET(XML_LOADER_ERROR);
 
 			CProgram Program;
@@ -600,10 +600,10 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	switch (pNetwork->getType())
 	{
 	case NETWORK_ACCEPTOR:
-		if (SUCCESS != _ERR(CTransactionManager::Instance()->AddTransaction(
-								sName,
-								Processor,
-								((CAcceptorConf *)pConf)->GetMaxConnection())))
+        if (SUCCESS != _ERR(CTransactionManager::instance()->addTransaction(
+                sName,
+                Processor,
+                ((CAcceptorConf *) pConf)->GetMaxConnection())))
 		{
 			_RET(XML_LOADER_ERROR);
 		}
@@ -613,10 +613,10 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 	case NETWORK_CONNECTOR:
 	case NETWORK_RECEIVER:
 	case NETWORK_SENDER:
-		if (SUCCESS != _ERR(CTransactionManager::Instance()->AddTransaction(
-								sName,
-								Processor,
-								1)))
+        if (SUCCESS != _ERR(CTransactionManager::instance()->addTransaction(
+                sName,
+                Processor,
+                1)))
 		{
 			_RET(XML_LOADER_ERROR);
 		}
@@ -631,9 +631,9 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 
 	CTransaction *pTransaction = null_v;
 
-	if (SUCCESS != _ERR(CTransactionManager::Instance()->GetTransaction(
-							sName,
-							pTransaction)))
+    if (SUCCESS != _ERR(CTransactionManager::instance()->getTransaction(
+            sName,
+            pTransaction)))
 	{
 		_RET(XML_LOADER_ERROR);
 	}
@@ -1458,7 +1458,7 @@ ret_ CXMLLoaderTransaction::LoadSend(CProgram &Program,
 
     CPduInfo *pPDUInfo = null_v;
 
-	if (SUCCESS != _ERR(pProtocol->GetPDU(sPDU, pPDUInfo)))
+    if (SUCCESS != _ERR(pProtocol->getPdu(sPDU, pPDUInfo)))
 		_RET(XML_LOADER_ERROR);
 
 	// For send operation, sub elements is not necessary.

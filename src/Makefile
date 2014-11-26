@@ -38,7 +38,7 @@ ComEgg: Main.cpp $(OBJS)
 .PHONY: clean
 clean:
 	cd Common && $(MAKE) clean
-	cd Data && $(MAKE) clean
+	cd data && $(MAKE) clean
 	cd Network && $(MAKE) clean
 	cd Modules && $(MAKE) clean
 	cd Logic && $(MAKE) clean
