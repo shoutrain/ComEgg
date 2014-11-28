@@ -13,11 +13,9 @@ using namespace std;
 typedef map<string, CNode *>    MapNode;
 typedef map<string, CReactor *> MapReactor;
 
-class CNetworkManager : public CBase
-{
+class CNetworkManager {
 public:
-    static CNetworkManager *instance()
-	{
+    static CNetworkManager *instance() {
         if (_instance) {
             return _instance;
         }
@@ -25,48 +23,52 @@ public:
         _instance = new CNetworkManager;
 
         return _instance;
-	}
+    }
 
-    static none_ destroy()
-	{
+    static none_ destroy() {
         _DEL(_instance);
-	}
+    }
 
-	ret_ AddNetwork(const ch_1 *pszName,
-					ENetworkType Type,
-            const CNode *pNetwork);
+    none_ addReactor(const ch_1 *name, const CReactor *reactor);
 
-	ret_ Work();
+    CReactor *getReactor(const ch_1 *name) {
+        MapReactor::iterator pos = _reactorMap.find(name);
 
-    none_ Exit()
-	{
-		ACE_Reactor::instance()->end_reactor_event_loop();
-	}
+        if (_reactorMap.end() != pos) {
+            assert(pos->second);
+            return pos->second;
+        }
 
-    const CNode *GetNetwork(const ch_1 *pszName)
-	{
-        MapNode::iterator pos = _nodeMap.find(pszName);
+        return null_v;
+    }
 
-        if (_nodeMap.end() != pos)
-			return pos->second;
+    none_ addNode(const ch_1 *name, const CNode *node);
 
-		return null_v;
-	}
+    CNode *getNode(const ch_1 *name) {
+        MapNode::iterator pos = _nodeMap.find(name);
 
-protected:
-	ret_ Stop();
+        if (_nodeMap.end() != pos) {
+            assert(pos->second);
+            return pos->second;
+        }
+
+        return null_v;
+    }
+
+    none_ work();
+
+    none_ exit();
 
 private:
     CNetworkManager() {
     }
 
-	CNetworkManager(const CNetworkManager &);
-	const CNetworkManager &operator =(const CNetworkManager &);
+    CNetworkManager(const CNetworkManager &);
 
-	virtual ~CNetworkManager()
-	{
-		Stop();
-	}
+    const CNetworkManager &operator=(const CNetworkManager &);
+
+    virtual ~CNetworkManager() {
+    }
 
     MapNode    _nodeMap;
     MapReactor _reactorMap;

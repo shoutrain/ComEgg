@@ -3,13 +3,15 @@
 #include <sys/errno.h>
 
 CSem::CSem(ub_4 value) {
-    if (-1 == sem_init(&_sem, 0, value))
+    if (-1 == sem_init(&_sem, 0, value)) {
         logFatal("CSem::CSem: failed to call sem_init");
+    }
 }
 
 CSem::~CSem() {
-    if (-1 == sem_destroy(&_sem))
+    if (-1 == sem_destroy(&_sem)) {
         logFatal("CSem::~CSem: failed to call sem_destroy");
+    }
 }
 
 bool_ CSem::lock(bool_ check) {
@@ -43,14 +45,3 @@ none_ CSem::unlock() {
         logFatal("CSem::unlock: failed to call sem_post");
     }
 }
-
-ub_4 CSem::getValue() {
-    b_4 n = 0;
-
-    if (-1 == sem_getvalue(&_sem, &n)) {
-        logFatal("CSem::getValue: failed to call sem_getvalue");
-    }
-
-    return (ub_4) n;
-}
-

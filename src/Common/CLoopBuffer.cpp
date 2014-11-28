@@ -8,11 +8,11 @@ CLoopBuffer::CLoopBuffer(ub_4 size, CMutex *mutex, bool_ isPadding) :
         _totalSize(size) {
     assert(size);
     _actualSize = size;
-    _usedSize = 0;
-    _freeSize = size;
-    _mutex = mutex;
+    _usedSize  = 0;
+    _freeSize  = size;
+    _mutex     = mutex;
     _isPadding = isPadding;
-    _padding = 0;
+    _padding   = 0;
     _writePoint = _readPoint = _buffer = new ch_1[size];
     assert(_buffer);
 }
@@ -90,8 +90,9 @@ bool_ CLoopBuffer::read(ch_1 *buffer, ub_4 &size) {
         assert(_padding == 0);
         assert(_writePoint - _readPoint == (int) _usedSize);
 
-        if (size > _usedSize)
+        if (size > _usedSize) {
             size = _usedSize;
+        }
 
         memcpy(buffer, _readPoint, size);
         _readPoint += size;
@@ -143,7 +144,7 @@ none_ CLoopBuffer::reset() {
     _actualSize = _totalSize;
     _usedSize = 0;
     _freeSize = _totalSize;
-    _padding = 0;
+    _padding  = 0;
     _writePoint = _readPoint = _buffer;
 }
 

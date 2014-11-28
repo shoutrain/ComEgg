@@ -1,10 +1,12 @@
 #ifndef _C_AUTO_PTR_H_
 #define _C_AUTO_PTR_H_
 
-#include "CBase.h"
+#include "CGlobal.h"
+
+#include <stdio.h>
 
 template<class T>
-class CAutoPtr : public CBase {
+class CAutoPtr {
 public:
 
     explicit CAutoPtr(T *p = null_v) :

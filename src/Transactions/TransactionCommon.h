@@ -1,7 +1,7 @@
 #ifndef _TRANSACTION_COMMON_H_
 #define _TRANSACTION_COMMON_H_
 
-#include "../Common/CBase.h"
+#include "CGlobal.h"
 #include "../Logic/CProgram.h"
 #include "../Network/NetworkCommon.h"
 

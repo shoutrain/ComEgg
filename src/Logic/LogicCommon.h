@@ -1,7 +1,7 @@
 #ifndef _LOGIC_COMMMON_H_
 #define _LOGIC_COMMMON_H_
 
-#include "../Common/CBase.h"
+#include "CGlobal.h"
 
 // Operation types define
 enum EOperatorType {

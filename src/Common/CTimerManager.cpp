@@ -1,7 +1,4 @@
 #include "CTimerManager.h"
-#include "CAutoLock.h"
-
-#include <sys/time.h>
 
 CTimerManager::CTimerManager(ub_4 maxTimerNum, ub_4 threadStackSize) :
         _worker(threadStackSize), _timerRes(maxTimerNum) {
@@ -15,7 +12,7 @@ CTimerManager::CTimerManager(ub_4 maxTimerNum, ub_4 threadStackSize) :
 CTimerManager::~CTimerManager() {
 }
 
-ub_8 CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
+obj_ CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
     TTimer *timer = _timerRes.allocate();
 
     if (null_v == timer) {
@@ -27,14 +24,14 @@ ub_8 CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
     struct timeval curTime;
     gettimeofday(&curTime, null_v);
 
-    timer->period = period;
+    timer->period   = period;
     timer->parameter = parameter;
-    timer->times = times;
-    timer->baseS = curTime.tv_sec;
-    timer->baseUS = curTime.tv_usec;
+    timer->times    = times;
+    timer->baseS    = curTime.tv_sec;
+    timer->baseUS   = curTime.tv_usec;
     timer->previous = null_v;
-    timer->next = null_v;
-    timer->status = TO_BE_ADD;
+    timer->next     = null_v;
+    timer->status   = TO_BE_ADD;
 
     _mutex.lock();
     _queueForAdd.push(timer);
@@ -44,25 +41,25 @@ ub_8 CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
             "CTimerManager::setTimer: from-%016p, time id-%016p, period-%uSec, times-%u",
             parameter, timer, period, times);
 
-    return (ub_8) timer;
+    return (obj_) timer;
 }
 
-none_ CTimerManager::killTimer(ub_8 timerId) {
-    assert(timerId > 0);
-    TTimer *pTimer = (TTimer *) timerId;
+none_ CTimerManager::killTimer(obj_ timer) {
+    assert(timer > 0);
+    TTimer *localTimer = (TTimer *) timer;
 
-    if (TO_BE_DEL == (pTimer->status & TO_BE_DEL)
-            || DELETED == (pTimer->status & DELETED)) {
+    if (TO_BE_DEL == (localTimer->status & TO_BE_DEL)
+            || DELETED == (localTimer->status & DELETED)) {
         return; // The timer will be deleted or has been deleted
     }
 
-    pTimer->status |= TO_BE_DEL;
+    localTimer->status |= TO_BE_DEL;
 
     _mutex.lock();
-    _queueForDel.push(pTimer);
+    _queueForDel.push(localTimer);
     _mutex.unlock();
 
-    logDebug("CTimerManager::killTimer: time id-%016p.", pTimer);
+    logDebug("CTimerManager::killTimer: time id-%016p.", localTimer);
 }
 
 bool_ CTimerManager::working() {
@@ -96,12 +93,13 @@ bool_ CTimerManager::working() {
     _mutex.unlock();
 
     struct timeval curTime;
+
     gettimeofday(&curTime, null_v);
 
     if (null_v == _pCurTimer) {
         if (null_v == _timerList) {
             // Sleep for 0.5s
-            sleep(0, 500);
+            CGlobal::sleep(0, 500);
 
             return true_v;
         }
@@ -113,7 +111,7 @@ bool_ CTimerManager::working() {
 
     if ((i < curTime.tv_sec)
             || (i == curTime.tv_sec && _pCurTimer->baseUS <= curTime.tv_usec)) {
-        if (onTimer((ub_8) _pCurTimer, _pCurTimer->parameter)) {
+        if (onTimer((obj_) _pCurTimer, _pCurTimer->parameter)) {
             _pCurTimer->baseS = curTime.tv_sec;
             _pCurTimer->baseUS = curTime.tv_usec;
 

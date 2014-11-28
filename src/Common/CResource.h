@@ -1,7 +1,6 @@
 #ifndef _C_RESOURCE_H_
 #define _C_RESOURCE_H_
 
-#include "CBase.h"
 #include "CAutoLock.h"
 
 #include <deque>
@@ -9,7 +8,7 @@
 class CMutex;
 
 template<class T, class Y>
-class CResource : public CBase {
+class CResource {
 public:
     CResource(const ub_4 maxNum, CMutex *mutex = null_v) :
             _maxNum(maxNum) {
@@ -23,8 +22,9 @@ public:
         }
     }
 
-    CResource(const ub_4 maxNum, Y *container, CMutex *mutex =
-    null_v) :
+    CResource(const ub_4 maxNum,
+            Y *container,
+            CMutex *mutex = null_v) :
             _maxNum(maxNum) {
         assert(_maxNum > 1);
         assert(null_v != container);

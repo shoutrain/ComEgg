@@ -1,7 +1,7 @@
 #ifndef _C_LINUX_MODULE_CALL_IMP_H_
 #define _C_LINUX_MODULE_CALL_IMP_H_
 
-#include "../Common/BaseType.h"
+#include "../Common/CGlobal.h"
 #include "CModuleCallImp.h"
 
 class CLinuxModuleCallImp : public CModuleCallImp {

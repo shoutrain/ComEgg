@@ -13,7 +13,7 @@ typedef map<string, const CTransaction *> MapTransaction;
 typedef map<string, const CProcessor *>   MapProcessor;
 typedef map<string, MapProcessor *>       MapProcessorCategory;
 
-class CTransactionManager : public CBase {
+class CTransactionManager {
 public:
     static CTransactionManager *instance() {
         if (_instance) {

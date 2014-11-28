@@ -1,7 +1,7 @@
-#ifndef _C_TIMERMANAGER_H_
-#define _C_TIMERMANAGER_H_
+#ifndef _C_TIMER_MANAGER_H_
+#define _C_TIMER_MANAGER_H_
 
-#include "CBase.h"
+#include "CGlobal.h"
 #include "IWorkable.h"
 #include "CWorker.h"
 #include "CMutex.h"
@@ -32,7 +32,7 @@ struct TTimer {
 typedef std::queue<TTimer *> OperatorQueue;
 
 // A timer manager, which can accept 1 second as the minimal unit
-class CTimerManager : public CBase, public IWorkable {
+class CTimerManager : public IWorkable {
 public:
     CTimerManager(ub_4 maxTimerNum, ub_4 threadStackSize);
 
@@ -40,14 +40,14 @@ public:
 
     // timers == 0: Infinite
     // return timer id or 0: failed
-    ub_8 setTimer(ub_4 period, obj_ parameter, ub_4 times = 1);
+    obj_ setTimer(ub_4 period, obj_ parameter, ub_4 times = 1);
 
-    none_ killTimer(ub_8 timerId);
+    none_ killTimer(obj_ timer);
 
     virtual bool_ working();
 
 protected:
-    virtual bool_ onTimer(ub_8 timerId, obj_ parameter) = 0;
+    virtual bool_ onTimer(obj_ timer, obj_ parameter) = 0;
 
 private:
     none_ addTimer(TTimer *timer);
@@ -55,15 +55,15 @@ private:
     none_ delTimer(TTimer *timer);
 
     CWorker _worker;
-    CMutex _mutex;
+    CMutex        _mutex;
 
     CResource<TTimer, CTimerManager> _timerRes;
-    TTimer *_timerList;
-    TTimer *_lastTimer;
+    TTimer        *_timerList;
+    TTimer        *_lastTimer;
 
     OperatorQueue _queueForAdd;
     OperatorQueue _queueForDel;
-    TTimer *_pCurTimer;
+    TTimer        *_pCurTimer;
 };
 
 #endif // _C_TIMER_MANAGER_H_

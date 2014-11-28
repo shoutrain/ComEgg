@@ -204,8 +204,8 @@ const CAutoVar operator-(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -250,8 +250,8 @@ const CAutoVar operator*(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -297,8 +297,8 @@ const CAutoVar operator/(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -338,8 +338,8 @@ const CAutoVar operator%(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -375,8 +375,8 @@ const CAutoVar operator&(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -412,8 +412,8 @@ const CAutoVar operator|(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:
@@ -449,8 +449,8 @@ const CAutoVar operator^(const CAutoVar &leftValue,
     }
 
     type_ type =
-            _LEN(leftValue._type) >= _LEN(rightValue._type) ?
-                    leftValue._type : rightValue._type;
+                  _LEN(leftValue._type) >= _LEN(rightValue._type) ?
+                          leftValue._type : rightValue._type;
 
     switch (_EVT(type)) {
         case B_1:

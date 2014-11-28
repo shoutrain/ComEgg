@@ -3,13 +3,13 @@
 #include "IWorkable.h"
 
 CMutex CWorker::_mutexWorker;
-ub_4 CWorker::_workerNum = 0;
-bool_ CWorker::_workingCondition = true_v;
+ub_4   CWorker::_workerNum        = 0;
+bool_  CWorker::_workingCondition = true_v;
 
 CWorker::CWorker(ub_4 threadStackSize) :
         _condInformed(&_mutexInformed) {
     _threadStackSize = threadStackSize * 1024;
-    _handle = null_v;
+    _handle   = null_v;
     _informed = false_v;
     _workable = null_v;
 }

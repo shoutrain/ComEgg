@@ -15,7 +15,7 @@ typedef map<CPduInfo *, CProgram *> MapHandle;
 typedef set<string>                 SetRegister;
 typedef map<string, SetRegister *>  MapRegister;
 
-class CProcessor : public CBase {
+class CProcessor {
 public:
     CProcessor();
 

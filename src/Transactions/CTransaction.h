@@ -4,7 +4,7 @@
 #include "CProcessor.h"
 #include "../Common/CResource.h"
 
-class CTransaction : public CBase {
+class CTransaction {
 public:
     CTransaction(const CProcessor *processor, const size_ &size)
             : _resource(size, processor) {

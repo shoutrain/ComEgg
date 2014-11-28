@@ -1,20 +1,20 @@
 #ifndef _C_VAR_H_
 #define _C_VAR_H_
 
-#include "CBase.h"
+#include "CGlobal.h"
 
 #include <string.h>
 #include <string>
 
 using namespace std;
 
-typedef class CAutoVar : public CBase {
+typedef class CAutoVar {
 public:
     // Default constructor.
     CAutoVar() {
         memset(&_v, 0, sizeof(UValue));
         _offset = 0;
-        _len = 0;
+        _len  = 0;
         _type = INVALID;
     }
 
@@ -277,7 +277,7 @@ public:
 
     explicit CAutoVar(obj_ *value, size_ n_offset, size_ n = 0) {
         _offset = n_offset;
-        _len = n;
+        _len  = n;
         _type = P_OBJ;
         _v.pobj = value;
     }
@@ -1551,7 +1551,7 @@ public:
         }
 
         _offset = 0;
-        _len = 0;
+        _len  = 0;
         _type = INVALID;
     }
 

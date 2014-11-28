@@ -15,8 +15,6 @@ public:
 
     none_ unlock();
 
-    ub_4 getValue();
-
 private:
     sem_t _sem;
 };

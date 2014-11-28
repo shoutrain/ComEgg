@@ -13,7 +13,7 @@ class CPduInfo;
 
 typedef map<string, CPduInfo *> MapPdu;
 
-class CProtocolInfo : public CBase {
+class CProtocolInfo {
 public:
     CProtocolInfo() {
         _field    = null_v;

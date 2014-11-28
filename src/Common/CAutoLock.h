@@ -3,7 +3,7 @@
 
 #include "CLock.h"
 
-class CAutoLock : public CBase {
+class CAutoLock {
 public:
     CAutoLock(CLock *lock = null_v);
 

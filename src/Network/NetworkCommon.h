@@ -1,7 +1,7 @@
 #ifndef _NETWORK_COMMON_H_
 #define _NETWORK_COMMON_H_
 
-#include "../Common/CBase.h"
+#include "CGlobal.h"
 
 const ub_4 REV_BUFFER_MAX_SIZE = 65535;
 const ub_4 IP_MAX_LENGTH      = 16;

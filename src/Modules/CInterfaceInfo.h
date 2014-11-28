@@ -6,7 +6,7 @@
 
 #include <string.h>
 
-class CInterfaceInfo : public CBase {
+class CInterfaceInfo {
 public:
     CInterfaceInfo(const CModuleInfo *moduleInfo, const ch_1 *name) {
         _inField    = null_v;

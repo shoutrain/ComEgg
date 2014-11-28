@@ -8,10 +8,10 @@
 
 using namespace std;
 
-typedef map<string, v_ *> MapVariable;
-typedef map<string, mapVariable *> mapCategory;
+typedef map<string, v_ *>          MapVariable;
+typedef map<string, MapVariable *> MapCategory;
 
-class CRegister : public CBase {
+class CRegister {
 public:
     static CRegister *instance() {
         if (_instance) {
@@ -32,7 +32,7 @@ public:
     b_4 registerItem(const ch_1 *category, const ch_1 *key, const v_ *variable,
             const bool_ isCovered = false_v);
 
-    b_4 unregisterItem(const ch_1 *category, const ch_1 *key);
+    none_ unregisterItem(const ch_1 *category, const ch_1 *key);
 
 protected:
     CRegister() {
@@ -46,12 +46,12 @@ protected:
         stop();
     }
 
-    b_4 stop();
+    none_ stop();
 
 private:
     static CRegister *_instance;
 
-    mapCategory _categoryMap;
+    MapCategory _categoryMap;
 };
 
 #endif // _C_REGISTER_H_

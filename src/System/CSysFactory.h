@@ -5,7 +5,7 @@
 #include "CLinuxSysInfoImp.h"
 #include "CLinuxSysCallImp.h"
 #include "CLinuxModuleCallImp.h"
-#include "../Common/BaseType.h"
+#include "../Common/CGlobal.h"
 
 class CSysFactory {
 public:

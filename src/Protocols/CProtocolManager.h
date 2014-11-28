@@ -12,7 +12,7 @@ class CProtocolInfo;
 
 typedef map<string, CProtocolInfo *> MapProtocol;
 
-class CProtocolManager : public CBase {
+class CProtocolManager {
 public:
     static CProtocolManager *instance() {
         if (_instance) {

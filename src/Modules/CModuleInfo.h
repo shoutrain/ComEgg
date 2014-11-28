@@ -13,7 +13,7 @@ class CInterfaceInfo;
 
 typedef map<string, const CInterfaceInfo *> MapInterface;
 
-class CModuleInfo : public CBase {
+class CModuleInfo {
 public:
     CModuleInfo(const ch_1 *path, const ch_1 *name, const ch_1 *ext) {
         memset(_path, 0, MODULE_PATH_LENGTH);

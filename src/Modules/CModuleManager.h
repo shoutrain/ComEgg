@@ -12,7 +12,7 @@ class CModuleInfo;
 
 typedef map<string, const CModuleInfo *> MapModule;
 
-class CModuleManager : public CBase {
+class CModuleManager {
 public:
     static CModuleManager *instance() {
         if (_instance) {

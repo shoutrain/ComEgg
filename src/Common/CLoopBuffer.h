@@ -1,11 +1,11 @@
 #ifndef _C_LOOP_BUFFER_H_
 #define _C_LOOP_BUFFER_H_
 
-#include "CBase.h"
+#include "CGlobal.h"
 
 class CMutex;
 
-class CLoopBuffer : public CBase {
+class CLoopBuffer {
 public:
     CLoopBuffer(ub_4 size, CMutex *mutex = null_v, bool_ isPadding = false_v);
 
@@ -19,7 +19,7 @@ public:
     // buffer: the buffer to be readFile in
     // size: the buffer size, the actual readFile size
     // Return true if success, otherwise false
-    bool_ read(ch_1 *uffer, ub_4 &size);
+    bool_ read(ch_1 *buffer, ub_4 &size);
 
     none_ reset();
 
@@ -44,12 +44,12 @@ protected:
 
 private:
     const ub_4 _totalSize;
-    ub_4 _actualSize; // _totalSize - _padding
-    ub_4 _usedSize; // _actualSize - _freeSize
-    ub_4 _freeSize; // _actualSize - _userSize
+    ub_4  _actualSize; // _totalSize - _padding
+    ub_4  _usedSize; // _actualSize - _freeSize
+    ub_4  _freeSize; // _actualSize - _userSize
 
     bool_ _isPadding;
-    ub_4 _padding; // _totalSize - _actualSize
+    ub_4  _padding; // _totalSize - _actualSize
 
     ch_1 *_writePoint;
     ch_1 *_readPoint;

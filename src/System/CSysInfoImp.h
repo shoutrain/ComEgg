@@ -1,7 +1,7 @@
 #ifndef _C_SYS_INFO_IMP_H_
 #define _C_SYS_INFO_IMP_H_
 
-#include "../Common/BaseType.h"
+#include "../Common/CGlobal.h"
 
 class CSysInfoImp {
 public:
