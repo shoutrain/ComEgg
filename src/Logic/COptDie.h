@@ -25,7 +25,7 @@ public:
     }
 
     virtual none_ work(const TMessageUnit *tmu) {
-        CNetworkManager::Instance()->Exit();
+        CNetworkManager::instance()->Exit();
     }
 };
 

@@ -2,11 +2,11 @@
 #define CCONNECTOR_H
 
 #include "CConnectorHandle.h"
-#include "CNetwork.h"
+#include "CNode.h"
 
 class CConnector:
 	public ACE_Connector<CConnectorHandle, ACE_SOCK_CONNECTOR>,
-	public CNetwork
+    public CNode
 {
 public:
 	CConnector(const CProtocolInfo *pProtocol,
@@ -17,7 +17,7 @@ public:
 			   ub_2 nRemotePort,
 			   b_4 nReconnect,
 			   bool_ bIsAutoStart)
-		: CNetwork(bIsAutoStart, NETWORK_CONNECTOR, CCONNECTOR),
+            : CNode(bIsAutoStart, NETWORK_CONNECTOR, CCONNECTOR),
 		  m_Conf(pProtocol,
 				 pCommandID,
 				 pSizeID,
@@ -46,9 +46,9 @@ public:
 		close();
 	}
 
-	virtual const CNetworkConf *getConf() const
+    virtual const CNodeConf *getConf() const
 	{
-		return (CNetworkConf *)&m_Conf;
+        return (CNodeConf *) &m_Conf;
 	}
 
 	b_4 Run()

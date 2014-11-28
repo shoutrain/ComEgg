@@ -20,7 +20,7 @@ ret_ CAcceptorHandle::OnOpen(const ub_1 *pObj)
 
 	peer().get_remote_addr(Addr);
 
-	if (!m_pConf->IPFilter().IPPermit((const ch_1 *)Addr.get_host_addr()))
+    if (!m_pConf->IPFilter().ipPermit((const ch_1 *) Addr.get_host_addr()))
 		_RET(FROBID_USE);
 
 	_RET(SUCCESS);

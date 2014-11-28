@@ -48,7 +48,7 @@ protected:
 
     virtual none_ clear();
 
-    vectorOpt _optVector;
+    VectorOpt _optVector;
 
     CData _ornData;
     CData _data;

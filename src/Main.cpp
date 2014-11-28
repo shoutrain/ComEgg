@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	CXMLLoaderManager::Destory();
 
 	// Working...
-	if (SUCCESS != _ERR(CNetworkManager::Instance()->Work()))
+    if (SUCCESS != _ERR(CNetworkManager::instance()->instance()))
 		return -2;
 
 	return 0;

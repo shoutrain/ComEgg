@@ -2,7 +2,7 @@
 #include "CProtocolInfo.h"
 
 none_ CProtocolInfo::stop() {
-    for (mapPdu::iterator pos1 = _pduInfoMap.begin();
+    for (MapPdu::iterator pos1 = _pduInfoMap.begin();
          pos1 != _pduInfoMap.end(); pos1++) {
         assert(pos1->second);
         _DEL(pos1->second);
@@ -10,7 +10,7 @@ none_ CProtocolInfo::stop() {
 
     _pduInfoMap.clear();
 
-    for (mapField::iterator pos2 = _headFieldMap.begin();
+    for (MapField::iterator pos2 = _headFieldMap.begin();
          pos2 != _headFieldMap.end(); pos2++) {
         assert(pos2->second);
         _DEL(pos2->second);
@@ -116,13 +116,13 @@ none_ CProtocolInfo::addHeadField(const TField &field,
         groupField->setSubField(localField);
     }
 
-    _headFieldMap.insert(mapField::value_type(name, localField));
+    _headFieldMap.insert(MapField::value_type(name, localField));
 }
 
 CField *CProtocolInfo::getHeadField(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapField::iterator pos = _headFieldMap.find(name);
+    MapField::iterator pos = _headFieldMap.find(name);
 
     assert(_headFieldMap.end() != pos);
     assert(pos->second);
@@ -134,13 +134,13 @@ none_ CProtocolInfo::addPdu(const ch_1 *name,
     assert(name && 0 != name[0] && !pduInfo);
 
     pduInfo = new CPduInfo(_field);
-    _pduInfoMap.insert(mapPdu::value_type(name, pduInfo));
+    _pduInfoMap.insert(MapPdu::value_type(name, pduInfo));
 }
 
 CPduInfo *CProtocolInfo::getPdu(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapPdu::iterator pos = _pduInfoMap.find(name);
+    MapPdu::iterator pos = _pduInfoMap.find(name);
 
     if (_pduInfoMap.end() != pos) {
         assert(pos->second);

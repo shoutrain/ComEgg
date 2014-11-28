@@ -124,7 +124,7 @@ protected:
 		_RET(SUCCESS);
 	};
 
-	virtual const CNetworkConf *GetConf() const
+    virtual const CNodeConf *GetConf() const
 	{
 		return null_v;
 	}

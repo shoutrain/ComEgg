@@ -86,7 +86,7 @@ COptSend::COptSend(const COptSend &opt) : COperator(opt) {
         _port = opt._port->clone();
     }
 
-    for (vectorEvaluate::const_iterator pos = opt._evaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = opt._evaluateVector.begin();
          pos != opt._evaluateVector.end(); pos++) {
         TEvaluate *evaluate = new TEvaluate;
 
@@ -121,7 +121,7 @@ const COptSend &COptSend::operator=(const COptSend &opt) {
             _port = opt._port->clone();
         }
 
-        for (vectorEvaluate::const_iterator pos = opt._evaluateVector.begin();
+        for (VectorEvaluate::const_iterator pos = opt._evaluateVector.begin();
              pos != opt._evaluateVector.end(); pos++) {
             TEvaluate *evaluate = new TEvaluate;
 
@@ -155,7 +155,7 @@ none_ COptSend::clear() {
     _DEL(_ip);
     _DEL(_port);
 
-    for (vectorEvaluate::iterator pos = _evaluateVector.begin();
+    for (VectorEvaluate::iterator pos = _evaluateVector.begin();
          pos != _evaluateVector.end(); pos++) {
         _DEL((*pos)->field);
         _DEL((*pos)->value);
@@ -168,7 +168,7 @@ none_ COptSend::clear() {
 none_ COptSend::init(const optUnit *unit) {
     COperator::init(unit);
 
-    for (vectorEvaluate::iterator pos = _evaluateVector.begin();
+    for (VectorEvaluate::iterator pos = _evaluateVector.begin();
          pos != _evaluateVector.end(); pos++) {
         if ((*pos)->field) {
             (*pos)->field->init(unit->data);
@@ -199,7 +199,7 @@ bool_ COptSend::addEvaluate(const ch_1 *fieldName,
         return false_v;
     }
 
-    vectorEvaluate::iterator pos;
+    VectorEvaluate::iterator pos;
 
     for (pos = _evaluateVector.begin();
          pos != _evaluateVector.end(); pos++) {
@@ -225,7 +225,7 @@ bool_ COptSend::addEvaluate(const ch_1 *fieldName,
 none_ COptSend::work(const TMessageUnit *tmu) {
     size_ size = 0;
 
-    for (vectorEvaluate::const_iterator pos = _evaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _evaluateVector.begin();
          pos != _evaluateVector.end(); pos++) {
         if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) {
             // If it's Group, check if it's available.
@@ -269,7 +269,7 @@ none_ COptSend::work(const TMessageUnit *tmu) {
         return;
     }
 
-    for (vectorEvaluate::const_iterator pos = _evaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _evaluateVector.begin();
          pos != _evaluateVector.end(); pos++) {
         if ((*pos)->field && (*pos)->value) {
             if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) if (0 == (*pos)->value->value(tmu)->size()) {

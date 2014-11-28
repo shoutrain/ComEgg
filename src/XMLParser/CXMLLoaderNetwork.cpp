@@ -187,7 +187,7 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 			bIsAutoStart = false_v;
 		}
 
-		CNetwork		*pNetwork = null_v;
+        CNode *pNetwork = null_v;
 		auto_xerces_str sName(pChild->getAttribute(wsName));
 
 		switch (NetworkType)
@@ -256,7 +256,7 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 			}
 		}
 
-		CNetworkConf *pNetworkConf = (CNetworkConf *)pNetwork->getConf();
+        CNodeConf *pNetworkConf = (CNodeConf *) pNetwork->getConf();
 
 		//
 		DOMElement *pSub = (DOMElement *)pChild->getFirstChild();
@@ -325,21 +325,22 @@ ret_ CXMLLoaderNetwork::Load(XercesDOMParser *pParser,
 
 				auto_xerces_str sType(pSub->getAttribute(wsType));
 
-				if (0 == strcmp(sType, "forbid"))
-					pIPFilter->SetForbid(true_v);
-				else if (0 == strcmp(sType, "permit"))
-					pIPFilter->SetForbid(false_v);
+				if (0 == strcmp(sType, "forbid")) {
+                    pIPFilter->setForbid(true_v);
+                } else if (0 == strcmp(sType, "permit")) {
+                    pIPFilter->setForbid(false_v);
+                }
 
-				auto_xerces_str sIPGroup(pSub->getTextContent());
+                auto_xerces_str sIPGroup(pSub->getTextContent());
 
-				if (false_v == pIPFilter->AddIPGroup((const ch_1 *)sIPGroup))
+                if (false_v == pIPFilter->addIpGroup((const ch_1 *) sIPGroup))
 					_RET(XML_LOADER_ERROR);
 			}
 
 			pSub = (DOMElement *)pSub->getNextSibling();
 		}
 
-		if (SUCCESS != _ERR(CNetworkManager::Instance()->AddNetwork(
+        if (SUCCESS != _ERR(CNetworkManager::instance()->AddNetwork(
 														(const char *)sName,
 														NetworkType,
 														pNetwork)))

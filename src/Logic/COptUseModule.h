@@ -33,8 +33,8 @@ private:
 
     CInterfaceInfo *_interfaceInfo;
 
-    vectorEvaluate _inEvaluateVector;
-    vectorEvaluate _outEvaluateVector;
+    VectorEvaluate _inEvaluateVector;
+    VectorEvaluate _outEvaluateVector;
 };
 
 #endif // _C_OPT_USE_MODULE_H_

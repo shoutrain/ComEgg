@@ -11,7 +11,7 @@ using namespace std;
 
 class CPduInfo;
 
-typedef map<string, CPduInfo *> mapPdu;
+typedef map<string, CPduInfo *> MapPdu;
 
 class CProtocolInfo : public CBase {
 public:
@@ -52,8 +52,8 @@ protected:
     none_ stop();
 
 private:
-    mapField _headFieldMap;
-    mapPdu   _pduInfoMap;
+    MapField _headFieldMap;
+    MapPdu   _pduInfoMap;
 
     CField *_field;
     CField *_curField;

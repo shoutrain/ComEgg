@@ -116,7 +116,7 @@ public:
 					 ub_2 nPort = 0);
 
 protected:
-	virtual const CNetworkConf *GetConf() const
+    virtual const CNodeConf *GetConf() const
 	{
 		return null_v;
 	}

@@ -443,8 +443,8 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
     if (true_v == CTransactionManager::instance()->isTransactionReady(sName))
 		_RET(XML_LOADER_ERROR);
 
-	CNetwork *pNetwork =
-		(CNetwork *)CNetworkManager::Instance()->GetNetwork(sName);
+    CNode *pNetwork =
+                  (CNode *) CNetworkManager::instance()->GetNetwork(sName);
 
 #ifdef _DEBUG_
 	if (!pNetwork)
@@ -454,7 +454,7 @@ ret_ CXMLLoaderTransaction::LoadProcessor(const DOMElement *pElement)
 		_RET(XML_LOADER_ERROR);
 #endif
 
-	CNetworkConf *pConf = (CNetworkConf *)pNetwork->getConf();
+    CNodeConf *pConf = (CNodeConf *) pNetwork->getConf();
 
 #ifdef _DEBUG_
 	if (!pConf)

@@ -5,14 +5,14 @@
 #include "../Data/CFieldGroup.h"
 
 none_ CInterfaceInfo::stop() {
-    for (mapField::iterator pos1 = _inFieldMap.begin();
+    for (MapField::iterator pos1 = _inFieldMap.begin();
          pos1 != _inFieldMap.end();
          pos1++) {
         assert(pos1->second);
         _DEL(pos1->second);
     }
 
-    for (mapField::iterator pos2 = _outFieldMap.begin();
+    for (MapField::iterator pos2 = _outFieldMap.begin();
          pos2 != _outFieldMap.end();
          pos2++) {
         assert(pos2->second);
@@ -118,7 +118,7 @@ none_ CInterfaceInfo::addInField(const TField &field, const ch_1 *groupName) {
         groupField->setSubField(localField);
     }
 
-    _inFieldMap.insert(mapField::value_type(name, localField));
+    _inFieldMap.insert(MapField::value_type(name, localField));
 }
 
 none_ CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
@@ -214,13 +214,13 @@ none_ CInterfaceInfo::addOutField(const TField &field, const ch_1 *groupName) {
     }
 
     _outCurField = localField;
-    _outFieldMap.insert(mapField::value_type(name, localField));
+    _outFieldMap.insert(MapField::value_type(name, localField));
 }
 
 CField *CInterfaceInfo::getInField(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapField::iterator pos = _inFieldMap.find(name);
+    MapField::iterator pos = _inFieldMap.find(name);
 
     if (_inFieldMap.end() != pos) {
         assert(pos->second);
@@ -233,7 +233,7 @@ CField *CInterfaceInfo::getInField(const ch_1 *name) {
 CField *CInterfaceInfo::getOutField(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapField::iterator pos = _outFieldMap.find(name);
+    MapField::iterator pos = _outFieldMap.find(name);
 
     if (_outFieldMap.end() != pos) {
         assert(pos->second);

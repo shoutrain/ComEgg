@@ -11,7 +11,7 @@ using namespace std;
 
 class CInterfaceInfo;
 
-typedef map<string, const CInterfaceInfo *> mapInterface;
+typedef map<string, const CInterfaceInfo *> MapInterface;
 
 class CModuleInfo : public CBase {
 public:
@@ -58,7 +58,7 @@ protected:
     none_ stop();
 
 private:
-    mapInterface _interfaceInfoMap;
+    MapInterface _interfaceInfoMap;
 
     ch_1 _path[MODULE_PATH_LENGTH];
     ch_1 _name[MODULE_NAME_LENGTH];

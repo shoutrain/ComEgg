@@ -8,7 +8,7 @@
 
 class CField;
 
-typedef map<string, CField *> mapField;
+typedef map<string, CField *> MapField;
 
 const ub_4 VARIABLE_NAME_LENGTH = 32;
 

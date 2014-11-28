@@ -84,11 +84,11 @@ using namespace std;
 
 class COperator;
 
-typedef vector<const COperator *> vectorOpt;
+typedef vector<const COperator *> VectorOpt;
 
 class CExpression;
 
-typedef vector<const CExpression *> vectorExp;
+typedef vector<const CExpression *> VectorExp;
 
 class CData;
 
@@ -125,6 +125,6 @@ struct TEvaluate {
 
 using namespace std;
 
-typedef vector<TEvaluate *> vectorEvaluate;
+typedef vector<TEvaluate *> VectorEvaluate;
 
 #endif // _LOGIC_COMMMON_H_

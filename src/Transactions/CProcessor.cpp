@@ -38,20 +38,20 @@ CProcessor::CProcessor(const CProcessor &processor) {
 
     _handle = null_v;
 
-    mapHandle::const_iterator pos;
+    MapHandle::const_iterator pos;
 
     for (pos = processor._handleInMap.begin();
          pos != processor._handleInMap.end(); pos++) {
         CProgram *handle = new CProgram(*pos->second);
 
-        _handleInMap.insert(mapHandle::value_type(pos->first, handle));
+        _handleInMap.insert(MapHandle::value_type(pos->first, handle));
     }
 
     for (pos = processor._handleOutMap.begin();
          pos != processor._handleOutMap.end(); pos++) {
         CProgram *handle = new CProgram(*pos->second);
 
-        _handleOutMap.insert(mapHandle::value_type(pos->first, handle));
+        _handleOutMap.insert(MapHandle::value_type(pos->first, handle));
     }
 }
 
@@ -75,20 +75,20 @@ const CProcessor &CProcessor::operator=(const CProcessor &processor) {
 
         _handle = null_v;
 
-        mapHandle::const_iterator pos;
+        MapHandle::const_iterator pos;
 
         for (pos = processor._handleInMap.begin();
              pos != processor._handleInMap.end(); pos++) {
             CProgram *handle = new CProgram(*pos->second);
 
-            _handleInMap.insert(mapHandle::value_type(pos->first, handle));
+            _handleInMap.insert(MapHandle::value_type(pos->first, handle));
         }
 
         for (pos = processor._handleOutMap.begin();
              pos != processor._handleOutMap.end(); pos++) {
             CProgram *handle = new CProgram(*pos->second);
 
-            _handleOutMap.insert(mapHandle::value_type(pos->first, handle));
+            _handleOutMap.insert(MapHandle::value_type(pos->first, handle));
         }
     }
 
@@ -96,7 +96,7 @@ const CProcessor &CProcessor::operator=(const CProcessor &processor) {
 }
 
 none_ CProcessor::stop() {
-    mapHandle::iterator pos1;
+    MapHandle::iterator pos1;
 
     for (pos1 = _handleInMap.begin(); pos1 != _handleInMap.end(); pos1++) {
         assert(pos1->second);
@@ -111,11 +111,11 @@ none_ CProcessor::stop() {
     _handleInMap.clear();
     _handleOutMap.clear();
 
-    for (mapRegister::iterator pos2 = _registerMap.begin();
+    for (MapRegister::iterator pos2 = _registerMap.begin();
          pos2 != _registerMap.end(); pos2++) {
         assert(pos1->second);
 
-        for (setRegister::iterator pos3 = pos2->second->begin();
+        for (SetRegister::iterator pos3 = pos2->second->begin();
              pos3 != pos2->second->end(); pos3++) {
             ch_1 *category = (ch_1 *) pos2->first.data();
             ch_1 *key      = (ch_1 *) pos3->data();
@@ -141,7 +141,7 @@ none_ CProcessor::reset() {
 
     _handle = null_v;
 
-    mapHandle::iterator pos1;
+    MapHandle::iterator pos1;
 
     for (pos1 = _handleInMap.begin(); pos1 != _handleInMap.end(); pos1++) {
         assert(pos1->second);
@@ -153,11 +153,11 @@ none_ CProcessor::reset() {
         ((CProgram *) pos1->second)->reset();
     }
 
-    for (mapRegister::iterator pos2 = _registerMap.begin();
+    for (MapRegister::iterator pos2 = _registerMap.begin();
          pos2 != _registerMap.end(); pos2++) {
         assert(pos1->second);
 
-        for (setRegister::iterator pos3 = pos2->second->begin();
+        for (SetRegister::iterator pos3 = pos2->second->begin();
              pos3 != pos2->second->end(); pos3++) {
             ch_1 *category = (ch_1 *) pos2->first.data();
             ch_1 *key      = (ch_1 *) pos3->data();
@@ -188,14 +188,14 @@ none_ CProcessor::setMsgHandle(const CProgram &program,
         assert(_handleInMap.end() != _handleInMap.find(pduInfo));
         CProgram *handle = new CProgram(program);
 
-        _handleInMap.insert(mapHandle::value_type(pduInfo, handle));
+        _handleInMap.insert(MapHandle::value_type(pduInfo, handle));
     }
 
     if (DIRECTION_OUT == (EDirection) (direction & DIRECTION_OUT)) {
         assert(_handleOutMap.end() == _handleOutMap.find(pduInfo));
         CProgram *handle = new CProgram(program);
 
-        _handleOutMap.insert(mapHandle::value_type(pduInfo, handle));
+        _handleOutMap.insert(MapHandle::value_type(pduInfo, handle));
     }
 }
 
@@ -230,7 +230,7 @@ none_ CProcessor::execMsgHandle(const CPduInfo *pduInfo,
     unit.container = this;
     unit.parent    = null_v;
 
-    mapHandle::const_iterator pos;
+    MapHandle::const_iterator pos;
 
     if (DIRECTION_IN == direction) {
         pos = _handleInMap.find(pduInfo);
@@ -293,19 +293,19 @@ none_ CProcessor::registerItem(const ch_1 *category, const ch_1 *key, bool_ isCo
             &variable,
             isCovered);
 
-    mapRegister::iterator pos1 = _registerMap.find(category);
+    MapRegister::iterator pos1 = _registerMap.find(category);
 
     if (_registerMap.end() != pos1) {
-        setRegister::iterator pos2 = pos1->second->find(key);
+        SetRegister::iterator pos2 = pos1->second->find(key);
 
         if (pos1->second->end() == pos2) {
             pos1->second->insert(key);
         }
     } else {
-        setRegister *set = new setRegister;
+        SetRegister *set = new SetRegister;
 
         set->insert(key);
-        _registerMap.insert(mapRegister::value_type(category, set));
+        _registerMap.insert(MapRegister::value_type(category, set));
     }
 
     CTransactionManager::instance()->registerItem(category,
@@ -321,10 +321,10 @@ none_ CProcessor::unregisterItem(const ch_1 *category, const ch_1 *key) {
             key);
     assert(processor);
 
-    mapRegister::iterator pos1 = _registerMap.find(category);
+    MapRegister::iterator pos1 = _registerMap.find(category);
 
     if (_registerMap.end() != pos1) {
-        setRegister::iterator pos2 = pos1->second->find(key);
+        SetRegister::iterator pos2 = pos1->second->find(key);
 
         if (pos1->second->end() != pos2) {
             pos1->second->erase(key);

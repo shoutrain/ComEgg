@@ -1,39 +1,40 @@
-#ifndef CNETWORK_MANAGER_H
-#define CNETWORK_MANAGER_H
+#ifndef _C_NETWORK_MANAGER_H_
+#define _C_NETWORK_MANAGER_H_
 
 #include "CAcceptor.h"
 #include "CConnector.h"
-#include "CReceiver.h"
-#include "CSender.h"
+#include "CReactor.h"
 
 #include <string>
 #include <map>
 
 using namespace std;
 
-typedef map<string, const CNetwork *> map_network;
+typedef map<string, CNode *>    MapNode;
+typedef map<string, CReactor *> MapReactor;
 
-class CNetworkManager: public CBaseClass
+class CNetworkManager : public CBase
 {
 public:
-	static CNetworkManager *Instance()
+    static CNetworkManager *instance()
 	{
-		if (m_pInstance)
-			return m_pInstance;
+        if (_instance) {
+            return _instance;
+        }
 
-		m_pInstance = new CNetworkManager;
+        _instance = new CNetworkManager;
 
-		return m_pInstance;
+        return _instance;
 	}
 
-    static none_ Destory()
+    static none_ destroy()
 	{
-		_DEL(m_pInstance);
+        _DEL(_instance);
 	}
 
 	ret_ AddNetwork(const ch_1 *pszName,
 					ENetworkType Type,
-					const CNetwork *pNetwork);
+            const CNode *pNetwork);
 
 	ret_ Work();
 
@@ -42,11 +43,11 @@ public:
 		ACE_Reactor::instance()->end_reactor_event_loop();
 	}
 
-	const CNetwork *GetNetwork(const ch_1 *pszName)
+    const CNode *GetNetwork(const ch_1 *pszName)
 	{
-		map_network::iterator pos = m_NetworkMap.find(pszName);
+        MapNode::iterator pos = _nodeMap.find(pszName);
 
-		if (m_NetworkMap.end() != pos)
+        if (_nodeMap.end() != pos)
 			return pos->second;
 
 		return null_v;
@@ -56,7 +57,8 @@ protected:
 	ret_ Stop();
 
 private:
-	CNetworkManager(): CBaseClass(CINTERFACEMANAGER) {}
+    CNetworkManager() {
+    }
 
 	CNetworkManager(const CNetworkManager &);
 	const CNetworkManager &operator =(const CNetworkManager &);
@@ -66,9 +68,10 @@ private:
 		Stop();
 	}
 
-	map_network m_NetworkMap;
+    MapNode    _nodeMap;
+    MapReactor _reactorMap;
 
-	static CNetworkManager *m_pInstance;
+    static CNetworkManager *_instance;
 };
 
-#endif // CNETWORK_MANAGER_H
+#endif // _C_NETWORK_MANAGER_H_

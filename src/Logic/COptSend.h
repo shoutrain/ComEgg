@@ -36,7 +36,7 @@ private:
     none_ clear();
 
     CPduInfo *_pduInfo;
-    vectorEvaluate _evaluateVector;
+    VectorEvaluate _evaluateVector;
 
     enum {
         NONE_SEND,

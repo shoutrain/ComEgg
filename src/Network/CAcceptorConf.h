@@ -1,11 +1,11 @@
 #ifndef CACCEPTOR_CONF_H
 #define CACCEPTOR_CONF_H
 
-#include "CNetworkConf.h"
+#include "CNodeConf.h"
 #include "CIPFilter.h"
 #include "ace/Synch.h"
 
-class CAcceptorConf: public CNetworkConf
+class CAcceptorConf : public CNodeConf
 {
 public:
 	CAcceptorConf(const CProtocolInfo *pProtocol,
@@ -13,7 +13,7 @@ public:
 				  const CField *pSizeID,
 				  ub_2 nLocalPort,
 				  size_ nMaxConnection)
-		: CNetworkConf(pProtocol,
+            : CNodeConf(pProtocol,
 					   pCommandID,
 					   pSizeID,
 					   nLocalPort,

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-typedef map<string, v_ *> mapVariable;
+typedef map<string, v_ *> MapVariable;
 typedef map<string, mapVariable *> mapCategory;
 
 class CRegister : public CBase {

@@ -86,7 +86,7 @@ none_ CProgramIf::work(const TMessageUnit *tmu) {
 none_ CProgramIf::clear() {
     CProgram::clear();
 
-    for (vectorExp::iterator pos = _expVector.begin();
+    for (VectorExp::iterator pos = _expVector.begin();
          pos != _expVector.end(); pos++) {
         _DEL(*pos);
     }

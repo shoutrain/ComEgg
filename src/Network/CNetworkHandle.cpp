@@ -50,7 +50,7 @@ ret_ CNetworkHandle::CheckSend(const CPduInfo *pPDUInfo,
 		_RET(PARAMETER_ERROR | PARAMETER_3);
 #endif
 
-	CNetworkConf *pConf = (CNetworkConf *)GetConf();
+    CNodeConf *pConf = (CNodeConf *) GetConf();
 
 #ifdef _DEBUG_
 	if (!pConf)
@@ -113,7 +113,7 @@ ret_ CNetworkHandle::OnMessage(const ub_1 *pMsg,
 		_RET(PARAMETER_NULL | PARAMETER_3);
 #endif
 
-	CNetworkConf *pConf = (CNetworkConf *)GetConf();
+    CNodeConf *pConf = (CNodeConf *) GetConf();
 
 #ifdef _DEBUG_
 	if (!pConf)

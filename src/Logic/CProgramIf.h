@@ -32,7 +32,7 @@ public:
 private:
     none_ clear();
 
-    vectorExp _expVector;
+    VectorExp _expVector;
 };
 
 #endif // _C_OPT_IF_H_

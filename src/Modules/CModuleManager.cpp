@@ -4,7 +4,7 @@
 CModuleManager *CModuleManager::_instance = null_v;
 
 none_ CModuleManager::stop() {
-    for (mapModule::iterator pos = _moduleMap.begin();
+    for (MapModule::iterator pos = _moduleMap.begin();
          pos != _moduleMap.end(); pos++) {
         assert(pos->second);
         _DEL(pos->second);
@@ -23,13 +23,13 @@ none_ CModuleManager::addModule(const ch_1 *path,
     assert(!module);
 
     module = new CModuleInfo(path, name, ext);
-    _moduleMap.insert(mapModule::value_type(name, module));
+    _moduleMap.insert(MapModule::value_type(name, module));
 }
 
 CModuleInfo *CModuleManager::getModule(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapModule::iterator pos = _moduleMap.find(name);
+    MapModule::iterator pos = _moduleMap.find(name);
 
     if (_moduleMap.end() != pos) {
         assert(pos->second);

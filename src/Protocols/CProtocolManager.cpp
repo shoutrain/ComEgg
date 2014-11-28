@@ -4,7 +4,7 @@
 CProtocolManager *CProtocolManager::_instance = null_v;
 
 none_ CProtocolManager::stop() {
-    for (mapProtocol::iterator pos = _protocolMap.begin();
+    for (MapProtocol::iterator pos = _protocolMap.begin();
          pos != _protocolMap.end(); pos++) {
         assert(pos->second);
         _DEL(pos->second);
@@ -17,13 +17,13 @@ none_ CProtocolManager::addProtocol(const ch_1 *name, CProtocolInfo *&protocolIn
     assert(name && 0 != name && !protocolInfo);
 
     protocolInfo = new CProtocolInfo();
-    _protocolMap.insert(mapProtocol::value_type(name, protocolInfo));
+    _protocolMap.insert(MapProtocol::value_type(name, protocolInfo));
 }
 
 CProtocolInfo *CProtocolManager::getProtocol(const ch_1 *name) {
     assert(name && 0 != name[0]);
 
-    mapProtocol::iterator pos = _protocolMap.find(name);
+    MapProtocol::iterator pos = _protocolMap.find(name);
 
     if (_protocolMap.end() != pos) {
         assert(pos->second);

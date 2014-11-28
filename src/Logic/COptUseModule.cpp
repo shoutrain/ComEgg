@@ -44,7 +44,7 @@ COptUseModule::COptUseModule(const CInterfaceInfo *interfaceInfo)
 COptUseModule::COptUseModule(const COptUseModule &opt) : COperator(opt) {
     _interfaceInfo = opt._interfaceInfo;
 
-    for (vectorEvaluate::const_iterator pos = opt._inEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = opt._inEvaluateVector.begin();
          pos != opt._inEvaluateVector.end(); pos++) {
         TEvaluate *evaluate = new TEvaluate;
 
@@ -62,7 +62,7 @@ COptUseModule::COptUseModule(const COptUseModule &opt) : COperator(opt) {
         _inEvaluateVector.push_back(evaluate);
     }
 
-    for (vectorEvaluate::const_iterator pos_ = opt._outEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos_ = opt._outEvaluateVector.begin();
          pos_ != opt._outEvaluateVector.end(); pos_++) {
         TEvaluate *evaluate = new TEvaluate;
 
@@ -89,7 +89,7 @@ const COptUseModule &COptUseModule::operator=(const COptUseModule &opt) {
 
         _interfaceInfo = opt._interfaceInfo;
 
-        for (vectorEvaluate::const_iterator pos
+        for (VectorEvaluate::const_iterator pos
                                                     = opt._inEvaluateVector.begin();
              pos != opt._inEvaluateVector.end(); pos++) {
             TEvaluate *evaluate = new TEvaluate;
@@ -108,7 +108,7 @@ const COptUseModule &COptUseModule::operator=(const COptUseModule &opt) {
             _inEvaluateVector.push_back(evaluate);
         }
 
-        for (vectorEvaluate::const_iterator pos_
+        for (VectorEvaluate::const_iterator pos_
                                                     = opt._outEvaluateVector.begin();
              pos_ != opt._outEvaluateVector.end(); pos_++) {
             TEvaluate *evaluate = new TEvaluate;
@@ -138,14 +138,14 @@ COptUseModule::~COptUseModule() {
 none_ COptUseModule::clear() {
     _interfaceInfo = null_v;
 
-    for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
+    for (VectorEvaluate::iterator pos = _inEvaluateVector.begin();
          pos != _inEvaluateVector.end(); pos++) {
         _DEL((*pos)->field);
         _DEL((*pos)->value);
         _DEL(*pos);
     }
 
-    for (vectorEvaluate::iterator pos = _outEvaluateVector.begin();
+    for (VectorEvaluate::iterator pos = _outEvaluateVector.begin();
          pos != _outEvaluateVector.end(); pos++) {
         _DEL((*pos)->field);
         _DEL((*pos)->value);
@@ -159,7 +159,7 @@ none_ COptUseModule::clear() {
 none_ COptUseModule::init(const optUnit *unit) {
     COperator::init(unit);
 
-    for (vectorEvaluate::iterator pos = _inEvaluateVector.begin();
+    for (VectorEvaluate::iterator pos = _inEvaluateVector.begin();
          pos != _inEvaluateVector.end(); pos++) {
         if ((*pos)->field) {
             (*pos)->field->init(unit->data);
@@ -170,7 +170,7 @@ none_ COptUseModule::init(const optUnit *unit) {
         }
     }
 
-    for (vectorEvaluate::iterator pos_ = _outEvaluateVector.begin();
+    for (VectorEvaluate::iterator pos_ = _outEvaluateVector.begin();
          pos_ != _outEvaluateVector.end(); pos_++) {
         if ((*pos_)->field) {
             (*pos_)->field->init(unit->data);
@@ -187,7 +187,7 @@ bool_ COptUseModule::addInParameter(CVariable *value) {
         return false_v;
     }
 
-    vectorEvaluate::iterator pos;
+    VectorEvaluate::iterator pos;
 
     for (pos = _inEvaluateVector.begin();
          pos != _inEvaluateVector.end(); pos++) {
@@ -226,7 +226,7 @@ bool_ COptUseModule::addOutParameter(const ch_1 *fieldName,
         return false_v;
     }
 
-    vectorEvaluate::iterator pos;
+    VectorEvaluate::iterator pos;
 
     for (pos = _outEvaluateVector.begin();
          pos != _outEvaluateVector.end(); pos++) {
@@ -252,7 +252,7 @@ bool_ COptUseModule::addOutParameter(const ch_1 *fieldName,
 none_ COptUseModule::work(const TMessageUnit *tmu) {
     size_ size = 0;
 
-    for (vectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
          pos != _inEvaluateVector.end(); pos++) {
         if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) {
             // If it's Group, check if it's available.
@@ -291,7 +291,7 @@ none_ COptUseModule::work(const TMessageUnit *tmu) {
 
     memset(&outMU, 0, sizeof(TMessageUnit));
 
-    for (vectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _inEvaluateVector.begin();
          pos != _inEvaluateVector.end(); pos++) {
         v_ *field = (*pos)->field->value(&inMU);
         v_ *value = (*pos)->value->value(tmu);
@@ -316,7 +316,7 @@ none_ COptUseModule::work(const TMessageUnit *tmu) {
     }
 
     // Get variable size first, so that can create enough memory to keep it.
-    for (vectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
          pos != _outEvaluateVector.end(); pos++) {
         if ((*pos)->field && (*pos)->value) {
             if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type() &&
@@ -356,7 +356,7 @@ none_ COptUseModule::work(const TMessageUnit *tmu) {
         }
     }
 
-    for (vectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
+    for (VectorEvaluate::const_iterator pos = _outEvaluateVector.begin();
          pos != _outEvaluateVector.end(); pos++) {
         if (FIELD_GROUP_TYPE == (*pos)->fieldInfo->type()) {
             CField      *valueField = null_v;

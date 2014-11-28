@@ -2,7 +2,7 @@
 #define CNETWORK_HANDLE
 
 #include "NetworkCommon.h"
-#include "CNetworkConf.h"
+#include "CNodeConf.h"
 
 // transaction level
 class CNetworkHandle: public CBaseClass
@@ -52,7 +52,7 @@ protected:
 				   size_ nSize,
 				   const TMsgInfo *pMsgInfo);
 
-	virtual const CNetworkConf *GetConf() const = 0;
+    virtual const CNodeConf *GetConf() const = 0;
 
 	CProcessor	*m_pProcessor;
 	TMsgInfo	m_MsgInfo;

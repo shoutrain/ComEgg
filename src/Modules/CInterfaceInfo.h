@@ -55,8 +55,8 @@ protected:
     none_ stop();
 
 private:
-    mapField _inFieldMap;
-    mapField _outFieldMap;
+    MapField _inFieldMap;
+    MapField _outFieldMap;
 
     CField *_inField;
     CField *_inCurField;

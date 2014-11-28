@@ -1,9 +1,9 @@
 #ifndef CCONNECTOR_CONF_H
 #define CCONNECTOR_CONF_H
 
-#include "CNetworkConf.h"
+#include "CNodeConf.h"
 
-class CConnectorConf: public CNetworkConf
+class CConnectorConf : public CNodeConf
 {
 public:
 	CConnectorConf(const CProtocolInfo *pProtocol,
@@ -13,7 +13,7 @@ public:
 				   const ch_1 *pszRemoteIP,
 				   ub_2 nRemotePort,
 				   b_4 nReconnect)
-		: CNetworkConf(pProtocol,
+            : CNodeConf(pProtocol,
 					   pCommandID,
 					   pSizeID,
 					   nLocalPort,

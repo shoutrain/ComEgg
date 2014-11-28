@@ -1,5 +1,5 @@
-#ifndef CIP_FILTER_H
-#define CIP_FILTER_H
+#ifndef _C_IP_FILTER_H_
+#define _C_IP_FILTER_H_
 
 #include "NetworkCommon.h"
 
@@ -8,76 +8,71 @@
 
 using namespace std;
 
-typedef set<string> set_string;
+typedef set<string> SetString;
 
-class CIPFilter
-{
+class CIPFilter {
 public:
-	CIPFilter() 
-	{
-		m_bIsForbid = false_v;
-		m_bIsWork	= false_v;
-	}
+    CIPFilter() {
+        _isForbid = false_v;
+        _isWork   = false_v;
+    }
 
-	virtual ~CIPFilter()
-	{
-		m_IPSet.clear();
-	}
+    virtual ~CIPFilter() {
+        _ipSet.clear();
+    }
 
-    none_ SetForbid(bool_ bIsForbid = true_v)
-	{
-		m_bIsForbid = bIsForbid;
-		m_bIsWork	= true_v;
-	}
+    none_ setForbid(bool_ isForbid = true_v) {
+        _isForbid = isForbid;
+        _isWork   = true_v;
+    }
 
-	bool_ AddIP(const ch_1 *pszIP)
-	{
-		if (!m_bIsWork)
-			return false_v;
+    bool_ addIP(const ch_1 *ip) {
+        assert(ip && 0 != ip[0]);
 
-		if (!pszIP)
-			return false_v;
+        if (!_isWork) {
+            return false_v;
+        }
 
-		if (!m_IPSet.count(pszIP))
-			m_IPSet.insert(pszIP);
+        if (!_ipSet.count(ip)) {
+            _ipSet.insert(ip);
+        }
 
-		return true_v;
-	}
+        return true_v;
+    }
 
-	bool_ AddIPGroup(const ch_1 *pszIP);
+    bool_ addIpGroup(const ch_1 *ip);
 
-	bool_ IPPermit(const ch_1 *pszIP)
-	{
-		if (!pszIP)
-			return false_v;
+    bool_ ipPermit(const ch_1 *ip) {
+        assert(ip && 0 != ip[0]);
 
-		if (!m_bIsWork)
-			return true_v;
+        if (!_isWork) {
+            return true_v;
+        }
 
-		if (m_bIsForbid)
-		{
-			if (m_IPSet.count(pszIP))
-				return false_v;
-			else
-				return true_v;
-		}
-		else
-		{
-			if (m_IPSet.count(pszIP))
-				return true_v;
-			else
-				return false_v;
-		}
-	}
+        if (_isForbid) {
+            if (_ipSet.count(ip)) {
+                return false_v;
+            } else {
+                return true_v;
+            }
+        } else {
+            if (_ipSet.count(ip)) {
+                return true_v;
+            } else {
+                return false_v;
+            }
+        }
+    }
 
 private:
-	CIPFilter(const CIPFilter &);
-	const CIPFilter &operator =(const CIPFilter &);
+    CIPFilter(const CIPFilter &);
 
-	bool_ m_bIsWork;
-	bool_ m_bIsForbid;
+    const CIPFilter &operator=(const CIPFilter &);
 
-	set_string m_IPSet;
+    bool_ _isWork;
+    bool_ _isForbid;
+
+    SetString _ipSet;
 };
 
-#endif // CIP_FILTER_H
+#endif // _C_IP_FILTER_H_

@@ -1,5 +1,5 @@
-#ifndef CNETWORK_CONF_H
-#define CNETWORK_CONF_H
+#ifndef _C_NODE_CONF_H_
+#define _C_NODE_CONF_H_
 
 #include "NetworkCommon.h"
 #include "../Protocols/ProtocolCommon.h"
@@ -11,16 +11,16 @@
 
 using namespace std;
 
-typedef map<size_, const CPduInfo *> MapPduTable;
-typedef map<const CPduInfo *, size_> MapIdTable;
+typedef map<ub_4, const CPduInfo *> MapPduTable;
+typedef map<const CPduInfo *, ub_4> MapIdTable;
 
-class CNetworkConf: public CBase {
+class CNodeConf : public CBase {
 public:
-    b_4 configPdu(const v_ &id, const CPduInfo *pduInfo, EDirection direction);
+    none_      configPdu(const v_ &id, const CPduInfo *pduInfo, EDirection direction);
 
-    b_4 identifyId(const v_ &id, CPduInfo *&pduInfo, EDirection direction);
+    CPduInfo   *findPdu(const v_ &id, EDirection direction);
 
-    b_4 identifyPdu(const CPduInfo *pPDUInfo, v_ &id, EDirection direction);
+    ub_4       findId(const CPduInfo *pduInfo, EDirection direction);
 
 	const CProtocolInfo *getProtocol() const {
 		return _protocol;
@@ -47,7 +47,7 @@ public:
 	}
 
 protected:
-	CNetworkConf(const CProtocolInfo *protocol, const CField *commandId,
+    CNodeConf(const CProtocolInfo *protocol, const CField *commandId,
 			const CField *sizeId, ub_2 localPort) {
 		_protocol = (CProtocolInfo *) protocol;
 		_commandId = (CField *) commandId;
@@ -57,21 +57,19 @@ protected:
 		_transaction = null_v;
 	}
 
-	virtual ~CNetworkConf() {
+    virtual ~CNodeConf() {
 		_pduInTableMap.clear();
 		_pduOutTableMap.clear();
 	}
 
 private:
-    bool_ findPdu(const v_ &id, EDirection direction, CPduInfo *&pduInfo);
 
-    bool_ findId(const CPduInfo *pduInfo, EDirection direction, v_ &id);
 
 	MapPduTable _pduInTableMap;
 	MapPduTable _pduOutTableMap;
 
 	MapIdTable _idInTableMap;
-	MapIdTable _idOutTablemap;
+    MapIdTable _idOutTableMap;
 
 	CProtocolInfo *_protocol;
 	CField *_commandId;
@@ -81,4 +79,4 @@ private:
 	CTransaction *_transaction;
 };
 
-#endif // CNETWORK_CONF_H
+#endif // _C_NODE_CONF_H_

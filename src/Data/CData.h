@@ -9,8 +9,8 @@
 
 using namespace std;
 
-typedef map<string, v_ *> mapVariable;
-typedef map<string, TFieldGroup *> mapData;
+typedef map<string, v_ *>          MapVariable;
+typedef map<string, TFieldGroup *> MapData;
 
 class CData {
 public:
@@ -95,8 +95,8 @@ public:
 private:
     CData *_parent;
 
-    mapVariable _variableMap;
-    mapData _dataMap;
+    MapVariable _variableMap;
+    MapData     _dataMap;
 };
 
 #endif // CDATA_H

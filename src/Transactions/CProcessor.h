@@ -11,10 +11,9 @@ class CNetworkHandle;
 
 using namespace std;
 
-typedef map<CPduInfo *, CProgram *> mapHandle;
-
-typedef set<string>                setRegister;
-typedef map<string, setRegister *> mapRegister;
+typedef map<CPduInfo *, CProgram *> MapHandle;
+typedef set<string>                 SetRegister;
+typedef map<string, SetRegister *>  MapRegister;
 
 class CProcessor : public CBase {
 public:
@@ -77,12 +76,12 @@ private:
 
     CProgram _normalHandle[NORMAL_HANDLE];
 
-    mapHandle _handleInMap;
-    mapHandle _handleOutMap;
+    MapHandle _handleInMap;
+    MapHandle _handleOutMap;
 
     CNetworkHandle *_handle;
 
-    mapRegister _registerMap;
+    MapRegister _registerMap;
 };
 
 #endif // _C_PROCESSOR_H_

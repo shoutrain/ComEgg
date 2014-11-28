@@ -9,9 +9,9 @@
 
 using namespace std;
 
-typedef map<string, const CTransaction *> mapTransaction;
-typedef map<string, const CProcessor *>   mapProcessor;
-typedef map<string, mapProcessor *>       mapProcessorCategory;
+typedef map<string, const CTransaction *> MapTransaction;
+typedef map<string, const CProcessor *>   MapProcessor;
+typedef map<string, MapProcessor *>       MapProcessorCategory;
 
 class CTransactionManager : public CBase {
 public:
@@ -80,8 +80,8 @@ private:
     static CTransactionManager *_instance;
 
     CData                _data;
-    mapTransaction       _transactionMap;
-    mapProcessorCategory _categoryMap;
+    MapTransaction       _transactionMap;
+    MapProcessorCategory _categoryMap;
 };
 
 #endif // _C_TRANSACTION_MANAGER_H_

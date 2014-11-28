@@ -10,7 +10,7 @@ using namespace std;
 
 class CProtocolInfo;
 
-typedef map<string, CProtocolInfo *> mapProtocol;
+typedef map<string, CProtocolInfo *> MapProtocol;
 
 class CProtocolManager : public CBase {
 public:
@@ -57,7 +57,7 @@ private:
         stop();
     }
 
-    mapProtocol _protocolMap;
+    MapProtocol _protocolMap;
 
     static CProtocolManager *_instance;
 };

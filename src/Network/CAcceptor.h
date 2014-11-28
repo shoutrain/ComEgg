@@ -1,11 +1,11 @@
 #ifndef CACCEPTOR_H
 #define CACCEPTOR_H
 
-#include "CNetwork.h"
+#include "CNode.h"
 #include "CAcceptorHandle.h"
 
 class CAcceptor: public ACE_Acceptor<CAcceptorHandle, ACE_SOCK_ACCEPTOR>,
-				 public CNetwork
+                 public CNode
 {
 public:
 	CAcceptor(const CProtocolInfo *pProtocol,
@@ -14,7 +14,7 @@ public:
 			  ub_2 nPort,
 			  size_ nMaxConnection,
 			  bool_ bIsAutoStart)
-		: CNetwork(bIsAutoStart, NETWORK_ACCEPTOR, CACCEPTOR),
+            : CNode(bIsAutoStart, NETWORK_ACCEPTOR, CACCEPTOR),
 		  m_Conf(pProtocol, pCommandID, pSizeID, nPort, nMaxConnection)
 
 	{
@@ -37,9 +37,9 @@ public:
 		close();
 	}
 
-	virtual const CNetworkConf *getConf() const
+    virtual const CNodeConf *getConf() const
 	{
-		return (CNetworkConf *)&m_Conf;
+        return (CNodeConf *) &m_Conf;
 	}
 
 private:

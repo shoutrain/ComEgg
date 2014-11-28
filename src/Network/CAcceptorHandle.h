@@ -13,9 +13,9 @@ public:
 	}
 
 protected:
-	virtual const CNetworkConf *GetConf() const
+    virtual const CNodeConf *GetConf() const
 	{
-		return (const CNetworkConf *)m_pConf;
+        return (const CNodeConf *) m_pConf;
 	}
 
 	virtual ret_ OnOpen(const ub_1 *Obj);

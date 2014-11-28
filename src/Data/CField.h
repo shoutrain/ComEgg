@@ -9,7 +9,7 @@ using namespace std;
 
 class CField;
 
-typedef set<const CField *> setField;
+typedef set<const CField *> SetField;
 
 class CField {
 public:

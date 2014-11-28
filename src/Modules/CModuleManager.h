@@ -10,7 +10,7 @@ using namespace std;
 
 class CModuleInfo;
 
-typedef map<string, const CModuleInfo *> mapModule;
+typedef map<string, const CModuleInfo *> MapModule;
 
 class CModuleManager : public CBase {
 public:
@@ -60,7 +60,7 @@ private:
         stop();
     }
 
-    mapModule _moduleMap;
+    MapModule _moduleMap;
 
     static CModuleManager *_instance;
 };

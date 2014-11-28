@@ -1,19 +1,19 @@
 #include "CData.h"
 
 CData::CData(const CData &data) {
-    for (mapVariable::const_iterator pos = data._variableMap.begin();
+    for (MapVariable::const_iterator pos = data._variableMap.begin();
          pos != data._variableMap.end(); pos++) {
         v_ *p = new v_(*(pos->second));
 
-        _variableMap.insert(mapVariable::value_type(pos->first, p));
+        _variableMap.insert(MapVariable::value_type(pos->first, p));
     }
 
-    for (mapData::const_iterator pos_ = data._dataMap.begin();
+    for (MapData::const_iterator pos_ = data._dataMap.begin();
          pos_ != data._dataMap.end(); pos_++) {
         TFieldGroup *newData = new TFieldGroup;
 
         memset(newData, 0, sizeof(TFieldGroup));
-        _dataMap.insert(mapData::value_type(pos_->first, newData));
+        _dataMap.insert(MapData::value_type(pos_->first, newData));
 
         if (pos_->second->size && pos_->second->data) {
             newData->size = pos_->second->size;
@@ -26,19 +26,19 @@ const CData &CData::operator=(const CData &data) {
     if (&data != this) {
         clear();
 
-        for (mapVariable::const_iterator pos = data._variableMap.begin();
+        for (MapVariable::const_iterator pos = data._variableMap.begin();
              pos != data._variableMap.end(); pos++) {
             v_ *p = new v_(*(pos->second));
 
-            _variableMap.insert(mapVariable::value_type(pos->first, p));
+            _variableMap.insert(MapVariable::value_type(pos->first, p));
         }
 
-        for (mapData::const_iterator pos_ = data._dataMap.begin();
+        for (MapData::const_iterator pos_ = data._dataMap.begin();
              pos_ != data._dataMap.end(); pos_++) {
             TFieldGroup *newData = new TFieldGroup;
 
             memset(newData, 0, sizeof(TFieldGroup));
-            _dataMap.insert(mapData::value_type(pos_->first, newData));
+            _dataMap.insert(MapData::value_type(pos_->first, newData));
 
             if (pos_->second->size && pos_->second->data) {
                 newData->size = pos_->second->size;
@@ -120,7 +120,7 @@ bool_ CData::define(const ch_1 *name, evt_ type) {
             return false_v;
     }
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -155,7 +155,7 @@ bool_ CData::define(const ch_1 *name, evt_ type, b_4 data) {
             return false_v;
     }
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -167,7 +167,7 @@ bool_ CData::define(const ch_1 *name, b_8 data) {
 
     v_ *var = new v_(data);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -179,7 +179,7 @@ bool_ CData::define(const ch_1 *name, ub_8 data) {
 
     v_ *var = new v_(data);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -191,7 +191,7 @@ bool_ CData::define(const ch_1 *name, fb_4 data) {
 
     v_ *var = new v_(data);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -203,7 +203,7 @@ bool_ CData::define(const ch_1 *name, fb_8 data) {
 
     v_ *var = new v_(data);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -215,7 +215,7 @@ bool_ CData::define(const ch_1 *name, const ch_1 *value) {
 
     v_ *var = new v_((const ch_1 *) value, 0);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -227,7 +227,7 @@ bool_ CData::define(const ch_1 *name, obj_ object) {
 
     v_ *var = new v_(object);
 
-    _variableMap.insert(mapVariable::value_type(name, var));
+    _variableMap.insert(MapVariable::value_type(name, var));
 
     return true_v;
 }
@@ -247,13 +247,13 @@ bool_ CData::define(const CFieldGroupDefined *fieldGroup) {
         return false_v;
     }
 
-    _variableMap.insert(mapVariable::value_type(fieldGroup->name(),
+    _variableMap.insert(MapVariable::value_type(fieldGroup->name(),
             new v_((obj_) fieldGroup)));
 
     TFieldGroup *groupData = new TFieldGroup;
 
     memset(groupData, 0, sizeof(TFieldGroup));
-    _dataMap.insert(mapData::value_type(fieldGroup->name(),
+    _dataMap.insert(MapData::value_type(fieldGroup->name(),
             groupData));
 
     size_ n = (size_) *size;
@@ -275,7 +275,7 @@ bool_ CData::define(const CFieldGroupDefined *fieldGroup) {
             return false_v;
         }
 
-        _variableMap.insert(mapVariable::value_type(name,
+        _variableMap.insert(MapVariable::value_type(name,
                 new v_((obj_) field)));
         field = field->getNextField();
     }
@@ -284,7 +284,7 @@ bool_ CData::define(const CFieldGroupDefined *fieldGroup) {
 }
 
 v_ *CData::value(const ch_1 *name) const {
-    mapVariable::const_iterator pos = _variableMap.find(name);
+    MapVariable::const_iterator pos = _variableMap.find(name);
 
     if (_variableMap.end() != pos) {
         return pos->second;
@@ -310,10 +310,10 @@ v_ *CData::value(const ch_1 *groupName,
         sprintf(name, "%s.%s", groupName, subName);
     }
 
-    mapVariable::const_iterator pos = _variableMap.find(name);
+    MapVariable::const_iterator pos = _variableMap.find(name);
 
     if (_variableMap.end() != pos) {
-        mapData::const_iterator pos_ = _dataMap.find(groupName);
+        MapData::const_iterator pos_ = _dataMap.find(groupName);
 
         if (_dataMap.end() != pos_) {
             data = pos_->second;
@@ -330,12 +330,12 @@ v_ *CData::value(const ch_1 *groupName,
 }
 
 none_ CData::clear() {
-    for (mapVariable::iterator pos = _variableMap.begin();
+    for (MapVariable::iterator pos = _variableMap.begin();
          pos != _variableMap.end(); pos++) {
         _DEL(pos->second);
     }
 
-    for (mapData::iterator pos_ = _dataMap.begin();
+    for (MapData::iterator pos_ = _dataMap.begin();
          pos_ != _dataMap.end(); pos_++) {
         if (pos_->second->size && pos_->second->data) {
             _DEL_ARR(pos_->second->data);
