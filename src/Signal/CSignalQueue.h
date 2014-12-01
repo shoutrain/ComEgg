@@ -4,10 +4,6 @@
 #include "CGlobal.h"
 #include "CLoopBuffer.h"
 
-struct TSignal {
-    ub_1 size;
-    ub_1 cmd;
-};
 
 class CSignalQueue {
 public:
@@ -15,6 +11,17 @@ public:
             : _loopBuffer(size, mutex, false_v) {
 
     }
+
+    TSignal *allocSignal();
+
+    none_   preparedSignal();
+
+
+    TSignal *readSignal();
+
+    none_ freeSignal();
+
+
 
 private:
     CLoopBuffer _loopBuffer;
