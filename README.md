@@ -39,6 +39,6 @@ Log
 2014/11/28 ~ NOW
 ---------
 1. use epoll to establish network system which can be changed in running-time
-2. establish unified message queue for all thread and realize communication between threads
+2. establish unified message/signal queue for all thread and realize communication between threads
 3. re-establish xml parser system
 4. new ComEgg will have a real-time changing system, a long time need to realize it

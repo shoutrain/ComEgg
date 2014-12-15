@@ -1,3 +1,14 @@
+/*!
+* \file CResource.h
+* \brief the header file for class of CResource.h.
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 12/15/2014
+*/
+
 #ifndef _C_RESOURCE_H_
 #define _C_RESOURCE_H_
 
@@ -7,9 +18,19 @@
 
 class CMutex;
 
+/// \brief CResource can manager a lot of objects.
+///
+/// CResource can avoid using of new/delete, you can allocate some objects in
+/// advance and use some of them and free some of them without worrying about
+/// memory leak.
 template<class T, class Y>
 class CResource {
 public:
+    /// \brief The constructor of CResource.
+    ///
+    /// \param maxNum The total number of objects you want to manager.
+    /// \param mutex Make the instance of CResource to support multi-thread if
+    /// mutex is not null_v.
     CResource(const ub_4 maxNum, CMutex *mutex = null_v) :
             _maxNum(maxNum) {
         assert(_maxNum > 1);
@@ -22,6 +43,15 @@ public:
         }
     }
 
+    /// \brief The constructor of CResource.
+    ///
+    /// You can assign container to these objects, but you should ensure these
+    /// objects has corresponding construct with container as the only param.
+    /// \param maxNum The total number of objects you want to manager.
+    /// \param container These objects' container, which should be passed to
+    /// the constructor of these objects.
+    /// \param mutex Make the instance of CResource to support multi-thread if
+    /// mutex is not null_v.
     CResource(const ub_4 maxNum,
             Y *container,
             CMutex *mutex = null_v) :
@@ -37,6 +67,7 @@ public:
         }
     }
 
+    /// \brief The destructor of CResource.
     virtual ~CResource() {
         _freeDeque.clear();
 
@@ -47,6 +78,10 @@ public:
         _DEL_ARR(_unitGroup);
     }
 
+    /// \brief Allocate object to use.
+    ///
+    /// \return The allocated object to use, return null_v if there is no more
+    /// object to be allocated.
     T *allocate() {
         CAutoLock al(_mutex);
 
@@ -62,6 +97,12 @@ public:
         return null_v;
     }
 
+    /// \brief Reclaim object to sleep.
+    ///
+    /// \param unit The object will not be used any more and should be reclaimed
+    /// back to CResource instance.
+    /// \return Returning false_v means the object in unit is not owned by this
+    /// CResource instance.
     bool_ reclaim(T *&unit) {
         assert(unit);
         CAutoLock al(_mutex);
@@ -84,6 +125,9 @@ public:
         return false_v;
     }
 
+    /// \brief Get the free objects number
+    ///
+    /// \return The number of free objects which can be allocated
     size_ size() const {
         return (size_) _freeDeque.size();
     }

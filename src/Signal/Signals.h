@@ -3,9 +3,9 @@
 
 const ub_2 REQ_MARK = 0x1000;
 
-// NetworkManager <-> ParserManager
-const ub_2 PARSER_RDS_RES = 0x0001;
-const ub_2 PARSER_RDS_REQ = REQ_MARK | PARSER_RDS_RES;
+// Network <-> Parser
+const ub_2 PARSER_RDS_REQ = 0x0001;
+const ub_2 PARSER_RDS_RES = REQ_MARK | PARSER_RDS_RES;
 
 struct TSignalHeader {
     ub_2 size;
@@ -17,9 +17,12 @@ struct TSignalExtra {
     ub_4 extraHigh;
 };
 
+struct TSignalParserRdsReq {
+    TSignalHeader header;
+};
+
 struct TSignalParserRdsRes {
     TSignalHeader header;
-
 };
 
 #endif // _SIGNALS_H_
