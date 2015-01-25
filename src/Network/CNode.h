@@ -19,8 +19,6 @@ public:
 
     virtual none_ sleep() = 0;
 
-    virtual CNetworkConf *getConf() const = 0;
-
     bool_ isAutoStart() const {
         return _isAutoStart;
     }

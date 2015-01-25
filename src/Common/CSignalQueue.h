@@ -6,20 +6,21 @@
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
 * \version 1.0.0
-* \date 12/16/2014
+* \date 01/25/2015
 */
 
-#ifndef _C_QUEUE_H_
-#define _C_QUEUE_H_
+#ifndef _C_SIGNAL_QUEUE_H_
+#define _C_SIGNAL_QUEUE_H_
 
 #include "CAutoLock.h"
-#include "CSignal.h"
 
 class CMutex;
 
+class Signal;
+
 /// \brief CSignalQueue can queue a lot of CSignal instances.
 ///
-/// CQueue can avoid using of delete.
+/// CSignalQueue can avoid using of delete.
 /// Notice: This class can support multi-thread signal sending and
 /// single-thread signal receiving
 class CSignalQueue {
@@ -55,11 +56,14 @@ private:
     CSignal    *_signals;
     CMutex     *_mutex;
 
-    struct {
+    struct TSignalNode {
         CSignal *prevSignal;
         CSignal *curSignal;
         CSignal *nextSignal;
-    }          _queueHead, _queueTail;
+    };
+
+    TSignalNode _queueHead;
+    TSignalNode _queueTail;
 };
 
-#endif // _C_QUEUE_H_
+#endif // _C_SIGNAL_QUEUE_H_

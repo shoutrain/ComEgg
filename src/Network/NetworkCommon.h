@@ -1,24 +1,21 @@
 #ifndef _NETWORK_COMMON_H_
 #define _NETWORK_COMMON_H_
 
-#include "CGlobal.h"
-
 const ub_4 REV_BUFFER_MAX_SIZE = 65535;
-const ub_4 IP_MAX_LENGTH      = 16;
-const ub_4 IP_MAX_LENGTH_SIGN = IP_MAX_LENGTH - 1;
+const ub_4 IP_MAX_LENGTH = 15;
 
-enum ENetworkStatus {
+enum ENodeType {
+    NONE,
+    CONTAINER,
+    CONNECTOR,
+};
+
+enum ENodeStatus {
     WORKING, SLEEPING
 };
 
 enum EDirection {
-    DIRECTION_IN = 1, DIRECTION_OUT, DIRECTION_ALL,
-};
-
-enum ENetworkType {
-    NETWORK_NONE,
-    NETWORK_ACCEPTOR,
-    NETWORK_CONNECTOR,
+    IN = 1, OUT, ALL,
 };
 
 struct TMsgInfo {
