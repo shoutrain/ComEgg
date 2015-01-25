@@ -1,6 +1,6 @@
-最近一些感想和动态(2015年1月8日)
+最近一些感想和动态(2015年1月25日)
 ==================
-今年的时间安排，一部分集中在赚取全家生存和研发经费上，其他大部分时间都会花在SCS的研发上面。
+上上周北京之行一周，认识了一些新朋友，对今年的计划有影响，那几天北京雾霾很重，回无锡后就感冒了，也就是上周，躺在床上一周。最近有些迷失。
 
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
 
