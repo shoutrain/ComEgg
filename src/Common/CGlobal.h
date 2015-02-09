@@ -1,3 +1,14 @@
+/*!
+* \file CGlobal.h
+* \brief define the class of CGlobal and log functions
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/09/2015
+*/
+
 #ifndef _C_GLOBAL_H_
 #define _C_GLOBAL_H_
 
@@ -5,6 +16,11 @@
 
 #include <log4c.h>
 
+/// \brief CSignalQueue can queue a lot of CSignal instances.
+///
+/// CSignalQueue can avoid using of delete.
+/// Notice: This class can support multi-thread signal sending and
+/// single-thread signal receiving
 class CGlobal {
 public:
     static bool_ init();

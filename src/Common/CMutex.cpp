@@ -2,7 +2,7 @@
 
 #include <sys/errno.h>
 
-CMutex::CMutex(pthread_mutexattr_t *attr) {
+CMutex::CMutex(pthread_mutexattr_t * attr) {
     if (0 != pthread_mutex_init(&_mutex, attr)) {
         logFatal("CMutex::CMutex: failed to call pthread_mutex_init");
     }
@@ -15,7 +15,7 @@ CMutex::~CMutex() {
 }
 
 bool_ CMutex::lock(bool_ check) {
-    int ret = 0;
+    b_4 ret = 0;
 
     if (check) {
         ret = pthread_mutex_trylock(&_mutex);
@@ -45,4 +45,3 @@ none_ CMutex::unlock() {
         logFatal("CMutex::unlock: failed to call pthread_mutex_unlock");
     }
 }
-

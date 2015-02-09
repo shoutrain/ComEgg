@@ -6,16 +6,13 @@
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
 * \version 1.0.0
-* \date 01/25/2015
+* \date 02/09/2015
 */
 
 #ifndef _C_SIGNAL_QUEUE_H_
 #define _C_SIGNAL_QUEUE_H_
 
-#include "CAutoLock.h"
-
 class CMutex;
-
 class Signal;
 
 /// \brief CSignalQueue can queue a lot of CSignal instances.
@@ -46,7 +43,7 @@ public:
     /// Please call prepare() first before call this function
     none_ send();
 
-    /// \brief Obtain the next signal if there is new signal
+    /// \brief Obtain the next signal if there are new signals
     ///
     /// \return Obtain null_v is there is no more signal
     CSignal *receive();

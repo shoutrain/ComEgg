@@ -1,3 +1,15 @@
+/*!
+* \file CBaseType.h
+* \brief all native data type and other basic header file and operators are
+* defined here
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/09/2015
+*/
+
 #ifndef _BASE_TYPE_H_
 #define _BASE_TYPE_H_
 
