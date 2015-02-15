@@ -1,3 +1,14 @@
+/*!
+* \file CCond.h
+* \brief The encapsulation class for condition
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
 #ifndef _C_COND_H_
 #define _C_COND_H_
 

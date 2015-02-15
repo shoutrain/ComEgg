@@ -1,5 +1,26 @@
-#ifndef _C_VAR_H_
-#define _C_VAR_H_
+/*!
+* \file CAutoVar.h
+* \brief Define variable with weak type.
+*
+* It's class encapsulate a week type which supports following types and
+* corresponding pointers and corresponding operators:
+* 1. char(b_1), unsigned char(ub_1);
+* 2. short int(b_2), unsigned short int(ub_2);
+* 3. int(b_4), unsigned int(ub_4);
+* 4. long(b_8), unsigned long(ub_8);
+* 5. float(fb_4);
+* 6. double(fb_8);
+* 7. string(str_);
+* 8. object(obj_);
+* There is no more description for this file below.
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
+#ifndef _C_AUTO_VAR_H_
+#define _C_AUTO_VAR_H_
 
 #include "CGlobal.h"
 
@@ -8,9 +29,8 @@
 
 using namespace std;
 
-typedef class CAutoVar {
+typedef class CAutoVar : public CGlobal {
 public:
-    // Default constructor.
     CAutoVar() {
         memset(&_v, 0, sizeof(UValue));
         _offset = 0;
@@ -1656,4 +1676,4 @@ private:
             const CAutoVar &rightValue);
 } v_;
 
-#endif // _C_VAR_H_
+#endif // _C_AUTO_VAR_H_

@@ -1,3 +1,14 @@
+/*!
+* \file CCond.h
+* \brief The encapsulation class for semaphore
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
 #ifndef _C_SEM_H_
 #define _C_SEM_H_
 

@@ -1,7 +1,3 @@
-最近一些感想和动态(2015年2月9日)
-==================
-深圳之行后，又有了杭州之行，2015年的计划已经初具雏形。
-
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
 
 If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com

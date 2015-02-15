@@ -1,9 +1,10 @@
 /*!
 * \file CBaseType.h
-* \brief all native data type and other basic header file and operators are
-* defined here
+* \brief All native data type and other basic header file and operators are
+* defined here.
 *
-*
+* All data types in the application should use the date types defined here
+* except this file.
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
 * \version 1.0.0

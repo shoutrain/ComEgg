@@ -1,3 +1,14 @@
+/*!
+* \file CAutoPtr.h
+* \brief Define auto pointer here.
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
 #ifndef _C_AUTO_PTR_H_
 #define _C_AUTO_PTR_H_
 
@@ -6,7 +17,7 @@
 #include <stdio.h>
 
 template<class T>
-class CAutoPtr {
+class CAutoPtr : CGlobal {
 public:
 
     explicit CAutoPtr(T *p = null_v) :
@@ -57,7 +68,9 @@ public:
     }
 
 private:
-    // Cannot new this class
+    /// \brief Cannot new this class directly,
+    ///
+    /// It is used only with stack variable style.
     obj_ operator new(size_t size);
 
     T *_p;
