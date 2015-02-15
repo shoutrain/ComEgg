@@ -1,6 +1,6 @@
 /*!
 * \file CWorker.h
-* \brief the header file for class of CWorker.
+* \brief The header file for class of CWorker.
 *
 *
 *
@@ -21,7 +21,7 @@ class IWorkable;
 /// \brief CWorker wraps a thread with an internal signal queue.
 ///
 ///
-class CWorker {
+class CWorker : CGlobal {
 public:
     /// \brief The constructor of CWorker.
     ///

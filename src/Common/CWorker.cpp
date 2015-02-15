@@ -51,7 +51,7 @@ obj_ CWorker::run(obj_ object) {
 
     _mutexWorker.lock();
     _workerNum++;
-    logDebug("Worker(%016lu) started, totally %d workers ", pthread_self(),
+    logDebug("Worker(%016lu) started, totally %d workers.", pthread_self(),
             _workerNum);
     _mutexWorker.unlock();
 
@@ -72,7 +72,7 @@ obj_ CWorker::run(obj_ object) {
 
     _mutexWorker.lock();
     _workerNum--;
-    logDebug("Worker(%016lu) ended, totally %d workers", pthread_self(),
+    logDebug("Worker(%016lu) ended, totally %d workers.", pthread_self(),
             _workerNum);
     _mutexWorker.unlock();
 
@@ -85,20 +85,21 @@ bool_ CWorker::createThread() {
     pthread_attr_t attr;
 
     if (0 != pthread_attr_init(&attr)) {
-        logFatal("CWorker::createThread: failed to call pthread_attr_init");
+        logFatal("CWorker::createThread: failed to call pthread_attr_init.");
 
         return false_v;
     }
 
     if (0 != pthread_attr_setstacksize(&attr, _threadStackSize)) {
         logFatal(
-                "CWorker::createThread: failed to call pthread_attr_setstacksize");
+                "CWorker::createThread: failed to call "
+                        "pthread_attr_setstacksize.");
 
         return false_v;
     }
 
     if (0 != pthread_create(&_handle, &attr, CWorker::run, (obj_) this)) {
-        logFatal("CWorker::createThread: failed to call pthread_create");
+        logFatal("CWorker::createThread: failed to call pthread_create.");
 
         return false_v;
     }

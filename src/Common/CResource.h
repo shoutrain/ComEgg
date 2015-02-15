@@ -1,6 +1,6 @@
 /*!
 * \file CResource.h
-* \brief the header file for class of CResource.h.
+* \brief The header file for class of CResource.
 *
 *
 *

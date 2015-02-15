@@ -1,3 +1,15 @@
+/*!
+* \file CLoopBuffer.h
+* \brief The buffer like a cycle, which is offen used as socket receiving
+* buffer
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
 #ifndef _C_LOOP_BUFFER_H_
 #define _C_LOOP_BUFFER_H_
 
@@ -5,20 +17,24 @@
 
 class CMutex;
 
-class CLoopBuffer {
+class CLoopBuffer : CGlobal {
 public:
     CLoopBuffer(ub_4 size, CMutex *mutex = null_v, bool_ isPadding = false_v);
 
     virtual ~CLoopBuffer();
 
-    // buffer: the buffer to be writeFile to the LoopBuffer
-    // size: the buffer size
-    // Return true if success, otherwise false
+    /// \brief Write data into the buffer.
+    ///
+    /// \param buffer The buffer to be write into the loop buffer.
+    /// \param size The size of the buffer to be write.
+    /// \return true_v if success, otherwise false_v.
     bool_ write(const ch_1 *buffer, ub_4 size);
 
-    // buffer: the buffer to be readFile in
-    // size: the buffer size, the actual readFile size
-    // Return true if success, otherwise false
+    /// \brief Read data from the loop buffer to buffer
+    ///
+    /// \param buffer The buffer to be read from the loop buffer to.
+    /// \param size The buffer size and the actual read size after returned.
+    /// \return true_v if success, otherwise false_v.
     bool_ read(ch_1 *buffer, ub_4 &size);
 
     none_ reset();

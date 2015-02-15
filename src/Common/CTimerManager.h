@@ -1,3 +1,14 @@
+/*!
+* \file CTimerManager.h
+* \brief The header file for class of CTimerManager.
+*
+*
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 12/15/2014
+*/
+
 #ifndef _C_TIMER_MANAGER_H_
 #define _C_TIMER_MANAGER_H_
 
@@ -31,15 +42,23 @@ struct TTimer {
 
 typedef std::queue<TTimer *> OperatorQueue;
 
-// A timer manager, which can accept 1 second as the minimal unit
-class CTimerManager : public IWorkable {
+/// \brief CTimerManager can manage a lot of timers.
+///
+/// All timers in CTimerManager have precision with 1 second.
+class CTimerManager : public CGlobal, public IWorkable {
 public:
     CTimerManager(ub_4 maxTimerNum, ub_4 threadStackSize);
 
     virtual ~CTimerManager();
 
-    // timers == 0: Infinite
-    // return timer id or 0: failed
+    /// \brief Create timer and add timer into CTimerManager
+    ///
+    /// \param period The interval seconds the timer will be activated.
+    /// \param parameter The parameter will be passed to timer and you can
+    // used it when the time is activated.
+    /// \param times 0 means the timer will be activated forever until calling
+    /// killTimer; other number means the timers the timer can be activated.
+    /// \return The timer id.
     obj_ setTimer(ub_4 period, obj_ parameter, ub_4 times = 1);
 
     none_ killTimer(obj_ timer);
@@ -55,11 +74,11 @@ private:
     none_ delTimer(TTimer *timer);
 
     CWorker _worker;
-    CMutex        _mutex;
+    CMutex _mutex;
 
     CResource<TTimer, CTimerManager> _timerRes;
-    TTimer        *_timerList;
-    TTimer        *_lastTimer;
+    TTimer *_timerList;
+    TTimer *_lastTimer;
 
     OperatorQueue _queueForAdd;
     OperatorQueue _queueForDel;

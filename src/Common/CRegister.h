@@ -1,3 +1,15 @@
+/*!
+* \file CRegister.h
+* \brief A category->key->value keeper.
+*
+* One category can container many keys, and one key maps only one value.
+* There are only one instance of the class in the application.
+*
+* \author Rafael Gu(shoutrain.goo@gmail.com)
+* \version 1.0.0
+* \date 02/15/2015
+*/
+
 #ifndef _C_REGISTER_H_
 #define _C_REGISTER_H_
 
