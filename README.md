@@ -1,3 +1,5 @@
+今年有机会找到实际应用点把这个思想用于软件基础体系的改造：先有鸡还是先有蛋？在有鸡和蛋之前鸡和蛋是同一样东西；好比问先有老师还是先有学生，先有人，老师和学生都是人，逐步人在社会分工上有了老师和学生这两种共生的关系；已经科学确认的是：先有蛋白质还是先有DNA？先有RNA，RNA最后分化为蛋白质和DNA两种功能角色；先有脑细胞还是先有心脏细胞？先有干细胞…
+
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
 
 If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com

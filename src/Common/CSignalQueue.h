@@ -6,11 +6,13 @@
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
 * \version 1.0.0
-* \date 02/09/2015
+* \date 02/18/2015
 */
 
 #ifndef _C_SIGNAL_QUEUE_H_
 #define _C_SIGNAL_QUEUE_H_
+
+#include "CGlobal.h"
 
 class CMutex;
 class Signal;
@@ -20,7 +22,7 @@ class Signal;
 /// CSignalQueue can avoid using of delete.
 /// Notice: This class can support multi-thread signal sending and
 /// single-thread signal receiving
-class CSignalQueue {
+class CSignalQueue : CGlobal {
 public:
     /// \brief The Constructor of CSignalQueue
     ///
@@ -58,6 +60,8 @@ private:
         CSignal *curSignal;
         CSignal *nextSignal;
     };
+
+    CSignal *_curPreparedItem;
 
     TSignalNode _queueHead;
     TSignalNode _queueTail;

@@ -6,7 +6,7 @@
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
 * \version 1.0.0
-* \date 02/09/2015
+* \date 02/18/2015
 */
 
 #ifndef _C_SIGNAL_H_
@@ -15,7 +15,7 @@
 #include "CGlobal.h"
 
 /// \brief CSignal is used as an internal message for communication
-class CSignal {
+class CSignal : CGlobal {
 public:
     CSignal();
 
@@ -31,6 +31,9 @@ public:
 
 private:
     bool_ _used;
+
+    ub_4 _commandId;
+
 };
 
 #endif // _C_SIGNAL_H_
