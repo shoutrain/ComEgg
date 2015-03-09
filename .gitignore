@@ -14,5 +14,5 @@
 *.a
 
 # project folders and files
-CMakeLists.txt
-/.idea/
+.cproject
+.project
