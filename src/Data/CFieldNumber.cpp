@@ -5,7 +5,7 @@ size_ CFieldNumber::offset(const ub_1 *block,
         size_ index) const {
     if (!block || 0 == blockSize) {
         assert(0);
-        logError("The parameters block and blockSize are not right in CFieldNumber::offset");
+        log_error("The parameters block and blockSize are not right in CFieldNumber::offset");
         return 0;
     }
 
@@ -22,7 +22,7 @@ size_ CFieldNumber::offset(const ub_1 *block,
 
     if (blockSize < nOffset + size(block, blockSize)) {
         assert(0);
-        logError("blockSize in CFieldNumber::offset is overloaded");
+        log_error("blockSize in CFieldNumber::offset is overloaded");
         return 0;
     }
 

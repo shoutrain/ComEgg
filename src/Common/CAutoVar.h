@@ -122,7 +122,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -134,7 +134,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -146,7 +146,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -158,7 +158,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -170,7 +170,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -182,7 +182,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -194,7 +194,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -206,7 +206,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -233,7 +233,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -245,7 +245,7 @@ public:
             _offset = 0;
         } else {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
     }
 
@@ -253,7 +253,7 @@ public:
     explicit CAutoVar(const ch_1 *value, const size_ n) {
         if (!value) {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
 
             return;
         }
@@ -275,7 +275,7 @@ public:
     explicit CAutoVar(const string &value) {
         if (value.empty()) {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
 
             return;
         }
@@ -316,7 +316,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -337,7 +337,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -358,7 +358,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -379,7 +379,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -400,7 +400,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -421,7 +421,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -442,7 +442,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -463,7 +463,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -484,7 +484,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -505,7 +505,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -526,7 +526,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -547,7 +547,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -568,7 +568,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -589,7 +589,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -610,7 +610,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -631,7 +631,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -652,7 +652,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -673,7 +673,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -694,7 +694,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -715,7 +715,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -725,7 +725,7 @@ public:
     const CAutoVar &operator=(const ch_1 *value) {
         if (!value) {
             assert(0);
-            logError("Invalid value in construct of CAutoVar");
+            log_error("Invalid value in construct of CAutoVar");
         }
 
         if (INVALID == _type) {
@@ -749,7 +749,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -768,7 +768,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -797,7 +797,7 @@ public:
         } else if (INVALID == value._type) {
             if (P_OBJ == _type || P_STR == _type) {
                 assert(0);
-                logError("Invalid value in construct of CAutoVar");
+                log_error("Invalid value in construct of CAutoVar");
             } else {
                 clear();
             }
@@ -848,7 +848,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         } else if (REFERENCE_VARIABLE != (REFERENCE_VARIABLE & _type)
                 && REFERENCE_VARIABLE == (REFERENCE_VARIABLE & value._type)) {
@@ -894,7 +894,7 @@ public:
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         } else if (REFERENCE_VARIABLE == (REFERENCE_VARIABLE & _type)) {
             switch (_type) {
@@ -942,13 +942,13 @@ public:
                                 ((ub_1 *) *value._v.pobj) + value._offset, _len);
                     } else {
                         assert(0);
-                        logError("Invalid value in construct of CAutoVar");
+                        log_error("Invalid value in construct of CAutoVar");
                     }
                 }
                     break;
                 default:
                     assert(0);
-                    logError("Invalid value in construct of CAutoVar");
+                    log_error("Invalid value in construct of CAutoVar");
             }
         }
 
@@ -999,7 +999,7 @@ public:
                 return (b_1) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1048,7 +1048,7 @@ public:
                 return (ub_1) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1097,7 +1097,7 @@ public:
                 return (b_2) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1146,7 +1146,7 @@ public:
                 return (ub_2) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1195,7 +1195,7 @@ public:
                 return (b_4) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1244,7 +1244,7 @@ public:
                 return (ub_4) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1293,7 +1293,7 @@ public:
                 return (b_8) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1342,7 +1342,7 @@ public:
                 return (ub_8) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1391,7 +1391,7 @@ public:
                 return (fb_4) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1440,7 +1440,7 @@ public:
                 return (fb_8) (*_v.pfb8);
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1453,7 +1453,7 @@ public:
                 return _v.pstr;
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1464,7 +1464,7 @@ public:
                 return _v.obj;
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
                 return 0;
         }
     }
@@ -1549,13 +1549,13 @@ public:
                     memset(((ub_1 *) *_v.pobj) + _offset, 0, _len);
                 } else {
                     assert(0);
-                    logError("Wrong type of conversion of CAutoVar");
+                    log_error("Wrong type of conversion of CAutoVar");
                 }
 
                 break;
             default:
                 assert(0);
-                logError("Wrong type of conversion of CAutoVar");
+                log_error("Wrong type of conversion of CAutoVar");
         }
     }
 

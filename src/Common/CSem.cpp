@@ -4,13 +4,13 @@
 
 CSem::CSem(ub_4 value) {
     if (-1 == sem_init(&_sem, 0, value)) {
-        logFatal("CSem::CSem: failed to call sem_init");
+        log_fatal("CSem::CSem: failed to call sem_init");
     }
 }
 
 CSem::~CSem() {
     if (-1 == sem_destroy(&_sem)) {
-        logFatal("CSem::~CSem: failed to call sem_destroy");
+        log_fatal("CSem::~CSem: failed to call sem_destroy");
     }
 }
 
@@ -29,9 +29,9 @@ bool_ CSem::lock(bool_ check) {
         }
 
         if (check) {
-            logFatal("CSem::lock: failed to call sem_trywait");
+            log_fatal("CSem::lock: failed to call sem_trywait");
         } else {
-            logFatal("CSem::lock: failed to call sem_wait");
+            log_fatal("CSem::lock: failed to call sem_wait");
         }
 
         return false_v;
@@ -42,6 +42,6 @@ bool_ CSem::lock(bool_ check) {
 
 none_ CSem::unlock() {
     if (-1 == sem_post(&_sem)) {
-        logFatal("CSem::unlock: failed to call sem_post");
+        log_fatal("CSem::unlock: failed to call sem_post");
     }
 }

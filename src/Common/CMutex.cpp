@@ -4,13 +4,13 @@
 
 CMutex::CMutex(pthread_mutexattr_t * attr) {
     if (0 != pthread_mutex_init(&_mutex, attr)) {
-        logFatal("CMutex::CMutex: failed to call pthread_mutex_init");
+        log_fatal("CMutex::CMutex: failed to call pthread_mutex_init");
     }
 }
 
 CMutex::~CMutex() {
     if (0 != pthread_mutex_destroy(&_mutex)) {
-        logFatal("CMutex::~CMutex: failed to call pthread_mutex_destroy");
+        log_fatal("CMutex::~CMutex: failed to call pthread_mutex_destroy");
     }
 }
 
@@ -29,9 +29,9 @@ bool_ CMutex::lock(bool_ check) {
 
     if (0 != ret) {
         if (check) {
-            logFatal("CMutex::lock: failed to call pthread_mutext_trylock");
+            log_fatal("CMutex::lock: failed to call pthread_mutext_trylock");
         } else {
-            logFatal("CMutex::lock: failed to call pthread_mutext_lock");
+            log_fatal("CMutex::lock: failed to call pthread_mutext_lock");
         }
 
         return false_v;
@@ -42,6 +42,6 @@ bool_ CMutex::lock(bool_ check) {
 
 none_ CMutex::unlock() {
     if (0 != pthread_mutex_unlock(&_mutex)) {
-        logFatal("CMutex::unlock: failed to call pthread_mutex_unlock");
+        log_fatal("CMutex::unlock: failed to call pthread_mutex_unlock");
     }
 }

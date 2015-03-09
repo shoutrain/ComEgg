@@ -78,7 +78,7 @@ v_ *CVarNetwork::value(const TMessageUnit *tmu) {
             break;
         default:
             assert(0);
-            logError("Wrong type in CVarNetwork::value");
+            log_error("Wrong type in CVarNetwork::value");
             return null_v;
     }
 

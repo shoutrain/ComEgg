@@ -16,7 +16,7 @@ obj_ CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
     TTimer *timer = _timerRes.allocate();
 
     if (null_v == timer) {
-        logCrit("CTimerManager::setTimer: no more timers can be allocated.");
+        log_crit("CTimerManager::setTimer: no more timers can be allocated.");
 
         return 0;
     }
@@ -37,7 +37,7 @@ obj_ CTimerManager::setTimer(ub_4 period, obj_ parameter, ub_4 times) {
     _queueForAdd.push(timer);
     _mutex.unlock();
 
-    logDebug(
+    log_debug(
             "CTimerManager::setTimer: from-%016p, time id-%016p, period-%uSec, "
                     "times-%u.", parameter, timer, period, times);
 
@@ -59,7 +59,7 @@ none_ CTimerManager::killTimer(obj_ timer) {
     _queueForDel.push(localTimer);
     _mutex.unlock();
 
-    logDebug("CTimerManager::killTimer: time id-%016p.", localTimer);
+    log_debug("CTimerManager::killTimer: time id-%016p.", localTimer);
 }
 
 bool_ CTimerManager::working() {

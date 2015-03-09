@@ -28,7 +28,7 @@ const CAutoVar operator-(const CAutoVar &value) {
             return CAutoVar((fb_8) -(*value._v.pfb8));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -69,7 +69,7 @@ const CAutoVar operator~(const CAutoVar &value) {
             return CAutoVar(~(*value._v.pub8));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -126,7 +126,7 @@ const b_4 operator!(const CAutoVar &value) {
             return null_v == *value._v.pobj ? true_v : false_v;
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -135,13 +135,13 @@ const CAutoVar operator+(const CAutoVar &leftValue,
         const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
     if (OBJ == leftValue._type) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -184,7 +184,7 @@ const CAutoVar operator+(const CAutoVar &leftValue,
         }
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -193,13 +193,13 @@ const CAutoVar operator-(const CAutoVar &leftValue,
         const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
     if (OBJ == leftValue._type || STR == _EVT(leftValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -230,7 +230,7 @@ const CAutoVar operator-(const CAutoVar &leftValue,
             return CAutoVar(((fb_8) leftValue) - ((fb_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -239,13 +239,13 @@ const CAutoVar operator*(const CAutoVar &leftValue,
         const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
     if (OBJ == leftValue._type || STR == _EVT(leftValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -276,7 +276,7 @@ const CAutoVar operator*(const CAutoVar &leftValue,
             return CAutoVar(((fb_8) leftValue) * ((fb_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 
@@ -286,13 +286,13 @@ const CAutoVar operator/(const CAutoVar &leftValue,
         const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
     if (OBJ == leftValue._type || STR == _EVT(leftValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -323,7 +323,7 @@ const CAutoVar operator/(const CAutoVar &leftValue,
             return CAutoVar(((fb_8) leftValue) / ((fb_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -333,7 +333,7 @@ const CAutoVar operator%(const CAutoVar &leftValue,
     if (NORMAL_STYLE != _STYLE(leftValue._type)
             || NORMAL_STYLE != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -360,7 +360,7 @@ const CAutoVar operator%(const CAutoVar &leftValue,
             return CAutoVar(((ub_8) leftValue) % ((ub_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -370,7 +370,7 @@ const CAutoVar operator&(const CAutoVar &leftValue,
     if (NORMAL_STYLE != _STYLE(leftValue._type)
             || NORMAL_STYLE != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -397,7 +397,7 @@ const CAutoVar operator&(const CAutoVar &leftValue,
             return CAutoVar(((ub_8) leftValue) & ((ub_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -407,7 +407,7 @@ const CAutoVar operator|(const CAutoVar &leftValue,
     if (NORMAL_STYLE != _STYLE(leftValue._type)
             || NORMAL_STYLE != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -434,7 +434,7 @@ const CAutoVar operator|(const CAutoVar &leftValue,
             return CAutoVar(((ub_8) leftValue) | ((ub_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -444,7 +444,7 @@ const CAutoVar operator^(const CAutoVar &leftValue,
     if (NORMAL_STYLE != _STYLE(leftValue._type)
             || NORMAL_STYLE != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return CAutoVar();
     }
 
@@ -471,7 +471,7 @@ const CAutoVar operator^(const CAutoVar &leftValue,
             return CAutoVar(((ub_8) leftValue) ^ ((ub_8) rightValue));
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return CAutoVar();
     }
 }
@@ -479,7 +479,7 @@ const CAutoVar operator^(const CAutoVar &leftValue,
 const b_4 operator==(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -519,7 +519,7 @@ const b_4 operator==(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return ((const obj_) leftValue) == ((const obj_) rightValue);
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -527,7 +527,7 @@ const b_4 operator==(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator!=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -567,7 +567,7 @@ const b_4 operator!=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return ((const obj_) leftValue) != ((const obj_) rightValue);
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -575,13 +575,13 @@ const b_4 operator!=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator>(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
     if (OBJ == leftValue._type) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -619,7 +619,7 @@ const b_4 operator>(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return strcmp((const ch_1 *) leftValue, (const ch_1 *) rightValue) > 0;
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -627,13 +627,13 @@ const b_4 operator>(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator>=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
     if (OBJ == leftValue._type) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -671,7 +671,7 @@ const b_4 operator>=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return strcmp((const ch_1 *) leftValue, (const ch_1 *) rightValue) >= 0;
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -679,13 +679,13 @@ const b_4 operator>=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator<(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
     if (OBJ == leftValue._type) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -723,7 +723,7 @@ const b_4 operator<(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return strcmp((const ch_1 *) leftValue, (const ch_1 *) rightValue) < 0;
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -731,13 +731,13 @@ const b_4 operator<(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator<=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
     if (OBJ == leftValue._type) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -775,7 +775,7 @@ const b_4 operator<=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return strcmp((const ch_1 *) leftValue, (const ch_1 *) rightValue) <= 0;
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -783,7 +783,7 @@ const b_4 operator<=(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator&&(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -824,7 +824,7 @@ const b_4 operator&&(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return ((const obj_) leftValue) && ((const obj_) rightValue);
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }
@@ -832,7 +832,7 @@ const b_4 operator&&(const CAutoVar &leftValue, const CAutoVar &rightValue) {
 const b_4 operator||(const CAutoVar &leftValue, const CAutoVar &rightValue) {
     if (_STYLE(leftValue._type) != _STYLE(rightValue._type)) {
         assert(0);
-        logError("Invalid parameter in operator of CAutoVar");
+        log_error("Invalid parameter in operator of CAutoVar");
         return 0;
     }
 
@@ -873,7 +873,7 @@ const b_4 operator||(const CAutoVar &leftValue, const CAutoVar &rightValue) {
             return ((const obj_) leftValue) || ((const obj_) rightValue);
         default:
             assert(0);
-            logError("Invalid parameter in operator of CAutoVar");
+            log_error("Invalid parameter in operator of CAutoVar");
             return 0;
     }
 }

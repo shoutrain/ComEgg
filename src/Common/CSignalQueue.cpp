@@ -17,7 +17,7 @@ CSignal *CSignalQueue::prepare() {
     CSignal *signal = _res.allocate();
 
     if (null_v == signal) {
-        logCrit("There is no more signal resource for signal queue");
+        log_crit("There is no more signal resource for signal queue");
     }
 
     return signal;

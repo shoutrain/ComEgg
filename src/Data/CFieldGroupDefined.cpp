@@ -5,7 +5,7 @@ size_ CFieldGroupDefined::offset(size_ size,
         size_ index) const {
     if (0 == blockSize || size < index || size * _unitSize > blockSize || 0 == _sizeName[0]) {
         assert(0);
-        logError("The parameter of CFieldGroupDefined::offset is wrong");
+        log_error("The parameter of CFieldGroupDefined::offset is wrong");
         return 0;
     }
 
@@ -17,7 +17,7 @@ size_ CFieldGroupDefined::offset(size_ size,
 
     if (blockSize <= offset) {
         assert(0);
-        logError("The offset is not right in CFieldGroupDefined::offset");
+        log_error("The offset is not right in CFieldGroupDefined::offset");
         return 0;
     }
 

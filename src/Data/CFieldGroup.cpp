@@ -3,13 +3,13 @@
 size_ CFieldGroup::size(const ub_1 *block, size_ blockSize) const {
     if (!block || 0 == blockSize) {
         assert(0);
-        logError("The parameters block and blockSize are not right in CFieldGroup::size");
+        log_error("The parameters block and blockSize are not right in CFieldGroup::size");
         return 0;
     }
 
     if (null_v == _sizeField) {
         assert(0);
-        logError("_sizeField is not right in CFieldGroup::size");
+        log_error("_sizeField is not right in CFieldGroup::size");
         return 0;
     }
 
@@ -24,7 +24,7 @@ size_ CFieldGroup::offset(const ub_1 *block,
         size_ index) const {
     if (!block || 0 == blockSize) {
         assert(0);
-        logError("The parameters block and blockSize are not right in CFieldGroup::offset");
+        log_error("The parameters block and blockSize are not right in CFieldGroup::offset");
         return 0;
     }
 
@@ -41,7 +41,7 @@ size_ CFieldGroup::offset(const ub_1 *block,
 
     if (blockSize <= offset) {
         assert(0);
-        logError("blockSize in CFieldGroup::offset is overloaded");
+        log_error("blockSize in CFieldGroup::offset is overloaded");
         return 0;
     }
 

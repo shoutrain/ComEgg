@@ -8,14 +8,14 @@
 
 CIniReader::CIniReader(const char *fileName) {
 	if (NULL == fileName || 0 == fileName[0]) {
-		logFatal("configure file name is not right");
+		log_fatal("configure file name is not right");
 		exit(0);
 	}
 
 	FILE *file = fopen(fileName, "r");
 
 	if (NULL == file) {
-		logFatal("configure file is not exist");
+		log_fatal("configure file is not exist");
 		exit(0);
 	}
 
@@ -33,7 +33,7 @@ CIniReader::CIniReader(const char *fileName) {
 
 	if (MAX_CONFIG_FILE_SIZE <= i) {
 		fclose(file);
-		logFatal("configure file is too big");
+		log_fatal("configure file is too big");
 		exit(0);
 	}
 

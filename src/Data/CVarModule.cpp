@@ -60,7 +60,7 @@ v_ *CVarModule::value(const TMessageUnit *tmu) {
             break;
         default:
             assert(0);
-            logError("Wrong type in CVarModule::value");
+            log_error("Wrong type in CVarModule::value");
             return null_v;
     }
 

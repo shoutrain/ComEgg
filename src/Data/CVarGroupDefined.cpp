@@ -105,7 +105,7 @@ v_ *CVarGroupDefined::value(const TMessageUnit *tmu) {
             break;
         default:
             assert(0);
-            logError("Wrong type in CVarGroupDefined::value");
+            log_error("Wrong type in CVarGroupDefined::value");
             return null_v;
     }
 
@@ -115,7 +115,7 @@ v_ *CVarGroupDefined::value(const TMessageUnit *tmu) {
 v_ *CVarGroupDefined::value(obj_ &parameter) {
     if (parameter || !_groupData || !_field) {
         assert(0);
-        logError("Wrong type in CVarGroupDefined::value");
+        log_error("Wrong type in CVarGroupDefined::value");
         return null_v;
     }
 
