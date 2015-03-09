@@ -4,7 +4,7 @@ CTimerManager::CTimerManager(ub_4 maxTimerNum, ub_4 threadStackSize) :
         _worker(threadStackSize), _timerRes(maxTimerNum) {
     _timerList = null_v;
     _lastTimer = null_v;
-    _pCurTimer = null_v;
+    _curTimer = null_v;
 
     _worker.work(this, true_v);
 }
@@ -80,8 +80,8 @@ bool_ CTimerManager::working() {
 
         if (TO_BE_DEL == (timer->status & TO_BE_DEL)
                 && ADDED == (timer->status & ADDED)) {
-            if (timer == _pCurTimer) {
-                _pCurTimer = _pCurTimer->next;
+            if (timer == _curTimer) {
+                _curTimer = _curTimer->next;
             }
 
             delTimer(timer);
@@ -96,7 +96,7 @@ bool_ CTimerManager::working() {
 
     gettimeofday(&curTime, null_v);
 
-    if (null_v == _pCurTimer) {
+    if (null_v == _curTimer) {
         if (null_v == _timerList) {
             // Sleep for 0.5s
             CGlobal::sleep(0, 500);
@@ -104,40 +104,40 @@ bool_ CTimerManager::working() {
             return true_v;
         }
 
-        _pCurTimer = _timerList;
+        _curTimer = _timerList;
     }
 
-    b_4 i = _pCurTimer->period + _pCurTimer->baseS;
+    b_4 i = _curTimer->period + _curTimer->baseS;
 
     if ((i < curTime.tv_sec)
-            || (i == curTime.tv_sec && _pCurTimer->baseUS <= curTime.tv_usec)) {
-        if (onTimer((obj_) _pCurTimer, _pCurTimer->parameter)) {
-            _pCurTimer->baseS = curTime.tv_sec;
-            _pCurTimer->baseUS = curTime.tv_usec;
+            || (i == curTime.tv_sec && _curTimer->baseUS <= curTime.tv_usec)) {
+        if (onTimer((obj_) _curTimer, _curTimer->parameter)) {
+            _curTimer->baseS = curTime.tv_sec;
+            _curTimer->baseUS = curTime.tv_usec;
 
-            if (0 != _pCurTimer->times) {
-                _pCurTimer->times--;
+            if (0 != _curTimer->times) {
+                _curTimer->times--;
 
-                if (0 == _pCurTimer->times) {
-                    TTimer *curTimer = _pCurTimer;
+                if (0 == _curTimer->times) {
+                    TTimer *curTimer = _curTimer;
 
-                    _pCurTimer = _pCurTimer->next;
+                    _curTimer = _curTimer->next;
                     delTimer(curTimer);
 
                     return true_v;
                 }
             }
         } else {
-            TTimer *curTimer = _pCurTimer;
+            TTimer *curTimer = _curTimer;
 
-            _pCurTimer = _pCurTimer->next;
+            _curTimer = _curTimer->next;
             delTimer(curTimer);
 
             return true_v;
         }
     }
 
-    _pCurTimer = _pCurTimer->next;
+    _curTimer = _curTimer->next;
 
     return true_v;
 }

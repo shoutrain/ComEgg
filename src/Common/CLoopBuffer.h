@@ -1,6 +1,6 @@
 /*!
 * \file CLoopBuffer.h
-* \brief The buffer like a cycle, which is offen used as socket receiving
+* \brief The buffer like a cycle, which is often used as socket receiving
 * buffer
 *
 *

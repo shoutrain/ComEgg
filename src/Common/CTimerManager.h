@@ -82,7 +82,7 @@ private:
 
     OperatorQueue _queueForAdd;
     OperatorQueue _queueForDel;
-    TTimer        *_pCurTimer;
+    TTimer        *_curTimer;
 };
 
 #endif // _C_TIMER_MANAGER_H_
