@@ -1,5 +1,5 @@
-#ifndef CBLOG_H
-#define CBLOG_H
+#ifndef _C_BLOG_H_
+#define _C_BLOG_H_
 
 const unsigned int USER_NAME_MAX_LENGTH = 16;
 const unsigned int PASSWORD_MAX_LEGNTH = 16;
@@ -10,7 +10,9 @@ const unsigned int BLOG_CONTENT_MAX_LENGTH = 255;
 const unsigned int BLOG_COMMENTS_MAX_LENGTH = 128;
 const unsigned int CREATE_TIME_MAX_LENGTH = 20;
 
+#ifndef NULL
 #define NULL 0
+#endif
 
 #pragma pack(1)
 
@@ -133,7 +135,7 @@ struct TGetBlogListOut {
 
 #pragma pack()
 
-#include <mysql.h>
+#include <mysql/mysql.h>
 
 class CBlog {
 public:
@@ -180,5 +182,5 @@ private:
     MYSQL *_cnn;
 };
 
-#endif // CBLOG_H
+#endif // _C_BLOG_H_
 

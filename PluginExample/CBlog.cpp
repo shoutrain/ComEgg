@@ -1,9 +1,9 @@
 #include "CConfig.h"
+#include "CBlog.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CBlog.h"
 
 bool CBlog::init() {
     if (_cnn) {
