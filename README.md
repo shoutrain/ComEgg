@@ -38,9 +38,15 @@ Log
 6. refine schemes and xml files accordingly
 7. use the new code-style
 
-2014/11/28 ~ NOW
+2014/11/28 ~ 2015/03/13
 ---------
 1. use epoll to establish network system which can be changed in running-time
 2. establish unified message/signal queue for all thread and realize communication between threads
 3. re-establish xml parser system
 4. new ComEgg will have a real-time changing system, a long time need to realize it
+
+2015/03/14 ~ NOW
+---------
+1. I gave up developing ComEgg as an realistic project. ComEgg will be an insteresting project for research. 
+2. ComEgg will be developing as an gene evolution tools.  Same thinking, different roles and same worker bodies.
+
