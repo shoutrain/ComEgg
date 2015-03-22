@@ -18,7 +18,7 @@
 
 class CMutex : public CLock {
 public:
-    CMutex(pthread_mutexattr_t *attr = null_v);
+    CMutex(bool_ recursive = false_v);
 
     virtual ~CMutex();
 
