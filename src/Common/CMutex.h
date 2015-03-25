@@ -5,8 +5,8 @@
 *
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
-* \version 1.0.0
-* \date 02/15/2015
+* \version 1.1.0
+* \date 03/23/2015
 */
 
 #ifndef _C_MUTEX_H_

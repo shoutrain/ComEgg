@@ -5,8 +5,8 @@
 *
 *
 * \author Rafael Gu(shoutrain.goo@gmail.com)
-* \version 1.0.0
-* \date 12/15/2014
+* \version 1.1.0
+* \date 03/23/2015
 */
 
 #ifndef _C_TIMER_MANAGER_H_
