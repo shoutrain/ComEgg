@@ -51,4 +51,7 @@ Log
 ---------
 1. I gave up developing ComEgg as an realistic project. ComEgg will be an insteresting project for research. 
 2. ComEgg will be developing as an gene evolution tools.  Same thinking, different roles and same worker bodies.
+3. Re-factor the infrastructure of ComEgg, include plugin, network, system.
+4. Re-define the RDS.
+5. Add log functions to represent the run-time status and information.
 

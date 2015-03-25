@@ -5,20 +5,20 @@
 
 class CSysInfo {
 public:
-    CSysInfo() {
-        _sysInfo = CSysFactory::instance()->makeSysInfo();
-    }
+	CSysInfo() {
+		_sysInfo = CSysFactory::instance()->makeSysInfo();
+	}
 
-    ~CSysInfo() {
-        _DEL(_sysInfo);
-    }
+	~CSysInfo() {
+		_DEL(_sysInfo);
+	}
 
-    ub_1 getUsage() {
-        return _sysInfo->getMemoryUsage();
-    }
+	ub_1 getUsage() {
+		return _sysInfo->getMemoryUsage();
+	}
 
 private:
-    CSysInfoImp *_sysInfo;
+	CSysInfoImp *_sysInfo;
 };
 
 #endif // _C_SYS_INFO_H_

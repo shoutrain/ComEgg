@@ -6,8 +6,8 @@ const ub_4 IP_MAX_LENGTH = 15;
 
 enum ENodeType {
     NONE,
-    CONTAINER,
-    CONNECTOR,
+    TRUNK,
+	BRANCH
 };
 
 enum ENodeStatus {
