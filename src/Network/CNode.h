@@ -1,35 +1,42 @@
 #ifndef _C_NODE_H_
 #define _C_NODE_H_
 
-#include "NetworkCommon.h"
+#include "../Common/CGlobal.h"
 
 class CNodeConf;
 
-class CNode : public CBase {
+enum ENodeType {
+	NONE, TRUNK, BRANCH
+};
+
+enum ENodeStatus {
+	FREE, BUSY
+};
+
+class CNode: public CGlobal {
 public:
-    CNode(bool_ isAutoStart, ENetworkType type) {
-        _isAutoStart = isAutoStart;
-        _type        = type;
-    }
 
-    virtual ~CNode() {
-    }
 
-    virtual none_ work() = 0;
+	ENodeType type() const {
+		return _type;
+	}
 
-    virtual none_ sleep() = 0;
+	ENodeStatus status() const {
+		return _status;
+	}
 
-    bool_ isAutoStart() const {
-        return _isAutoStart;
-    }
+protected:
+	CNode(ENodeType type) {
+		_type = type;
+		_status = FREE;
+	}
 
-    ENetworkType getType() const {
-        return _type;
-    }
+	virtual ~CNode() {
+	}
 
 private:
-    bool_        _isAutoStart;
-    ENetworkType _type;
+	ENodeType _type;
+	ENodeType _status;
 };
 
 #endif // _C_NODE_H_

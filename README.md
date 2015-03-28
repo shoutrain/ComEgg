@@ -2,7 +2,7 @@
 
 就当作兴趣创造，现在不考虑实用，而是通过软件来初步构建这个思想的灵活模型。每周花一点时间进行更新。
 
-More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.
+More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
 
 If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
 
@@ -50,8 +50,9 @@ Log
 2015/03/14 ~ NOW
 ---------
 1. I gave up developing ComEgg as an realistic project. ComEgg will be an insteresting project for research. 
-2. ComEgg will be developing as an gene evolution tools.  Same thinking, different roles and same worker bodies.
-3. Re-factor the infrastructure of ComEgg, include plugin, network, system.
-4. Re-define the RDS.
-5. Add log functions to represent the run-time status and information.
+2. comEgg will be developing as an gene evolution tools.  Same thinking, different roles and same worker bodies.
+3. re-factor the infrastructure of ComEgg, include plugin, network, system.
+4. re-define the RDS.
+5. add log functions to represent the run-time status and information.
+6. delete most of obsoleted classes, new ComEgg don't need them.
 
