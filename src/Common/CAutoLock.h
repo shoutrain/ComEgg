@@ -1,5 +1,16 @@
-#ifndef _C_AUTO_LOCK_H_
-#define _C_AUTO_LOCK_H_
+/*!
+ * \file CAutolOCK.h
+ * \brief Define auto lock here.
+ *
+ *
+ *
+ * \author Rafael Gu(shoutrain.goo@gmail.com)
+ * \version 1.0.0
+ * \date 02/15/2015
+ */
+
+#ifndef SRC_COMMON_CAUTOLOCK_H_
+#define SRC_COMMON_CAUTOLOCK_H_
 
 #include "CLock.h"
 
@@ -20,4 +31,4 @@ private:
 	CLock *_lock;
 };
 
-#endif // _C_AUTO_LOCK_H_
+#endif /* SRC_COMMON_CAUTOLOCK_H_ */

@@ -9,8 +9,8 @@
 * \date 02/15/2015
 */
 
-#ifndef _C_SEM_H_
-#define _C_SEM_H_
+#ifndef SRC_COMMON_CSEM_H_
+#define SRC_COMMON_CSEM_H_
 
 #include "CLock.h"
 
@@ -30,4 +30,4 @@ private:
     sem_t _sem;
 };
 
-#endif // _C_SEM_H_
+#endif /* SRC_COMMON_CSEM_H_ */

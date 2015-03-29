@@ -24,4 +24,4 @@ $(OBJECTS): $(OBJECT_ROOT)%.o: $(SOURCE_ROOT)%.cpp
 
 .PHONY: clean
 clean:
-	-$(RM) -fr $(OBJECT_ROOT)/* $(TARGET)
+	-$(RM) -fr $(OBJECT_ROOT) $(TARGET)

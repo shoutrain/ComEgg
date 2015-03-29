@@ -9,8 +9,8 @@
 * \date 02/15/2015
 */
 
-#ifndef _C_COND_H_
-#define _C_COND_H_
+#ifndef SRC_COMMON_CCOND_H_
+#define SRC_COMMON_CCOND_H_
 
 #include "CLock.h"
 
@@ -33,4 +33,4 @@ private:
     CMutex *_mutex;
 };
 
-#endif // _C_COND_H_
+#endif /* SRC_COMMON_CCOND_H_ */

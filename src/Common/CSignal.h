@@ -9,8 +9,8 @@
 * \date 02/18/2015
 */
 
-#ifndef _C_SIGNAL_H_
-#define _C_SIGNAL_H_
+#ifndef SRC_COMMON_CSIGNAL_H_
+#define SRC_COMMON_CSIGNAL_H_
 
 #include "CGlobal.h"
 
@@ -36,4 +36,4 @@ private:
 
 };
 
-#endif // _C_SIGNAL_H_
+#endif /* SRC_COMMON_CSIGNAL_H_ */

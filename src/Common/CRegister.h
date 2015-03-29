@@ -1,17 +1,17 @@
 /*!
-* \file CRegister.h
-* \brief A category->key->value keeper.
-*
-* One category can container many keys, and one key maps only one value.
-* There are only one instance of the class in the application.
-*
-* \author Rafael Gu(shoutrain.goo@gmail.com)
-* \version 1.0.0
-* \date 02/15/2015
-*/
+ * \file CRegister.h
+ * \brief A category->key->value keeper.
+ *
+ * One category can container many keys, and one key maps only one value.
+ * There are only one instance of the class in the application.
+ *
+ * \author Rafael Gu(shoutrain.goo@gmail.com)
+ * \version 1.0.0
+ * \date 02/15/2015
+ */
 
-#ifndef _C_REGISTER_H_
-#define _C_REGISTER_H_
+#ifndef SRC_COMMON_CREGISTER_H_
+#define SRC_COMMON_CREGISTER_H_
 
 #include "CAutoVar.h"
 
@@ -20,50 +20,50 @@
 
 using namespace std;
 
-typedef map<string, v_ *>          MapVariable;
+typedef map<string, v_ *> MapVariable;
 typedef map<string, MapVariable *> MapCategory;
 
 class CRegister {
 public:
-    static CRegister *instance() {
-        if (_instance) {
-            return _instance;
-        }
+	static CRegister *instance() {
+		if (_instance) {
+			return _instance;
+		}
 
-        _instance = new CRegister;
+		_instance = new CRegister;
 
-        return _instance;
-    }
+		return _instance;
+	}
 
-    static void destroy() {
-        _DEL(_instance);
-    }
+	static void destroy() {
+		_DEL(_instance);
+	}
 
-    v_ *searchItem(const ch_1 *category, const ch_1 *key);
+	v_ *searchItem(const ch_1 *category, const ch_1 *key);
 
-    b_4 registerItem(const ch_1 *category, const ch_1 *key, const v_ *variable,
-            const bool_ isCovered = false_v);
+	b_4 registerItem(const ch_1 *category, const ch_1 *key, const v_ *variable,
+			const bool_ isCovered = false_v);
 
-    none_ unregisterItem(const ch_1 *category, const ch_1 *key);
+	none_ unregisterItem(const ch_1 *category, const ch_1 *key);
 
 protected:
-    CRegister() {
-    }
+	CRegister() {
+	}
 
-    CRegister(const CRegister &);
+	CRegister(const CRegister &);
 
-    const CRegister &operator=(const CRegister &);
+	const CRegister &operator=(const CRegister &);
 
-    virtual ~CRegister() {
-        stop();
-    }
+	virtual ~CRegister() {
+		stop();
+	}
 
-    none_ stop();
+	none_ stop();
 
 private:
-    static CRegister *_instance;
+	static CRegister *_instance;
 
-    MapCategory _categoryMap;
+	MapCategory _categoryMap;
 };
 
-#endif // _C_REGISTER_H_
+#endif /* SRC_COMMON_CREGISTER_H_ */

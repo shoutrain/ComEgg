@@ -11,8 +11,8 @@
  * \date 02/09/2015
  */
 
-#ifndef _BASE_TYPE_H_
-#define _BASE_TYPE_H_
+#ifndef SRC_COMMON_BASETYPE_H_
+#define SRC_COMMON_BASETYPE_H_
 
 // Base type
 typedef char b_1;
@@ -136,4 +136,4 @@ typedef enum {
 
 #include <assert.h>
 
-#endif // _BASE_TYPE_H_
+#endif /* SRC_COMMON_BASETYPE_H_ */

@@ -9,8 +9,8 @@
 * \date 12/15/2014
 */
 
-#ifndef _C_WORKER_H_
-#define _C_WORKER_H_
+#ifndef SRC_COMMON_CWORKER_H_
+#define SRC_COMMON_CWORKER_H_
 
 #include "CGlobal.h"
 #include "CMutex.h"
@@ -77,4 +77,4 @@ private:
     IWorkable *_workable;
 };
 
-#endif // _C_WORKER_H_
+#endif /* SRC_COMMON_CWORKER_H_ */

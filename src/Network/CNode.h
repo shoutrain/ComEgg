@@ -1,5 +1,5 @@
-#ifndef _C_NODE_H_
-#define _C_NODE_H_
+#ifndef SRC_NETWORK_CNODE_H_
+#define SRC_NETWORK_CNODE_H_
 
 #include "../Common/CGlobal.h"
 
@@ -15,7 +15,6 @@ enum ENodeStatus {
 
 class CNode: public CGlobal {
 public:
-
 
 	ENodeType type() const {
 		return _type;
@@ -39,5 +38,5 @@ private:
 	ENodeType _status;
 };
 
-#endif // _C_NODE_H_
+#endif /* SRC_NETWORK_CNODE_H_ */
 

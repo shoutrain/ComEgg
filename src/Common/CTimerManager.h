@@ -9,8 +9,8 @@
 * \date 03/23/2015
 */
 
-#ifndef _C_TIMER_MANAGER_H_
-#define _C_TIMER_MANAGER_H_
+#ifndef SRC_COMMON_CTIMERMANAGER_H_
+#define SRC_COMMON_CTIMERMANAGER_H_
 
 #include "CGlobal.h"
 #include "IWorkable.h"
@@ -85,4 +85,4 @@ private:
     TTimer        *_curTimer;
 };
 
-#endif // _C_TIMER_MANAGER_H_
+#endif /* SRC_COMMON_CTIMERMANAGER_H_ */

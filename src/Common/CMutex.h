@@ -9,8 +9,8 @@
 * \date 03/23/2015
 */
 
-#ifndef _C_MUTEX_H_
-#define _C_MUTEX_H_
+#ifndef SRC_COMMON_CMUTEX_H_
+#define SRC_COMMON_CMUTEX_H_
 
 #include "CLock.h"
 
@@ -34,4 +34,4 @@ private:
     pthread_mutex_t _mutex;
 };
 
-#endif // _C_MUTEX_H_
+#endif /* SRC_COMMON_CMUTEX_H_ */
