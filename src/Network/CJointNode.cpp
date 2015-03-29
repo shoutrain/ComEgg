@@ -5,14 +5,14 @@
  *      Author: rafael
  */
 
-#include "CJoinNode.h"
+#include "CJointNode.h"
 
-CJoinNode::CJoinNode() {
+CJointNode::CJointNode() {
 	// TODO Auto-generated constructor stub
 
 }
 
-CJoinNode::~CJoinNode() {
+CJointNode::~CJointNode() {
 	// TODO Auto-generated destructor stub
 }
 

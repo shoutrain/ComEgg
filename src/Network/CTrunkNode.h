@@ -9,11 +9,14 @@
 #define SRC_NETWORK_CTRUNKNODE_H_
 
 #include "CNode.h"
+#include "../Common/IWorkable.h"
 
-class CTrunkNode: public CNode {
+class CTrunkNode: public CNode, public IWorkable  {
 public:
 	CTrunkNode();
 	virtual ~CTrunkNode();
+
+	virtual bool working();
 };
 
 #endif /* SRC_NETWORK_CTRUNKNODE_H_ */

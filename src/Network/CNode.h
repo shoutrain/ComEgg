@@ -6,7 +6,7 @@
 class CNodeConf;
 
 enum ENodeType {
-	NONE, TRUNK, BRANCH
+	NONE, TRUNK, BRANCH, JOINT
 };
 
 enum ENodeStatus {
@@ -15,6 +15,12 @@ enum ENodeStatus {
 
 class CNode: public CGlobal {
 public:
+	virtual bool_ onConnect() = 0;
+	virtual bool_ onMessage() = 0;
+	virtual void onError() = 0;
+	virtual void onClose() = 0;
+
+	virtual b_4 write() = 0;
 
 	ENodeType type() const {
 		return _type;

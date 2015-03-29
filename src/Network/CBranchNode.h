@@ -9,11 +9,14 @@
 #define SRC_NETWORK_CBRANCHNODE_H_
 
 #include "CNode.h"
+#include "../Common/IWorkable.h"
 
-class CBranchNode: public CNode {
+class CBranchNode: public CNode, public IWorkable {
 public:
 	CBranchNode();
 	virtual ~CBranchNode();
+
+	virtual bool_ working();
 };
 
 #endif /* SRC_NETWORK_CBRANCHNODE_H_ */

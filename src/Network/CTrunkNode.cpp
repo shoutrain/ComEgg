@@ -16,3 +16,6 @@ CTrunkNode::~CTrunkNode() {
 	// TODO Auto-generated destructor stub
 }
 
+bool CTrunkNode::working() {
+	return false;
+}

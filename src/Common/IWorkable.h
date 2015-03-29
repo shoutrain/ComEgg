@@ -5,8 +5,8 @@
  *
  *
  * \author Rafael Gu(shoutrain.goo@gmail.com)
- * \version 1.0.0
- * \date 2/15/2015
+ * \version 1.0.1
+ * \date 3/29/2015
  */
 
 #ifndef SRC_COMMON_IWORKABLE_H_
@@ -14,11 +14,15 @@
 
 class IWorkable {
 public:
-	// only for avoiding warning
+	virtual bool_ working() = 0;
+
+protected:
+	IWorkable() {
+	}
+
 	virtual ~IWorkable() {
 	}
 
-	virtual bool_ working() = 0;
 };
 
 #endif /* SRC_COMMON_IWORKABLE_H_ */

@@ -1,21 +1,21 @@
 /*
- * CBranchNode.cpp
+ * CNodeRoute.cpp
  *
  *  Created on: Mar 29, 2015
  *      Author: rafael
  */
 
-#include "CBranchNode.h"
+#include "CNodeRoute.h"
 
-CBranchNode::CBranchNode() {
+CNodeRoute::CNodeRoute() {
 	// TODO Auto-generated constructor stub
 
 }
 
-CBranchNode::~CBranchNode() {
+CNodeRoute::~CNodeRoute() {
 	// TODO Auto-generated destructor stub
 }
 
-bool_ CBranchNode::working() {
+bool CNodeRoute::working() {
 	return true;
 }
