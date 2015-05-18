@@ -1,22 +1,3 @@
-More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
-
-If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
-
-New Beginning - What's the new ComEgg
-==================
-Although I had a lot of ideas about ComEgg, I don't know what's the new ComEgg.  My current idea is to refactor ComEgg module by module and make every moudle useful.  Sooner or later the ComEgg composed by these useful modules will be useful.
-
-So step by step, module by module, we will see what's the new ComEgg after 3 years.
-
-History - What's the old ComEgg
-==================
-1. Dec, 2004, spirited by Gene/Cell, I wanted to make new software architecture which is similar with gene/cell system and totally different with current software thinkings, completed the design at the end of the year.
-2. Feb ~ Apr, 2005, completed the first version, 0.1, wich can parse XML scripts and run with private PDU on TCP/UDP and work like a route/switch
-3. Sep ~ Oct, 2005, completed the second version, 0.1.1, which can work like JRE, some demo established based on ComEgg, and size-variable PDU was supported.
-4. Jun ~ Aug, 2009, completed the third version, 0.2, ported from Windows to Linux, supports so plug-in, and made some demos, like an Blog demo.  This phase the XML script was called RDS(Role define Script), and a new part which is named MagicEgg rised.  So RDS+ComEgg<-->MagicEgg on TCP/UDP works the way of Java+JVM+Tomcat+Servlet<-->IE/Firefox/Chrome on HTTP. (You can find old ComEgg and old MagicEgg in /old)
-
-Old ComEgg is ACE 5.7.2 and Xerces C++ 3.0.1 based
-
 Thinking Log
 ==================
 2015/03/01
@@ -46,6 +27,27 @@ fn-1<-xn = fn
 fn-1<-xn=fn中，以SCS的基本思想来实现，执行和角色的分离。fn-1是执行体当前的稳定状态，xn是下一次角色的变化。
 
 执行体保持稳定，角色作为xn一直在跃升变化中。
+
+Intro and Contact me
+==================
+More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
+
+If you have any question and advice, please send me emails: shoutrain.goo@gmail.com && shoutrain_goo@aliyun.com
+
+New Beginning - What's the new ComEgg
+---------
+Although I had a lot of ideas about ComEgg, I don't know what's the new ComEgg.  My current idea is to refactor ComEgg module by module and make every moudle useful.  Sooner or later the ComEgg composed by these useful modules will be useful.
+
+So step by step, module by module, we will see what's the new ComEgg after 3 years.
+
+History - What's the old ComEgg
+---------
+1. Dec, 2004, spirited by Gene/Cell, I wanted to make new software architecture which is similar with gene/cell system and totally different with current software thinkings, completed the design at the end of the year.
+2. Feb ~ Apr, 2005, completed the first version, 0.1, wich can parse XML scripts and run with private PDU on TCP/UDP and work like a route/switch
+3. Sep ~ Oct, 2005, completed the second version, 0.1.1, which can work like JRE, some demo established based on ComEgg, and size-variable PDU was supported.
+4. Jun ~ Aug, 2009, completed the third version, 0.2, ported from Windows to Linux, supports so plug-in, and made some demos, like an Blog demo.  This phase the XML script was called RDS(Role define Script), and a new part which is named MagicEgg rised.  So RDS+ComEgg<-->MagicEgg on TCP/UDP works the way of Java+JVM+Tomcat+Servlet<-->IE/Firefox/Chrome on HTTP. (You can find old ComEgg and old MagicEgg in /old)
+
+Old ComEgg is ACE 5.7.2 and Xerces C++ 3.0.1 based
 
 Change Log
 ==================
