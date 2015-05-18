@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.magicegg.com/interface" xmlns="http://www.magicegg.com/interface" xmlns:editix="http://www.magicegg.com/interface" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Goo Shoutrain</author>
+			<filename>transactions.xsd</filename>
+			<describe>				All UI interface are defined here.
+				Instance documents follow this must be named &quot;interface.xml&quot;.</describe>
+		</xs:appinfo>
+	</xs:annotation>
+<!--****************************************************************************************************-->
+	<xs:include schemaLocation="types.xsd"/>
+<!--****************************************************************************************************-->	
+	<xs:complexType name="window">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:attribute name="left" type="xs:unsignedShort" use="required"/>
+				<xs:attribute name="top" type="xs:unsignedShort" use="required"/>
+				<xs:attribute name="width" type="length" use="required"/>
+				<xs:attribute name="height" type="length" use="required"/>
+				<xs:attribute name="name" type="reference_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="label">
+		<xs:complexContent>
+			<xs:extension base="window">
+				<xs:attribute name="value" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="text">
+		<xs:complexContent>
+			<xs:extension base="window">
+				<xs:attribute name="maxlength" type="capacity" default="unbounded"/>
+				<xs:attribute name="readonly" type="xs:boolean" default="false"/>
+				<xs:attribute name="multiline" type="xs:boolean" default="false"/>
+				<xs:attribute name="secret" type="xs:boolean" default="false"/>
+				<xs:attribute name="value" type="xs:string" default=""/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="table">
+		<xs:complexContent>
+			<xs:extension base="window">
+				<xs:sequence>
+					<xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="base">
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="width" type="xs:unsignedShort" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="button">
+		<xs:complexContent>
+			<xs:extension base="window">
+				<xs:attribute name="disable" type="xs:boolean" default="false"/>
+				<xs:attribute name="value" type="xs:string" default=""/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="container">
+		<xs:complexContent>
+			<xs:extension base="window">
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="label" type="label"/>
+					<xs:element name="text" type="text"/>
+					<xs:element name="table" type="table"/>
+					<xs:element name="button" type="button"/>
+				</xs:choice>
+				<xs:attribute name="title" type="xs:string" default=""/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="interface">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element name="container" type="container" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

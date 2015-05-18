@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<networks xmlns="http://www.magicegg.com/network" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/network network.xsd">
+	<connector command_id="command" size_id="size" remote_ip="127.0.0.1" remote_port="9000">
+		<identity identity="RegisterUserID" pdu="RegisterUser" direction="out"/>
+		<identity identity="RegisterUserAckID" pdu="RegisterUserAck" direction="in"/>
+		<identity identity="VerifyUserID" pdu="VerifyUser" direction="out"/>
+		<identity identity="VerifyUserAckID" pdu="VerifyUserAck" direction="in"/>
+		<identity identity="UpdateUserInfoID" pdu="UpdateUserInfo" direction="out"/>
+		<identity identity="UpdateUserInfoAckID" pdu="UpdateUserInfoAck" direction="in"/>
+		<identity identity="GetUserInfoID" pdu="GetUserInfo" direction="out"/>
+		<identity identity="GetUserInfoAckID" pdu="GetUserInfoAck" direction="in"/>
+		<identity identity="AddBlogID" pdu="AddBlog" direction="out"/>
+		<identity identity="AddBlogAckID" pdu="AddBlogAck" direction="in"/>
+		<identity identity="AddCommentsID" pdu="AddComments" direction="out"/>
+		<identity identity="AddCommentsAckID" pdu="AddCommentsAck" direction="in"/>
+		<identity identity="GetBlogID" pdu="GetBlog" direction="out"/>
+		<identity identity="GetBlogAckID" pdu="GetBlogAck" direction="in"/>
+		<identity identity="GetBlogListByUserID" pdu="GetBlogListByUser" direction="out"/>
+		<identity identity="GetBlogListByUserAckID" pdu="GetBlogListByUserAck" direction="in"/>
+		<identity identity="GetBlogListID" pdu="GetBlogList" direction="out"/>
+		<identity identity="GetBlogListAckID" pdu="GetBlogListAck" direction="in"/>
+		<identity identity="OpenWeatherServerID" pdu="OpenWeatherServer" direction="out"/>
+		<identity identity="OpenWeatherServerAckID" pdu="OpenWeatherServerAck" direction="in"/>
+	</connector>
+</networks>

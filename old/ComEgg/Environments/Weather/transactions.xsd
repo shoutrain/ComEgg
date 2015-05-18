@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.comegg.com/transactions" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://www.comegg.com/transactions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Goo Shoutrain</author>
+			<filename>transactions.xsd</filename>
+			<describe>
+				All transactions must be defined here.
+				Instance documents follow this must be named "transactions.xml".
+			</describe>
+		</xs:appinfo>
+	</xs:annotation>
+	<!--****************************************************************************************************-->
+	<xs:include schemaLocation="operators.xsd"/>
+	<!--****************************************************************************************************-->
+	<xs:complexType name="processor">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:sequence>
+					<xs:element name="data_block" type="data_block" minOccurs="0"/>
+					<xs:element name="start_handle" type="program" minOccurs="0"/>
+					<xs:element name="handle" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="program">
+									<xs:attribute name="identity" type="unique_name" use="required"/>
+									<xs:attribute name="direction" type="direction" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="else_in_handle" type="program" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								For all input pdu
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="else_out_handle" type="program" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								For all output pdu
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="over_handle" type="program" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="name" type="unique_name" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							When this is processor, the name must be same as the interface's name.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="transactions">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element name="data_block" type="data_block" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>
+									Global variables are defined here.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="processor" type="processor" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Some networks, include server and client, must have their corresponding processors.
+									Some networks, include module, have their default processors.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

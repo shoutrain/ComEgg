@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<networks xmlns="http://www.magicegg.com/network" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/network network.xsd">
+	<connector command_id="command" size_id="size" remote_ip="127.0.0.1" remote_port="8900">
+		<identity identity="query_id" pdu="query" direction="out"/>
+		<identity identity="query_ack_id" pdu="query_ack" direction="in"/>
+	</connector>
+</networks>

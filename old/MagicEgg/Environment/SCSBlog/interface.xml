@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.magicegg.com/interface" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/interface interface.xsd">
+	<container name="register" left="0" top="0" width="200" height="200" title="Register">
+		<label name="label_1" left="0" top="0" width="100" height="50" value="register Name:"/>
+		<text name="text_register_name" left="100" top="0" width="150" height="50" maxlength="16"/>
+		<label name="label_2" left="0" top="50" width="100" height="50" value="register Password:"/>
+		<text name="text_register_password_1" left="100" top="50" width="150" height="50" maxlength="16" secret="true"/>
+		<text name="text_register_password_2" left="100" top="100" width="150" height="50" maxlength="16" secret="true"/>
+		<button name="button_register" left="0" top="150" width="100" height="50" value="Register"/>
+		<button name="button_back" left="0" top="100" width="100" height="50" value="Back"/>
+	</container>
+	<container name="login" left="0" top="0" width="200" height="200" title="Login">
+		<label name="label_1" left="0" top="0" width="100" height="50" value="Login Name:"/>
+		<text name="text_login_name" left="100" top="0" width="150" height="50" maxlength="16"/>
+		<label name="label_2" left="0" top="50" width="100" height="50" value="Login Password:"/>
+		<text name="text_login_password" left="100" top="50" width="150" height="50" maxlength="16" secret="true"/>
+		<button name="button_login" left="0" top="100" width="100" height="50" value="Login"/>
+		<button name="button_register" left="100" top="100" width="100" height="50" value="Register"/>
+	</container>
+	<container name="main" left="0" top="0" width="800" height="600" title="SCS Blog Index">
+		<table name="table_blog_list" left="0" top="50" width="800" height="500">
+			<column name="User Name" width="200"/>
+			<column name="Blog Title" width="200"/>
+			<column name="Create Time" width="200"/>
+		</table>
+		<button name="button_open_blog" left="0" top="550" width="100" height="50" value="Open Blog"/>
+		<button name="button_write_blog" left="100" top="550" width="100" height="50" value="Write Blog"/>
+		<button name="button_my_blog" left="200" top="550" width="100" height="50" value="My Blog"/> 
+		<button name="button_my_info" left="300" top="550" width="100" height="50" value="My Info"/>
+		<button name="button_logout" left="400" top="550" width="100" height="50" value="Logout"/>
+		<button name="button_weather_c" left="550" top="550" width="100" height="50" value="Weather(C)"/>
+		<button name="button_weather_cs" left="650" top="550" width="150" height="50" value="Weather(C and S)"/>
+	</container>
+	<container name="my_blog" left="0" top="0" width="800" height="600" title="My Blog">
+		<table name="table_blog_list" left="0" top="50" width="800" height="500">
+			<column name="Blog Title" width="200"/>
+			<column name="Create Time" width="200"/>
+		</table>
+		<button name="button_return" left="0" top="550" width="100" height="50" value="Return"/>
+		<button name="button_open_blog" left="100" top="550" width="100" height="50" value="Open Blog"/>
+		<button name="button_write_blog" left="200" top="550" width="100" height="50" value="Write Blog"/>
+		<button name="button_my_info" left="300" top="550" width="100" height="50" value="My Info"/>
+		<button name="button_logout" left="400" top="550" width="100" height="50" value="Logout"/>
+	</container>
+	<container name="blog_details" left="0" top="0" width="800" height="600" title="Blog Details">
+		<label name="label_1" left="0" top="0" width="100" height="50" value="Blog Title"/>
+		<text name="text_blog_title" left="100" top="0" width="700" height="50" maxlength="32" readonly="true"/>
+		<label name="label_2" left="0" top="50" width="100" height="50" value="Blog Author"/>
+		<text name="text_blog_author" left="100" top="50" width="700" height="50" maxlength="16" readonly="true"/>
+		<label name="label_3" left="0" top="100" width="100" height="50" value="Create Time"/>
+		<text name="text_blog_create_time" left="100" top="100" width="700" height="50" maxlength="20" readonly="true"/>
+		<text name="text_blog_content" left="0" top="150" width="800" height="200" readonly="true" multiline="true"/>
+		<table name="table_blog_comments" left="0" top="350" width="800" height="150">
+			<column name="User Name" width="200"/>
+			<column name="Comments" width="200"/>
+			<column name="Create Time" width="200"/>
+		</table>
+		<label name="label_4" left="0" top="500" width="100" height="50" value="Your Comment"/>
+		<text name="text_blog_comment" left="100" top="500" width="700" height="50" maxlength="128"/>
+		<button name="button_return" left="0" top="550" width="100" height="50" value="Return"/>
+		<button name="button_submit_comment" left="100" top="550" width="100" height="50" value="Submit"/>
+		<button name="button_write_blog" left="200" top="550" width="100" height="50" value="Write Blog"/>
+		<button name="button_my_info" left="300" top="550" width="100" height="50" value="My Info"/>
+		<button name="button_logout" left="400" top="550" width="100" height="50" value="Logout"/>		
+	</container>
+	<container name="write_blog" left="0" top="0" width="800" height="600" title="Write Blog">
+		<label name="label_1" left="0" top="0" width="100" height="50" value="Blog Title"/>
+		<text name="text_blog_title" left="100" top="0" width="700" height="50" maxlength="32"/>
+		<text name="text_blog_content" left="0" top="50" width="800" height="500" multiline="true"/>
+		<button name="button_submit" left="0" top="550" width="100" height="50" value="Submit"/>
+		<button name="button_cancel" left="100" top="550" width="100" height="50" value="Cancle"/>	
+	</container>
+	<container name="my_info" left="0" top="0" width="600" height="450" title="My Info">
+		<label name="label_1" left="0" top="0" width="100" height="50" value="User Name"/>
+		<text name="text_user_name" left="100" top="0" width="100" height="50" maxlength="16" readonly="true"/>
+		<label name="label_2" left="0" top="50" width="100" height="50" value="Sex"/>
+		<text name="text_user_sex" left="100" top="50" width="100" height="50" maxlength="1"/>
+		<label name="label_3" left="0" top="100" width="100" height="50" value="Birthday"/>
+		<text name="text_user_birthday" left="100" top="100" width="100" height="50" maxlength="11"/>
+		<label name="label_4" left="0" top="150" width="100" height="50" value="Self-Estimate"/>
+		<text name="text_user_self_estimate" left="0" top="200" width="600" height="200" multiline="true"/>
+		<button name="button_submit" left="0" top="400" width="100" height="50" value="Submit"/>
+		<button name="button_cancel" left="100" top="400" width="100" height="50" value="Cancel"/>
+	</container>
+</interface>
+

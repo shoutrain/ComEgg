@@ -1,0 +1,12 @@
+*.pre
+*.ede
+.emacs.desktop*
+.settings
+.project
+.cproject
+*.o
+cscope.*
+*.depend
+*.depend.*
+ComEgg
+scsblog

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.magicegg.com/network" xmlns="http://www.magicegg.com/network" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Goo Shoutrain</author>
+			<filename>network.xsd</filename>
+			<describe>				All interfaces must be defined here.
+				Instance documents follow this must be named &quot;network.xml&quot;.</describe>
+		</xs:appinfo>
+	</xs:annotation>
+<!--****************************************************************************************************-->
+	<xs:include schemaLocation="types.xsd"/>
+<!--****************************************************************************************************-->
+	<xs:complexType final="restriction" name="network">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" name="identity">
+						<xs:complexType>
+							<xs:attribute name="identity" type="unique_name" use="required"/>
+							<xs:attribute name="pdu" type="reference_name" use="required"/>
+							<xs:attribute name="direction" type="direction" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="command_id" type="reference_name" use="required">
+					<xs:annotation>
+						<xs:documentation>							It&apos;s one of fields in head.
+							It identifis which pdu in the protocols.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute default="reference_name" name="size_id"/>
+				<xs:attribute default="0" name="local_port" type="port"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--****************************************************************************************************-->
+	<xs:complexType final="#all" name="connector">
+		<xs:complexContent>
+			<xs:extension base="network">
+				<xs:attribute name="remote_ip" type="ip" use="required"/>
+				<xs:attribute name="remote_port" type="port" use="required"/>
+				<xs:attribute default="0" name="reconnect" type="xs:nonNegativeInteger"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+<!--****************************************************************************************************-->
+	<xs:element name="networks">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element name="connector" type="connector"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

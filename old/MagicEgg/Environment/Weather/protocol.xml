@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol xmlns="http://www.magicegg.com/protocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/protocol protocol.xsd">
+	<command_id_value name="query_id" value="1"/>
+	<command_id_value name="query_ack_id" value="2"/>
+	<head>
+		<normal name="size" length="4" signed="false"/>
+		<normal name="command" length="4" signed="false"/>
+	</head>
+	<pdu name="query">
+		<string name="identity" size="16"/>
+	</pdu>
+	<pdu name="query_ack">
+		<string name="content" size="256"/>
+	</pdu>
+</protocol>
+

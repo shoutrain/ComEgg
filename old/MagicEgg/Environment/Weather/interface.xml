@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.magicegg.com/interface" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/interface interface.xsd">
+	<container name="main" left="0" top="0" width="200" height="50" title="Weather Service">
+		<button name="button_query" left="0" top="0" width="100" height="50" value="Query"/>
+		<button name="button_exit" left="100" top="0" width="100" height="50" value="Exit"/>
+	</container>
+	<container name="query" left="0" top="0" width="400" height="330" title="Today's Weather">
+		<text name="text_weather_content" left="0" top="0" width="400" height="300" readonly="true" multiline="true"/>
+		<button name="button_back" left="300" top="300" width="100" height="30" value="Back"/>
+	</container>
+</interface>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions xmlns="http://www.magicegg.com/actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/actions actions.xsd">
+	<start>
+		<process_block>
+			<show_window name="main"/>
+		</process_block>
+	</start>
+	<processor name="main">
+		<on_click name="button_query">
+			<process_block>
+				<show_window name="query"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_exit">
+			<process_block>
+				<die />
+			</process_block>
+		</on_click>
+	</processor>
+	<processor name="query">
+		<start>
+			<process_block>
+				<send pdu="query"/>
+				<wait_message pdu="query_ack"/>
+			</process_block>
+		</start>	
+		<on_click name="button_back">
+			<process_block>
+				<show_window name="main"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="query_ack">
+			<process_block>
+				<unitary_calculate>
+					<interface_variable name="text_weather_content"/>
+					<network_variable field_name="content"/>
+				</unitary_calculate>
+			</process_block>
+		</on_message>
+	</processor>
+</actions>

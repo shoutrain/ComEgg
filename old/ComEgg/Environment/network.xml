@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<networks xmlns="http://www.comegg.com/network" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.comegg.com/network network.xsd">
+	<acceptor name="weather_server" command_id="command" protocol="weather" local_port="8900" size_id="size" max_connections="100">
+		<identity identity="weather_server.query_id" pdu="query" direction="in"/>
+		<identity identity="weather_server.query_ack_id" pdu="query_ack" direction="out"/>
+	</acceptor>
+	<acceptor name="scsblog_server" command_id="command" protocol="scsblog" local_port="9000" size_id="size" max_connections="100">
+		<identity identity="scsblog_server.RegisterUserID" pdu="RegisterUser" direction="in"/>
+		<identity identity="scsblog_server.RegisterUserAckID" pdu="RegisterUserAck" direction="out"/>
+		<identity identity="scsblog_server.VerifyUserID" pdu="VerifyUser" direction="in"/>
+		<identity identity="scsblog_server.VerifyUserAckID" pdu="VerifyUserAck" direction="out"/>
+		<identity identity="scsblog_server.UpdateUserInfoID" pdu="UpdateUserInfo" direction="in"/>
+		<identity identity="scsblog_server.UpdateUserInfoAckID" pdu="UpdateUserInfoAck" direction="out"/>
+		<identity identity="scsblog_server.GetUserInfoID" pdu="GetUserInfo" direction="in"/>
+		<identity identity="scsblog_server.GetUserInfoAckID" pdu="GetUserInfoAck" direction="out"/>
+		<identity identity="scsblog_server.AddBlogID" pdu="AddBlog" direction="in"/>
+		<identity identity="scsblog_server.AddBlogAckID" pdu="AddBlogAck" direction="out"/>
+		<identity identity="scsblog_server.AddCommentsID" pdu="AddComments" direction="in"/>
+		<identity identity="scsblog_server.AddCommentsAckID" pdu="AddCommentsAck" direction="out"/>
+		<identity identity="scsblog_server.GetBlogID" pdu="GetBlog" direction="in"/>
+		<identity identity="scsblog_server.GetBlogAckID" pdu="GetBlogAck" direction="out"/>
+		<identity identity="scsblog_server.GetBlogListByUserID" pdu="GetBlogListByUser" direction="in"/>
+		<identity identity="scsblog_server.GetBlogListByUserAckID" pdu="GetBlogListByUserAck" direction="out"/>
+		<identity identity="scsblog_server.GetBlogListID" pdu="GetBlogList" direction="in"/>
+		<identity identity="scsblog_server.GetBlogListAckID" pdu="GetBlogListAck" direction="out"/>
+		<identity identity="scsblog_server.OpenWeatherServerID" pdu="OpenWeatherServer" direction="in"/>
+		<identity identity="scsblog_server.OpenWeatherServerAckID" pdu="OpenWeatherServerAck" direction="out"/>
+	</acceptor>
+</networks>

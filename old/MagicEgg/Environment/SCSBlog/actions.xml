@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions xmlns="http://www.magicegg.com/actions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.magicegg.com/actions actions.xsd">
+ 	<data_block>
+		<v_ub_4 name="user_id"/>
+		<v_string name="user_name"/>
+		<v_b_4 name="blog_id"/>
+		<v_ub_4 name="zero" value="0"/>
+	</data_block>
+	<start>
+		<process_block>
+			<show_window name="login"/>
+		</process_block>
+	</start>
+	<processor name="register">
+		<on_click name="button_register">
+			<process_block>
+				<if>
+					<condition_duality calculate="gl">
+						<interface_variable name="text_register_password_1"/>
+						<interface_variable name="text_register_password_2"/>
+					</condition_duality>
+					<program>
+						<process_block>
+							<alert message="Tow passwords is not match!"/>
+							<block/>
+						</process_block>
+					</program>
+				</if>
+				<send pdu="RegisterUser">
+					<field_variable field_name="UserName">
+						<interface_variable name="text_register_name"/>
+					</field_variable>
+					<field_variable field_name="Password">
+						<interface_variable name="text_register_password_1"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="RegisterUserAck"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_back">
+			<process_block>
+				<show_window name="login"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="RegisterUserAck">
+			<process_block>
+				<if>
+					<data_block>
+						<v_ub_4 name="invalid_user_id" value="0"/>
+					</data_block>
+					<condition_duality calculate="gt">
+						<network_variable field_name="UserID"/>
+						<solid_variable name="invalid_user_id"/>
+					</condition_duality>
+					<program>
+						<process_block>
+							<show_window name="login"/>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Register failure!"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="login">
+		<on_click name="button_login">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="user_name"/>
+					<interface_variable name="text_login_name"/>
+				</unitary_calculate>
+				<send pdu="VerifyUser">
+					<field_variable field_name="UserName">
+						<interface_variable name="text_login_name"/>
+					</field_variable>
+					<field_variable field_name="Password">
+						<interface_variable name="text_login_password"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="VerifyUserAck"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_register">
+			<process_block>
+				<show_window name="register"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="VerifyUserAck">
+			<process_block>
+				<if>
+					<data_block>
+						<v_ub_4 name="invalid_user_id" value="0"/>
+					</data_block>
+					<condition_duality calculate="gt">
+						<network_variable field_name="UserID"/>
+						<solid_variable name="invalid_user_id"/>
+					</condition_duality>
+					<program>
+						<process_block>
+							<unitary_calculate>
+								<solid_variable name="user_id"/>
+								<network_variable field_name="UserID"/>
+							</unitary_calculate>
+							<show_window name="main"/>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Invalid user name or password!"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="main">
+		<start>
+			<process_block>
+				<send pdu="GetBlogList"/>
+				<wait_message pdu="GetBlogListAck"/>
+			</process_block>
+		</start>
+		<on_click name="button_open_blog">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="blog_id"/>
+					<interface_variable name="table_blog_list"/>
+				</unitary_calculate>
+				<show_window name="blog_details"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_write_blog">
+			<process_block>
+				<show_window name="write_blog"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_my_blog">
+			<process_block>
+				<show_window name="my_blog"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_my_info">
+			<process_block>
+				<show_window name="my_info"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_logout">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="user_id"/>
+					<solid_variable name="zero"/>
+				</unitary_calculate>
+				<show_window name="login"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_weather_c">
+			<data_block>
+				<v_string name="weather_env" value="Weather"/>
+				<v_ub_4 name="call_weather_result"/>
+			</data_block>
+			<process_block>
+				<split>
+					<solid_variable name="weather_env"/>
+					<solid_variable name="call_weather_result"/>
+				</split>
+			</process_block>
+		</on_click>
+		<on_click name="button_weather_cs">
+			<process_block>
+				<send pdu="OpenWeatherServer"/>
+				<wait_message pdu="OpenWeatherServerAck"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="OpenWeatherServerAck">
+			<data_block>
+				<v_string name="weather_env" value="Weather"/>
+				<v_ub_4 name="call_weather_result"/>
+			</data_block>
+			<process_block>
+				<split>
+					<solid_variable name="weather_env"/>
+					<solid_variable name="call_weather_result"/>
+				</split>
+			</process_block>
+		</on_message>
+		<on_message pdu="GetBlogListAck">
+			<process_block>
+				<if>
+					<condition_unitary>
+						<network_variable field_name="BlogNum"/>
+					</condition_unitary>				
+					<program>
+						<data_block>
+							<v_ub_4 name="index" value="0"/>
+							<v_ub_4 name="step" value="1"/>
+						</data_block>
+						<process_block>
+							<while>
+								<condition_duality calculate="ls">
+									<solid_variable name="index"/>
+									<network_variable field_name="BlogNum"/>
+								</condition_duality>
+								<process_block>
+									<duality_calculate operator="add">
+										<solid_variable name="index"/>
+										<solid_variable name="step"/>
+										<solid_variable name="index"/>
+									</duality_calculate>
+									<add_item name="table_blog_list">
+										<network_variable group_name="BlogArray" field_name="BlogID" index="index"/>
+										<network_variable group_name="BlogArray" field_name="UserName" index="index"/>
+										<network_variable group_name="BlogArray" field_name="BlogTitle" index="index"/>
+										<network_variable group_name="BlogArray" field_name="CreateTime" index="index"/>
+									</add_item>
+								</process_block>
+							</while>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="my_blog">
+		<start>
+			<process_block>
+				<send pdu="GetBlogListByUser">
+					<field_variable field_name="UserID">
+						<solid_variable name="user_id"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="GetBlogListByUserAck"/>
+			</process_block>
+		</start>
+		<on_click name="button_return">
+			<process_block>
+				<show_window name="main"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_open_blog">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="blog_id"/>
+					<interface_variable name="table_blog_list"/>
+				</unitary_calculate>
+				<show_window name="blog_details"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_write_blog">
+			<process_block>
+				<show_window name="write_blog"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_my_info">
+			<process_block>
+				<show_window name="my_info"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_logout">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="user_id"/>
+					<solid_variable name="zero"/>
+				</unitary_calculate>
+				<show_window name="login"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="GetBlogListByUserAck">
+			<process_block>		
+				<if>
+					<condition_unitary>
+						<network_variable field_name="BlogNum"/>
+					</condition_unitary>
+					<program>
+						<data_block>
+							<v_ub_4 name="index" value="0"/>
+							<v_ub_4 name="step" value="1"/>
+						</data_block>
+						<process_block>
+							<while>
+								<condition_duality calculate="ls">
+									<solid_variable name="index"/>
+									<network_variable field_name="BlogNum"/>
+								</condition_duality>
+								<process_block>
+									<duality_calculate operator="add">
+										<solid_variable name="index"/>
+										<solid_variable name="step"/>
+										<solid_variable name="index"/>
+									</duality_calculate>
+									<add_item name="table_blog_list">
+										<network_variable group_name="BlogArray" field_name="BlogID" index="index"/>
+										<network_variable group_name="BlogArray" field_name="BlogTitle" index="index"/>
+										<network_variable group_name="BlogArray" field_name="CreateTime" index="index"/>
+									</add_item>
+								</process_block>
+							</while>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="blog_details">
+		<start>
+			<process_block>
+				<send pdu="GetBlog">
+					<field_variable field_name="BlogID">
+						<solid_variable name="blog_id"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="GetBlogAck"/>
+			</process_block>
+		</start>
+		<on_click name="button_return">
+			<process_block>
+				<show_window name="main"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_submit_comment">
+			<process_block>
+				<send pdu="AddComments">
+					<field_variable field_name="BlogID">
+						<solid_variable name="blog_id"/>
+					</field_variable>
+					<field_variable field_name="Comments">
+						<interface_variable name="text_blog_comment"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="AddCommentsAck"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_write_blog">
+			<process_block>
+				<show_window name="write_blog"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_my_info">
+			<process_block>
+				<show_window name="my_info"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_logout">
+			<process_block>
+				<unitary_calculate>
+					<solid_variable name="user_id"/>
+					<solid_variable name="zero"/>
+				</unitary_calculate>
+				<show_window name="login"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="GetBlogAck">
+			<process_block>
+				<if>
+					<condition_unitary>
+						<network_variable field_name="Result"/>
+					</condition_unitary>
+					<program>
+						<data_block>
+							<v_ub_4 name="index" value="0"/>
+							<v_ub_4 name="step" value="1"/>
+						</data_block>
+						<process_block>
+							<unitary_calculate>
+								<interface_variable name="text_blog_title"/>
+								<network_variable field_name="BlogTitle"/>
+							</unitary_calculate>
+							<unitary_calculate>
+								<interface_variable name="text_blog_author"/>
+								<network_variable field_name="UserName"/>
+							</unitary_calculate>
+							<unitary_calculate>
+								<interface_variable name="text_blog_create_time"/>
+								<network_variable field_name="CreateTime"/>
+							</unitary_calculate>
+							<unitary_calculate>
+								<interface_variable name="text_blog_content"/>
+								<network_variable field_name="BlogContent"/>
+							</unitary_calculate>
+							<while>
+								<condition_duality calculate="ls">
+									<solid_variable name="index"/>
+									<network_variable field_name="CommentsNum"/>
+								</condition_duality>
+								<process_block>
+									<duality_calculate operator="add">
+										<solid_variable name="index"/>
+										<solid_variable name="step"/>
+										<solid_variable name="index"/>
+									</duality_calculate>
+									<add_item name="table_blog_comments">
+										<network_variable group_name="CommentsArray" field_name="UserID" index="index"/>
+										<network_variable group_name="CommentsArray" field_name="UserName" index="index"/>
+										<network_variable group_name="CommentsArray" field_name="BlogComments" index="index"/>
+										<network_variable group_name="CommentsArray" field_name="CreateTime" index="index"/>
+									</add_item>
+								</process_block>
+							</while>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Get blog failure!"/>
+							<show_window name="main"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+		<on_message pdu="AddCommentsAck">
+			<process_block>
+				<if>
+					<condition_unitary>
+						<network_variable field_name="Result"/>
+					</condition_unitary>
+					<program>
+						<process_block>
+							<alert message="Add comments successfully"/>
+							<show_window name="blog_details"/>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Add comments failure"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="write_blog">
+		<on_click name="button_submit">
+			<process_block>
+				<send pdu="AddBlog">
+					<field_variable field_name="BlogTitle">
+						<interface_variable name="text_blog_title"/>
+					</field_variable>
+					<field_variable field_name="BlogContent">
+						<interface_variable name="text_blog_content"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="AddBlogAck"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_cancel">
+			<process_block>
+				<show_window name="main"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="AddBlogAck">
+			<process_block>
+				<if>
+					<condition_unitary>
+						<network_variable field_name="Result"/>
+					</condition_unitary>
+					<program>
+						<process_block>
+							<alert message="Add blog successfully"/>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Add blog failure"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+	<processor name="my_info">
+		<start>
+			<process_block>
+				<send pdu="GetUserInfo">
+					<field_variable field_name="UserID">
+						<solid_variable name="user_id"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="GetUserInfoAck"/>
+			</process_block>
+		</start>
+		<on_click name="button_submit">
+			<data_block>
+				<v_b_4 name="is_male" value="1"/>
+				<v_b_4 name="zero" value="0"/>
+			</data_block>
+			<process_block>
+				<if>
+					<data_block>
+						<v_string name="male" value="Man"/>
+						<v_string name="female" value="Woman"/>
+					</data_block>
+					<condition_duality>
+						<interface_variable name="text_user_sex"/>
+						<solid_variable name="female"/>
+					</condition_duality>
+					<program>
+						<process_block>
+							<unitary_calculate>
+								<solid_variable name="is_male"/>
+								<solid_variable name="zero"/>
+							</unitary_calculate>
+						</process_block>
+					</program>
+				</if>
+				<send pdu="UpdateUserInfo">
+					<field_variable field_name="UserID">
+						<solid_variable name="user_id"/>
+					</field_variable>
+					<field_variable field_name="IsMale">
+						<solid_variable name="is_male"/>
+					</field_variable>
+					<field_variable field_name="Birthday">
+						<interface_variable name="text_user_birthday"/>
+					</field_variable>
+					<field_variable field_name="SelfEstimate">
+						<interface_variable name="text_user_self_estimate"/>
+					</field_variable>
+				</send>
+				<wait_message pdu="UpdateUserInfoAck"/>
+			</process_block>
+		</on_click>
+		<on_click name="button_cancel">
+			<process_block>
+				<show_window name="main"/>
+			</process_block>
+		</on_click>
+		<on_message pdu="GetUserInfoAck">
+			<process_block>
+				<unitary_calculate>
+					<interface_variable name="text_user_name"/>
+					<solid_variable name="user_name"/>
+				</unitary_calculate>
+				<if>
+					<data_block>
+						<v_string name="male" value="Man"/>
+						<v_string name="female" value="Woman"/>
+					</data_block>
+					<condition_duality>
+						<network_variable field_name="IsMale"/>
+						<solid_variable name="zero"/>
+					</condition_duality>
+					<program>
+						<process_block>
+							<unitary_calculate>
+								<interface_variable name="text_user_sex"/>
+								<solid_variable name="female"/>
+							</unitary_calculate>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<unitary_calculate>
+								<interface_variable name="text_user_sex"/>
+								<solid_variable name="male"/>
+							</unitary_calculate>
+						</process_block>
+					</program>
+				</if>
+				<unitary_calculate>
+					<interface_variable name="text_user_birthday"/>
+					<network_variable field_name="Birthday"/>
+				</unitary_calculate>
+				<unitary_calculate>
+					<interface_variable name="text_user_self_estimate"/>
+					<network_variable field_name="SelfEstimate"/>
+				</unitary_calculate>
+			</process_block>
+		</on_message>
+		<on_message pdu="UpdateUserInfoAck">
+			<process_block>
+				<if>
+					<condition_unitary>
+						<network_variable field_name="Result"/>
+					</condition_unitary>
+					<program>
+						<process_block>
+							<alert message="Update user info successfully"/>
+						</process_block>
+					</program>
+					<program>
+						<process_block>
+							<alert message="Update user info failure"/>
+						</process_block>
+					</program>
+				</if>
+			</process_block>
+		</on_message>
+	</processor>
+</actions>

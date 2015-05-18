@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.magicegg.com/actions" xmlns="http://www.magicegg.com/actions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>
+			<author>Goo Shoutrain</author>
+			<filename>transactions.xsd</filename>
+			<describe>				All actions must be defined here.
+				Instance documents follow this must be named &quot;actions.xml&quot;.</describe>
+		</xs:appinfo>
+	</xs:annotation>
+<!--****************************************************************************************************-->
+	<xs:include schemaLocation="operators.xsd"/>
+<!--****************************************************************************************************-->
+	<xs:complexType name="processor">
+		<xs:complexContent>
+			<xs:extension base="base">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="data_block" type="data_block"/>
+					<xs:element minOccurs="0" name="start" type="program"/>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="on_click">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="program">
+									<xs:attribute name="name" type="reference_name" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>					
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="on_message">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="program">
+									<xs:attribute name="pdu" type="reference_name" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="end" type="program"/>
+				</xs:sequence>
+				<xs:attribute name="name" type="unique_name" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="actions">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base">
+					<xs:sequence>
+						<xs:element minOccurs="0" name="data_block" type="data_block"/>
+						<xs:element minOccurs="0" name="start" type="program"/>
+						<xs:element maxOccurs="unbounded" name="processor" type="processor"/>
+						<xs:element minOccurs="0" name="end" type="program"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
