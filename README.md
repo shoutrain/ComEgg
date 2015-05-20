@@ -28,6 +28,10 @@ fn-1<-xn=fn中，以SCS的基本思想来实现，执行和角色的分离。fn-
 
 执行体保持稳定，角色作为xn一直在跃升变化中。
 
+2015/05/20
+---------
+Machine Learning, Linear algebra, Probability theory are necessary, I am learning.
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
