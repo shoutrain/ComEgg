@@ -32,6 +32,12 @@ fn-1<-xn=fn中，以SCS的基本思想来实现，执行和角色的分离。fn-
 ---------
 Machine Learning, Linear algebra, Probability theory are necessary, I am learning.
 
+2015/06/10
+---------
+在学习kNN分类算法时，想到分类这机器算法的实际应用中相当普遍，SCS是否可以应用于分类。
+
+所谓分类，就是一个典型的树状图，有一个根节点，然后向下分出若干的分支，若干的层次。这里的根节点作为第一层，就是f0，第二层就是f1，直到第n层就是fn-1，然后每层的“分”都由xn来实现。这样，fn-1其实很可能是多个点，而xn则是对应多个点的“分”算法。
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
