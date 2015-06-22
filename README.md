@@ -38,6 +38,12 @@ Machine Learning, Linear algebra, Probability theory are necessary, I am learnin
 
 所谓分类，就是一个典型的树状图，有一个根节点，然后向下分出若干的分支，若干的层次。这里的根节点作为第一层，就是f0，第二层就是f1，直到第n层就是fn-1，然后每层的“分”都由xn来实现。这样，fn-1其实很可能是多个点，而xn则是对应多个点的“分”算法。
 
+2015/06/22
+---------
+在学习机器学习的多项式回归算法中涉及偏微分时，有进入了微积分和多维理论的关系思考，其实真实世界的维度不是有限的，而是无限的，其中应该是有规律的。维度除了由基础维度向高级维度的层层叠加，还有高级维度向基础维度的层层分解，它们的种种关系，本质为一体，之所有多个维度，在于观察者本身所组成的维度和所处的维度。所以SCS在考虑全息进化的时候，应该要考虑这一点。
+
+韩峰老师的TED演讲中，提到两点，一个是比特位的压缩（合并），还有就是“基础协议”。其实我正在做的就是给SCS寻找“基础协议”，这个“基础协议”比面向对象的组件模型要更接近真实宇宙，我相信能给我们带来更好的变化。关于比特位的压缩（合并），其实一直在发生，只不过没有把这个特性独立的抽象出来思考，我得思考一下这个……
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
