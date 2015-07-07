@@ -44,6 +44,12 @@ Machine Learning, Linear algebra, Probability theory are necessary, I am learnin
 
 韩峰老师的TED演讲中，提到两点，一个是比特位的压缩（合并），还有就是“基础协议”。其实我正在做的就是给SCS寻找“基础协议”，这个“基础协议”比面向对象的组件模型要更接近真实宇宙，我相信能给我们带来更好的变化。关于比特位的压缩（合并），其实一直在发生，只不过没有把这个特性独立的抽象出来思考，我得思考一下这个……
 
+2015/07/08
+---------
+机器学习的课程按照正常的设定，本周已经到了神经网络。
+
+在看到了神经网络为了对多维、多特性的逻辑回归算法进行降维时，这种方法和fn-1<-xn=fn优点类似，而且其神经元部分的拓扑图总发生的计算，和SCS的关联度很高，SCS可以实现这种神经元之间更复杂的计算；反过来神经网络这种方式对SCS在数学和算法上的启示有很多。
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
