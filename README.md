@@ -50,6 +50,12 @@ Machine Learning, Linear algebra, Probability theory are necessary, I am learnin
 
 在看到了神经网络为了对多维、多特性的逻辑回归算法进行降维时，这种方法和fn-1<-xn=fn有点类似，而且其神经元部分的拓扑图总发生的计算，和SCS的关联度很高，SCS可以实现这种神经元之间更复杂的计算；反过来神经网络这种方式对SCS在数学和算法上的启示有很多。
 
+2015/08/07
+---------
+这几天有些很烦人的事情，当然有自己的问题，但更为关键的是，不管工作还是生活，基本的条件是要找到可以沟通的人在一起。
+
+今天的领悟是关于不同xn之间的关系。xn之间应该有一个可以无限二叉树的结构关系。所有的xn都可以从一个总的x继承下来。这样fn要定义基本、统一的功能。整个由xn和fn整合的系统就是一套自循环的系统。
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
