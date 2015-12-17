@@ -56,6 +56,12 @@ Machine Learning, Linear algebra, Probability theory are necessary, I am learnin
 
 今天的领悟是关于不同xn之间的关系。xn之间应该有一个可以无限二叉树的结构关系。所有的xn都可以从一个总的x继承下来。这样fn要定义基本、统一的功能。整个由xn和fn整合的系统就是一套自循环的系统。
 
+2015/12/17
+---------
+Found new goal for ComEgg:
+1. replace Map/Reduce and Spark as a new distributed framework
+2. become a new algorithm for machine learning
+
 Intro and Contact me
 ==================
 More information about the History you can refer the document-SCS Introduction(pdf format), you can find it in the above project.  The current ComEgg will not meet all suggestions in the document. 
